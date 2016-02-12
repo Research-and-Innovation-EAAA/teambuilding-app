@@ -1,0 +1,31 @@
+@media (min-width: 768px) {
+    .frontpage-topcomponent {
+        min-height: 365px;
+        height: 100%;
+    }
+
+    .frontpage-card {
+        min-height: 200px;
+    }
+}
+
+.frontpage-col {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.frontpage-card-icon {
+    padding-right: 20px;
+    margin: -10px -15px;
+    float: left;
+    height: 48px;
+}
+
+.login-link-text {
+    color: white;
+}
+
+login-buttons {
+    margin-left: 10px;
+    margin-top: 5px;
+}

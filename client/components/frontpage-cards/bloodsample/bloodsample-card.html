@@ -1,0 +1,31 @@
+<div class="card frontpage-card">
+    <div class="item item-divider bar bar-assertive">
+        <span class="frontpage-card-icon" ng-style="{'content':'url(/blodtransparent.png)'}"></span>
+        <strong>Blodprøver</strong>
+        <button style="float: right" class="button button-icon ion-plus-round"
+                ng-click="openQuestionWizardPage('Blodprøve')"></button>
+        <span style="padding-left: 50px; float: right;"></span>
+        <button style="float: right" class="button button-icon ion-stats-bars"
+                ng-click="openDataOverviewPage('Blodprøve')"></button>
+    </div>
+    <div class="item item-text-wrap">
+        <div class="row">
+            <div class="col"><strong>Trombocytter</strong></div>
+            <div class="col">{{getLatestBloodsampleRegistration(1)}} <b>
+                <small>10<sup>9</sup> L</small>
+            </b></div>
+        </div>
+        <div class="row">
+            <div class="col"><strong>Hæmoglobin</strong></div>
+            <div class="col">{{getLatestBloodsampleRegistration(2)}} <b>
+                <small>10<sup>9</sup> L</small>
+            </b></div>
+        </div>
+        <div class="row">
+            <div class="col"><strong>ALAT</strong></div>
+            <div class="col">{{getLatestBloodsampleRegistration(3)}} <b>
+                <small>U/L</small>
+            </b></div>
+        </div>
+    </div>
+</div>

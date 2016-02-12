@@ -1,0 +1,20 @@
+#calendar {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.flex-calendar .days .day {
+    min-height: 40px !important;
+    line-height: 40px !important;
+}
+
+/* moves event marker on calendar date */
+.flex-calendar .days .day.event:before {
+    bottom: 5px !important;
+}

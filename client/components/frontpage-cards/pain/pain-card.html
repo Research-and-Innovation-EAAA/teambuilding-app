@@ -1,0 +1,25 @@
+<div class="card frontpage-card">
+    <div class="item item-divider bar bar-balanced">
+        <span class="frontpage-card-icon" ng-style="{'content':'url(/smertetransparent.png)'}"></span>
+        <strong>Smerte</strong>
+        <button style="float: right" class="button button-icon ion-plus-round"
+                ng-click="openQuestionWizardPage('Smerte')"></button>
+        <span style="padding-left: 50px; float: right;"></span>
+        <button style="float: right" class="button button-icon ion-stats-bars"
+                ng-click="openDataOverviewPage('Smerte')"></button>
+    </div>
+    <div class="item item-text-wrap">
+        <div class="row">
+            <div class="col"><strong>Smerte typen</strong></div>
+            <div class="col">{{getLatestPainRegistration(1)}}</div>
+        </div>
+        <div class="row">
+            <div class="col"><strong>Intensitet</strong></div>
+            <div class="col">{{getLatestPainRegistration(2)}}</div>
+        </div>
+        <div class="row">
+            <div class="col"><strong>Morfin</strong></div>
+            <div class="col">{{getLatestPainRegistration(3)}} {{getLatestPainRegistration(4)}}</div>
+        </div>
+    </div>
+</div>

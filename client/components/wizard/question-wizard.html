@@ -1,0 +1,45 @@
+<ion-view>
+    <ion-content id="wizard-template" class="padding">
+        <div ng-include="qwiz.modules[qwiz.dataType][qwiz.steps[qwiz.stepNumber]]">
+        </div>
+    </ion-content>
+
+    <ion-footer-bar class="bar thick-footer">
+        <wizard style="width: 100%" current-step="qwiz.stepName">
+            <div ng-repeat="(label,step) in qwiz.modules[qwiz.dataType]">
+                <wz-step wz-title="{{label}}">
+                </wz-step>
+            </div>
+            <ion-footer-bar class="bar">
+                <section style="width: 100%">
+                    <span ng-if="qwiz.stepNumber == 0">
+                        <a id="wiz-nav-button"
+                           class="button ion-ios-undo button-royal icon-left"
+                           ng-click="$ionicGoBack()"
+                           value="Cancel">Fortryd</a>
+                    </span>
+                    <span ng-if="qwiz.stepNumber > 0">
+                        <a id="wiz-nav-button"
+                           class="button ion-chevron-left button-royal icon-left"
+                           wz-previous="qwiz.stepNumber = qwiz.stepNumber - 1"
+                           value="Previous">Forrige</a>
+                    9</span>
+                    <span ng-if="qwiz.stepNumber < qwiz.steps.length - 1">
+                        <a id="wiz-nav-button"
+                           style="float:right"
+                           class="button ion-chevron-right button-royal icon-right"
+                           wz-next="qwiz.stepNumber = qwiz.stepNumber + 1"
+                           value="Next">Næste</a>
+                    </span>
+                    <span ng-if="qwiz.stepNumber == qwiz.steps.length - 1">
+                        <a id="wiz-nav-button"
+                           style="float:right"
+                           class="button ion-archive button-royal icon-right"
+                           wz-finish
+                           value="Finish">Gem</a>
+                    </span>
+                </section>
+            </ion-footer-bar>
+        </wizard>
+    </ion-footer-bar>
+</ion-view>
