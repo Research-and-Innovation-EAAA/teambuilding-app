@@ -1,12 +1,17 @@
 .center-vertical {
+    /*top: 50%;*/
+    /*-webkit-transform: translateY(-50%);*/
+    /*-moz-transform: translateY(-50%);*/
+    /*-ms-transform: translateY(-50%);*/
+    /*-o-transform: translateY(-50%);*/
+    /*transform: translateY(-50%);*/
+    /*position: absolute !important;*/
+    /*margin: 0 auto;*/
+    position: relative;
     top: 50%;
     -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
     transform: translateY(-50%);
-    position: absolute !important;
-    margin: 0 auto;
 }
 
 .center-horizontal {
@@ -34,4 +39,9 @@
 
 #wiz-nav-button {
     min-width: 120px;
+}
+
+.padding-horizontal-50 {
+    padding-left: 50px;
+    padding-right: 50px;
 }

@@ -6,7 +6,8 @@ angular
       'pascalprecht.translate',
       'accounts.ui',
       'mgo-angular-wizard',
-      'ionic-datepicker'
+      'ionic-datepicker',
+      'ionic-timepicker'
    ]);
 
 if (Meteor.isCordova) {

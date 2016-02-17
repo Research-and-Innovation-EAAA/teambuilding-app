@@ -5,7 +5,9 @@
     </ion-content>
 
     <ion-footer-bar class="bar thick-footer">
-        <wizard style="width: 100%" current-step="qwiz.stepName">
+        <wizard style="width: 100%"
+                current-step="qwiz.stepName"
+                on-finish="qwiz.finishWizard()">
             <div ng-repeat="(label,step) in qwiz.modules[qwiz.dataType]">
                 <wz-step wz-title="{{label}}">
                 </wz-step>
@@ -23,7 +25,7 @@
                            class="button ion-chevron-left button-royal icon-left"
                            wz-previous="qwiz.stepNumber = qwiz.stepNumber - 1"
                            value="Previous">Forrige</a>
-                    9</span>
+                    </span>
                     <span ng-if="qwiz.stepNumber < qwiz.steps.length - 1">
                         <a id="wiz-nav-button"
                            style="float:right"
@@ -35,7 +37,7 @@
                         <a id="wiz-nav-button"
                            style="float:right"
                            class="button ion-archive button-royal icon-right"
-                           wz-finish
+                           wz-finish="$ionicGoBack()"
                            value="Finish">Gem</a>
                     </span>
                 </section>

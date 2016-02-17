@@ -1,9 +1,23 @@
-<ion-view>
-    <div style="width: 100%" class="center-vertical">
-        <ionic-datepicker input-obj="timestamp.datePickerObj">
-            <button class="button button-block button-stable">
-                <strong>{{timestamp.datePickerObj.inputDate | date:'d. MMMM, yyyy'}}</strong>
-            </button>
-        </ionic-datepicker>
-    </div>
-</ion-view>
+<div ng-controller="timestampController as ts">
+
+    <section style="margin-top: 100px;" class="center-vertical padding-horizontal-50">
+        <div style="width: 100%">
+            <div ng-hide="ts.dataType == 'Medicin' || ts.dataType == 'Blodprøve'">
+                <ionic-timepicker input-obj="ts.timePickerObj">
+                    <button class="button button-block button-stable overflowShow">
+                        <strong>{{ts.timePickerObj.displayValue()}}</strong>
+                    </button>
+                </ionic-timepicker>
+            </div>
+            <div>
+                <ionic-datepicker input-obj="ts.datePickerObj">
+                    <button class="button button-block button-stable">
+                        <strong>{{ts.datePickerObj.inputDate | date:ts.dateFormat}}</strong>
+                    </button>
+                </ionic-datepicker>
+            </div>
+        </div>
+    </section>
+
+</div>
+
