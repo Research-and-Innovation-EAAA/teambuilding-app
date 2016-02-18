@@ -1,0 +1,79 @@
+<div id="Bloodsample" ng-controller="bloodsampleController as vm">
+
+    <section style="margin-top: 100px;" class="center-vertical padding-horizontal-50">
+        <div style="width: 100%">
+            <label class="item item-input">
+                <span class="input-label">Leukocytter</span>
+                <input id="inputLeukocytter"
+                       type="number"
+                       style="direction: rtl;"
+                       placeholder="100.0 - 0.0"
+                       onfocus="this.placeholder = ''"
+                       onblur="this.placeholder = '100.0 - 0.0'"
+                       ng-model="vm.registration.Leukocytter">
+                <span class="input-label">10<sup>9</sup> L</span>
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Neutrofile</span>
+                <input id="inputNeutrofile"
+                       type="number"
+                       style="direction: rtl;"
+                       placeholder="20.0 - 0.0"
+                       onfocus="this.placeholder = ''"
+                       onblur="this.placeholder = '20.0 - 0.0'"
+                       ng-model="vm.registration.Neutrofile">
+                <span class="input-label">10<sup>9</sup> L</span>
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Thombocyt</span>
+                <input id="inputThrombocytter"
+                       type="number"
+                       style="direction: rtl;"
+                       placeholder="100.0 - 0.0"
+                       onfocus="this.placeholder = ''"
+                       onblur="this.placeholder = '100.0 - 0.0'"
+                       ng-model="vm.registration.Thrombocytter">
+                <span class="input-label">10<sup>9</sup> L</span>
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Hæmoglobin</span>
+                <input id="inputHemoglobin"
+                       type="number"
+                       style="direction: rtl;"
+                       placeholder="10.0 - 2.0"
+                       onfocus="this.placeholder = ''"
+                       onblur="this.placeholder = '10.0 - 2.0'"
+                       ng-model="vm.registration.Hemoglobin">
+                <span class="input-label">10<sup>9</sup> L</span>
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Alat</span>
+                <input id="inputAlat"
+                       type="number"
+                       style="direction: rtl;"
+                       placeholder="9999 - 99"
+                       onfocus="this.placeholder = ''"
+                       onblur="this.placeholder = '9999 - 99'"
+                       ng-model="vm.registration.Alat">
+                <span class="input-label">U/L</span>
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">CRP</span>
+                <input id="inputCRP"
+                       type="number"
+                       style="direction: rtl;"
+                       placeholder="999 - 1"
+                       onfocus="this.placeholder = ''"
+                       onblur="this.placeholder = '999 - 1'"
+                       ng-model="vm.registration.CRP">
+                <span class="input-label">mg/L</span>
+            </label>
+        </div>
+    </section>
+
+</div>

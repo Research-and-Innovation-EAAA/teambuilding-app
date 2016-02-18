@@ -1,0 +1,33 @@
+<div id="Medicine" ng-controller="medicineController as vm">
+
+    <section style="margin-top: 100px;" class="center-vertical padding-horizontal-50">
+        <div style="width: 100%">
+            <label class="item item-input">
+                <span class="input-label">Tablet 6 MP</span>
+                <input id="inputSixMP"
+                       type="number"
+                       name="sixmp"
+                       style="direction: rtl;"
+                       placeholder="0.0"
+                       onfocus="this.placeholder = ''"
+                       onblur="this.placeholder = '0.0'"
+                       ng-model="vm.registration.SixMP">
+                <span class="input-label">mg/dag</span>
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Tablet MTX</span>
+                <input id="inputMTX"
+                       type="number"
+                       name="mtx"
+                       style="direction: rtl;"
+                       placeholder="0.0"
+                       onfocus="this.placeholder = ''"
+                       onblur="this.placeholder = '0.0'"
+                       ng-model="vm.registration.MTX">
+                <span class="input-label">mg/uge</span>
+            </label>
+        </div>
+    </section>
+
+</div>

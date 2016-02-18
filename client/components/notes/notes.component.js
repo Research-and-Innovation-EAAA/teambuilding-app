@@ -11,6 +11,8 @@ function NotesController($scope, $reactive) {
    $reactive(this).attach($scope);
    var vm = this;
 
+   vm.subscribe('notes');
+
    vm.selectedDate = new Date();
 
    vm.helpers({
@@ -18,6 +20,12 @@ function NotesController($scope, $reactive) {
          vm.selectedDate = moment(Session.get('selectedDate')).startOf('day').toDate();
          vm.note = Notes.findOne({timestamp: vm.selectedDate});
          return vm.note;
+      },
+      isLoggedIn() {
+         return Meteor.userId() !== null;
+      },
+      placeholder() {
+         return Meteor.userId() !== null ? 'Tryk for at indtaste tekst' : 'Log in to create notes';
       }
    });
 
@@ -25,24 +33,26 @@ function NotesController($scope, $reactive) {
    txaNotes.addEventListener('blur', saveNote, true);
 
    function saveNote() {
+      if (Meteor.userId() === null)
+         return;
       if (vm.note.timestamp === undefined) {
-         Notes.insert({
+         Meteor.call('addNewNote', {
             timestamp: vm.selectedDate,
             description: vm.note.description
          });
          console.log('Succesfully inserted new note');
       } else {
-         Notes.update({timestamp: vm.note.timestamp}, {
-            $set: {
-               description: vm.note.description
-            }
-         }, (error) => {
-            if (error) {
-               console.log('Unable to update note');
-            } else {
-               console.log('Succesfully updated note');
-            }
-         });
+         Meteor.call('updateNote', vm.note._id, vm.note.description);
       }
+   }
+
+   vm.onFocus = () => {
+      if (Meteor.userId() !== null) {
+         txaNotes.placeholder = '';
+      }
+   };
+
+   vm.onBlur = () => {
+      txaNotes.placeholder = vm.placeholder;
    }
 }

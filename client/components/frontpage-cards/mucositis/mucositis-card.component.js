@@ -11,14 +11,16 @@ function MucositisCardController($scope, $reactive, $location) {
    $reactive(this).attach($scope);
    var vm = this;
 
+   vm.subscribe('mucositisData');
+
    vm.helpers({
-      latestRegistration() {
+      latestMucositisRegistration() {
          return Mucositis.findOne({}, {
-            sort: {timeStamp: -1}
+            sort: {timestamp: -1}
          });
       }
    });
-
+   console.log(vm.latestMucositisRegistration);
 
    vm.newRegistration = () => {
       Session.set('registrationType', 'Mucositis');
@@ -27,7 +29,7 @@ function MucositisCardController($scope, $reactive, $location) {
 
    vm.diagnosis = (number) => {
       var message = 'Ingen data';
-      var registration = vm.latestRegistration;
+      var registration = vm.latestMucositisRegistration;
       if (registration === undefined)
          return message;
 

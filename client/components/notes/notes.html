@@ -3,8 +3,9 @@ Noter:
           rows="9"
           cols="1"
           class="notes"
-          placeholder="Tryk for at indtaste tekst"
-          onfocus="this.placeholder = ''"
-          onblur="this.placeholder = 'Tryk for at indtaste tekst'"
+          placeholder="{{notes.placeholder}}"
+          ng-focus="notes.onFocus()"
+          ng-blur="notes.onBlur()"
+          ng-readonly="!notes.isLoggedIn"
           ng-model="notes.note.description">
 </textarea>

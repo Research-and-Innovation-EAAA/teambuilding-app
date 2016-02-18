@@ -6,11 +6,11 @@ angular.module('leukemiapp')
       $stateProvider
          .state('frontpage', {
             url: '/frontpage',
-            template: '<frontpage></frontpage>'
+            templateUrl: 'client/components/frontpage/frontpage.html'
          })
          .state('questionwizard', {
             url: '/questionwizard',
-            template: '<question-wizard></question-wizard>'
+            templateUrl: 'client/components/wizard/question-wizard.html'
          });
       //.state('dataoverviewpage', {
       //   url: '/dataoverviewpage',

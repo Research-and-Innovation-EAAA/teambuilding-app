@@ -1,5 +1,11 @@
 <ion-view view-title="Leukæmi App">
-    <ion-content>
+    <ion-nav-buttons side="primary">
+        <login-buttons></login-buttons>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon ion-android-settings" ng-click="openModal()"></button>
+    </ion-nav-buttons>
+    <ion-content ng-controller="frontpageController">
         <div class="row responsive-md bigScreen-topRow">
             <div class="col">
                 <calendar></calendar>

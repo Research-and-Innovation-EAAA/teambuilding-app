@@ -1,12 +1,12 @@
-Mucositis = new Mongo.Collection("mucositis");
+Medicine = new Mongo.Collection("medicine");
 
 Meteor.methods({
-   addMucositisRegistration: (registration) => {
+   addMedicineRegistration: (registration) => {
       if (!Meteor.userId()) {
          throw new Meteor.Error('not-authorized');
       }
       registration.createdBy = Meteor.userId();
 
-      Mucositis.insert(registration);
+      Medicine.insert(registration);
    }
-})
+});
