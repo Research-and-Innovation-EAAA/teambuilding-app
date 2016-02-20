@@ -25,6 +25,15 @@ Meteor.publish("bloodsampleData", function () {
    });
 });
 
+Meteor.publish("painData", function () {
+   return Pain.find({
+      $and: [
+         {createdBy: this.userId},
+         {createdBy: {$exists: true}}
+      ]
+   });
+});
+
 Meteor.publish("notes", function () {
    return Notes.find({
       $and: [

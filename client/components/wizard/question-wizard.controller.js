@@ -13,6 +13,12 @@ function QuestionWizardController($scope, $reactive, $meteor, $ionicPopup, $loca
          "Tid": "client/components/wizard/timestamp/qw-timestamp.html",
          "Blodprøve": "client/components/wizard/bloodsample/qw-bloodsample-01.html"
       },
+      "Pain": {
+         "Tid": "client/components/wizard/timestamp/qw-timestamp.html",
+         "Morfin": "client/components/wizard/pain/qw-pain-01.html",
+         "Type": "client/components/wizard/pain/qw-pain-02.html",
+         "Styrke": "client/components/wizard/pain/qw-pain-03.html"
+      },
       "Mucositis": {
          "Tid": "client/components/wizard/timestamp/qw-timestamp.html",
          "Mundsår": "client/components/wizard/mucositis/qw-mucositis-01.html",
@@ -48,6 +54,10 @@ function QuestionWizardController($scope, $reactive, $meteor, $ionicPopup, $loca
             break;
          case 'Bloodsample':
             Meteor.call('addBloodsampleRegistration', registration);
+            saveOk();
+            break;
+         case 'Pain':
+            Meteor.call('addPainRegistration', registration);
             saveOk();
             break;
          default:

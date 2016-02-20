@@ -1,0 +1,43 @@
+<div id="Morphine" class="padding-horizontal"
+     ng-controller="painController as vm">
+
+    <div style="width: 100%" class="top-margin">
+
+        <h3 class="center-horizontal">Hvor meget morfin er givet?</h3>
+        <br>
+
+        <div class="center-horizontal-morphine">
+            <label class="item item-input item-select">
+                <span class="input-label">
+                 Administration type:
+                </span>
+                <select ng-change="vm.updateRegistration()"
+                        ng-model="vm.registration.morphineType">
+                    <option value='oral'>Tablet</option>
+                    <option value='intravenous'>Intravenous</option>
+                </select>
+            </label>
+
+            <div class="item item-input padding-right">
+                <span class="input-label">Dosis:</span>
+                <input type="number"
+                       min="0"
+                       style="direction: rtl;"
+                       placeholder="0=<"
+                       onfocus="this.placeholder = ''"
+                       onblur="this.placeholder = '0=<'"
+                       ng-change="vm.updateRegistration()"
+                       ng-model="vm.registration.morphineDose">
+
+                <span ng-if="vm.registration.morphineType == 'oral'">mg/dag</span>
+                <select ng-if="vm.registration.morphineType == 'intravenous'"
+                        class="item item-input item-select"
+                        ng-change="vm.updateRegistration()"
+                        ng-model="vm.registration.morphineMeasureUnit">
+                    <option selected value='mg/t'>mg/t</option>
+                    <option value='mg'>mg</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

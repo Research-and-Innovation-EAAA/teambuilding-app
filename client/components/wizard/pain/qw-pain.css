@@ -1,0 +1,33 @@
+.center-horizontal-morphine {
+    margin: auto;
+    width: 80%;
+}
+
+.pain-button {
+    line-height: 1.5em;
+    min-height: 5.0em;
+}
+
+.flacc-row {
+    padding: 0;
+}
+
+.image {
+    float: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.responsive {
+    height: 163px;
+    width: 100%;
+    box-shadow: 0 0 0 5px white inset;
+}
+
+@media (min-width: 768px) {
+    .flacc-title {
+        margin: 0px 15px;
+        line-height: 1.0;
+    }
+}
