@@ -15,9 +15,15 @@ function MucositisCardController($scope, $reactive, $location) {
 
    vm.helpers({
       latestMucositisRegistration() {
-         return Mucositis.findOne({}, {
-            sort: {timestamp: -1}
-         });
+         return Mucositis.findOne(
+            {
+               timestamp: {$lte: moment(Session.get('selectedDate')).toDate()}
+            }, {
+               sort: {
+                  timestamp: -1,
+                  createdAt: -1
+               }
+            });
       }
    });
    console.log(vm.latestMucositisRegistration);

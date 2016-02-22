@@ -15,8 +15,14 @@ function PainCardController($scope, $reactive, $location) {
 
    vm.helpers({
       latestPainRegistration() {
-         return Pain.findOne({}, {
-            sort: {timestamp: -1}
+         return Pain.findOne(
+            {
+               timestamp: {$lte: moment(Session.get('selectedDate')).toDate()}
+            }, {
+               sort: {
+                  timestamp: -1,
+                  createdAt: -1
+               }
          });
       }
    });

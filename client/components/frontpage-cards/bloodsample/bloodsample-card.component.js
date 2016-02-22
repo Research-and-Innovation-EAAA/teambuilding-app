@@ -15,9 +15,15 @@ function BloodsampleCardController($scope, $reactive, $location) {
 
    vm.helpers({
       latestBloodsampleRegistration() {
-         return Bloodsample.findOne({}, {
-            sort: {timestamp: -1}
-         });
+         return Bloodsample.findOne(
+            {
+               timestamp: {$lte: moment(Session.get('selectedDate')).toDate()}
+            }, {
+               sort: {
+                  timestamp: -1,
+                  createdAt: -1
+               }
+            });
       }
    });
    console.log(vm.latestBloodsampleRegistration);
@@ -39,7 +45,7 @@ function BloodsampleCardController($scope, $reactive, $location) {
       if (registration !== undefined)
          return registration.Hemoglobin;
       else return ' - ';
-   }
+   };
 
    vm.thrombocytter = () => {
       var registration = vm.latestBloodsampleRegistration;

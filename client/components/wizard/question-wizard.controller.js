@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('questionWizardController', QuestionWizardController);
 
-function QuestionWizardController($scope, $reactive, $meteor, $ionicPopup, $location) {
+function QuestionWizardController($scope, $reactive, $ionicPopup, WizardHandler) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -37,31 +37,36 @@ function QuestionWizardController($scope, $reactive, $meteor, $ionicPopup, $loca
       }
    });
 
+   vm.validateData = () => {
+      var validated = Session.get('regValidated');
+      var stepNumber = WizardHandler.wizard().currentStepNumber();
+
+      console.log('wizardController validateData: ', validated[stepNumber - 1]);
+      console.log('stepNumber: ', stepNumber);
+
+      if (!validated[stepNumber - 1] && vm.errorPopup === undefined) {
+         vm.errorPopup = $ionicPopup.alert({
+            title: 'Error',
+            content: 'Et eller flere felter er enten ikke udfyldt, eller ikke udfyldt korrekt!'
+         }).then(function (res) {
+            vm.errorPopup = undefined;
+         });
+      }
+
+      return validated[stepNumber - 1];
+   };
+
    vm.finishWizard = function () {
+      if (vm.validateData()) {
+         var registration = Session.get('registration');
 
-      //TODO: validation
-
-      var registration = Session.get('registration');
-
-      switch (vm.dataType) {
-         case 'Mucositis':
-            Meteor.call('addMucositisRegistration', registration);
-            saveOk();
-            break;
-         case 'Medicine':
-            Meteor.call('addMedicineRegistration', registration);
-            saveOk();
-            break;
-         case 'Bloodsample':
-            Meteor.call('addBloodsampleRegistration', registration);
-            saveOk();
-            break;
-         case 'Pain':
-            Meteor.call('addPainRegistration', registration);
-            saveOk();
-            break;
-         default:
-            saveError();
+         Meteor.call('addRegistration', registration, vm.dataType, (error, result) => {
+            if (error) {
+               saveError();
+            } else {
+               saveOk();
+            }
+         });
       }
    };
 
@@ -69,18 +74,15 @@ function QuestionWizardController($scope, $reactive, $meteor, $ionicPopup, $loca
       $ionicPopup.alert({
          title: vm.dataType,
          content: 'Registrering gemt!'
-      }).then(function (res) {
-         setTimeout(vm.$ionicGoBack);
       });
       Session.set('registration', undefined);
+      Session.set('regValidated', undefined);
    }
 
    function saveError() {
       $ionicPopup.alert({
          title: vm.dataType,
          content: 'Failed to save registration'
-      }).then(function (res) {
-         setTimeout(vm.$ionicGoBack);
       });
    }
 

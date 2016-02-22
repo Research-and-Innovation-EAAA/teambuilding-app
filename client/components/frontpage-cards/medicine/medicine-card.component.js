@@ -15,9 +15,17 @@ function MedicineCardController($scope, $reactive, $location) {
 
    vm.helpers({
       latestMedicineRegistration() {
-         return Medicine.findOne({}, {
-            sort: {timestamp: -1}
-         });
+         console.log('latestMedicineRegistration() called. Selected date is: ',
+            moment(Session.get('selectedDate')).date());
+         return Medicine.findOne(
+            {
+               timestamp: {$lte: moment(Session.get('selectedDate')).toDate()}
+            }, {
+               sort: {
+                  timestamp: -1,
+                  createdAt: -1
+               }
+            });
       }
    });
    console.log(vm.latestMedicineRegistration);

@@ -67,11 +67,20 @@ function TimestampController($scope, $reactive) {
       var hours = Math.floor(vm.timePickerObj.inputEpochTime / 3600);
       var minutes = Math.floor((vm.timePickerObj.inputEpochTime - hours * 3600) / 60);
       date.setHours(hours, minutes, 0, 0);
+
       var registration = Session.get('registration');
       if (registration === undefined)
          registration = {};
       registration.timestamp = date;
       Session.set('registration', registration);
+
+      var validated = Session.get('regValidated');
+      if (validated === undefined)
+         validated = [];
+      validated[0] = registration.timestamp !== undefined;
+      Session.set('regValidated', validated);
+      console.log('regValidated session variable updated');
+
       console.log(Session.get('registration'));
    }
 

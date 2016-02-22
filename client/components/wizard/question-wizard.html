@@ -11,7 +11,8 @@
                     current-step="qwiz.stepName"
                     on-finish="qwiz.finishWizard()">
                 <div ng-repeat="(label,step) in qwiz.modules[qwiz.dataType]">
-                    <wz-step wz-title="{{label}}">
+                    <wz-step wz-title="{{label}}"
+                             canexit="qwiz.validateData">
                     </wz-step>
                 </div>
                 <ion-footer-bar class="bar">
@@ -32,14 +33,14 @@
                         <a id="wiz-nav-button"
                            style="float:right"
                            class="button ion-chevron-right button-royal icon-right"
-                           wz-next="qwiz.stepNumber = qwiz.stepNumber + 1"
+                           wz-next="qwiz.validateData() ? qwiz.stepNumber = qwiz.stepNumber + 1 : null"
                            value="Next">Næste</a>
                     </span>
                     <span ng-if="qwiz.stepNumber == qwiz.steps.length - 1 && qwiz.isLoggedIn">
                         <a id="wiz-nav-button"
                            style="float:right"
                            class="button ion-archive button-royal icon-right"
-                           wz-finish="$ionicGoBack()"
+                           wz-finish="qwiz.validateData() ? $ionicGoBack() : null"
                            value="Finish">Gem</a>
                     </span>
                     <span ng-if="qwiz.stepNumber == qwiz.steps.length - 1 && !qwiz.isLoggedIn">
