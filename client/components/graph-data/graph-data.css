@@ -1,0 +1,16 @@
+.graph-data-flex-parent {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.graph-data-flex-child {
+    flex: 1 auto;
+}
+
+.graph-data-width {
+    min-height: 50%;
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 96%;
+}

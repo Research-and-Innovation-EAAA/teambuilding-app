@@ -18,13 +18,13 @@ function CalendarDateController($scope, $reactive) {
    ];
 
    vm.helpers({
-      selectedDate() {
+      selectedDate: () => {
          return moment(Session.get('selectedDate')).date();
       },
-      selectedDayOfWeek() {
+      selectedDayOfWeek: () => {
          return dayOfWeekNames[moment(Session.get('selectedDate')).day()];
       },
-      selectedMonth() {
+      selectedMonth: () => {
          return monthNames[moment(Session.get('selectedDate')).month()];
       }
    });

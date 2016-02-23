@@ -11,11 +11,11 @@ angular.module('leukemiapp')
          .state('questionwizard', {
             url: '/questionwizard',
             templateUrl: 'client/components/wizard/question-wizard.html'
+         })
+         .state('graphdata', {
+            url: '/graphdata',
+            templateUrl: 'client/components/graph-data/graph-data.html'
          });
-      //.state('dataoverviewpage', {
-      //   url: '/dataoverviewpage',
-      //   templateUrl: 'templates/dataoverview.html'
-      //});
 
       // if none of the above states are matched, use this as the fallback
       $urlRouterProvider.otherwise('/frontpage');

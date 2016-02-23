@@ -69,7 +69,9 @@ function PainController($scope, $reactive) {
 
    //flacc selection
    vm.selectFlacc = function (flaccnumber, newvalue) {
-      if (vm.registration.flaccvalue[flaccnumber] !== undefined) {
+      if (vm.registration.painScore === undefined) {
+         vm.registration.painScore = 0;
+      } else if (vm.registration.flaccvalue[flaccnumber] !== undefined) {
          vm.registration.painScore -= vm.registration.flaccvalue[flaccnumber];
       }
       vm.registration.flaccvalue[flaccnumber] = newvalue;
@@ -81,7 +83,7 @@ function PainController($scope, $reactive) {
       vm.show = !vm.show;
       vm.registration.painScore = 0;
       vm.selectedSmiley = undefined;
-      vm.registration.flaccvalue = [undefined, undefined, undefined];
+      vm.registration.flaccvalue = [undefined, undefined, undefined, undefined, undefined];
       vm.smileyDescription = "";
    };
 

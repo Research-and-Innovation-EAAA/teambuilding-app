@@ -11,7 +11,7 @@ function CalendarController($scope, $reactive) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   Session.set('selectedDate', new Date());
+   Session.set('selectedDate', new Date().valueOf());
 
    vm.options = {
       defaultDate: new Date(),
@@ -38,13 +38,13 @@ function CalendarController($scope, $reactive) {
       },
       dateClick: function (date) {
          //saveNote();
-         Session.set('selectedDate', date.valueOf());
+         Session.set('selectedDate', date.date.valueOf());
          //$scope.checkBoxModel.bloodsample = false;
          //$scope.checkBoxModel.highdose = false;
          //$scope.notes = calendarFactory.getNoteForDay();
       },
       changeMonth: function (month, year) {
-         console.log(Session.get('selectedDate'));
+         console.log('Month changed');
       }
    };
 

@@ -14,12 +14,11 @@ function MedicineCardController($scope, $reactive, $location) {
    vm.subscribe('medicineData');
 
    vm.helpers({
-      latestMedicineRegistration() {
-         console.log('latestMedicineRegistration() called. Selected date is: ',
-            moment(Session.get('selectedDate')).date());
+      latestMedicineRegistration: () => {
+         //var selectedDate = Session.get('selectedDate');
          return Medicine.findOne(
             {
-               timestamp: {$lte: moment(Session.get('selectedDate')).toDate()}
+               //timestamp: {$lt: moment(selectedDate).toDate()}
             }, {
                sort: {
                   timestamp: -1,
@@ -28,7 +27,6 @@ function MedicineCardController($scope, $reactive, $location) {
             });
       }
    });
-   console.log(vm.latestMedicineRegistration);
 
    vm.newRegistration = () => {
       Session.set('registrationType', 'Medicine');

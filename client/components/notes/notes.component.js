@@ -13,18 +13,21 @@ function NotesController($scope, $reactive) {
 
    vm.subscribe('notes');
 
-   vm.selectedDate = new Date();
-
    vm.helpers({
-      noteForDay() {
-         vm.selectedDate = moment(Session.get('selectedDate')).startOf('day').toDate();
-         vm.note = Notes.findOne({timestamp: vm.selectedDate});
-         return vm.note;
+      noteForDay: () => {
+         if (vm.selectedDate = Session.get('selectedDate')) {
+            var formattedDate = moment(vm.selectedDate).startOf('day').toDate();
+            vm.note = Notes.findOne({timestamp: formattedDate});
+            return Notes.findOne({timestamp: formattedDate});
+         } else {
+            vm.note = Notes.findOne({timestamp: new Date()});
+            return Notes.findOne({timestamp: new Date()});
+         }
       },
-      isLoggedIn() {
+      isLoggedIn: () => {
          return Meteor.userId() !== null;
       },
-      placeholder() {
+      placeholder: () => {
          return Meteor.userId() !== null ? 'Tryk for at indtaste tekst' : 'Log in to create notes';
       }
    });
@@ -33,11 +36,11 @@ function NotesController($scope, $reactive) {
    txaNotes.addEventListener('blur', saveNote, true);
 
    function saveNote() {
-      if (Meteor.userId() === null)
+      if (Meteor.userId() === null || (vm.note.description == '' && vm.note._id === undefined))
          return;
-      if (vm.note.timestamp === undefined) {
+      if (vm.noteForDay === undefined) {
          Meteor.call('addNewNote', {
-            timestamp: vm.selectedDate,
+            timestamp: moment(vm.selectedDate).startOf('day').toDate(),
             description: vm.note.description
          });
          console.log('Succesfully inserted new note');

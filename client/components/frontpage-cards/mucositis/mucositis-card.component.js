@@ -14,10 +14,11 @@ function MucositisCardController($scope, $reactive, $location) {
    vm.subscribe('mucositisData');
 
    vm.helpers({
-      latestMucositisRegistration() {
+      latestMucositisRegistration: () => {
+         //var selectedDate = Session.get('selectedDate');
          return Mucositis.findOne(
             {
-               timestamp: {$lte: moment(Session.get('selectedDate')).toDate()}
+               //timestamp: {$lt: moment(selectedDate).toDate()}
             }, {
                sort: {
                   timestamp: -1,
@@ -31,6 +32,11 @@ function MucositisCardController($scope, $reactive, $location) {
    vm.newRegistration = () => {
       Session.set('registrationType', 'Mucositis');
       $location.path("questionwizard");
+   };
+
+   vm.showGraphData = () => {
+      Session.set('graphDataType', 'Mucositis');
+      $location.path("graphdata")
    };
 
    vm.diagnosis = (number) => {

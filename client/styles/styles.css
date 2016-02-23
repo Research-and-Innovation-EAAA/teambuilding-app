@@ -3,3 +3,13 @@
     margin-left: 0px;
     margin-top: 0px;
 }
+
+.scroll-content > .scroll {
+    height: 100%;
+}
+
+@media (max-width: 767px) {
+    .col, .button.button-block {
+        margin: 0 0 !important;
+    }
+}

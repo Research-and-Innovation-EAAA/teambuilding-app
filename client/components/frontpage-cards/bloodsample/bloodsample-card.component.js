@@ -14,10 +14,11 @@ function BloodsampleCardController($scope, $reactive, $location) {
    vm.subscribe('bloodsampleData');
 
    vm.helpers({
-      latestBloodsampleRegistration() {
+      latestBloodsampleRegistration: () => {
+         //var selectedDate = Session.get('selectedDate');
          return Bloodsample.findOne(
             {
-               timestamp: {$lte: moment(Session.get('selectedDate')).toDate()}
+               //timestamp: {$lt: moment(selectedDate).toDate()}
             }, {
                sort: {
                   timestamp: -1,
