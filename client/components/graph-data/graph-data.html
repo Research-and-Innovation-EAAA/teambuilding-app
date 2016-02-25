@@ -55,7 +55,7 @@
 
          <div id="graph-data-chart"
               class="graph-data-width"
-              ng-if="vm.displayType=='chart'">
+              ng-if="vm.displaytype=='chart'">
             <nvd3 id="graph"
                   options="vm.options"
                   data="vm.filteredDataSeries"
@@ -70,13 +70,13 @@
             <div ng-repeat="dataserie in vm.filteredDataSeries">
                <div ng-show="$index==0" class="row">
                   <div class="col"><strong></strong></div>
-                  <div class="col" ng-repeat="(index, value) in vm.dataserie.values">
+                  <div class="col" ng-repeat="(index, value) in dataserie.values">
                      <strong>{{value.x | date:'dd/MM'}}<br>{{value.x | date:'HH:mm'}}</strong>
                   </div>
                </div>
                <div class="row">
                   <div class="col" translate>{{vm.dataserie.key}}</div>
-                  <div class="col" ng-repeat="(index, value) in vm.dataserie.values">{{value.y}}</div>
+                  <div class="col" ng-repeat="(index, value) in dataserie.values">{{value.y}}</div>
                </div>
             </div>
          </div>
@@ -85,15 +85,15 @@
             <div ng-repeat="dataserie in vm.dataSeries">
                <div class="graph-data-flex-child">
 
-               <span ng-if="vm.dataserie.visible">
-                  <button ng-click="vm.toggleShowDataSerie(vm.dataserie.key)"
+               <span ng-if="dataserie.visible">
+                  <button ng-click="vm.toggleShowDataSerie(dataserie.key)"
                           class="button button-dark"
                           ng-style="{'background-color': '{{vm.options.chart.allcolors[$index]}}'};"
                           translate> {{dataserie.label}}
                   </button>
                </span>
                <span ng-if="!dataserie.visible">
-                  <button ng-click="vm.toggleShowDataSerie(vm.dataserie.key)"
+                  <button ng-click="vm.toggleShowDataSerie(dataserie.key)"
                           class="button button-stable"
                           translate> {{dataserie.label}}
                   </button>
@@ -107,9 +107,14 @@
 
       <ion-footer-bar>
          <div class="button-bar">
-            <button ng-class="vm.tableButtonClass" class="button" ng-click="vm.changeDisplayType('table')">Tabel
+            <button class="button"
+                    ng-class="vm.tableButtonClass"
+                    ng-click="vm.changeDisplayType('table')">Tabel
             </button>
-            <button ng-class="vm.chartButtonClass" class="button" ng-click="vm.changeDisplayType('chart')">Graf</button>
+            <button class="button"
+                    ng-class="vm.chartButtonClass"
+                    ng-click="vm.changeDisplayType('chart')">Graf
+            </button>
          </div>
       </ion-footer-bar>
 

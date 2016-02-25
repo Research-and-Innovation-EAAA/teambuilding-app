@@ -48,7 +48,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
             if (val) {
                vm.startTimePickerObject.inputEpochTime = val;
                vm.updateStartTimeStamp();
-               vm.updateDataObjects();
+               //vm.updateDataObjects();
             }
          }
       };
@@ -78,7 +78,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
                vm.startDatepickerObject.inputDate = val;
             }
             vm.updateStartTimeStamp();
-            vm.updateDataObjects();
+            //vm.updateDataObjects();
          },
          dateFormat: 'dd-MM-yyyy', //Optional
          closeOnSelect: false //Optional
@@ -103,7 +103,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
             if (val) {
                vm.endTimePickerObject.inputEpochTime = val;
                vm.updateEndTimeStamp();
-               vm.updateDataObjects();
+               //vm.updateDataObjects();
             }
          }
       };
@@ -133,7 +133,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
                vm.endDatepickerObject.inputDate = val;
             }
             vm.updateEndTimeStamp();
-            vm.updateDataObjects();
+            //vm.updateDataObjects();
          },
          dateFormat: 'dd-MM-yyyy', //Optional
          closeOnSelect: false //Optional
@@ -146,8 +146,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
       var minutes = Math.floor((vm.startTimePickerObject.inputEpochTime - hours * 3600) / 60);
       date.setHours(hours, minutes, 0, 0);
       vm.startTimeStamp = date;
-      console.log("updated start timestamp");
-      console.log(date);
+      console.log("updated start timestamp", date);
    };
 
    vm.updateEndTimeStamp = function () {
@@ -156,6 +155,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
       var minutes = Math.floor((vm.endTimePickerObject.inputEpochTime - hours * 3600) / 60);
       date.setHours(hours, minutes, 0, 0);
       vm.endTimeStamp = date;
+      console.log("updated end timestamp", date);
    };
 
    function formatTime(inputEpochTime) {
@@ -263,32 +263,43 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
       $timeout(function () {
          vm.displaytype = curr;
       });
+      console.log('Display type: ', vm.displaytype);
    };
+
+   //Remove all data out of period
+   function isDataOutOfPeriod(element, index, array) {
+      return (element.x < vm.startTimeStamp || element.x > vm.endTimeStamp);
+   }
 
    vm.updateDataObjects = function () {
       console.log("update data objects is called");
+      console.log('current timestamps: start-', vm.startTimeStamp, ' end-', vm.endTimeStamp);
       //create graph dataseries content
       //Mongo.Collection.get(vm.dataType)
       var dataObjects = vm.getDataForPeriod;
-      console.log(dataObjects);
+      console.log('dataObjects for period: ', dataObjects);
 
       var dataserieNumber = 0;
       for (var objcount in dataObjects) {
 
          //Insert all timeStamp data in data series
          var obj = dataObjects[objcount];
-         for (dataSerieName in obj) {
+         console.log('obj in dataObjects: ', obj);
+         for (var dataSerieName in obj) {
             if (!obj.hasOwnProperty(dataSerieName) ||
                dataSerieName === "_id" ||
                dataSerieName === "timestamp" ||
                dataSerieName === "createdAt" ||
-               dataSerieName === 'createdBy')
+               dataSerieName === 'createdBy' ||
+               dataSerieName === 'diagnosis')
                continue;
 
             //Lookup dataserie for dataSerieName
             var dataserie = vm.dataSeries.find(function (e) {
                return e.key == dataSerieName
             });
+            console.log('vm.dataSeries at search: ', vm.dataSeries);
+            console.log('found ', dataserie, ' while looking for ', dataSerieName);
             if (dataserie === undefined) {
                dataserie = {};
                dataserie['values'] = [];
@@ -298,6 +309,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
                dataserie['label'] = dataSerieName;
                dataserie['visible'] = 0 == dataserieNumber++;
                vm.dataSeries.push(dataserie);
+               console.log('vm.dataSeries after push of new dataserie: ', vm.dataSeries);
             }
 
             //Insert new dataserie value
@@ -312,22 +324,19 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
          }
       }
 
-      //Remove all data out of period
-      function isDataOutOfPeriod(element, index, array) {
-         return (element.x < vm.startTimeStamp || element.x > vm.endTimeStamp);
-      }
-
-      for (dataserie in vm.dataSeries) {
+      for (var ds in vm.dataSeries) {
          do {
-            var removeIndex = vm.dataSeries[dataserie].values.findIndex(isDataOutOfPeriod);
+            var removeIndex = vm.dataSeries[ds].values.findIndex(isDataOutOfPeriod);
             if (removeIndex >= 0)
-               vm.dataSeries[dataserie].values.splice(removeIndex, 1);
+               vm.dataSeries[ds].values.splice(removeIndex, 1);
          } while (removeIndex >= 0);
       }
 
       //Sort data values
-      for (dataserie in vm.dataSeries) {
-         vm.dataSeries[dataserie].values.sort(function (e1, e2) {
+      for (var i in vm.dataSeries) {
+         console.log('sorting data values...');
+         console.log('vm.dataSeries: ', vm.dataSeries, 'i: ', i);
+         vm.dataSeries[i].values.sort(function (e1, e2) {
             return e1.x < e2.x
          });
       }
@@ -335,6 +344,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
       //Data serie display control
       var countLeft = 0;
       var countRight = 0;
+      console.log('vm.dataSeries at dataserie display control: ', vm.dataSeries);
       vm.dataSeries.forEach(function (dataserie) {
          if (dataserie.yAxis === 1) {
             countLeft++;
@@ -362,9 +372,11 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
    };
 
    vm.toggleShowDataSerie = function (key) {
+      console.log('vm.dataSeries at toggleShowDataSerie', vm.dataSeries);
       var dataserie = vm.dataSeries.find(function (ds) {
          return ds.key == key;
       });
+      console.log('found ', dataserie, ' while looking for ', key);
       dataserie.visible = !dataserie.visible;
 
       //Data serie visibility control
@@ -376,8 +388,8 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
    vm.tableButtonClass = "";
 
    vm.changeDisplayType = function (dis) {
+      console.log('Changed display type from ', vm.displaytype, ' to ', dis);
       vm.displaytype = dis;
-      //console.log("Type:" + dis);
       if (dis == "chart") {
          vm.chartButtonClass = "button-dark";
          vm.tableButtonClass = "button-light";
@@ -396,7 +408,10 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
          return vm.startTimeStamp.getTime();
       },
       function (newValue, oldValue) {
-         vm.updateDataObjects();
+         if (newValue != oldValue) {
+            console.log('startTimeStamp watcher fired', vm.startTimeStamp);
+            vm.updateDataObjects();
+         }
       }
    );
    $scope.$watch(
@@ -404,7 +419,10 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
          return vm.endTimeStamp.getTime();
       },
       function (newValue, oldValue) {
-         vm.updateDataObjects();
+         if (newValue != oldValue) {
+            console.log('endTimeStamp watcher fired', vm.endTimeStamp);
+            vm.updateDataObjects();
+         }
       }
    );
 }

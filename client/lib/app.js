@@ -7,7 +7,8 @@ angular
       'accounts.ui',
       'mgo-angular-wizard',
       'ionic-datepicker',
-      'ionic-timepicker'
+      'ionic-timepicker',
+      'nvd3'
    ]);
 
 if (Meteor.isCordova) {

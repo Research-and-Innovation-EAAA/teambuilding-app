@@ -20,9 +20,11 @@ function MucositisController($scope, $reactive) {
 
    $scope.$watch(
       function nauseaScore(scope) {
-         return (vm.registration.nauseaScore);
+         return vm.registration.nauseaScore;
       },
-      updateRegistration()
+      function (newValue, oldValue) {
+         updateRegistration()
+      }
    );
 
    function validateData() {
@@ -42,6 +44,7 @@ function MucositisController($scope, $reactive) {
 
    function updateRegistration() {
       validateData();
+      vm.registration.nauseaScore = parseInt(vm.registration.nauseaScore);
       Session.set('registration', vm.registration);
       console.log('Registration updated');
       console.log(vm.registration);
