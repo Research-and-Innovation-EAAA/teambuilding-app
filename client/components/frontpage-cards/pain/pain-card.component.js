@@ -34,6 +34,11 @@ function PainCardController($scope, $reactive, $location) {
       $location.path("questionwizard");
    };
 
+   vm.showGraphData = () => {
+      Session.set('graphDataType', 'Pain');
+      $location.path("graphdata");
+   };
+
    vm.painType = () => {
       var registration = vm.latestPainRegistration;
       var message = 'Ingen data';

@@ -34,6 +34,11 @@ function BloodsampleCardController($scope, $reactive, $location) {
       $location.path("questionwizard");
    };
 
+   vm.showGraphData = () => {
+      Session.set('graphDataType', 'Bloodsample');
+      $location.path("graphdata")
+   };
+
    vm.alat = () => {
       var registration = vm.latestBloodsampleRegistration;
       if (registration !== undefined)

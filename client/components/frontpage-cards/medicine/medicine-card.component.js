@@ -33,6 +33,11 @@ function MedicineCardController($scope, $reactive, $location) {
       $location.path("questionwizard");
    };
 
+   vm.showGraphData = () => {
+      Session.set('graphDataType', 'Medicine');
+      $location.path("graphdata")
+   };
+
    vm.sixMP = () => {
       var registration = vm.latestMedicineRegistration;
       if (registration !== undefined)

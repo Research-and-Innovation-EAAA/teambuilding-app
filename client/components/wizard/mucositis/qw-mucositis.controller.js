@@ -15,6 +15,16 @@ function MucositisController($scope, $reactive) {
 
    vm.setDiagnosis = function (number, value) {
       vm.registration.diagnosis[number] = value;
+      switch (number) {
+         case 0:
+            vm.registration.pain = value;
+            break;
+         case 1:
+            vm.registration.ulcers = value;
+            break;
+         case 2:
+            vm.registration.food = value;
+      }
       updateRegistration();
    };
 

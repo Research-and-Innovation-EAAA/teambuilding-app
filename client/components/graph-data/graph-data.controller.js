@@ -5,17 +5,21 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
    var vm = this;
 
    vm.subscribe('mucositisData');
+   vm.subscribe('bloodsampleData');
+   vm.subscribe('painData');
+   vm.subscribe('medicineData');
 
    if (!vm.endTimeStamp || !vm.startTimeStamp) {
       vm.endTimeStamp = new Date();
       vm.startTimeStamp = new Date();
       vm.startTimeStamp.setMonth(vm.startTimeStamp.getMonth() - 1);
    }
+   vm.dataType = Session.get('graphDataType');
 
    vm.helpers({
       getDataForPeriod: () => {
          console.log('getDataForPeriod: ', vm.startTimeStamp, vm.endTimeStamp);
-         return Mucositis.find({
+         return Mongo.Collection.get(vm.dataType).find({
             timestamp: {
                $gt: vm.startTimeStamp,
                $lt: vm.endTimeStamp
@@ -23,8 +27,6 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
          });
       }
    });
-
-   vm.dataType = Session.get('graphDataType');
 
    if (vm.dataSeries === undefined) {
       vm.dataSeries = []; // Objects like {values: [{x:timeStap, y:value},...], color: ?, type: ?, key: ?, label: ?, visible: true}
@@ -215,7 +217,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
          xAxis: {
             tickFormat: function (d) {
                if (!d) return d;
-               return d3.time.format('%d/%m')(new Date(d));
+               return d3.time.format('%c')(new Date(d));
             }
          },
          yAxis1: {
@@ -253,8 +255,12 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
          vm.filteredDataSeries = $filter('filter')(vm.dataSeries, {visible: true});
          console.log("Filtered DataSeries: ");
          console.log(vm.filteredDataSeries);
+
          var chart = nv.models.multiChart();
-         d3.select("graph svg").datum(vm.filteredDataSeries).call(chart);
+         vm.graphData = validateForGraph(vm.filteredDataSeries);
+         d3.select("graph svg").datum(vm.graphData).call(chart);
+
+
          if (curr == "chart")
             vm.displaytype = "table";
          else
@@ -269,6 +275,29 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
    //Remove all data out of period
    function isDataOutOfPeriod(element, index, array) {
       return (element.x < vm.startTimeStamp || element.x > vm.endTimeStamp);
+   }
+
+   function validateForGraph(data) {
+      console.log('validating graph data', data);
+      var valid = true;
+      var validatedData = data;
+      for (var dataSerie in data) {
+         console.log('entering 1st for loop. dataSerie: ', dataSerie);
+         for (var value in data[dataSerie].values) {
+            console.log('validation - data: ', data);
+            if (typeof data[dataSerie].values[value].y == 'string') {
+               valid = false;
+               console.log('validation - found false data');
+               break;
+            }
+         }
+         if (!valid) {
+            validatedData = _.without(validatedData, data[dataSerie]);
+            console.log('replaced invalid data. new: ', validatedData);
+            valid = true;
+         }
+      }
+      return validatedData;
    }
 
    vm.updateDataObjects = function () {
@@ -291,7 +320,8 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
                dataSerieName === "timestamp" ||
                dataSerieName === "createdAt" ||
                dataSerieName === 'createdBy' ||
-               dataSerieName === 'diagnosis')
+               dataSerieName === 'diagnosis' ||
+               dataSerieName === 'flaccvalue')
                continue;
 
             //Lookup dataserie for dataSerieName
