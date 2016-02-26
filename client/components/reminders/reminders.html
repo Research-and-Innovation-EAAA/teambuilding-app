@@ -1,13 +1,17 @@
 <div class="row">Påmindelse</div>
 <div class="item item-checkbox">
     <label class="checkbox">
-        <input type="checkbox">
+       <input type="checkbox"
+              ng-model="reminders.reminders[0].isSelected"
+              ng-change="reminders.updateReminder(0)">
     </label>
     Blodprøver
 </div>
 <div class="item item-checkbox">
     <label class="checkbox">
-        <input type="checkbox">
+       <input type="checkbox"
+              ng-model="reminders.reminders[1].isSelected"
+              ng-change="reminders.updateReminder(1)">
     </label>
     Højdosis
 </div>

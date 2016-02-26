@@ -13,6 +13,13 @@ function CalendarController($scope, $reactive) {
 
    Session.set('selectedDate', new Date().valueOf());
 
+   vm.helpers({
+      calendarEvents: () => {
+         console.log('calendarEvents helper called');
+         return Reminders.find({})
+      }
+   });
+
    vm.options = {
       defaultDate: new Date(),
       minDate: "2015-01-01",
@@ -21,6 +28,7 @@ function CalendarController($scope, $reactive) {
       dayNamesLength: 1, // 1 for "M", 2 for "Mo", 3 for "Mon"; 9 will show full day names. Default is 1.
       mondayIsFirstDay: true,//set monday as first day of week. Default is false
       eventClick: function (date) {
+         Session.set('selectedDate', date.date.valueOf());
          //saveNote();
          //calendarFactory.setSelectedDate(date.date);
          //$scope.checkBoxModel.bloodsample = false;
@@ -48,7 +56,6 @@ function CalendarController($scope, $reactive) {
       }
    };
 
-   vm.events = [];
 }
 
 //CalendarController.$inject = ['calendarService'];

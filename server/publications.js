@@ -42,3 +42,12 @@ Meteor.publish("notes", function () {
       ]
    });
 });
+
+Meteor.publish("reminders", function () {
+   return Reminders.find({
+      $and: [
+         {createdBy: this.userId},
+         {createdBy: {$exists: true}}
+      ]
+   });
+});
