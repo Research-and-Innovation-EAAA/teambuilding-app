@@ -260,7 +260,6 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
          vm.graphData = validateForGraph(vm.filteredDataSeries);
          d3.select("graph svg").datum(vm.graphData).call(chart);
 
-
          if (curr == "chart")
             vm.displaytype = "table";
          else

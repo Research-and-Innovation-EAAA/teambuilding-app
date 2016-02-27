@@ -19,3 +19,20 @@ Meteor.methods({
       console.log('Removed reminder: ', reminder);
    }
 });
+
+Meteor.startup(() => {
+   console.log('Meteor startup called');
+   if (!Reminders.findOne({isListReminders: true})) {
+      var reminders = [{
+         description: 'Blodprøver'
+      },
+         {
+            description: 'Højdosis'
+         }];
+      Reminders.insert({
+         isListReminders: true,
+         reminders: reminders
+      });
+   }
+
+});
