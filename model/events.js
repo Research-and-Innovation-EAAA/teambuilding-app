@@ -20,12 +20,14 @@ Meteor.methods({
    }
 });
 
+// Initialise default reminders
 Meteor.startup(() => {
    console.log('Meteor startup called');
    if (!Reminders.findOne({isListReminders: true})) {
-      var reminders = [{
-         description: 'Blodprøver'
-      },
+      var reminders = [
+         {
+            description: 'Blodprøver'
+         },
          {
             description: 'Højdosis'
          }];
