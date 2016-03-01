@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('questionWizardController', QuestionWizardController);
 
-function QuestionWizardController($scope, $reactive, $ionicPopup, WizardHandler) {
+function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDelegate, WizardHandler) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -85,6 +85,17 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, WizardHandler)
          content: 'Failed to save registration'
       });
    }
+
+   $scope.$watch(
+      function steps() {
+         return vm.stepNumber;
+      },
+      function (newValue, oldValue) {
+         if (newValue != oldValue) {
+            $ionicScrollDelegate.scrollTop();
+         }
+      }
+   );
 
    //$scope.hideIndicators = Object.keys($scope.questions[$scope.dataType]).length <= 1;
 

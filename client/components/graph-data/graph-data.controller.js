@@ -395,6 +395,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
       vm.options.chart.color = vm.dataSeries.map(function (dataserie) {
          return dataserie.color;
       });
+      console.log('vm.option.chart.color set to ', vm.options.chart.color);
 
       //Data serie visibility control
       vm.updateFilteredDataSeries();

@@ -10,12 +10,13 @@ function PainController($scope, $reactive) {
    if (vm.registration.flaccvalue === undefined) {
       vm.registration.flaccvalue = [undefined, undefined, undefined, undefined, undefined];
    }
+   //vm.selectedSmiley;
    vm.show = true;
    validateData();
 
    function validateMorphine() {
       var isValidMorphine = true;
-      console.log(vm.registration.morphineType);
+      console.log('registration.morphineType: ', vm.registration.morphineType);
       if (vm.registration.morphineType !== undefined) { //if there is a selected morphine type
          // check there is valid dose
          console.log(vm.registration.morphineDose);
@@ -24,8 +25,8 @@ function PainController($scope, $reactive) {
       } else { //if there is no selected morphine type
          // check if there is valid dose
          // to avoid confusion, if there is valid dose but no valid type do not validate until type is chosen or dose deleted
-         console.log(vm.registration.morphineDose, ' vm.registration.morphineType === undefined')
-         if (vm.registration.morphineDose !== undefined || vm.registration.morphineDose != null) {
+         console.log('registration.morphineDose: ', vm.registration.morphineDose, 'when vm.registration.morphineType === undefined');
+         if (vm.registration.morphineDose != null) {
             isValidMorphine = false;
          }
       }
@@ -39,14 +40,16 @@ function PainController($scope, $reactive) {
       validated[0] = vm.registration.timestamp !== undefined;
       validated[1] = validateMorphine();
       validated[2] = vm.registration.painType !== undefined;
-      validated[3] = (vm.registration.flaccvalue !== undefined &&
-         vm.registration.flaccvalue[0] !== undefined &&
-         vm.registration.flaccvalue[1] !== undefined &&
-         vm.registration.flaccvalue[2] !== undefined &&
-         vm.registration.flaccvalue[3] !== undefined &&
-         vm.registration.flaccvalue[4] !== undefined) || (vm.selectedSmiley !== undefined);
+      validated[3] = (vm.registration.flaccvalue != null &&
+         vm.registration.flaccvalue[0] != null &&
+         vm.registration.flaccvalue[1] != null &&
+         vm.registration.flaccvalue[2] != null &&
+         vm.registration.flaccvalue[3] != null &&
+         vm.registration.flaccvalue[4] != null) || (vm.selectedSmiley != null);
       Session.set('regValidated', validated);
-      console.log('regValidated session variable updated');
+      console.log('regValidated session variable updated: ', validated);
+      console.log('validated[3] part one: ', vm.registration.flaccvalue);
+      console.log('validated[3] part two: ', vm.selectedSmiley);
    }
 
    vm.updateRegistration = () => {

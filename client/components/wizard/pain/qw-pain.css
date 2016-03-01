@@ -19,31 +19,40 @@
     background-position: left;
 }
 
-.responsive {
-    height: 163px;
-    width: 130px;
-    box-shadow: 0 0 0 5px white inset;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 @media (min-width: 768px) {
     .flacc-title {
-        margin: 0px 15px;
+        margin: 0 15px;
         line-height: 1.0;
     }
 
     .smiley-two-row {
         display: none;
     }
+
+    .responsive {
+        height: 212px;
+        width: 163px;
+        box-shadow: 0 0 0 5px white inset;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 @media (max-width: 767px) {
     .flacc-title {
         font-weight: bold;
+        margin-right: 5px;
     }
 
     .smiley-one-row {
         display: none;
+    }
+
+    .responsive {
+        height: 150px;
+        width: 125px;
+        box-shadow: 0 0 0 5px white inset;
+        margin-left: auto;
+        margin-right: auto;
     }
 }

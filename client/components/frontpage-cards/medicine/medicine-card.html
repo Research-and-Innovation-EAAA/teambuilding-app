@@ -1,26 +1,36 @@
 <div class="card frontpage-card">
-    <div class="item item-divider bar bar-calm">
+   <div class="item item-divider bar bar-calm">
             <span class="frontpage-card-icon" ng-style="{'content':'url(/medicintransparent.png)'}">
             </span>
-        <strong>Medicin</strong>
-        <button style="float: right" class="button button-icon ion-plus-round"
-                ng-click="medcard.newRegistration()"></button>
-        <span style="padding-left: 50px; float: right;"></span>
-        <button style="float: right" class="button button-icon ion-stats-bars"
-                ng-click="medcard.showGraphData()"></button>
-    </div>
-    <div class="item item-text-wrap">
-        <div class="row">
-            <div class="col-33"><strong>6 MP</strong></div>
-            <div class="col">{{ medcard.sixMP() }} <b>
-                <small>mg / daglig</small>
-            </b></div>
-        </div>
-        <div class="row">
-            <div class="col-33"><strong>MTX</strong></div>
-            <div class="col">{{ medcard.mtx() }} <b>
-                <small>mg / ugentlig</small>
-            </b></div>
-        </div>
-    </div>
+      <strong>Medicin</strong>
+      <button style="float: right" class="button button-icon ion-plus-round"
+              ng-click="medcard.newRegistration()"></button>
+      <span style="padding-left: 50px; float: right;"></span>
+      <button style="float: right" class="button button-icon ion-stats-bars"
+              ng-click="medcard.showGraphData()"></button>
+   </div>
+   <div class="item item-text-wrap">
+      <div class="row">
+         <div class="col">
+            <strong>6 MP</strong>
+         </div>
+         <div class="col">
+            {{ medcard.sixMP() }} &nbsp;&nbsp;
+            <b>
+               <small>mg / daglig</small>
+            </b>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col">
+            <strong>MTX</strong>
+         </div>
+         <div class="col">
+            {{ medcard.mtx() }} &nbsp;&nbsp;
+            <b>
+               <small>mg / ugentlig</small>
+            </b>
+         </div>
+      </div>
+   </div>
 </div>

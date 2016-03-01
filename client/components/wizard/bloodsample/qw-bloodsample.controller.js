@@ -35,7 +35,7 @@ function BloodsampleController($scope, $reactive) {
          (vm.registration.Neutrofile !== undefined && 0.0 <= parseFloat(vm.registration.Neutrofile) && parseFloat(vm.registration.Neutrofile) <= 20.0) &&
          (vm.registration.Thrombocytter !== undefined && 0.0 <= parseFloat(vm.registration.Thrombocytter) && parseFloat(vm.registration.Thrombocytter) <= 100.0) &&
          (vm.registration.Hemoglobin !== undefined && 2.0 <= parseFloat(vm.registration.Hemoglobin) && parseFloat(vm.registration.Hemoglobin) <= 10.0) &&
-         (vm.registration.Alat !== undefined && 99 <= parseInt(vm.registration.Alat) && parseInt(vm.registration.Alat) <= 9999) &&
+         (vm.registration.Alat !== undefined && 0 <= parseInt(vm.registration.Alat) && parseInt(vm.registration.Alat) <= 9999) &&
          (vm.registration.CRP !== undefined && 1 <= parseInt(vm.registration.CRP) && parseInt(vm.registration.CRP) <= 999);
       Session.set('regValidated', validated);
       console.log('regValidated session variable updated')
