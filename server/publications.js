@@ -45,13 +45,13 @@ Meteor.publish("notes", function () {
 
 Meteor.publish("reminders", function () {
    return Reminders.find({
-      //$or: [
-      //   {isListReminders: true},
-      //   {
-      //      $and: [
-      //         {createdBy: this.userId},
-      //         {createdBy: {$exists: true}}
-      //      ]
-      //   }]
+      $or: [
+         {isListReminders: true},
+         {
+            $and: [
+               {createdBy: this.userId},
+               {createdBy: {$exists: true}}
+            ]
+         }]
    });
 });

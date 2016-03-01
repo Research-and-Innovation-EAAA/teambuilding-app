@@ -36,7 +36,7 @@
                             'button button-block flacc-button pain-button': true}">
                Hyppigt til konstant dirren omkring munden eller sammenbidt
             </button>
-            </div>
+         </div>
       </div>
 
       <h4 class="flacc-title">Ben</h4>
@@ -62,7 +62,7 @@
                                                   'button button-block flacc-button pain-button': true}">
                Trækker benene op under sig, sparker
             </button>
-            </div>
+         </div>
       </div>
 
       <h4 class="flacc-title">Aktivitet</h4>
@@ -87,7 +87,7 @@
                                                   'button button-block flacc-button pain-button': true}">
                "Går i bro", stiv eller kaster sig rundt
             </button>
-            </div>
+         </div>
       </div>
 
       <h4 class="flacc-title">Gråd</h4>
@@ -112,10 +112,10 @@
                                                   'button button-block flacc-button pain-button': true}">
                Græder uafbrudt, skriger eller klager sig hyppigt
             </button>
-            </div>
+         </div>
       </div>
 
-      <h4 class="flacc-title">"Trøstbarhed"</h4>
+      <h4 class="flacc-title">Trøstbarhed</h4>
       <div class="row responsive-md flacc-row">
          <div class="col">
             <button ng-click="vm.selectFlacc(4,0)" ng-class="{'button-dark':vm.registration.flaccvalue[4]===0,
@@ -137,45 +137,85 @@
                                                   'button button-block flacc-button pain-button': true}">
                Vanskelig at trøste eller utrøstelig
             </button>
-            </div>
+         </div>
       </div>
       <!-- <h3 style="text-align: center">Score:</h3>
 
       <h1 style="text-align: center">{{vm.registration.painScore}}</h1> -->
    </div>
-   <div ng-show="!vm.show" class="top-margin">
-      <div class="row responsive-md">
-         <div class="col">
-            <div class="image responsive"
-                 ng-style="{'background-image': vm.selectedSmiley == 0 ? 'url(/smiley0selected.png)':'url(/smiley0.png)' }"
-                 ng-click="vm.selectSmiley(0)"></div>
+   <div ng-show="!vm.show" style="clear: right;" class="top-margin padding">
+      <div class="smiley-one-row">
+         <div class="row responsive-md">
+            <div class="col">
+               <div class="image responsive"
+                    ng-style="{'background-image': vm.selectedSmiley == 0 ? 'url(/smiley0selected.png)':'url(/smiley0.png)' }"
+                    ng-click="vm.selectSmiley(0)"></div>
             </div>
-         <div class="col">
-            <div class="image responsive"
-                 ng-style="{'background-image': vm.selectedSmiley == 2 ? 'url(/smiley2selected.png)':'url(/smiley2.png)' }"
-                 ng-click="vm.selectSmiley(2)"></div>
+            <div class="col">
+               <div class="image responsive"
+                    ng-style="{'background-image': vm.selectedSmiley == 2 ? 'url(/smiley2selected.png)':'url(/smiley2.png)' }"
+                    ng-click="vm.selectSmiley(2)"></div>
             </div>
-         <div class="col">
-            <div class="image responsive"
-                 ng-style="{'background-image': vm.selectedSmiley == 4 ? 'url(/smiley4selected.png)':'url(/smiley4.png)' }"
-                 ng-click="vm.selectSmiley(4)"></div>
+            <div class="col">
+               <div class="image responsive"
+                    ng-style="{'background-image': vm.selectedSmiley == 4 ? 'url(/smiley4selected.png)':'url(/smiley4.png)' }"
+                    ng-click="vm.selectSmiley(4)"></div>
             </div>
-         <div class="col">
-            <div class="image responsive"
-                 ng-style="{'background-image': vm.selectedSmiley == 6 ? 'url(/smiley6selected.png)':'url(/smiley6.png)' }"
-                 ng-click="vm.selectSmiley(6)"></div>
+            <div class="col">
+               <div class="image responsive"
+                    ng-style="{'background-image': vm.selectedSmiley == 6 ? 'url(/smiley6selected.png)':'url(/smiley6.png)' }"
+                    ng-click="vm.selectSmiley(6)"></div>
+            </div>
+            <div class="col">
+               <div class="image responsive"
+                    ng-style="{'background-image': vm.selectedSmiley == 8 ? 'url(/smiley8selected.png)':'url(/smiley8.png)' }"
+                    ng-click="vm.selectSmiley(8)"></div>
+            </div>
+            <div class="col">
+               <div class="image responsive"
+                    ng-style="{'background-image': vm.selectedSmiley == 10 ? 'url(/smiley10selected.png)':'url(/smiley10.png)' }"
+                    ng-click="vm.selectSmiley(10)"></div>
+            </div>
          </div>
-         <div class="col">
-            <div class="image responsive"
-                 ng-style="{'background-image': vm.selectedSmiley == 8 ? 'url(/smiley8selected.png)':'url(/smiley8.png)' }"
-                 ng-click="vm.selectSmiley(8)"></div>
+      </div>
+      <div class="smiley-two-row">
+         <div class="row">
+            <div class="col">
+               <div class="image responsive"
+                    ng-style="{'background-image': vm.selectedSmiley == 0 ? 'url(/smiley0selected.png)':'url(/smiley0.png)' }"
+                    ng-click="vm.selectSmiley(0)"></div>
+            </div>
+            <div class="col">
+               <div class="image responsive"
+                    ng-style="{'background-image': vm.selectedSmiley == 2 ? 'url(/smiley2selected.png)':'url(/smiley2.png)' }"
+                    ng-click="vm.selectSmiley(2)"></div>
+            </div>
+            <div class="col">
+               <div class="image responsive"
+                    ng-style="{'background-image': vm.selectedSmiley == 4 ? 'url(/smiley4selected.png)':'url(/smiley4.png)' }"
+                    ng-click="vm.selectSmiley(4)"></div>
+            </div>
          </div>
-         <div class="col">
-            <div class="image responsive"
-                 ng-style="{'background-image': vm.selectedSmiley == 10 ? 'url(/smiley10selected.png)':'url(/smiley10.png)' }"
-                 ng-click="vm.selectSmiley(10)"></div>
+         <div class="row">
+            <div class="col">
+               <div class="image responsive"
+                    ng-style="{'background-image': vm.selectedSmiley == 6 ? 'url(/smiley6selected.png)':'url(/smiley6.png)' }"
+                    ng-click="vm.selectSmiley(6)"></div>
+            </div>
+            <div class="col">
+               <div class="image responsive"
+                    ng-style="{'background-image': vm.selectedSmiley == 8 ? 'url(/smiley8selected.png)':'url(/smiley8.png)' }"
+                    ng-click="vm.selectSmiley(8)"></div>
+            </div>
+            <div class="col">
+               <div class="image responsive"
+                    ng-style="{'background-image': vm.selectedSmiley == 10 ? 'url(/smiley10selected.png)':'url(/smiley10.png)' }"
+                    ng-click="vm.selectSmiley(10)"></div>
+            </div>
          </div>
-        </div>
+      </div>
+
+
       <br>
       <div class="row responsive-md">
          <div class="col" style="text-align:center">
@@ -183,10 +223,10 @@
          </div>
       </div>
 
-      <!-- extends scrolling area so bottom doesnt get covered up by wizard -->
-      <div style="visibility: hidden" class="row">
-         <div style="height: 100px" class="col">Placeholder text</div>
-      </div>
-    </div>
+      <!--&lt;!&ndash; extends scrolling area so bottom doesnt get covered up by wizard &ndash;&gt;-->
+      <!--<div style="visibility: hidden" class="row">-->
+      <!--<div style="height: 100px" class="col">Placeholder text</div>-->
+      <!--</div>-->
+   </div>
 
 </div>

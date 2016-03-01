@@ -217,7 +217,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
          xAxis: {
             tickFormat: function (d) {
                if (!d) return d;
-               return d3.time.format('%c')(new Date(d));
+               return d3.time.format('%d/%m')(new Date(d));
             }
          },
          yAxis1: {

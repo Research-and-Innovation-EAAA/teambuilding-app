@@ -2,9 +2,10 @@
     <ion-nav-buttons side="primary">
         <login-buttons></login-buttons>
     </ion-nav-buttons>
-    <ion-nav-buttons side="secondary">
-        <button class="button button-icon ion-android-settings" ng-click="openModal()"></button>
-    </ion-nav-buttons>
+   <!-- Settings button -->
+   <!--<ion-nav-buttons side="secondary">-->
+   <!--<button class="button button-icon ion-android-settings" ng-click="openModal()"></button>-->
+   <!--</ion-nav-buttons>-->
     <ion-content ng-controller="frontpageController">
         <div class="row responsive-md bigScreen-topRow">
             <div class="col">
@@ -13,10 +14,10 @@
             <div class="col">
                 <div class="card item item-text-wrap frontpage-topcomponent">
                     <div class="row">
-                        <div class="col-33" style="float: right">
+                       <div id="calendar-date" class="col-33">
                             <calendar-date></calendar-date>
                         </div>
-                        <div class="col" style="float: left">
+                       <div class="col">
                             <reminders></reminders>
                         </div>
                     </div>

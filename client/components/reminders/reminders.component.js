@@ -82,11 +82,15 @@ function RemindersController($scope, $reactive) {
 
    vm.updateReminder = (number) => {
       console.log('updateReminder called with number ', number);
-      if (vm.reminders[number].isSelected) {
-         console.log('addReminder called');
-         vm.addReminder(number);
+      if (!Meteor.userId()) {
+         vm.reminders[number].isSelected = false;
       } else {
-         vm.deleteReminder(number);
+         if (vm.reminders[number].isSelected) {
+            console.log('addReminder called');
+            vm.addReminder(number);
+         } else {
+            vm.deleteReminder(number);
+         }
       }
    }
 }
