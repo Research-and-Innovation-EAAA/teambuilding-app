@@ -54,11 +54,6 @@ function PainController($scope, $reactive) {
 
    vm.updateRegistration = () => {
       validateData();
-      if (vm.registration.morphineType !== undefined || vm.registration.morphineDose > 0) {
-         if (vm.registration.morphineType == 'oral') {
-            vm.registration.morphineMeasureUnit = 'mg/dag';
-         }
-      }
 
       Session.set('registration', vm.registration);
       console.log('Registration updated');

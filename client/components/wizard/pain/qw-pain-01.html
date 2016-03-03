@@ -29,13 +29,11 @@
                        ng-change="vm.updateRegistration()"
                        ng-model="vm.registration.morphineDose">
 
-                <span ng-if="vm.registration.morphineType == 'oral'">mg/dag</span>
-                <select ng-if="vm.registration.morphineType == 'intravenous'"
-                        class="item item-input item-select"
+                <select class="item item-input item-select"
                         ng-change="vm.updateRegistration()"
                         ng-model="vm.registration.morphineMeasureUnit">
-                    <option selected value='mg/t'>mg/t</option>
-                    <option value='mg'>mg</option>
+                    <option value='mg/time'>mg/time</option>
+                    <option value='mg/døgn'>mg/døgn</option>
                 </select>
             </div>
         </div>
