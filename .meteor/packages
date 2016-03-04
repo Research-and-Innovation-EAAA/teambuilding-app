@@ -14,7 +14,7 @@ tracker                 # Meteor's client-side reactive programming library
 standard-minifiers      # JS/CSS minifiers run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 
-angular
+angular@=1.3.5
 driftyco:ionic
 shynah:flex-calendar
 momentjs:moment
@@ -28,3 +28,4 @@ nvd3:nvd3
 shynah:angularjs-nvd3-directives
 mystec:angular-nvd3
 fourseven:scss
+angular-meteor-data@=0.2.0
