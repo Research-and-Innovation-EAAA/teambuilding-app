@@ -24,6 +24,9 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
                $gt: vm.startTimeStamp,
                $lt: vm.endTimeStamp
             }
+         }, {
+            sort: {timestamp: -1},
+            limit: 5
          });
       }
    });
