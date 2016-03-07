@@ -6,6 +6,12 @@ function BloodsampleController($scope, $reactive) {
 
    //Init
    vm.registration = Session.get('registration');
+   vm.registration.Leukocytter = null;
+   vm.registration.Neutrofile = null;
+   vm.registration.Thrombocytter = null;
+   vm.registration.Hemoglobin = null;
+   vm.registration.Alat = null;
+   vm.registration.CRP = null;
 
    var inputLeukocytter = document.getElementById('inputLeukocytter');
    inputLeukocytter.addEventListener('blur', updateRegistration, true);
@@ -30,13 +36,7 @@ function BloodsampleController($scope, $reactive) {
       if (validated === undefined)
          validated = [];
       validated[0] = vm.registration.timestamp !== undefined;
-      validated[1] =
-         (vm.registration.Leukocytter !== undefined && 0.0 <= parseFloat(vm.registration.Leukocytter) && parseFloat(vm.registration.Leukocytter) <= 100.0) &&
-         (vm.registration.Neutrofile !== undefined && 0.0 <= parseFloat(vm.registration.Neutrofile) && parseFloat(vm.registration.Neutrofile) <= 20.0) &&
-         (vm.registration.Thrombocytter !== undefined && 0.0 <= parseFloat(vm.registration.Thrombocytter) && parseFloat(vm.registration.Thrombocytter) <= 100.0) &&
-         (vm.registration.Hemoglobin !== undefined && 2.0 <= parseFloat(vm.registration.Hemoglobin) && parseFloat(vm.registration.Hemoglobin) <= 15.0) &&
-         (vm.registration.Alat !== undefined && 0 <= parseInt(vm.registration.Alat) && parseInt(vm.registration.Alat) <= 9999) &&
-         (vm.registration.CRP !== undefined && 1 <= parseInt(vm.registration.CRP) && parseInt(vm.registration.CRP) <= 999);
+      validated[1] = validateBloodsamples();
       Session.set('regValidated', validated);
       console.log('regValidated session variable updated')
    }
@@ -46,5 +46,27 @@ function BloodsampleController($scope, $reactive) {
       Session.set('registration', vm.registration);
       console.log('Registration updated');
       console.log(vm.registration);
+   }
+
+   function validateBloodsamples() {
+      var isValid = true;
+      for (var property in vm.registration) {
+         if (property === "_id" ||
+            property === 'timestamp' ||
+            property === 'createdBy' ||
+            property === 'createdAt')
+            continue;
+
+         var bloodsample = vm.registration[property];
+         if (bloodsample != null) {
+            isValid = 0 <= parseFloat(bloodsample);
+            if (!isValid) {
+               //invalid data
+               console.log('Data is invalid at property ', property, '. Value is ', bloodsample);
+               return isValid;
+            }
+         }
+      }
+      return isValid;
    }
 }

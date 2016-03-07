@@ -1,22 +1,23 @@
-<ion-view>
-    <div ng-controller="questionWizardController as qwiz">
+<div ng-controller="questionWizardController as qwiz">
+   <ion-view ng-attr-view-title="{{qwiz.dataType}}">
+      <div>
 
-        <ion-content id="wizard-template" class="padding">
+         <ion-content id="wizard-template" class="padding">
             <div ng-include="qwiz.modules[qwiz.dataType][qwiz.steps[qwiz.stepNumber]]">
             </div>
-        </ion-content>
+         </ion-content>
 
-        <ion-footer-bar class="bar thick-footer">
+         <ion-footer-bar class="bar thick-footer">
             <wizard style="width: 100%"
                     current-step="qwiz.stepName"
                     on-finish="qwiz.finishWizard()">
-                <div ng-repeat="(label,step) in qwiz.modules[qwiz.dataType]">
-                    <wz-step wz-title="{{label}}"
-                             canexit="qwiz.validateData">
-                    </wz-step>
-                </div>
-                <ion-footer-bar class="bar">
-                    <section style="width: 100%">
+               <div ng-repeat="(label,step) in qwiz.modules[qwiz.dataType]">
+                  <wz-step wz-title="{{label}}"
+                           canexit="qwiz.validateData">
+                  </wz-step>
+               </div>
+               <ion-footer-bar class="bar">
+                  <section style="width: 100%">
                     <span ng-if="qwiz.stepNumber == 0">
                         <a id="wiz-nav-button"
                            class="button ion-ios-undo button-royal icon-left"
@@ -48,9 +49,10 @@
                            style="float:right"
                            class="">Log in to save registration</a>
                     </span>
-                    </section>
-                </ion-footer-bar>
+                  </section>
+               </ion-footer-bar>
             </wizard>
-        </ion-footer-bar>
-    </div>
-</ion-view>
+         </ion-footer-bar>
+      </div>
+   </ion-view>
+</div>

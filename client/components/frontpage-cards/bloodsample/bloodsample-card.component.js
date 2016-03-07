@@ -41,21 +41,21 @@ function BloodsampleCardController($scope, $reactive, $location) {
 
    vm.alat = () => {
       var registration = vm.latestBloodsampleRegistration;
-      if (registration !== undefined)
+      if (registration !== undefined && registration.Alat != null)
          return registration.Alat;
       else return ' - ';
    };
 
    vm.hemoglobin = () => {
       var registration = vm.latestBloodsampleRegistration;
-      if (registration !== undefined)
+      if (registration !== undefined && registration.Hemoglobin != null)
          return registration.Hemoglobin;
       else return ' - ';
    };
 
    vm.thrombocytter = () => {
       var registration = vm.latestBloodsampleRegistration;
-      if (registration !== undefined)
+      if (registration !== undefined && registration.Thrombocytter != null)
          return registration.Thrombocytter;
       else return ' - ';
    }

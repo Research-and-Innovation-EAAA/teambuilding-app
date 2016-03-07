@@ -305,8 +305,8 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
    vm.updateDataObjects = function () {
       console.log("update data objects is called");
       console.log('current timestamps: start-', vm.startTimeStamp, ' end-', vm.endTimeStamp);
+
       //create graph dataseries content
-      //Mongo.Collection.get(vm.dataType)
       var dataObjects = vm.getDataForPeriod;
       console.log('dataObjects for period: ', dataObjects);
 

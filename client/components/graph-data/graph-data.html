@@ -1,5 +1,5 @@
 <div ng-controller="graphDataController as vm">
-   <ion-view>
+   <ion-view ng-attr-view-title="{{vm.dataType}}">
       <ion-content>
          <div class="graph-data-flex-parent graph-data-flex-child">
             <div class="graph-data-flex-child">
@@ -76,7 +76,7 @@
                </div>
                <div class="row">
                   <div class="col" translate>{{dataserie.key}}</div>
-                  <div class="col" ng-repeat="(index, value) in dataserie.values">{{value.y}}</div>
+                  <div class="col" ng-repeat="(index, value) in dataserie.values">{{value.y || '-'}}</div>
                </div>
             </div>
          </div>
