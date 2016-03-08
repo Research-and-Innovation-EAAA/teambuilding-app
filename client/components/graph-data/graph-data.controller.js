@@ -253,20 +253,22 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
    //Data serie visibility control
    vm.updateFilteredDataSeries = function () {
       var curr = vm.displaytype;
+      console.log('calling filtered dataseries with curr ', curr);
       //using $timeout instead of $scope.$apply removes $digest already in progress error
       $timeout(function () {
          vm.filteredDataSeries = $filter('filter')(vm.dataSeries, {visible: true});
          console.log("Filtered DataSeries: ");
          console.log(vm.filteredDataSeries);
 
-         var chart = nv.models.multiChart();
-         vm.graphData = validateForGraph(vm.filteredDataSeries);
-         d3.select("graph svg").datum(vm.graphData).call(chart);
-
-         if (curr == "chart")
-            vm.displaytype = "table";
-         else
-            vm.displaytype = "chart";
+         if (curr === 'chart') {
+            var chart = nv.models.multiChart();
+            vm.graphData = validateForGraph(vm.filteredDataSeries);
+            d3.select("graph svg").datum(vm.graphData).call(chart);
+         }
+         //if (curr == "chart")
+         //   vm.displaytype = "table";
+         //else
+         //   vm.displaytype = "chart";
       });
       $timeout(function () {
          vm.displaytype = curr;
@@ -426,6 +428,10 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
       if (dis == "chart") {
          vm.chartButtonClass = "button-dark";
          vm.tableButtonClass = "button-light";
+
+         var chart = nv.models.multiChart();
+         vm.graphData = validateForGraph(vm.filteredDataSeries);
+         d3.select("graph svg").datum(vm.graphData).call(chart);
       } else if (dis == "table") {
          vm.chartButtonClass = "button-light";
          vm.tableButtonClass = "button-dark";
