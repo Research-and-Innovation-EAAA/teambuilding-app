@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('questionWizardController', QuestionWizardController);
 
-function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDelegate, WizardHandler) {
+function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDelegate, $translate, WizardHandler) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -27,6 +27,7 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
    };
 
    vm.dataType = Session.get('registrationType');
+   vm.viewTitle = $translate.instant(vm.dataType);
    vm.steps = Object.keys(vm.modules[vm.dataType]);
    vm.stepNumber = 0; //First template
    vm.stepName = "";

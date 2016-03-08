@@ -59,7 +59,7 @@ function config($translateProvider) {
       morphineDose: 'Dosis',
       morphineMeasureUnit: 'Måleenhed',
 
-      //Data overview
+      //Data overview Medicin
       sixmp: '6 MP',
       mtx: 'MTX',
 
@@ -68,8 +68,23 @@ function config($translateProvider) {
       neutrofile: 'Neutrofile',
       hemoglobin: 'Hæmoglobin',
       alat: 'Alat',
-      crp: 'CRP'
+      crp: 'CRP',
 
+      //Modules
+      Medicine: 'Medicin',
+      Bloodsample: 'Blodprøver',
+      Mucositis: 'Mucositis',
+      Pain: 'Smerte',
+
+      //Data overview
+      graphDataDisclaimer: 'Viser de nyeste 5 registreringer for det tidsrum.',
+
+      //Notes
+      notesPlaceholderLoggedIn: 'Tryk for at indtaste tekst',
+      notesPlaceholderLoggedOut: 'Logge ind for at oprette noter',
+
+      //Wizard
+      saveRegistrationLoggedOut: 'Log ind for at spare registrering'
    });
    $translateProvider.preferredLanguage('da_DA');
    $translateProvider.useSanitizeValueStrategy('escape');

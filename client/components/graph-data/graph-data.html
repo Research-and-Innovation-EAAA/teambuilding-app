@@ -1,5 +1,5 @@
 <div ng-controller="graphDataController as vm">
-   <ion-view ng-attr-view-title="{{vm.dataType}}">
+   <ion-view ng-attr-view-title="{{vm.viewTitle}}">
       <ion-content>
          <div class="graph-data-flex-parent graph-data-flex-child">
             <div class="graph-data-flex-child">
@@ -104,7 +104,7 @@
          </div>
 
          <div id="disclaimer">
-            <i>Showing the latest 5 registrations for the time period.</i>
+            <i translate="graphDataDisclaimer"></i>
          </div>
 
       </ion-content>

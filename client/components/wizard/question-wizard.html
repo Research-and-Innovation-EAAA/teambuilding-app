@@ -1,5 +1,5 @@
 <div ng-controller="questionWizardController as qwiz">
-   <ion-view ng-attr-view-title="{{qwiz.dataType}}">
+   <ion-view ng-attr-view-title="{{qwiz.viewTitle}}">
       <div>
 
          <ion-content id="wizard-template" class="padding">
@@ -47,7 +47,8 @@
                     <span ng-if="qwiz.stepNumber == qwiz.steps.length - 1 && !qwiz.isLoggedIn">
                         <a id="wiz-nav-button"
                            style="float:right"
-                           class="">Log in to save registration</a>
+                           class=""
+                           translate="saveRegistrationLoggedOut"></a>
                     </span>
                   </section>
                </ion-footer-bar>

@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('graphDataController', GraphDataController);
 
-function GraphDataController($scope, $reactive, $timeout, $filter) {
+function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -15,6 +15,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
       vm.startTimeStamp.setMonth(vm.startTimeStamp.getMonth() - 1);
    }
    vm.dataType = Session.get('graphDataType');
+   vm.viewTitle = $translate.instant(vm.dataType);
 
    vm.helpers({
       getDataForPeriod: () => {
@@ -260,20 +261,25 @@ function GraphDataController($scope, $reactive, $timeout, $filter) {
          console.log("Filtered DataSeries: ");
          console.log(vm.filteredDataSeries);
 
+         //TODO: Improve the way graph is generated,
+         //KNOWN BUG: when only 2 series selected, if one is deselected its line is not removed from the graph
+         //Changing the display type fixes this bug
          if (curr === 'chart') {
             var chart = nv.models.multiChart();
             vm.graphData = validateForGraph(vm.filteredDataSeries);
+            console.log('vm.graphData is ', vm.graphData);
             d3.select("graph svg").datum(vm.graphData).call(chart);
          }
+         //ugly workaround
          //if (curr == "chart")
          //   vm.displaytype = "table";
          //else
          //   vm.displaytype = "chart";
       });
-      $timeout(function () {
-         vm.displaytype = curr;
-      });
-      console.log('Display type: ', vm.displaytype);
+      //$timeout(function () {
+      //   vm.displaytype = curr;
+      //});
+      //console.log('Display type: ', vm.displaytype);
    };
 
    //Remove all data out of period

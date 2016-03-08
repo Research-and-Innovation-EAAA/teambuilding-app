@@ -7,7 +7,7 @@ angular.module('leukemiapp').directive('notes', function () {
    }
 });
 
-function NotesController($scope, $reactive) {
+function NotesController($scope, $reactive, $translate) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -28,7 +28,7 @@ function NotesController($scope, $reactive) {
          return Meteor.userId() !== null;
       },
       placeholder: () => {
-         return Meteor.userId() !== null ? 'Tryk for at indtaste tekst' : 'Log in to create notes';
+         return Meteor.userId() !== null ? $translate.instant('notesPlaceholderLoggedIn') : $translate.instant('notesPlaceholderLoggedOut');
       }
    });
 
