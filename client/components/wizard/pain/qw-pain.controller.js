@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('painController', PainController);
 
-function PainController($scope, $reactive) {
+function PainController($scope, $reactive, $ionicScrollDelegate) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -9,10 +9,18 @@ function PainController($scope, $reactive) {
 
    if (vm.registration.flaccvalue === undefined) {
       vm.registration.flaccvalue = [undefined, undefined, undefined, undefined, undefined];
+      vm.registration.painScore = 0;
    }
    //vm.selectedSmiley;
    vm.show = true;
+   vm.painScale = 'FLACC skala';
    validateData();
+
+   vm.helpers({
+      isSmallScreen: () => {
+         return window.innerWidth < 768;
+      }
+   });
 
    function validateMorphine() {
       var isValidMorphine = true;
@@ -79,10 +87,21 @@ function PainController($scope, $reactive) {
 
    vm.changeScale = () => {
       vm.show = !vm.show;
+      vm.show ? vm.painScale = 'FLACC skala' : vm.painScale = 'Wong-Baker skala';
       vm.registration.painScore = 0;
       vm.selectedSmiley = undefined;
       vm.registration.flaccvalue = [undefined, undefined, undefined, undefined, undefined];
       vm.smileyDescription = "";
+      $ionicScrollDelegate.resize();
+      $ionicScrollDelegate.$getByHandle('smiley-scroll').scrollTop();
+   };
+
+   vm.smileySliderChanged = () => {
+      var painScore = vm.registration.painScore;
+      if (painScore % 2 == 0) {
+         vm.selectSmiley(parseInt(painScore));
+      }
+      vm.updateRegistration();
    };
 
    //smiley selection
@@ -90,6 +109,7 @@ function PainController($scope, $reactive) {
    vm.smileyDescription = "";
 
    vm.selectSmiley = (smileynumber) => {
+      console.log('smileynumber is: ', smileynumber);
       vm.selectedSmiley = smileynumber;
       vm.registration.painScore = smileynumber;
       switch (smileynumber) {
@@ -113,6 +133,16 @@ function PainController($scope, $reactive) {
             break;
          default:
             vm.smileyDescription = "";
+      }
+      if (vm.isSmallScreen) {
+         var smileyWidth = 130;
+         var currentX = $ionicScrollDelegate.$getByHandle('smiley-scroll').getScrollPosition().left;
+         var threshold = smileyWidth * 3;
+         var x = vm.registration.painScore / 2 * smileyWidth;
+         console.log('currentX: ', currentX, 'threshold: ', threshold, 'x: ', x);
+         if (x < currentX || x >= threshold + currentX) {
+            $ionicScrollDelegate.$getByHandle('smiley-scroll').scrollTo(x, 0, true);
+         }
       }
       vm.updateRegistration();
    };
