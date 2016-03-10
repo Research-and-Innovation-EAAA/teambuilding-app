@@ -13,7 +13,7 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
    }
    //vm.selectedSmiley;
    vm.show = true;
-   vm.painScale = 'FLACC skala';
+   vm.painScale = 'FLACC score';
    validateData();
 
    vm.helpers({
@@ -87,7 +87,7 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
 
    vm.changeScale = () => {
       vm.show = !vm.show;
-      vm.show ? vm.painScale = 'FLACC skala' : vm.painScale = 'Wong-Baker skala';
+      vm.show ? vm.painScale = 'FLACC score' : vm.painScale = 'Wong-Baker score';
       vm.registration.painScore = 0;
       vm.selectedSmiley = undefined;
       vm.registration.flaccvalue = [undefined, undefined, undefined, undefined, undefined];
