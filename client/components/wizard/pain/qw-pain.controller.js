@@ -96,10 +96,18 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
       $ionicScrollDelegate.$getByHandle('smiley-scroll').scrollTop();
    };
 
+   function scrollToSmiley() {
+      var smileyWidth = 130;
+      var x = vm.registration.painScore / 2 * smileyWidth;
+      $ionicScrollDelegate.$getByHandle('smiley-scroll').scrollTo(x, 0, true);
+   }
+
    vm.smileySliderChanged = () => {
       var painScore = vm.registration.painScore;
       if (painScore % 2 == 0) {
          vm.selectSmiley(parseInt(painScore));
+      } else {
+         scrollToSmiley();
       }
       vm.updateRegistration();
    };
@@ -135,14 +143,7 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
             vm.smileyDescription = "";
       }
       if (vm.isSmallScreen) {
-         var smileyWidth = 130;
-         var currentX = $ionicScrollDelegate.$getByHandle('smiley-scroll').getScrollPosition().left;
-         var threshold = smileyWidth * 3;
-         var x = vm.registration.painScore / 2 * smileyWidth;
-         console.log('currentX: ', currentX, 'threshold: ', threshold, 'x: ', x);
-         if (x < currentX || x >= threshold + currentX) {
-            $ionicScrollDelegate.$getByHandle('smiley-scroll').scrollTo(x, 0, true);
-         }
+         scrollToSmiley();
       }
       vm.updateRegistration();
    };
