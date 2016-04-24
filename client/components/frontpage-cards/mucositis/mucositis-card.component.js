@@ -11,12 +11,12 @@ function MucositisCardController($scope, $reactive, $location) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   vm.subscribe('mucositisData');
+   vm.subscribe('moduleData', () => [Modules[3].name]);
 
    vm.helpers({
       latestMucositisRegistration: () => {
          //var selectedDate = Session.get('selectedDate');
-         return Mucositis.findOne(
+         return Mongo.Collection.get(Modules[3].name).findOne(
             {
                //timestamp: {$lt: moment(selectedDate).toDate()}
             }, {

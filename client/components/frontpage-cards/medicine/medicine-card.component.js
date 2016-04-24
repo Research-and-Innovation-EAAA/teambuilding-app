@@ -11,12 +11,12 @@ function MedicineCardController($scope, $reactive, $location) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   vm.subscribe('medicineData');
+   vm.subscribe('moduleData', () => [Modules[0].name]);
 
    vm.helpers({
       latestMedicineRegistration: () => {
          //var selectedDate = Session.get('selectedDate');
-         return Medicine.findOne(
+         return Mongo.Collection.get(Modules[0].name).findOne(
             {
                //timestamp: {$lt: moment(selectedDate).toDate()}
             }, {

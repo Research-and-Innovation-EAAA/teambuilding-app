@@ -11,12 +11,12 @@ function BloodsampleCardController($scope, $reactive, $location) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   vm.subscribe('bloodsampleData');
+   vm.subscribe('moduleData', () => [Modules[1].name]);
 
    vm.helpers({
       latestBloodsampleRegistration: () => {
          //var selectedDate = Session.get('selectedDate');
-         return Bloodsample.findOne(
+         return Mongo.Collection.get(Modules[1].name).findOne(
             {
                //timestamp: {$lt: moment(selectedDate).toDate()}
             }, {

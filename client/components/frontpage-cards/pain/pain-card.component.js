@@ -11,12 +11,12 @@ function PainCardController($scope, $reactive, $location) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   vm.subscribe('painData');
+   vm.subscribe('moduleData', () => [Modules[2].name]);
 
    vm.helpers({
       latestPainRegistration: () => {
          //var selectedDate = Session.get('selectedDate');
-         return Pain.findOne(
+         return Mongo.Collection.get(Modules[2].name).findOne(
             {
                //timestamp: {$lt: moment(selectedDate).toDate()}
             }, {

@@ -4,10 +4,9 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   vm.subscribe('mucositisData');
-   vm.subscribe('bloodsampleData');
-   vm.subscribe('painData');
-   vm.subscribe('medicineData');
+   for (i = 0; i< Modules.length; i++) {
+      vm.subscribe('moduleData', () => [Modules[i].name]);
+   }
 
    if (!vm.endTimeStamp || !vm.startTimeStamp) {
       vm.endTimeStamp = new Date();
