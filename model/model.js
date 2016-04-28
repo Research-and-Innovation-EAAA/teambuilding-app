@@ -3,13 +3,7 @@
 //Pain = new Mongo.Collection("Pain");
 //Mucositis = new Mongo.Collection("Mucositis");
 
-Collections = [];
-
-(function (){
-   for (i = 0; i < Modules.length; i++) {
-      Collections[i] = new Mongo.Collection(Modules[i].name);
-   }
-})();
+Registrations = new Mongo.Collection("Registrations");
 
 Meteor.methods({
    addRegistration: (registration, collection) => {
@@ -18,7 +12,8 @@ Meteor.methods({
       }
       registration.createdBy = Meteor.userId();
       registration.createdAt = new Date();
+      registration.moduleName = collection;
 
-      Mongo.Collection.get(collection).insert(registration);
+      Registrations.insert(registration);
    }
 });

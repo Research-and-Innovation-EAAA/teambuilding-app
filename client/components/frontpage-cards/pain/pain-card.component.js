@@ -16,9 +16,9 @@ function PainCardController($scope, $reactive, $location) {
    vm.helpers({
       latestPainRegistration: () => {
          //var selectedDate = Session.get('selectedDate');
-         return Mongo.Collection.get(Modules[2].name).findOne(
+         return Registrations.findOne(
             {
-               //timestamp: {$lt: moment(selectedDate).toDate()}
+               moduleName: Modules[2].name
             }, {
                sort: {
                   timestamp: -1,

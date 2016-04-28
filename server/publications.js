@@ -1,50 +1,16 @@
 (function () {
 
-   Meteor.publish('moduleData', function (moduleName) {
-      return Mongo.Collection.get(moduleName).find({
+   Meteor.publish('moduleData', function (module) {
+      return Registrations.find({
          $and: [
+            {moduleName: module},
+            {moduleName: {$exists: true}},
             {createdBy: this.userId},
             {createdBy: {$exists: true}}
          ]
       })
    });
 
-
-   //Meteor.publish("mucositisData", function () {
-   //   return Mucositis.find({
-   //      $and: [
-   //         {createdBy: this.userId},
-   //         {createdBy: {$exists: true}}
-   //      ]
-   //   });
-   //});
-   //
-   //Meteor.publish("medicineData", function () {
-   //   return Medicine.find({
-   //      $and: [
-   //         {createdBy: this.userId},
-   //         {createdBy: {$exists: true}}
-   //      ]
-   //   });
-   //});
-   //
-   //Meteor.publish("bloodsampleData", function () {
-   //   return Bloodsample.find({
-   //      $and: [
-   //         {createdBy: this.userId},
-   //         {createdBy: {$exists: true}}
-   //      ]
-   //   });
-   //});
-   //
-   //Meteor.publish("painData", function () {
-   //   return Pain.find({
-   //      $and: [
-   //         {createdBy: this.userId},
-   //         {createdBy: {$exists: true}}
-   //      ]
-   //   });
-   //});
 
    Meteor.publish("notes", function () {
       return Notes.find({

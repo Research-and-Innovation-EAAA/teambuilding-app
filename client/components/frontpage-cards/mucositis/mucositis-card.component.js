@@ -16,9 +16,9 @@ function MucositisCardController($scope, $reactive, $location) {
    vm.helpers({
       latestMucositisRegistration: () => {
          //var selectedDate = Session.get('selectedDate');
-         return Mongo.Collection.get(Modules[3].name).findOne(
+         return Registrations.findOne(
             {
-               //timestamp: {$lt: moment(selectedDate).toDate()}
+               moduleName: Modules[3].name
             }, {
                sort: {
                   timestamp: -1,

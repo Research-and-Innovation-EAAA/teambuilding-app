@@ -19,7 +19,8 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    vm.helpers({
       getDataForPeriod: () => {
          console.log('getDataForPeriod: ', vm.startTimeStamp, vm.endTimeStamp);
-         return Mongo.Collection.get(vm.dataType).find({
+         return Registrations.find({
+            moduleName: vm.dataType,
             timestamp: {
                $gt: vm.startTimeStamp,
                $lt: vm.endTimeStamp
