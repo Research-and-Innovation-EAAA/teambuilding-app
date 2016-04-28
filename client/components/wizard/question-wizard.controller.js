@@ -4,27 +4,23 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
    $reactive(this).attach($scope);
    var vm = this;
 
-   vm.modules = {
-      "Medicine": {
-         "Tid": "client/components/wizard/timestamp/qw-timestamp.html",
-         "Medicin": "client/components/wizard/medicine/qw-medicine-01.html"
-      },
-      "Bloodsample": {
-         "Tid": "client/components/wizard/timestamp/qw-timestamp.html",
-         "Blodprøve": "client/components/wizard/bloodsample/qw-bloodsample-01.html"
-      },
-      "Pain": {
-         "Tid": "client/components/wizard/timestamp/qw-timestamp.html",
-         "Morfin": "client/components/wizard/pain/qw-pain-01.html",
-         "Type": "client/components/wizard/pain/qw-pain-02.html",
-         "Styrke": "client/components/wizard/pain/qw-pain-03.html"
-      },
-      "Mucositis": {
-         "Tid": "client/components/wizard/timestamp/qw-timestamp.html",
-         "Mundsår": "client/components/wizard/mucositis/qw-mucositis-01.html",
-         "Kvalme": "client/components/wizard/mucositis/qw-mucositis-02.html"
-      }
-   };
+   vm.modules = {};
+
+   for (moduleNumber = 0; moduleNumber < Modules.length; moduleNumber++) {
+      var moduleSteps = {};
+      moduleSteps["Tid"] = "client/components/wizard/timestamp/qw-timestamp.html";
+
+      for (stepNumber = 0; stepNumber < Modules[moduleNumber].steps.length; stepNumber++) {
+         var stepName = Modules[moduleNumber].steps[stepNumber].stepName;
+         var stepTemplate = Modules[moduleNumber].steps[stepNumber].stepTemplate;
+
+         moduleSteps[stepName] = stepTemplate;
+   }
+
+      vm.modules[Modules[moduleNumber].name] = moduleSteps;
+   }
+   console.log("vm.modules after loop is finished: ", vm.modules);
+
 
    vm.dataType = Session.get('registrationType');
    vm.viewTitle = $translate.instant(vm.dataType);

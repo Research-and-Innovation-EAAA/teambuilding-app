@@ -327,6 +327,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
          for (var dataSerieName in obj) {
             if (!obj.hasOwnProperty(dataSerieName) ||
                dataSerieName === "_id" ||
+               dataSerieName === "moduleName" ||
                dataSerieName === "timestamp" ||
                dataSerieName === "createdAt" ||
                dataSerieName === 'createdBy' ||
