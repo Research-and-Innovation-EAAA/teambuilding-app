@@ -38,17 +38,18 @@ function MedicineCardController($scope, $reactive, $location) {
       $location.path("graphdata")
    };
 
-   vm.sixMP = () => {
-      var registration = vm.latestMedicineRegistration;
-      if (registration !== undefined)
-         return registration.SixMP;
-      else return ' - ';
-   };
+   //Get properties
+   //http://stackoverflow.com/questions/25638834/mutable-variable-is-accessible-from-closure
 
-   vm.mtx = () => {
-      var registration = vm.latestMedicineRegistration;
-      if (registration !== undefined)
-         return registration.MTX;
-      else return ' - ';
-   };
+   for (i = 0; i < Modules[0].frontPageProperties.length; i++) {
+      (function(){
+         var propertyName = Modules[0].frontPageProperties[i];
+         vm["row" + i] = () => {
+            var registration = vm.latestMedicineRegistration;
+            if (registration !== undefined && registration[propertyName] != null)
+               return registration[propertyName];
+            else return ' - ';
+         }
+      })();
+   }
 }

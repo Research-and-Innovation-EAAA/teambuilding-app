@@ -39,24 +39,36 @@ function BloodsampleCardController($scope, $reactive, $location) {
       $location.path("graphdata")
    };
 
-   vm.alat = () => {
-      var registration = vm.latestBloodsampleRegistration;
-      if (registration !== undefined && registration.Alat != null)
-         return registration.Alat;
-      else return ' - ';
-   };
+   //vm.alat = () => {
+   //   var registration = vm.latestBloodsampleRegistration;
+   //   if (registration !== undefined && registration.Alat != null)
+   //      return registration.Alat;
+   //   else return ' - ';
+   //};
+   //
+   //vm.hemoglobin = () => {
+   //   var registration = vm.latestBloodsampleRegistration;
+   //   if (registration !== undefined && registration.Hemoglobin != null)
+   //      return registration.Hemoglobin;
+   //   else return ' - ';
+   //};
+   //
+   //vm.thrombocytter = () => {
+   //   var registration = vm.latestBloodsampleRegistration;
+   //   if (registration !== undefined && registration.Thrombocytter != null)
+   //      return registration.Thrombocytter;
+   //   else return ' - ';
+   //}
 
-   vm.hemoglobin = () => {
-      var registration = vm.latestBloodsampleRegistration;
-      if (registration !== undefined && registration.Hemoglobin != null)
-         return registration.Hemoglobin;
-      else return ' - ';
-   };
-
-   vm.thrombocytter = () => {
-      var registration = vm.latestBloodsampleRegistration;
-      if (registration !== undefined && registration.Thrombocytter != null)
-         return registration.Thrombocytter;
-      else return ' - ';
+   for (i = 0; i < Modules[1].frontPageProperties.length; i++) {
+      (function () {
+         var propertyName = Modules[1].frontPageProperties[i];
+         vm["row" + i] = () => {
+            var registration = vm.latestBloodsampleRegistration;
+            if (registration !== undefined && registration[propertyName] != null)
+               return registration[propertyName];
+            else return ' - ';
+         }
+      })();
    }
 }

@@ -15,7 +15,7 @@
             <strong>6 MP</strong>
          </div>
          <div class="col">
-            {{ medcard.sixMP() }} &nbsp;&nbsp;
+            {{ medcard.row0() || medcard.row(0)}} &nbsp;&nbsp;
             <b>
                <small>mg / daglig</small>
             </b>
@@ -26,7 +26,7 @@
             <strong>MTX</strong>
          </div>
          <div class="col">
-            {{ medcard.mtx() }} &nbsp;&nbsp;
+            {{ medcard.row1() || medcard.row(1)}} &nbsp;&nbsp;
             <b>
                <small>mg / ugentlig</small>
             </b>
