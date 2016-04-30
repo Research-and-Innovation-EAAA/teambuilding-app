@@ -39,43 +39,52 @@ function PainCardController($scope, $reactive, $location) {
       $location.path("graphdata");
    };
 
-   vm.painType = () => {
-      var registration = vm.latestPainRegistration;
-      var message = 'Ingen data';
-      if (registration !== undefined) {
-         message = registration.painType;
-         message = message.charAt(0).toUpperCase() + message.slice(1);
+   if (Modules[2].frontPageProperties === undefined) {
+      if (Modules[2].frontPageFunction !== undefined) {
+         vm["row"] = (rowNumber) => {
+            var registration = vm.latestPainRegistration;
+            return Modules[2].frontPageFunction(registration,rowNumber);
+         }
       }
-      return message;
-   };
-
-   vm.painScore = () => {
-      var registration = vm.latestPainRegistration;
-      var message = 'Ingen data';
-      if (registration !== undefined)
-         message = registration.painScore;
-      return message;
-   };
-
-   vm.morphineDose = () => {
-      var registration = vm.latestPainRegistration;
-      var message = 'Ingen data';
-      if (registration !== undefined) {
-         if (registration.morphineDose !== undefined && registration.morphineDose > 0)
-            message = registration.morphineDose;
-         else
-            message = 'Ingen morfin';
-      }
-      return message;
-   };
-
-   vm.morphineMeasureUnit = () => {
-      var registration = vm.latestPainRegistration;
-      var message = '';
-      if (registration !== undefined) {
-         if (registration.morphineMeasureUnit !== undefined)
-            message = registration.morphineMeasureUnit;
-      }
-      return message;
    }
+
+   //vm.painType = () => {
+   //   var registration = vm.latestPainRegistration;
+   //   var message = 'Ingen data';
+   //   if (registration !== undefined) {
+   //      message = registration.painType;
+   //      message = message.charAt(0).toUpperCase() + message.slice(1);
+   //   }
+   //   return message;
+   //};
+   //
+   //vm.painScore = () => {
+   //   var registration = vm.latestPainRegistration;
+   //   var message = 'Ingen data';
+   //   if (registration !== undefined)
+   //      message = registration.painScore;
+   //   return message;
+   //};
+   //
+   //vm.morphineDose = () => {
+   //   var registration = vm.latestPainRegistration;
+   //   var message = 'Ingen data';
+   //   if (registration !== undefined) {
+   //      if (registration.morphineDose !== undefined && registration.morphineDose > 0)
+   //         message = registration.morphineDose;
+   //      else
+   //         message = 'Ingen morfin';
+   //   }
+   //   return message;
+   //};
+   //
+   //vm.morphineMeasureUnit = () => {
+   //   var registration = vm.latestPainRegistration;
+   //   var message = '';
+   //   if (registration !== undefined) {
+   //      if (registration.morphineMeasureUnit !== undefined)
+   //         message = registration.morphineMeasureUnit;
+   //   }
+   //   return message;
+   //}
 }

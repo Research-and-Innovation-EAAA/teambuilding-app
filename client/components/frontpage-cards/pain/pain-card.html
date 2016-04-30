@@ -11,19 +11,15 @@
    <div class="item item-text-wrap">
       <div class="row">
          <div class="col"><strong>Smerte typen</strong></div>
-         <div class="col">{{paincard.painType()}}</div>
+         <div class="col">{{ paincard.row0() || paincard.row(0) }}</div>
       </div>
       <div class="row">
          <div class="col"><strong>Intensitet</strong></div>
-         <div class="col">{{paincard.painScore()}}</div>
+         <div class="col">{{paincard.row1() || paincard.row(1)}}</div>
       </div>
       <div class="row">
          <div class="col"><strong>Morfin</strong></div>
-         <div class="col">{{ paincard.morphineDose() }} &nbsp;&nbsp;
-            <b>
-               <small>{{ paincard.morphineMeasureUnit() }} </small>
-            </b>
-         </div>
+         <div class="col">{{ paincard.row2() || paincard.row(2) }} </div>
       </div>
    </div>
 </div>

@@ -38,7 +38,33 @@ Modules = [{
          stepName: "Styrke",
          stepTemplate: "client/components/wizard/pain/qw-pain-03.html"
       }
-   ]
+   ],
+   frontPageFunction: (registration, rowNumber) => {
+      var message = 'Ingen data';
+      if (registration === undefined)
+         return message;
+
+      switch (rowNumber) {
+         case 0:
+            message = registration.painType;
+            message = message.charAt(0).toUpperCase() + message.slice(1);
+            break;
+         case 1:
+            message = registration.painScore;
+            break;
+         case 2:
+            if (registration.morphineDose !== undefined && registration.morphineDose > 0) {
+               message = registration.morphineDose;
+               if (registration.morphineMeasureUnit !== undefined) {
+                  message += "  " + registration.morphineMeasureUnit;
+               }
+            }
+            else
+               message = 'Ingen morfin';
+            break;
+      }
+      return message;
+   }
 }, {
    name: "Mucositis",
    steps: [
