@@ -1,12 +1,12 @@
 <ion-view view-title="Leukæmi App">
-   <ion-nav-buttons side="left">
+    <ion-nav-buttons side="left">
         <login-buttons></login-buttons>
     </ion-nav-buttons>
-   <!-- Settings button -->
-   <!--<ion-nav-buttons side="secondary">-->
-   <!--<button class="button button-icon ion-android-settings" ng-click="openModal()"></button>-->
-   <!--</ion-nav-buttons>-->
-    <ion-content ng-controller="frontpageController">
+    <!-- Settings button -->
+    <!--<ion-nav-buttons side="secondary">-->
+    <!--<button class="button button-icon ion-android-settings" ng-click="openModal()"></button>-->
+    <!--</ion-nav-buttons>-->
+    <ion-content ng-controller="frontpageController as vm">
         <div class="row responsive-md bigScreen-topRow">
             <div class="col">
                 <calendar></calendar>
@@ -14,10 +14,10 @@
             <div class="col">
                 <div class="card item item-text-wrap frontpage-topcomponent">
                     <div class="row">
-                       <div id="calendar-date" class="col-33">
+                        <div id="calendar-date" class="col-33">
                             <calendar-date></calendar-date>
                         </div>
-                       <div class="col">
+                        <div class="col">
                             <reminders></reminders>
                         </div>
                     </div>
@@ -25,21 +25,29 @@
                 </div>
             </div>
         </div>
-        <div class="row responsive-md">
+        <div ng-repeat="module in vm.activeModules" ng-if="$even" class="row responsive-md">
             <div class="col frontpage-col">
-                <medicine-card></medicine-card>
+                <template-card module-index="{{$index}}"></template-card>
             </div>
             <div class="col frontpage-col">
-                <bloodsample-card></bloodsample-card>
-            </div>
-        </div>
-        <div class="row responsive-md">
-            <div class="col frontpage-col">
-                <pain-card></pain-card>
-            </div>
-            <div class="col frontpage-col">
-                <mucositis-card></mucositis-card>
+                <template-card module-index="{{$index + 1}}"></template-card>
             </div>
         </div>
+        <!--<div class="row responsive-md">-->
+        <!--<div class="col frontpage-col">-->
+        <!--<template-card module-index="0"></template-card>-->
+        <!--</div>-->
+        <!--<div class="col frontpage-col">-->
+        <!--<template-card module-index="1"></template-card>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row responsive-md">-->
+        <!--<div class="col frontpage-col">-->
+        <!--<template-card module-index="2"></template-card>-->
+        <!--</div>-->
+        <!--<div class="col frontpage-col">-->
+        <!--<template-card module-index="3"></template-card>-->
+        <!--</div>-->
+        <!--</div>-->
     </ion-content>
 </ion-view>

@@ -1,0 +1,47 @@
+<div class="card frontpage-card">
+    <div class="item item-divider bar ng-class: vm.barClass;">
+            <span class="frontpage-card-icon" ng-style="{'content':'url({{vm.iconUrl}})'}">
+            </span>
+        <strong>{{vm.moduleTitle}}</strong>
+        <button style="float: right" class="button button-icon ion-plus-round"
+                ng-click="vm.newRegistration()"></button>
+        <span style="padding-left: 50px; float: right;"></span>
+        <button style="float: right" class="button button-icon ion-stats-bars"
+                ng-click="vm.showGraphData()"></button>
+    </div>
+    <div class="item item-text-wrap">
+        <div class="row">
+            <div class="col">
+                <strong>{{ vm.rowDescription(0) }}</strong>
+            </div>
+            <div class="col">
+                {{ vm.rowProperty(0) }} &nbsp;&nbsp;
+                <b>
+                    <small>{{vm.rowMeasurement(0)}}</small>
+                </b>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <strong>{{ vm.rowDescription(1) }}</strong>
+            </div>
+            <div class="col">
+                {{ vm.rowProperty(1) }} &nbsp;&nbsp;
+                <b>
+                    <small>{{vm.rowMeasurement(1)}}</small>
+                </b>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <strong>{{ vm.rowDescription(2) }}</strong>
+            </div>
+            <div class="col">
+                {{ vm.rowProperty(2) }} &nbsp;&nbsp;
+                <b>
+                    <small>{{vm.rowMeasurement(2)}}</small>
+                </b>
+            </div>
+        </div>
+    </div>
+</div>

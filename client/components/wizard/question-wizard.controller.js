@@ -10,14 +10,17 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
       var moduleSteps = {};
       moduleSteps["Tid"] = "client/components/wizard/timestamp/qw-timestamp.html";
 
-      for (stepNumber = 0; stepNumber < Modules[moduleNumber].steps.length; stepNumber++) {
-         var stepName = Modules[moduleNumber].steps[stepNumber].stepName;
-         var stepTemplate = Modules[moduleNumber].steps[stepNumber].stepTemplate;
+      var module = Modules[moduleNumber];
+      console.log('var module in loop is ',module);
+
+      for (stepNumber = 0; stepNumber < module.wizard.steps.length; stepNumber++) {
+         var stepName = module.wizard.steps[stepNumber].stepName;
+         var stepTemplate = module.wizard.steps[stepNumber].stepTemplate;
 
          moduleSteps[stepName] = stepTemplate;
-   }
+      }
 
-      vm.modules[Modules[moduleNumber].name] = moduleSteps;
+      vm.modules[module.name] = moduleSteps;
    }
    console.log("vm.modules after loop is finished: ", vm.modules);
 
