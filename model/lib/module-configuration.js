@@ -10,7 +10,10 @@ Modules = [
                stepTemplate: "client/components/wizard/medicine/qw-medicine-01.html",
                properties: [
                   "SixMP", "MTX"
-               ]
+               ],
+               validation: (registration) => {
+                  return (registration.SixMP !== undefined) && (registration.MTX !== undefined);
+               }
             }
          ]
       },
@@ -36,7 +39,28 @@ Modules = [
          steps: [
             {
                stepName: "Blodprøve",
-               stepTemplate: "client/components/wizard/bloodsample/qw-bloodsample-01.html"
+               stepTemplate: "client/components/wizard/bloodsample/qw-bloodsample-01.html",
+               validation: (registration) => {
+                  var isValid = true;
+                  for (var property in registration) {
+                     if (property === "_id" ||
+                        property === 'timestamp' ||
+                        property === 'createdBy' ||
+                        property === 'createdAt')
+                        continue;
+
+                     var bloodsample = registration;
+                     if (bloodsample != null) {
+                        isValid = 0 <= parseFloat(bloodsample);
+                        if (!isValid) {
+                           //invalid data
+                           console.log('Data is invalid at property ', property, '. Value is ', bloodsample);
+                           return isValid;
+                        }
+                     }
+                  }
+                  return isValid;
+               }
             }
          ]
       },
@@ -62,15 +86,49 @@ Modules = [
          steps: [
             {
                stepName: "Morfin",
-               stepTemplate: "client/components/wizard/pain/qw-pain-01.html"
+               stepTemplate: "client/components/wizard/pain/qw-pain-01.html",
+               validation: (registration) => {
+                  var isValidMorphine = true;
+                  console.log('registration.morphineType: ', registration.morphineType);
+                  if (registration.morphineType !== undefined) { //if there is a selected morphine type
+                     // check there is valid dose
+                     console.log(registration.morphineDose);
+                     if (registration.morphineDose === undefined || registration.morphineDose == null || registration.morphineDose < 0)
+                        isValidMorphine = false;
+                  } else { //if there is no selected morphine type
+                     // check if there is valid dose
+                     // to avoid confusion, if there is valid dose but no valid type do not validate until type is chosen or dose deleted
+                     console.log('registration.morphineDose: ', registration.morphineDose, 'when registration.morphineType === undefined');
+                     if (registration.morphineDose != null) {
+                        isValidMorphine = false;
+                     }
+                  }
+                  return isValidMorphine;
+               }
             },
             {
                stepName: "Type",
-               stepTemplate: "client/components/wizard/pain/qw-pain-02.html"
+               stepTemplate: "client/components/wizard/pain/qw-pain-02.html",
+               validation: (registration) => {
+                  return registration.painType !== undefined;
+               }
             },
             {
                stepName: "Styrke",
-               stepTemplate: "client/components/wizard/pain/qw-pain-03.html"
+               stepTemplate: "client/components/wizard/pain/qw-pain-03.html",
+               validation: (registration) => {
+                  var isValid;
+                  if (registration.flaccvalue != null) {
+                     isValid = registration.flaccvalue[0] != null &&
+                        registration.flaccvalue[1] != null &&
+                        registration.flaccvalue[2] != null &&
+                        registration.flaccvalue[3] != null &&
+                        registration.flaccvalue[4] != null;
+                  } else {
+                     isValid = registration.painScore != null;
+                  }
+                  return isValid;
+               }
             }
          ]
       },
@@ -116,11 +174,24 @@ Modules = [
          steps: [
             {
                stepName: "Mundsår",
-               stepTemplate: "client/components/wizard/mucositis/qw-mucositis-01.html"
+               stepTemplate: "client/components/wizard/mucositis/qw-mucositis-01.html",
+               validation: (registration) => {
+                  var isValid = true;
+                  for (i = 0; i < 3; i++) {
+                     if (registration.diagnosis[i] === undefined) {
+                        isValid = false;
+                        break;
+                     }
+                  }
+                  return isValid;
+               }
             },
             {
                stepName: "Kvalme",
-               stepTemplate: "client/components/wizard/mucositis/qw-mucositis-02.html"
+               stepTemplate: "client/components/wizard/mucositis/qw-mucositis-02.html",
+               validation: (registration) => {
+                  return (registration.nauseaScore >= 0) && (registration.nauseaScore <= 10);
+               }
             }
          ]
       },

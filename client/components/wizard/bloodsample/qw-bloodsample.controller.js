@@ -4,6 +4,8 @@ function BloodsampleController($scope, $reactive) {
    $reactive(this).attach($scope);
    var vm = this;
 
+   var module = Modules[1];
+
    //Init
    vm.registration = Session.get('registration');
    vm.registration.Leukocytter = null;
@@ -35,8 +37,12 @@ function BloodsampleController($scope, $reactive) {
       var validated = Session.get('regValidated');
       if (validated === undefined)
          validated = [];
+
       validated[0] = vm.registration.timestamp !== undefined;
-      validated[1] = validateBloodsamples();
+      for (i = 0; i < module.wizard.steps.length; i++) {
+         validated[i + 1] = module.wizard.steps[i].validation(vm.registration);
+      }
+
       Session.set('regValidated', validated);
       console.log('regValidated session variable updated')
    }

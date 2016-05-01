@@ -4,6 +4,8 @@ function MucositisController($scope, $reactive) {
    $reactive(this).attach($scope);
    var vm = this;
 
+   var module = Modules[3];
+
    //Init
    vm.registration = Session.get('registration');
 
@@ -37,19 +39,33 @@ function MucositisController($scope, $reactive) {
       }
    );
 
+   //function validateData() {
+   //   var validated = Session.get('regValidated');
+   //   if (validated === undefined)
+   //      validated = [];
+   //   validated[0] = vm.registration.timestamp !== undefined;
+   //   validated[1] = true;
+   //   for (var i = 0; i < 3; i++) {
+   //      if (vm.registration.diagnosis[i] === undefined)
+   //         validated[1] = false;
+   //   }
+   //   validated[2] = (vm.registration.nauseaScore >= 0) && (vm.registration.nauseaScore <= 10);
+   //   Session.set('regValidated', validated);
+   //   console.log('regValidated session variable updated', validated)
+   //}
+
    function validateData() {
       var validated = Session.get('regValidated');
       if (validated === undefined)
          validated = [];
+
       validated[0] = vm.registration.timestamp !== undefined;
-      validated[1] = true;
-      for (var i = 0; i < 3; i++) {
-         if (vm.registration.diagnosis[i] === undefined)
-            validated[1] = false;
+      for (i = 0; i < module.wizard.steps.length; i++) {
+         validated[i + 1] = module.wizard.steps[i].validation(vm.registration);
       }
-      validated[2] = (vm.registration.nauseaScore >= 0) && (vm.registration.nauseaScore <= 10);
+
       Session.set('regValidated', validated);
-      console.log('regValidated session variable updated', validated)
+      console.log('regValidated session variable updated')
    }
 
    function updateRegistration() {

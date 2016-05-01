@@ -4,12 +4,13 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
    $reactive(this).attach($scope);
    var vm = this;
 
+   var module = Modules[2];
+
    //Init
    vm.registration = Session.get('registration');
 
    if (vm.registration.flaccvalue === undefined) {
       vm.registration.flaccvalue = [undefined, undefined, undefined, undefined, undefined];
-      vm.registration.painScore = 0;
    }
    //vm.selectedSmiley;
    vm.show = true;
@@ -41,23 +42,37 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
       return isValidMorphine;
    }
 
+   //function validateData() {
+   //   var validated = Session.get('regValidated');
+   //   if (validated === undefined)
+   //      validated = [];
+   //   validated[0] = vm.registration.timestamp !== undefined;
+   //   validated[1] = validateMorphine();
+   //   validated[2] = vm.registration.painType !== undefined;
+   //   validated[3] = (vm.registration.flaccvalue != null &&
+   //      vm.registration.flaccvalue[0] != null &&
+   //      vm.registration.flaccvalue[1] != null &&
+   //      vm.registration.flaccvalue[2] != null &&
+   //      vm.registration.flaccvalue[3] != null &&
+   //      vm.registration.flaccvalue[4] != null) || (vm.selectedSmiley != null);
+   //   Session.set('regValidated', validated);
+   //   console.log('regValidated session variable updated: ', validated);
+   //   console.log('validated[3] part one: ', vm.registration.flaccvalue);
+   //   console.log('validated[3] part two: ', vm.selectedSmiley);
+   //}
+
    function validateData() {
       var validated = Session.get('regValidated');
       if (validated === undefined)
          validated = [];
+
       validated[0] = vm.registration.timestamp !== undefined;
-      validated[1] = validateMorphine();
-      validated[2] = vm.registration.painType !== undefined;
-      validated[3] = (vm.registration.flaccvalue != null &&
-         vm.registration.flaccvalue[0] != null &&
-         vm.registration.flaccvalue[1] != null &&
-         vm.registration.flaccvalue[2] != null &&
-         vm.registration.flaccvalue[3] != null &&
-         vm.registration.flaccvalue[4] != null) || (vm.selectedSmiley != null);
+      for (i = 0; i < module.wizard.steps.length; i++) {
+         validated[i + 1] = module.wizard.steps[i].validation(vm.registration);
+      }
+
       Session.set('regValidated', validated);
-      console.log('regValidated session variable updated: ', validated);
-      console.log('validated[3] part one: ', vm.registration.flaccvalue);
-      console.log('validated[3] part two: ', vm.selectedSmiley);
+      console.log('regValidated session variable updated')
    }
 
    vm.updateRegistration = () => {
@@ -88,12 +103,17 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
    vm.changeScale = () => {
       vm.show = !vm.show;
       vm.show ? vm.painScale = 'FLACC score' : vm.painScale = 'Wong-Baker score';
-      vm.registration.painScore = 0;
+      vm.registration.painScore = undefined;
       vm.selectedSmiley = undefined;
-      vm.registration.flaccvalue = [undefined, undefined, undefined, undefined, undefined];
+      if (vm.show) {
+         vm.registration.flaccvalue = [undefined, undefined, undefined, undefined, undefined];
+      } else {
+         vm.registration.flaccvalue = undefined;
+      }
       vm.smileyDescription = "";
       $ionicScrollDelegate.resize();
       $ionicScrollDelegate.$getByHandle('smiley-scroll').scrollTop();
+      validateData();
    };
 
    function scrollToSmiley() {
@@ -103,6 +123,9 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
    }
 
    vm.smileySliderChanged = () => {
+      if (vm.registration.painScore === undefined) {
+         vm.registration.painScore = 0;
+      }
       var painScore = vm.registration.painScore;
       if (painScore % 2 == 0) {
          vm.selectSmiley(parseInt(painScore));
