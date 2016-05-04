@@ -8,9 +8,6 @@ Modules = [
             {
                stepName: "Medicin",
                stepTemplate: "client/components/wizard/medicine/qw-medicine-01.html",
-               properties: [
-                  "SixMP", "MTX"
-               ],
                validation: (registration) => {
                   return (registration.SixMP !== undefined) && (registration.MTX !== undefined);
                }
@@ -108,7 +105,14 @@ Modules = [
             },
             {
                stepName: "Type",
-               stepTemplate: "client/components/wizard/pain/qw-pain-02.html",
+               stepTemplate: {
+                  url: "client/components/wizard/templates/simple-question.html",
+                  config: {
+                     propertyName: "painType",
+                     question: "Hvor er smerten?",
+                     answers: ["Mave", "Ben", "Arme", "Hoved", "Andet"]
+                  }
+               },
                validation: (registration) => {
                   return registration.painType !== undefined;
                }

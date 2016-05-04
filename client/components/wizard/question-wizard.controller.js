@@ -17,6 +17,10 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
          var stepName = module.wizard.steps[stepNumber].stepName;
          var stepTemplate = module.wizard.steps[stepNumber].stepTemplate;
 
+         if (stepTemplate.url !== undefined) {
+            stepTemplate = stepTemplate.url;
+         }
+
          moduleSteps[stepName] = stepTemplate;
       }
 

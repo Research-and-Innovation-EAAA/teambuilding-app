@@ -72,7 +72,7 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
       }
 
       Session.set('regValidated', validated);
-      console.log('regValidated session variable updated')
+      console.log('regValidated session variable updated');
    }
 
    vm.updateRegistration = () => {
