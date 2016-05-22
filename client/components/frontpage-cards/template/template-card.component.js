@@ -1,7 +1,7 @@
 angular.module('leukemiapp').directive('templateCard', function () {
    return {
       scope: {
-         moduleIndex: "@"
+         moduleName: "@"
       },
       restrict: 'E',
       templateUrl: 'client/components/frontpage-cards/template/template-card.html',
@@ -14,7 +14,18 @@ function TemplateCardController($scope, $reactive, $location) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   var module = Modules[parseInt($scope.moduleIndex)];
+   var module = {};
+
+   for (moduleIndex = 0; moduleIndex < Modules.length; moduleIndex++) {
+      if (Modules[moduleIndex].name === $scope.moduleName) {
+         module = Modules[moduleIndex];
+      }
+   }
+
+   console.log('moduleName for template is ',$scope.moduleName);
+
+   //var module = Modules[parseInt($scope.moduleIndex)];
+
 
    vm.subscribe('moduleData', () => [module.name]);
 

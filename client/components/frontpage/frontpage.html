@@ -1,12 +1,12 @@
-<ion-view view-title="Leukæmi App">
+<ion-view view-title="Leukæmi App" ng-controller="frontpageController as vm">
     <ion-nav-buttons side="left">
         <login-buttons></login-buttons>
     </ion-nav-buttons>
     <!-- Settings button -->
-    <!--<ion-nav-buttons side="secondary">-->
-    <!--<button class="button button-icon ion-android-settings" ng-click="openModal()"></button>-->
-    <!--</ion-nav-buttons>-->
-    <ion-content ng-controller="frontpageController as vm">
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon ion-android-settings" ng-click="vm.openModal()"></button>
+    </ion-nav-buttons>
+    <ion-content>
         <div class="row responsive-md bigScreen-topRow">
             <div class="col">
                 <calendar></calendar>
@@ -25,29 +25,15 @@
                 </div>
             </div>
         </div>
-        <div ng-repeat="module in vm.activeModules" ng-if="$even" class="row responsive-md">
-            <div class="col frontpage-col">
-                <template-card module-index="{{$index}}"></template-card>
+        <div ng-repeat="module in vm.activeModules" ng-if="$even && vm.refresh" class="row responsive-md">
+            <div class="col-50 frontpage-col">
+                <template-card
+                        module-name="{{vm.activeModules[$index]}}"></template-card>
             </div>
-            <div class="col frontpage-col">
-                <template-card module-index="{{$index + 1}}"></template-card>
+            <div class="col-50 frontpage-col" ng-if="$index + 1 < vm.activeModules.length">
+                <template-card
+                        module-name="{{vm.activeModules[$index+1]}}"></template-card>
             </div>
         </div>
-        <!--<div class="row responsive-md">-->
-        <!--<div class="col frontpage-col">-->
-        <!--<template-card module-index="0"></template-card>-->
-        <!--</div>-->
-        <!--<div class="col frontpage-col">-->
-        <!--<template-card module-index="1"></template-card>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="row responsive-md">-->
-        <!--<div class="col frontpage-col">-->
-        <!--<template-card module-index="2"></template-card>-->
-        <!--</div>-->
-        <!--<div class="col frontpage-col">-->
-        <!--<template-card module-index="3"></template-card>-->
-        <!--</div>-->
-        <!--</div>-->
     </ion-content>
 </ion-view>

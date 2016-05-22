@@ -1,0 +1,18 @@
+<ion-modal-view class="centervertically" ng-controller="settingsController as vm">
+  <ion-header-bar class="bar bar-header bar-stable">
+    <h1 class="title">Modules</h1>
+  </ion-header-bar>
+  <ion-content>
+    <ul class="list">
+      <li class="item item-toggle" ng-repeat="(key,val) in vm.modules">
+        <translate>{{key}}</translate>
+        <label class="toggle toggle-calm">
+          <input type="checkbox" ng-model="vm.modules[key]" ng-change="vm.toggleModule({{key}})">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </li>
+    </ul>
+  </ion-content>
+</ion-modal-view>
