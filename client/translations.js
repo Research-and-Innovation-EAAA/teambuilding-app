@@ -75,6 +75,7 @@ function config($translateProvider) {
       Bloodsample: 'Blodprøver',
       Mucositis: 'Mucositis',
       Pain: 'Smerte',
+      'Arthritis Pain': 'Gigt Smerte',
 
       //Data overview
       graphDataDisclaimer: 'Viser de nyeste 5 registreringer for det tidsrum.',

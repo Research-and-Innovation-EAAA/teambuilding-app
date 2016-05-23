@@ -39,21 +39,6 @@ function MucositisController($scope, $reactive) {
       }
    );
 
-   //function validateData() {
-   //   var validated = Session.get('regValidated');
-   //   if (validated === undefined)
-   //      validated = [];
-   //   validated[0] = vm.registration.timestamp !== undefined;
-   //   validated[1] = true;
-   //   for (var i = 0; i < 3; i++) {
-   //      if (vm.registration.diagnosis[i] === undefined)
-   //         validated[1] = false;
-   //   }
-   //   validated[2] = (vm.registration.nauseaScore >= 0) && (vm.registration.nauseaScore <= 10);
-   //   Session.set('regValidated', validated);
-   //   console.log('regValidated session variable updated', validated)
-   //}
-
    function validateData() {
       var validated = Session.get('regValidated');
       if (validated === undefined)
@@ -74,5 +59,17 @@ function MucositisController($scope, $reactive) {
       Session.set('registration', vm.registration);
       console.log('Registration updated');
       console.log(vm.registration);
+   }
+
+   //Rzslider test
+   vm.slider = {
+      value: 0,
+      options: {
+         floor: 0,
+         ceil: 10,
+         step: 0.5,
+         precision: 1,
+         hideLimitLabels: true
+      }
    }
 }

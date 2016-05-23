@@ -63,7 +63,7 @@ function TemplateCardController($scope, $reactive, $location) {
       vm.rowProperty = (rowNumber) => {
          var registration = vm.latestRegistration;
          if (module.frontPage.properties !== undefined) {
-            if (rowNumber == module.frontPage.properties.length)
+            if (rowNumber >= module.frontPage.properties.length)
                return "";
 
             var propertyName = module.frontPage.properties[rowNumber];
@@ -77,7 +77,7 @@ function TemplateCardController($scope, $reactive, $location) {
 
       vm.rowDescription = (rowNumber) => {
          if (module.frontPage.propertyDescription !== undefined) {
-            if (rowNumber == module.frontPage.propertyDescription.length)
+            if (rowNumber >= module.frontPage.propertyDescription.length)
                return "";
 
             return module.frontPage.propertyDescription[rowNumber];
@@ -86,7 +86,7 @@ function TemplateCardController($scope, $reactive, $location) {
 
       vm.rowMeasurement = (rowNumber) => {
          if (module.frontPage.propertyMeasurement !== undefined) {
-            if (rowNumber == module.frontPage.propertyMeasurement.length)
+            if (rowNumber >= module.frontPage.propertyMeasurement.length)
                return "";
 
             return module.frontPage.propertyMeasurement[rowNumber];
