@@ -11,6 +11,10 @@
       })
    });
 
+   Meteor.startup(function() {
+      Registrations._ensureIndex({"moduleName": 1});
+      Registrations._ensureIndex({"createdBy": 1});
+   });
 
    Meteor.publish("notes", function () {
       return Notes.find({
@@ -19,6 +23,10 @@
             {createdBy: {$exists: true}}
          ]
       });
+   });
+
+   Meteor.startup(function() {
+      Notes._ensureIndex({"createdBy": 1});
    });
 
    Meteor.publish("reminders", function () {
@@ -32,5 +40,9 @@
                ]
             }]
       });
+   });
+
+   Meteor.startup(function() {
+      Reminders._ensureIndex({"createdBy": 1});
    });
 })();

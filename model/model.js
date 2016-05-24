@@ -17,3 +17,4 @@ Meteor.methods({
       Registrations.insert(registration);
    }
 });
+

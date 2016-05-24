@@ -36,5 +36,5 @@ Meteor.startup(() => {
          reminders: reminders
       });
    }
-
+   Reminders._ensureIndex({"createdBy": 1});
 });
