@@ -46,7 +46,7 @@ Modules = [
                         property === 'createdAt')
                         continue;
 
-                     var bloodsample = registration;
+                     var bloodsample = registration[property];
                      if (bloodsample != null) {
                         isValid = 0 <= parseFloat(bloodsample);
                         if (!isValid) {
