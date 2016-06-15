@@ -31,4 +31,4 @@ fourseven:scss
 angular-meteor-data@=0.1.0
 thospaeth:angular-slider
 meteorhacks:kadira
-meteorhacks:kadira-debug
+kadira:debug

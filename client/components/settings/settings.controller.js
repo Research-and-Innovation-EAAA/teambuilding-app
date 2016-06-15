@@ -8,5 +8,9 @@ function SettingsController($scope, $reactive, ModuleManagementService) {
 
    vm.toggleModule = (moduleName) => {
       ModuleManagementService.toggleModule(moduleName);
+   };
+
+   vm.closeModal = () => {
+      $scope.modal.hide();
    }
 }

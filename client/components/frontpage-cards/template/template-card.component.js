@@ -22,25 +22,33 @@ function TemplateCardController($scope, $reactive, $location) {
       }
    }
 
-   console.log('moduleName for template is ',$scope.moduleName);
+   console.log('moduleName for template is ', $scope.moduleName);
 
    //var module = Modules[parseInt($scope.moduleIndex)];
 
 
    vm.subscribe('moduleData', () => [module.name]);
 
+   //vm.helpers({
+   //   latestRegistration: () => {
+   //      //var selectedDate = Session.get('selectedDate');
+   //      return Registrations.findOne(
+   //         {
+   //            moduleName: module.name
+   //         }, {
+   //            sort: {
+   //               timestamp: -1,
+   //               createdAt: -1
+   //            }
+   //         });
+   //   }
+   //});
+
    vm.helpers({
       latestRegistration: () => {
-         //var selectedDate = Session.get('selectedDate');
-         return Registrations.findOne(
-            {
-               moduleName: module.name
-            }, {
-               sort: {
-                  timestamp: -1,
-                  createdAt: -1
-               }
-            });
+         return Registrations.findOne({
+            moduleName: module.name
+         });
       }
    });
 

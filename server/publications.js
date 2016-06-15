@@ -8,10 +8,44 @@
             {createdBy: this.userId},
             {createdBy: {$exists: true}}
          ]
+      }, {
+         sort: {
+            timestamp: -1,
+            createdAt: -1
+         },
+         limit: 1,
+         fields: {
+            createdBy: 0,
+            id: 0,
+            createdAt: 0,
+            timestamp: 0
+         }
       })
    });
 
-   Meteor.startup(function() {
+   //Meteor.publish('moduleData', function (module) {
+   //   return Registrations.find({
+   //      $and: [
+   //         {moduleName: module},
+   //         {moduleName: {$exists: true}},
+   //         {createdBy: this.userId},
+   //         {createdBy: {$exists: true}}
+   //      ]
+   //   })
+   //});
+
+   Meteor.publish('graphData', function (module) {
+      return Registrations.find({
+         $and: [
+            {moduleName: module},
+            {moduleName: {$exists: true}},
+            {createdBy: this.userId},
+            {createdBy: {$exists: true}}
+         ]
+      })
+   });
+
+   Meteor.startup(function () {
       Registrations._ensureIndex({"moduleName": 1});
       Registrations._ensureIndex({"createdBy": 1});
    });
@@ -25,7 +59,7 @@
       });
    });
 
-   Meteor.startup(function() {
+   Meteor.startup(function () {
       Notes._ensureIndex({"createdBy": 1});
    });
 
@@ -42,7 +76,7 @@
       });
    });
 
-   Meteor.startup(function() {
+   Meteor.startup(function () {
       Reminders._ensureIndex({"createdBy": 1});
    });
 })();

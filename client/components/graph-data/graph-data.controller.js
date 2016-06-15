@@ -5,7 +5,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    var vm = this;
 
    for (i = 0; i< Modules.length; i++) {
-      vm.subscribe('moduleData', () => [Modules[i].name]);
+      vm.subscribe('graphData', () => [Modules[i].name]);
    }
 
    if (!vm.endTimeStamp || !vm.startTimeStamp) {
