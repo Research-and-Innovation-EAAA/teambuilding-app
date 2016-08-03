@@ -23,3 +23,7 @@
     color: #778899;
     font-size: 1.1em;
 }
+
+.axis path, .axis line {
+    shape-rendering: crispEdges;
+}

@@ -1,0 +1,42 @@
+<ion-side-menus enable-menu-with-back-views="false">
+   <ion-side-menu-content>
+      <ion-nav-bar class="bar-stable bar-positive">
+         <ion-nav-back-button>
+         </ion-nav-back-button>
+
+         <ion-nav-buttons side="right">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
+            </button>
+         </ion-nav-buttons>
+      </ion-nav-bar>
+      <ion-nav-view name="menuContent"></ion-nav-view>
+   </ion-side-menu-content>
+
+   <ion-side-menu side="right">
+      <ion-header-bar class="bar-stable">
+         <h1 class="title">Behandlinger</h1>
+      </ion-header-bar>
+      <div ng-controller="pdfController as vm">
+         <ion-content>
+            <h4 class="group-title">Leukæmi</h4>
+            <ion-list>
+               <ion-item menu-close ng-click="vm.openUrl('/pdf/standard_intensiv.pdf')">
+                  Standard Intensiv
+               </ion-item>
+               <ion-item menu-close ng-click="vm.openUrl('/pdf/intermediaer_intensiv.pdf')">
+                  Intermediær Intensiv
+               </ion-item>
+               <ion-item menu-close ng-click="vm.openUrl('/pdf/intermediaer_intensiv_cns3.pdf')">
+                  Intermediær Intensiv + CNS3
+               </ion-item>
+               <ion-item menu-close ng-click="vm.openUrl('/pdf/høj_intensiv.pdf')">
+                  Høj Intensiv
+               </ion-item>
+               <!--<ion-item menu-close ng-click="vm.clickTester()">-->
+               <!--NG-click test-->
+               <!--</ion-item>-->
+            </ion-list>
+         </ion-content>
+      </div>
+   </ion-side-menu>
+</ion-side-menus>

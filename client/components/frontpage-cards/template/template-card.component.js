@@ -56,12 +56,12 @@ function TemplateCardController($scope, $reactive, $location) {
 
    vm.newRegistration = () => {
       Session.set('registrationType', module.name);
-      $location.path("questionwizard");
+      $location.path("app/questionwizard");
    };
 
    vm.showGraphData = () => {
       Session.set('graphDataType', module.name);
-      $location.path("graphdata")
+      $location.path("app/graphdata")
    };
 
    if (module.frontPage !== undefined) {

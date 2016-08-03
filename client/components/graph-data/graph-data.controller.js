@@ -13,8 +13,6 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
       vm.startTimeStamp = new Date();
       vm.startTimeStamp.setMonth(vm.startTimeStamp.getMonth() - 1);
    }
-   vm.dataType = Session.get('graphDataType');
-   vm.viewTitle = $translate.instant(vm.dataType);
 
    vm.helpers({
       getDataForPeriod: () => {
@@ -22,8 +20,8 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
          return Registrations.find({
             moduleName: vm.dataType,
             timestamp: {
-               $gt: vm.startTimeStamp,
-               $lt: vm.endTimeStamp
+               $gt: vm.getReactively('startTimeStamp'),
+               $lt: vm.getReactively('endTimeStamp')
             }
          }, {
             sort: {timestamp: -1},
@@ -31,6 +29,12 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
          });
       }
    });
+
+
+   vm.dataType = Session.get('graphDataType');
+   vm.viewTitle = $translate.instant(vm.dataType);
+
+   //vm.updateDataObjects();
 
    if (vm.dataSeries === undefined) {
       vm.dataSeries = []; // Objects like {values: [{x:timeStap, y:value},...], color: ?, type: ?, key: ?, label: ?, visible: true}
@@ -176,6 +180,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
          type: 'multiChart',
          height: window.innerHeight / 2,
          showLegend: false,
+         interpolate: 'linear',
          noData: "Ingen data valgt til visning",
          margin: {
             top: 30,
@@ -323,7 +328,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
 
          //Insert all timeStamp data in data series
          var obj = dataObjects[objcount];
-         console.log('obj in dataObjects: ', obj);
+         //console.log('obj in dataObjects: ', obj);
          for (var dataSerieName in obj) {
             if (!obj.hasOwnProperty(dataSerieName) ||
                dataSerieName === "_id" ||
@@ -339,8 +344,8 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
             var dataserie = vm.dataSeries.find(function (e) {
                return e.key == dataSerieName
             });
-            console.log('vm.dataSeries at search: ', vm.dataSeries);
-            console.log('found ', dataserie, ' while looking for ', dataSerieName);
+            //console.log('vm.dataSeries at search: ', vm.dataSeries);
+            //console.log('found ', dataserie, ' while looking for ', dataSerieName);
             if (dataserie === undefined) {
                dataserie = {};
                dataserie['values'] = [];
@@ -350,7 +355,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
                dataserie['label'] = dataSerieName;
                dataserie['visible'] = 0 == dataserieNumber++;
                vm.dataSeries.push(dataserie);
-               console.log('vm.dataSeries after push of new dataserie: ', vm.dataSeries);
+               //console.log('vm.dataSeries after push of new dataserie: ', vm.dataSeries);
             }
 
             //Insert new dataserie value
@@ -375,8 +380,8 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
 
       //Sort data values
       for (var i in vm.dataSeries) {
-         console.log('sorting data values...');
-         console.log('vm.dataSeries: ', vm.dataSeries, 'i: ', i);
+         //console.log('sorting data values...');
+         //console.log('vm.dataSeries: ', vm.dataSeries, 'i: ', i);
          vm.dataSeries[i].values.sort(function (e1, e2) {
             return e1.x < e2.x
          });
@@ -385,7 +390,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
       //Data serie display control
       var countLeft = 0;
       var countRight = 0;
-      console.log('vm.dataSeries at dataserie display control: ', vm.dataSeries);
+      //console.log('vm.dataSeries at dataserie display control: ', vm.dataSeries);
       vm.dataSeries.forEach(function (dataserie) {
          if (dataserie.yAxis === 1) {
             countLeft++;
@@ -407,7 +412,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
       vm.options.chart.color = vm.dataSeries.map(function (dataserie) {
          return dataserie.color;
       });
-      console.log('vm.option.chart.color set to ', vm.options.chart.color);
+      //console.log('vm.option.chart.color set to ', vm.options.chart.color);
 
       //Data serie visibility control
       vm.updateFilteredDataSeries();
@@ -446,8 +451,6 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    };
    vm.changeDisplayType("table");
 
-   //Update data content
-   vm.updateDataObjects();
 
    $scope.$watch(
       function () {

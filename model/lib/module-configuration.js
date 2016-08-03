@@ -274,7 +274,7 @@ Modules = [
 
    //Arthritis pain module
    {
-      name: "Arthritis Pain",
+      name: "Arthritis_Pain",
       wizard: {
          steps: [
             {
