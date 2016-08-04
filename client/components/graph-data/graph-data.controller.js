@@ -4,14 +4,19 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   for (i = 0; i< Modules.length; i++) {
-      vm.subscribe('graphData', () => [Modules[i].name]);
-   }
+   vm.dataType = Session.get('graphDataType');
+   vm.viewTitle = $translate.instant(vm.dataType);
+
+   vm.subscribe('graphData', () => [vm.dataType]);
 
    if (!vm.endTimeStamp || !vm.startTimeStamp) {
       vm.endTimeStamp = new Date();
       vm.startTimeStamp = new Date();
       vm.startTimeStamp.setMonth(vm.startTimeStamp.getMonth() - 1);
+   }
+
+   if (vm.dataSeries === undefined) {
+      vm.dataSeries = []; // Objects like {values: [{x:timeStap, y:value},...], color: ?, type: ?, key: ?, label: ?, visible: true}
    }
 
    vm.helpers({
@@ -29,16 +34,6 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
          });
       }
    });
-
-
-   vm.dataType = Session.get('graphDataType');
-   vm.viewTitle = $translate.instant(vm.dataType);
-
-   //vm.updateDataObjects();
-
-   if (vm.dataSeries === undefined) {
-      vm.dataSeries = []; // Objects like {values: [{x:timeStap, y:value},...], color: ?, type: ?, key: ?, label: ?, visible: true}
-   }
 
    if (vm.startTimePickerObject === undefined) {
       vm.startTimePickerObject = {
