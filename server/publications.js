@@ -34,14 +34,22 @@
    //   })
    //});
 
-   Meteor.publish('graphData', function (module) {
+   Meteor.publish('graphData', function (module, startTimestamp, endTimestamp) {
       return Registrations.find({
          $and: [
             {moduleName: module},
             {moduleName: {$exists: true}},
             {createdBy: this.userId},
-            {createdBy: {$exists: true}}
+            {createdBy: {$exists: true}},
+            {
+               timestamp: {
+                  $gte: startTimestamp,
+                  $lte: endTimestamp
+               }
+            }
          ]
+      },{
+         sort: {timestamp: -1}
       })
    });
 
