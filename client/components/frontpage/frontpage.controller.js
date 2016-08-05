@@ -58,5 +58,9 @@ function FrontpageController($scope, $reactive, $ionicModal, ModuleManagementSer
       vm.refresh = true;
       console.log('vm.refresh at 3 is', vm.refresh);
    }
+
+   //$scope.$on("$ionicView.leave", function(event, data) {
+   //   console.log('Frontpage has left!');
+   //});
 }
 

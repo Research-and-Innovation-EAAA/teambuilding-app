@@ -64,48 +64,73 @@
                   api="vm.api"></nvd3>
          </div>
 
-         <div id="graph-data-table"
-              class="graph-data-flex-child graph-data-width"
-              ng-if="vm.displaytype=='table'">
-            <div ng-repeat="dataserie in vm.filteredDataSeries">
-               <div ng-show="$index==0" class="row">
-                  <div class="col"><strong></strong></div>
-                  <div class="col" ng-repeat="(index, value) in dataserie.values">
-                     <strong>{{value.x | date:'dd/MM'}}<br>{{value.x | date:'HH:mm'}}</strong>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col" translate>{{dataserie.key}}</div>
-                  <div class="col" ng-repeat="(index, value) in dataserie.values">{{value.y || '-'}}</div>
-               </div>
-            </div>
-         </div>
+          <div class="outer">
+              <div class="inner">
+                  <table>
+                      <tr ng-repeat="(key,value) in vm.tableObject"
+                          ng-init="isFirstRow = $first">
+                          <th>{{isFirstRow ? '' : key }}</th>
+                          <td ng-repeat="number in value">
+                              <span ng-if='isFirstRow'>
+                                  <strong>
+                                      {{number | date:'dd/MM'}}<br>{{number | date:'HH:mm'}}
+                                  </strong>
 
-         <div style="margin-top: 10px" class="graph-data-flex-parent">
-            <div ng-repeat="dataserie in vm.dataSeries">
-               <div class="graph-data-flex-child">
+                              </span>
+                              <span ng-if='!isFirstRow'>
+                                  {{number}}
+                              </span>
+                          </td>
+                      </tr>
+                  </table>
 
-               <span ng-if="dataserie.visible">
-                  <button ng-click="vm.toggleShowDataSerie(dataserie.key)"
-                          class="button button-dark"
-                          ng-style="{'background-color': '{{vm.options.chart.color[$index]}}'};"
-                          translate> {{dataserie.label}}
-                  </button>
-               </span>
-               <span ng-if="!dataserie.visible">
-                  <button ng-click="vm.toggleShowDataSerie(dataserie.key)"
-                          class="button button-stable"
-                          translate> {{dataserie.label}}
-                  </button>
-               </span>
+              </div>
+          </div>
 
-               </div>
-            </div>
-         </div>
+         <!--<div id="graph-data-table"-->
+              <!--class="graph-data-flex-child graph-data-width"-->
+              <!--ng-if="vm.displaytype=='table'">-->
+            <!--<div ng-repeat="dataserie in vm.filteredDataSeries">-->
+               <!--<div ng-show="$index==0" class="row">-->
+                  <!--<div class="col"><strong></strong></div>-->
+                  <!--<div class="col" ng-repeat="(index, value) in dataserie.values">-->
+                     <!--<strong>{{value.x | date:'dd/MM'}}<br>{{value.x | date:'HH:mm'}}</strong>-->
+                  <!--</div>-->
+               <!--</div>-->
+               <!--<div class="row">-->
+                  <!--<div class="col" translate>{{dataserie.key}}</div>-->
+                  <!--<div class="col" ng-repeat="(index, value) in dataserie.values">{{value.y || '-'}}</div>-->
+               <!--</div>-->
+            <!--</div>-->
+         <!--</div>-->
 
-         <div id="disclaimer">
-            <i translate="graphDataDisclaimer"></i>
-         </div>
+         <!--<div style="margin-top: 10px" class="graph-data-flex-parent">-->
+            <!--<div ng-repeat="dataserie in vm.dataSeries">-->
+               <!--<div class="graph-data-flex-child">-->
+
+               <!--<span ng-if="dataserie.visible">-->
+                  <!--<button ng-click="vm.toggleShowDataSerie(dataserie.key)"-->
+                          <!--class="button button-dark"-->
+                          <!--ng-style="{'background-color': '{{vm.options.chart.color[$index]}}'};"-->
+                          <!--translate> {{dataserie.label}}-->
+                  <!--</button>-->
+               <!--</span>-->
+               <!--<span ng-if="!dataserie.visible">-->
+                  <!--<button ng-click="vm.toggleShowDataSerie(dataserie.key)"-->
+                          <!--class="button button-stable"-->
+                          <!--translate> {{dataserie.label}}-->
+                  <!--</button>-->
+               <!--</span>-->
+
+               <!--</div>-->
+            <!--</div>-->
+         <!--</div>-->
+
+         <!--<div id="disclaimer">-->
+            <!--<i translate="graphDataDisclaimer"></i>-->
+         <!--</div>-->
+
+
 
       </ion-content>
 

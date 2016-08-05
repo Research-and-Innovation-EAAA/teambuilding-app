@@ -46,7 +46,8 @@
                   $gte: startTimestamp,
                   $lte: endTimestamp
                }
-            }
+            },
+            {timestamp: {$exists: true}}
          ]
       },{
          sort: {timestamp: -1}

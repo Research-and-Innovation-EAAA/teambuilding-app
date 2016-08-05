@@ -24,7 +24,7 @@ function TemplateCardController($scope, $reactive, $location) {
 
    console.log('moduleName for template is ', $scope.moduleName);
 
-   vm.subscribe('moduleData', () => [module.name]);
+   var sub_handler = vm.subscribe('moduleData', () => [module.name]);
 
    vm.helpers({
       latestRegistration: () => {

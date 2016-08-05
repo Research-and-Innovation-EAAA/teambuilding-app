@@ -4,11 +4,15 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    $reactive(this).attach($scope);
    var vm = this;
 
+   $scope.$on('$ionicView.beforeEnter',function(event, data){
+      console.log('Graph-data view is about to enter!');
+   });
+
    vm.dataType = Session.get('graphDataType');
    vm.viewTitle = $translate.instant(vm.dataType);
 
    var handle = vm.subscribe('graphData',
-      () => [vm.dataType, vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')]);
+      () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')]);
 
    //Init
    if (!vm.endTimeStamp || !vm.startTimeStamp) {
@@ -21,26 +25,16 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
       vm.filteredData = [];
    }
 
-   //vm.helpers({
-   //   getDataForPeriod: () => {
-   //      console.log('getDataForPeriod: ', vm.startTimeStamp, vm.endTimeStamp);
-   //      return Registrations.find({
-   //         moduleName: vm.dataType,
-   //         timestamp: {
-   //            $gt: vm.startTimeStamp,
-   //            $lt: vm.endTimeStamp
-   //         }
-   //      }, {
-   //         sort: {timestamp: -1},
-   //         limit: 5
-   //      });
-   //   }
-   //});
-
    vm.helpers({
       getDataForPeriod: () => {
          return Registrations.find({
-            moduleName: vm.dataType
+            $and: [
+               {moduleName: vm.dataType},
+               {timestamp: {$exists: true}}
+            ]
+
+         },{
+            sort: {timestamp: -1}
          });
       }
    });
@@ -186,9 +180,45 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
       console.log("updated end timestamp to ", vm.endTimeStamp);
    };
 
-   Tracker.autorun(function() {
-      if (handle.ready())
+   //Table display helper methods
+   //----------------------------
+   function generateTableObject() {
+      vm.tableObject = {};
+
+      var ignoredProperties = [
+         'timestamp', 'createdAt', 'createdBy', 'moduleName', '_id', 'diagnosis', 'flaccvalue'
+      ];
+
+      var data = vm.getDataForPeriod;
+      if (data[0] != null) {
+
+         vm.tableObject['timestamp'] = _.pluck(data, 'timestamp');
+         for (var property in data[0]) {
+            if (data[0].hasOwnProperty(property) && !_.contains(ignoredProperties, property)) {
+               vm.tableObject[property] = _.pluck(data, property);
+            }
+         }
+         console.log('vm.tableObject is ', vm.tableObject);
+         $scope.$evalAsync();
+      } else {
+         console.log('No data found :(');
+         //vm.refresh = false;
+      }
+
+   }
+
+   //function refreshDOM() {
+   //   vm.refresh = false;
+   //   $scope.$apply();
+   //   vm.refresh = true;
+   //}
+
+   Tracker.autorun(function () {
+      //TODO: Add loading indicator which finishes when sub is ready
+      if (handle.ready()) {
          console.log('Subscription ready!', vm.getDataForPeriod);
+         generateTableObject();
+      }
    });
 
 
