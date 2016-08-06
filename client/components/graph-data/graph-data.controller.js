@@ -4,15 +4,17 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   $scope.$on('$ionicView.beforeEnter',function(event, data){
+   var handle = vm.subscribe('graphData',
+      () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')]);
+
+   $scope.$on('$ionicView.beforeEnter', function (event, data) {
       console.log('Graph-data view is about to enter!');
+      handle = vm.subscribe('graphData',
+         () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')]);
    });
 
    vm.dataType = Session.get('graphDataType');
    vm.viewTitle = $translate.instant(vm.dataType);
-
-   var handle = vm.subscribe('graphData',
-      () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')]);
 
    //Init
    if (!vm.endTimeStamp || !vm.startTimeStamp) {
@@ -33,9 +35,12 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
                {timestamp: {$exists: true}}
             ]
 
-         },{
+         }, {
             sort: {timestamp: -1}
          });
+      },
+      isSmallScreen: () => {
+         return window.innerWidth < 768;
       }
    });
 
@@ -192,6 +197,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
       var data = vm.getDataForPeriod;
       if (data[0] != null) {
 
+         vm.isData = true;
          vm.tableObject['timestamp'] = _.pluck(data, 'timestamp');
          for (var property in data[0]) {
             if (data[0].hasOwnProperty(property) && !_.contains(ignoredProperties, property)) {
@@ -199,23 +205,41 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
             }
          }
          console.log('vm.tableObject is ', vm.tableObject);
-         $scope.$evalAsync();
+
+         $timeout(function (scope) {
+
+               var cellWidth = vm.isSmallScreen ? 80 : 100;
+               var width = vm.tableObject['timestamp'].length * cellWidth;
+               var height = _.size(vm.tableObject) * 45 + 15;
+               vm.tableDimensions = (isFirstRow) => {
+                  return {
+                     width: width + 'px',
+                     height: height + 'px'
+                  };
+               };
+               vm.scrollDimensions = () => {
+                  return {
+                     width: '100%',
+                     height: height + 'px'
+                  };
+               };
+               console.log('scrollDimensions: ', vm.scrollDimensions());
+               console.log('width: ', width, 'vm.tableWidth: ', vm.tableDimensions(true));
+            }
+         );
       } else {
          console.log('No data found :(');
-         //vm.refresh = false;
+         $timeout(function (scope) {
+               vm.isData = false;
+            }
+         );
       }
 
    }
 
-   //function refreshDOM() {
-   //   vm.refresh = false;
-   //   $scope.$apply();
-   //   vm.refresh = true;
-   //}
-
    Tracker.autorun(function () {
       //TODO: Add loading indicator which finishes when sub is ready
-      if (handle.ready()) {
+      if (handle != null && handle.ready()) {
          console.log('Subscription ready!', vm.getDataForPeriod);
          generateTableObject();
       }

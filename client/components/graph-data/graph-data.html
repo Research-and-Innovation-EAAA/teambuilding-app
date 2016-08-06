@@ -1,152 +1,129 @@
 <div ng-controller="graphDataController as vm">
-   <ion-view ng-attr-view-title="{{vm.viewTitle}}">
-      <ion-content>
-         <div class="graph-data-flex-parent graph-data-flex-child">
-            <div class="graph-data-flex-child">
+    <ion-view ng-attr-view-title="{{vm.viewTitle}}">
+        <ion-content>
+            <div class="graph-data-flex-parent graph-data-flex-child">
+                <div class="graph-data-flex-child">
 
-               <div class="row">
+                    <div class="row">
                     <span class="col" style="text-align: center">
                         <strong>Fra:</strong>
                     </span>
                     <span class="col" style="text-align: center">
                         <strong>Til:</strong>
                     </span>
-               </div>
-               <div class="row">
+                    </div>
+                    <div class="row">
 
-                  <div class="col">
-                     <div class="row responsive-sm">
                         <div class="col">
-                           <ionic-datepicker input-obj="vm.startDatepickerObject">
-                              <button class="button button-block button-stable">
-                                 <strong>{{vm.startDatepickerObject.inputDate | date:'dd/MM, yyyy'}}</strong>
-                              </button>
-                           </ionic-datepicker>
+                            <div class="row responsive-sm">
+                                <div class="col">
+                                    <ionic-datepicker input-obj="vm.startDatepickerObject">
+                                        <button class="button button-block button-stable">
+                                            <strong>{{vm.startDatepickerObject.inputDate | date:'dd/MM, yyyy'}}</strong>
+                                        </button>
+                                    </ionic-datepicker>
+                                </div>
+                                <div class="col">
+                                    <ionic-timepicker input-obj="vm.startTimePickerObject">
+                                        <button class="button button-block button-stable overflowShow">
+                                            <strong>{{vm.startTimePickerObject.displayValue()}}</strong>
+                                        </button>
+                                    </ionic-timepicker>
+                                </div>
+
+                            </div>
                         </div>
                         <div class="col">
-                           <ionic-timepicker input-obj="vm.startTimePickerObject">
-                              <button class="button button-block button-stable overflowShow">
-                                 <strong>{{vm.startTimePickerObject.displayValue()}}</strong>
-                              </button>
-                           </ionic-timepicker>
+                            <div class="row responsive-sm">
+                                <ionic-datepicker input-obj="vm.endDatepickerObject" class="col">
+                                    <button class="button button-block button-stable">
+                                        <strong>{{vm.endDatepickerObject.inputDate | date:'dd/MM, yyyy'}}</strong>
+                                    </button>
+                                </ionic-datepicker>
+                                <ionic-timepicker input-obj="vm.endTimePickerObject" class="col">
+                                    <button class="button button-block button-stable overflowShow">
+                                        <strong>{{vm.endTimePickerObject.displayValue()}}</strong>
+                                    </button>
+                                </ionic-timepicker>
+                            </div>
                         </div>
 
-                     </div>
-                  </div>
-                  <div class="col">
-                     <div class="row responsive-sm">
-                        <ionic-datepicker input-obj="vm.endDatepickerObject" class="col">
-                           <button class="button button-block button-stable">
-                              <strong>{{vm.endDatepickerObject.inputDate | date:'dd/MM, yyyy'}}</strong>
-                           </button>
-                        </ionic-datepicker>
-                        <ionic-timepicker input-obj="vm.endTimePickerObject" class="col">
-                           <button class="button button-block button-stable overflowShow">
-                              <strong>{{vm.endTimePickerObject.displayValue()}}</strong>
-                           </button>
-                        </ionic-timepicker>
-                     </div>
-                  </div>
+                    </div>
 
-               </div>
-
+                </div>
             </div>
-         </div>
 
-         <div id="graph-data-chart"
-              class="graph-data-width"
-              ng-if="vm.displaytype=='chart'">
-            <nvd3 id="graph"
-                  options="vm.options"
-                  data="vm.graphData"
-                  config="vm.config"
-                  events="vm.events"
-                  api="vm.api"></nvd3>
-         </div>
+            <div id="graph-data-chart"
+                 class="graph-data-width"
+                 ng-if="vm.displaytype=='chart'">
+                <nvd3 id="graph"
+                      options="vm.options"
+                      data="vm.graphData"
+                      config="vm.config"
+                      events="vm.events"
+                      api="vm.api"></nvd3>
+            </div>
 
-          <div class="outer">
-              <div class="inner">
-                  <table>
-                      <tr ng-repeat="(key,value) in vm.tableObject"
-                          ng-init="isFirstRow = $first">
-                          <th>{{isFirstRow ? '' : key }}</th>
-                          <td ng-repeat="number in value">
-                              <span ng-if='isFirstRow'>
-                                  <strong>
-                                      {{number | date:'dd/MM'}}<br>{{number | date:'HH:mm'}}
-                                  </strong>
+            <div class="outer" ng-show="vm.isData">
+                <div class="row">
+                    <div class="col col-property"
+                         style="margin-top: 6px !important;">
+                        <div class="row" ng-repeat="(key,value) in vm.tableObject"
+                             ng-style="{ height: $first ? '60px' : '45px',
+                                         overflow: 'hidden'}">
+                            <span class="center-text">
+                                {{$first ? '' : key}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col col-value">
+                        <ion-scroll zooming="false" direction="x"
+                                    ng-style="vm.scrollDimensions()">
+                            <div ng-style="vm.tableDimensions()">
+                                <div class="row center-text" ng-repeat="(key,value) in vm.tableObject"
+                                     ng-init="isFirstRow = $first"
+                                     ng-style="{ height: isFirstRow ? '60px' : '45px',
+                                                 'border-top': isFirstRow ? '0px none transparent' : '1px solid #778899',
+                                                 overflow: 'hidden'}">
+                                    <div class="col" ng-repeat="number in value track by $index">
+                                        <span ng-if='isFirstRow'>
+                                            <strong>
+                                                {{number | date:'dd/MM'}}<br>{{number | date:'HH:mm'}}
+                                            </strong>
+                                        </span>
+                                        <span ng-if='!isFirstRow'>
+                                            {{number}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
 
-                              </span>
-                              <span ng-if='!isFirstRow'>
-                                  {{number}}
-                              </span>
-                          </td>
-                      </tr>
-                  </table>
+                        </ion-scroll>
+                    </div>
+                </div>
+            </div>
 
-              </div>
-          </div>
+            <div id="no-data" ng-show="!vm.isData">
+                <label style="font-size: 1.9em;">
+                    Ingen data tilgængelige for denne periode.
+                </label>
+            </div>
 
-         <!--<div id="graph-data-table"-->
-              <!--class="graph-data-flex-child graph-data-width"-->
-              <!--ng-if="vm.displaytype=='table'">-->
-            <!--<div ng-repeat="dataserie in vm.filteredDataSeries">-->
-               <!--<div ng-show="$index==0" class="row">-->
-                  <!--<div class="col"><strong></strong></div>-->
-                  <!--<div class="col" ng-repeat="(index, value) in dataserie.values">-->
-                     <!--<strong>{{value.x | date:'dd/MM'}}<br>{{value.x | date:'HH:mm'}}</strong>-->
-                  <!--</div>-->
-               <!--</div>-->
-               <!--<div class="row">-->
-                  <!--<div class="col" translate>{{dataserie.key}}</div>-->
-                  <!--<div class="col" ng-repeat="(index, value) in dataserie.values">{{value.y || '-'}}</div>-->
-               <!--</div>-->
-            <!--</div>-->
-         <!--</div>-->
+        </ion-content>
 
-         <!--<div style="margin-top: 10px" class="graph-data-flex-parent">-->
-            <!--<div ng-repeat="dataserie in vm.dataSeries">-->
-               <!--<div class="graph-data-flex-child">-->
+        <ion-footer-bar>
+            <div class="button-bar">
+                <button class="button"
+                        ng-class="vm.tableButtonClass"
+                        ng-click="vm.changeDisplayType('table')">Tabel
+                </button>
+                <button class="button"
+                        ng-class="vm.chartButtonClass"
+                        ng-click="vm.changeDisplayType('chart')">Graf
+                </button>
+            </div>
+        </ion-footer-bar>
 
-               <!--<span ng-if="dataserie.visible">-->
-                  <!--<button ng-click="vm.toggleShowDataSerie(dataserie.key)"-->
-                          <!--class="button button-dark"-->
-                          <!--ng-style="{'background-color': '{{vm.options.chart.color[$index]}}'};"-->
-                          <!--translate> {{dataserie.label}}-->
-                  <!--</button>-->
-               <!--</span>-->
-               <!--<span ng-if="!dataserie.visible">-->
-                  <!--<button ng-click="vm.toggleShowDataSerie(dataserie.key)"-->
-                          <!--class="button button-stable"-->
-                          <!--translate> {{dataserie.label}}-->
-                  <!--</button>-->
-               <!--</span>-->
-
-               <!--</div>-->
-            <!--</div>-->
-         <!--</div>-->
-
-         <!--<div id="disclaimer">-->
-            <!--<i translate="graphDataDisclaimer"></i>-->
-         <!--</div>-->
-
-
-
-      </ion-content>
-
-      <ion-footer-bar>
-         <div class="button-bar">
-            <button class="button"
-                    ng-class="vm.tableButtonClass"
-                    ng-click="vm.changeDisplayType('table')">Tabel
-            </button>
-            <button class="button"
-                    ng-class="vm.chartButtonClass"
-                    ng-click="vm.changeDisplayType('chart')">Graf
-            </button>
-         </div>
-      </ion-footer-bar>
-
-   </ion-view>
+    </ion-view>
 
 </div>
