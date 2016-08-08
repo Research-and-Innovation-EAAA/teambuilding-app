@@ -53,6 +53,10 @@
     }
 }
 
+#table-value-row {
+    margin-top: 0;
+}
+
 #no-data {
     margin-left: auto;
     margin-right: auto;
@@ -60,4 +64,21 @@
     text-align: center;
     color: #778899;
 }
+
+#graph-button-row {
+    margin: auto;
+    width: 80%;
+    padding: 2px;
+}
+
+svg {
+    margin: auto;
+}
+
+/*#graphArea, svg {*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+/*}*/
 

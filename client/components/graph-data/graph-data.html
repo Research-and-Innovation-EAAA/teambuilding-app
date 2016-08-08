@@ -53,18 +53,32 @@
                 </div>
             </div>
 
-            <div id="graph-data-chart"
-                 class="graph-data-width"
-                 ng-if="vm.displaytype=='chart'">
+            <div ng-if="vm.displaytype==='chart'" ng-show="vm.isData">
                 <nvd3 id="graph"
-                      options="vm.options"
+                      options="vm.graph.options"
                       data="vm.graphData"
-                      config="vm.config"
+                      config="vm.graph.config"
                       events="vm.events"
                       api="vm.api"></nvd3>
+
+                <div id="buttonArea">
+                    <div id='graph-button-row' class="row">
+                        <div class="col"
+                             style="padding: 2px"
+                             ng-repeat="property in vm.graphProperties">
+                            <button class="button"
+                                    style="width: 100%; overflow: hidden;"
+                                    ng-style="{ background: vm.btnBackground(property)}"
+                                    ng-click="vm.showPropertyGraph(property.name)">
+                                {{property.name}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="outer" ng-show="vm.isData">
+
+            <div class="outer" ng-show="vm.isData" ng-if="vm.displaytype==='table'">
                 <div class="row">
                     <div class="col col-property"
                          style="margin-top: 6px !important;">
@@ -80,11 +94,14 @@
                         <ion-scroll zooming="false" direction="x"
                                     ng-style="vm.scrollDimensions()">
                             <div ng-style="vm.tableDimensions()">
-                                <div class="row center-text" ng-repeat="(key,value) in vm.tableObject"
+                                <div id="table-value-row"
+                                     class="row center-text"
+                                     ng-repeat="(key,value) in vm.tableObject"
                                      ng-init="isFirstRow = $first"
                                      ng-style="{ height: isFirstRow ? '60px' : '45px',
                                                  'border-top': isFirstRow ? '0px none transparent' : '1px solid #778899',
-                                                 overflow: 'hidden'}">
+                                                 overflow: 'hidden',
+                                                 background: vm.rowBackground(key)}">
                                     <div class="col" ng-repeat="number in value track by $index">
                                         <span ng-if='isFirstRow'>
                                             <strong>

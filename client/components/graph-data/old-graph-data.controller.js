@@ -7,7 +7,8 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    vm.dataType = Session.get('graphDataType');
    vm.viewTitle = $translate.instant(vm.dataType);
 
-   vm.subscribe('graphData', () => [vm.dataType]);
+   vm.subscribe('graphData',
+      () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')]);
 
    if (!vm.endTimeStamp || !vm.startTimeStamp) {
       vm.endTimeStamp = new Date();
@@ -24,10 +25,6 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
          console.log('getDataForPeriod: ', vm.startTimeStamp, vm.endTimeStamp);
          return Registrations.find({
             moduleName: vm.dataType,
-            timestamp: {
-               $gt: vm.getReactively('startTimeStamp'),
-               $lt: vm.getReactively('endTimeStamp')
-            }
          }, {
             sort: {timestamp: -1},
             limit: 5
