@@ -1,6 +1,6 @@
 <div ng-controller="graphDataController as vm">
     <ion-view ng-attr-view-title="{{vm.viewTitle}}">
-        <ion-content>
+        <ion-content class="default-background">
             <div class="graph-data-flex-parent graph-data-flex-child">
                 <div class="graph-data-flex-child">
 
@@ -18,14 +18,14 @@
                             <div class="row responsive-sm">
                                 <div class="col">
                                     <ionic-datepicker input-obj="vm.startDatepickerObject">
-                                        <button class="button button-block button-stable">
+                                        <button class="button button-block button-stable button-border">
                                             <strong>{{vm.startDatepickerObject.inputDate | date:'dd/MM, yyyy'}}</strong>
                                         </button>
                                     </ionic-datepicker>
                                 </div>
                                 <div class="col">
                                     <ionic-timepicker input-obj="vm.startTimePickerObject">
-                                        <button class="button button-block button-stable overflowShow">
+                                        <button class="button button-block button-stable button-border">
                                             <strong>{{vm.startTimePickerObject.displayValue()}}</strong>
                                         </button>
                                     </ionic-timepicker>
@@ -36,12 +36,12 @@
                         <div class="col">
                             <div class="row responsive-sm">
                                 <ionic-datepicker input-obj="vm.endDatepickerObject" class="col">
-                                    <button class="button button-block button-stable">
+                                    <button class="button button-block button-stable button-border">
                                         <strong>{{vm.endDatepickerObject.inputDate | date:'dd/MM, yyyy'}}</strong>
                                     </button>
                                 </ionic-datepicker>
                                 <ionic-timepicker input-obj="vm.endTimePickerObject" class="col">
-                                    <button class="button button-block button-stable overflowShow">
+                                    <button class="button button-block button-stable button-border">
                                         <strong>{{vm.endTimePickerObject.displayValue()}}</strong>
                                     </button>
                                 </ionic-timepicker>
@@ -70,7 +70,7 @@
                                     style="width: 100%; overflow: hidden;"
                                     ng-style="{ background: vm.btnBackground(property)}"
                                     ng-click="vm.showPropertyGraph(property.name)">
-                                {{property.name}}
+                                <strong>{{property.name}}</strong>
                             </button>
                         </div>
                     </div>
@@ -81,12 +81,14 @@
             <div class="outer" ng-show="vm.isData" ng-if="vm.displaytype==='table'">
                 <div class="row">
                     <div class="col col-property"
-                         style="margin-top: 6px !important;">
-                        <div class="row" ng-repeat="(key,value) in vm.tableObject"
+                         style="margin-top: 10px !important;">
+                        <div id="table-property-row"
+                             class="row center-text"
+                             ng-repeat="(key,value) in vm.tableObject"
                              ng-style="{ height: $first ? '60px' : '45px',
                                          overflow: 'hidden'}">
                             <span class="center-text">
-                                {{$first ? '' : key}}
+                                <b>{{$first ? '' : key}}</b>
                             </span>
                         </div>
                     </div>
@@ -102,7 +104,9 @@
                                                  'border-top': isFirstRow ? '0px none transparent' : '1px solid #778899',
                                                  overflow: 'hidden',
                                                  background: vm.rowBackground(key)}">
-                                    <div class="col" ng-repeat="number in value track by $index">
+                                    <div class="col"
+                                         ng-repeat="number in value track by $index"
+                                         style="margin-top: 5px;">
                                         <span ng-if='isFirstRow'>
                                             <strong>
                                                 {{number | date:'dd/MM'}}<br>{{number | date:'HH:mm'}}
@@ -128,15 +132,17 @@
 
         </ion-content>
 
-        <ion-footer-bar>
+        <ion-footer-bar id="display-type-footer-bar">
             <div class="button-bar">
-                <button class="button"
+                <button class="button button-border display-type-footer-button"
                         ng-class="vm.tableButtonClass"
-                        ng-click="vm.changeDisplayType('table')">Tabel
+                        ng-click="vm.changeDisplayType('table')">
+                    <strong>Tabel</strong>
                 </button>
-                <button class="button"
+                <button class="button button-border display-type-footer-button"
                         ng-class="vm.chartButtonClass"
-                        ng-click="vm.changeDisplayType('chart')">Graf
+                        ng-click="vm.changeDisplayType('chart')">
+                    <strong>Graf</strong>
                 </button>
             </div>
         </ion-footer-bar>

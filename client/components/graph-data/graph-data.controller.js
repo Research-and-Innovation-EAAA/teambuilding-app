@@ -196,20 +196,22 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    //Display control
    //---------------
    vm.changeDisplayType = function (dis) {
-      console.log('Changed display type from ', vm.displaytype, ' to ', dis);
-      vm.displaytype = dis;
-      if (dis === "chart") {
-         vm.chartButtonClass = "button-dark";
-         vm.tableButtonClass = "button-light";
+      if (vm.displaytype !== dis) {
+         console.log('Changed display type from ', vm.displaytype, ' to ', dis);
+         vm.displaytype = dis;
+         if (dis === "chart") {
+            vm.chartButtonClass = "button-dark";
+            vm.tableButtonClass = "button-light display-type-not-selected";
 
-         var chart = nv.models.lineChart();
-         vm.graphData = generateGraphData();
-         console.log('vm.graphData is ', vm.graphData);
-         d3.select("graph svg").datum(vm.graphData).call(chart);
+            var chart = nv.models.lineChart();
+            vm.graphData = generateGraphData();
+            console.log('vm.graphData is ', vm.graphData);
+            d3.select("graph svg").datum(vm.graphData).call(chart);
 
-      } else if (dis === "table") {
-         vm.chartButtonClass = "button-light";
-         vm.tableButtonClass = "button-dark";
+         } else if (dis === "table") {
+            vm.chartButtonClass = "button-light display-type-not-selected";
+            vm.tableButtonClass = "button-dark";
+         }
       }
    };
 
@@ -252,7 +254,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
          console.log('vm.tableObject is ', vm.tableObject);
          console.log('vm.graphProperties is ', vm.graphProperties);
 
-         //Setup UI for table based on data
+         //Setup table size
          $timeout(function (scope) {
 
                var cellWidth = vm.isSmallScreen ? 80 : 100;
@@ -273,7 +275,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
             }
          );
 
-         //Setup UI for graph by updating datasource
+         //Setup graph by updating datasource
          vm.graphData = generateGraphData();
 
       } else {
@@ -478,22 +480,27 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    };
 
    vm.rowBackground = (propertyName) => {
-      var property = _.find(vm.graphProperties, (p) => {
-         return p.name === propertyName;
-      });
 
-      var background;
-      if (property != null) {
+      if (propertyName !== 'timestamp') {
+         var property = _.find(vm.graphProperties, (p) => {
+            return p.name === propertyName;
+         });
 
-         var hex = property.color;
-         background = 'rgba(' + hexToRgb(hex).r + ',' + hexToRgb(hex).g + ',' + hexToRgb(hex).b
-            + ',' + '0.1)';
+         var background;
+         if (property != null) {
 
+            var hex = property.color;
+            background = 'rgba(' + hexToRgb(hex).r + ',' + hexToRgb(hex).g + ',' + hexToRgb(hex).b
+               + ',' + '0.1)';
+
+         } else {
+            console.log('No matching property found for ',propertyName);
+         }
+
+         return background;
       } else {
-         console.log('No matching property found for ',propertyName);
+         //console.log('Running vm.rowBackground for property timestamp!');
       }
-
-      return background;
    };
 
    Tracker.autorun(function () {

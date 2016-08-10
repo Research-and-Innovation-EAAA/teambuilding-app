@@ -53,7 +53,7 @@
     }
 }
 
-#table-value-row {
+#table-value-row, #table-property-row {
     margin-top: 0;
 }
 
@@ -71,14 +71,26 @@
     padding: 2px;
 }
 
+#display-type-footer-bar {
+    height: 60px;
+}
+
+.display-type-footer-button {
+    font-size: 1.15em !important;
+}
+
+.display-type-not-selected {
+    background: rgba(230,230,230,0.6) !important;
+}
+
 svg {
     margin: auto;
 }
 
 /*#graphArea, svg {*/
-    /*margin: 0;*/
-    /*padding: 0;*/
-    /*height: 100%;*/
-    /*width: 100%;*/
+/*margin: 0;*/
+/*padding: 0;*/
+/*height: 100%;*/
+/*width: 100%;*/
 /*}*/
 
