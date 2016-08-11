@@ -12,7 +12,7 @@ function PdfViewerController($scope, $reactive, $ionicPopup) {
       if (Meteor.isCordova) {
          $ionicPopup.alert({
             title: 'Funktion ikke tilgængelig',
-            content: 'Denne funktion er kun tilgængelig på leukemia.meteorapp.com'
+            content: 'Denne funktion er kun tilgængelig på howryou.meteorapp.com'
          });
       } else {
          window.open(url, "_blank");
