@@ -1,6 +1,6 @@
 <div class="card frontpage-card">
     <div class="item item-divider bar ng-class: vm.barClass;">
-            <span class="frontpage-card-icon" ng-style="{'content':'url({{vm.iconUrl}})'}">
+            <span class="frontpage-card-icon" ng-style=vm.iconStyle>
             </span>
         <strong translate>{{vm.moduleTitle}}</strong>
         <button style="float: right" class="button button-icon ion-plus-round"
@@ -11,8 +11,8 @@
     </div>
     <div class="item item-text-wrap">
         <div class="row">
-            <div class="col">
-                <strong>{{ vm.rowDescription(0) }}</strong>
+            <div class="col row-description">
+                {{ vm.rowDescription(0) }}
             </div>
             <div class="col">
                 {{ vm.rowProperty(0) }} &nbsp;&nbsp;
@@ -22,8 +22,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <strong>{{ vm.rowDescription(1) }}</strong>
+            <div class="col row-description">
+                {{ vm.rowDescription(1) }}
             </div>
             <div class="col">
                 {{ vm.rowProperty(1) }} &nbsp;&nbsp;
@@ -33,8 +33,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <strong>{{ vm.rowDescription(2) }}</strong>
+            <div class="col row-description">
+                {{ vm.rowDescription(2) }}
             </div>
             <div class="col">
                 {{ vm.rowProperty(2) }} &nbsp;&nbsp;

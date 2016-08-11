@@ -1,6 +1,7 @@
 .group-title {
     margin: auto;
-    width: 50%;
+    width: 100%;
     padding: 10px;
     text-align: center;
+    background-color: #e5f7ff;
 }

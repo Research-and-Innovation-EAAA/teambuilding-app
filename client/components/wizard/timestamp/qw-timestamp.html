@@ -4,14 +4,14 @@
         <div style="width: 100%">
            <div ng-hide="ts.dataType == 'Medicine' || ts.dataType == 'Bloodsamples'">
                 <ionic-timepicker input-obj="ts.timePickerObj">
-                    <button class="button button-block button-stable overflowShow">
+                    <button class="button button-block button-stable button-border">
                         <strong>{{ts.timePickerObj.displayValue()}}</strong>
                     </button>
                 </ionic-timepicker>
             </div>
             <div>
                 <ionic-datepicker input-obj="ts.datePickerObj">
-                    <button class="button button-block button-stable">
+                    <button class="button button-block button-stable button-border">
                         <strong>{{ts.datePickerObj.inputDate | date:ts.dateFormat}}</strong>
                     </button>
                 </ionic-datepicker>

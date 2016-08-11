@@ -10,78 +10,104 @@ angular.module('leukemiapp').directive('templateCard', function () {
    }
 });
 
-function TemplateCardController($scope, $reactive, $location) {
+function TemplateCardController($scope, $reactive, $location, $timeout, $ionicScrollDelegate) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   var module = {};
+   vm.module = {};
 
-   for (moduleIndex = 0; moduleIndex < Modules.length; moduleIndex++) {
-      if (Modules[moduleIndex].name === $scope.moduleName) {
-         module = Modules[moduleIndex];
-      }
-   }
-
-   console.log('moduleName for template is ', $scope.moduleName);
-
-   var sub_handler = vm.subscribe('moduleData', () => [module.name]);
+   var subHandle = vm.subscribe('moduleData', () => [vm.module.name]);
 
    vm.helpers({
       latestRegistration: () => {
          return Registrations.findOne({
-            moduleName: module.name
+            moduleName: vm.getReactively('module.name')
          });
       }
    });
 
-   vm.moduleTitle = module.name;
+   //Find module from name
+   function getModuleFromName() {
+      for (moduleIndex = 0; moduleIndex < Modules.length; moduleIndex++) {
+         if (Modules[moduleIndex].name === $scope.moduleName) {
+
+            vm.module = Modules[moduleIndex];
+            vm.moduleTitle = vm.module.name;
+
+            subHandle = vm.subscribe('moduleData', () => [vm.module.name]);
+
+            if (vm.module.frontPage !== undefined) {
+               vm.iconStyle = {
+                  content: 'url('+ vm.module.frontPage.iconUrl + ')'
+               };
+               vm.barClass = vm.module.frontPage.barClass;
+
+               vm.rowProperty = (rowNumber) => {
+                  var registration = vm.latestRegistration;
+                  if (vm.module.frontPage.properties !== undefined) {
+                     if (rowNumber >= vm.module.frontPage.properties.length)
+                        return "";
+
+                     var propertyName = vm.module.frontPage.properties[rowNumber];
+                     if (registration !== undefined && registration[propertyName] != null)
+                        return registration[propertyName];
+                     else return ' - ';
+                  } else if (vm.module.frontPage.propertyFunction !== undefined) {
+                     return vm.module.frontPage.propertyFunction(registration, rowNumber);
+                  } else return "";
+               };
+
+               vm.rowDescription = (rowNumber) => {
+                  if (vm.module.frontPage.propertyDescription !== undefined) {
+                     if (rowNumber >= vm.module.frontPage.propertyDescription.length)
+                        return "";
+
+                     return vm.module.frontPage.propertyDescription[rowNumber];
+                  } else return "";
+               };
+
+               vm.rowMeasurement = (rowNumber) => {
+                  if (vm.module.frontPage.propertyMeasurement !== undefined) {
+                     if (rowNumber >= vm.module.frontPage.propertyMeasurement.length)
+                        return "";
+
+                     return vm.module.frontPage.propertyMeasurement[rowNumber];
+                  } else return "";
+               };
+            }
+         }
+      }
+      console.log('getModuleFromName() called! module is',vm.module);
+      console.log('vm.moduleTitle is ',vm.moduleTitle);
+   }
 
    vm.newRegistration = () => {
-      Session.set('registrationType', module.name);
+      Session.set('registrationType', vm.module.name);
       $location.path("app/questionwizard");
    };
 
    vm.showGraphData = () => {
-      Session.set('graphDataType', module.name);
+      Session.set('graphDataType', vm.module.name);
       $location.path("app/graphdata")
    };
 
-   if (module.frontPage !== undefined) {
-      vm.iconUrl = module.frontPage.iconUrl;
-      vm.barClass = module.frontPage.barClass;
+   $scope.$watch(
+      function () {
+         return $scope.moduleName;
+      },
+      function (newValue, oldValue) {
+         if (newValue != oldValue) {
+            console.log('Module name changed for component from ', oldValue,' to ',newValue);
+            getModuleFromName();
+         }
+      }
+   );
 
-      vm.rowProperty = (rowNumber) => {
-         var registration = vm.latestRegistration;
-         if (module.frontPage.properties !== undefined) {
-            if (rowNumber >= module.frontPage.properties.length)
-               return "";
-
-            var propertyName = module.frontPage.properties[rowNumber];
-            if (registration !== undefined && registration[propertyName] != null)
-               return registration[propertyName];
-            else return ' - ';
-         } else if (module.frontPage.propertyFunction !== undefined) {
-            return module.frontPage.propertyFunction(registration, rowNumber);
-         } else return "";
-      };
-
-      vm.rowDescription = (rowNumber) => {
-         if (module.frontPage.propertyDescription !== undefined) {
-            if (rowNumber >= module.frontPage.propertyDescription.length)
-               return "";
-
-            return module.frontPage.propertyDescription[rowNumber];
-         } else return "";
-      };
-
-      vm.rowMeasurement = (rowNumber) => {
-         if (module.frontPage.propertyMeasurement !== undefined) {
-            if (rowNumber >= module.frontPage.propertyMeasurement.length)
-               return "";
-
-            return module.frontPage.propertyMeasurement[rowNumber];
-         } else return "";
-      };
-   }
-
+   Tracker.autorun(function () {
+      //TODO: Add loading indicator which finishes when sub is ready
+      if (subHandle != null && subHandle.ready()) {
+         console.log('Subscription ready on card!');
+         getModuleFromName();
+      }
+   });
 }

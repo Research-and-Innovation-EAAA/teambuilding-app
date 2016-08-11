@@ -80,8 +80,8 @@
 
             <div class="outer" ng-show="vm.isData" ng-if="vm.displaytype==='table'">
                 <div class="row">
-                    <div class="col col-property"
-                         style="margin-top: 10px !important;">
+                    <div class="col col-property">
+                         <!--style="margin-top: 5px !important;"-->
                         <div id="table-property-row"
                              class="row center-text"
                              ng-repeat="(key,value) in vm.tableObject"
@@ -106,7 +106,7 @@
                                                  background: vm.rowBackground(key)}">
                                     <div class="col"
                                          ng-repeat="number in value track by $index"
-                                         style="margin-top: 5px;">
+                                         style="margin-top: 7px !important;">
                                         <span ng-if='isFirstRow'>
                                             <strong>
                                                 {{number | date:'dd/MM'}}<br>{{number | date:'HH:mm'}}

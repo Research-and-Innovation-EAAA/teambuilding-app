@@ -7,7 +7,8 @@
     <ion-nav-buttons side="secondary">
         <button class="button button-icon ion-android-settings" ng-click="vm.openModal()"></button>
     </ion-nav-buttons>
-    <ion-content class="default-background">
+    <ion-content class="default-background"
+                 delegate-handle="front-page-scroll">
         <div class="row responsive-md bigScreen-topRow">
             <div class="col">
                 <calendar></calendar>
@@ -26,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div ng-repeat="module in vm.activeModules" ng-if="$even && vm.refresh" class="row responsive-md">
+        <div ng-repeat="module in vm.activeModules" ng-if="$even" class="row responsive-md">
             <div class="col-50 frontpage-col">
                 <template-card
                         module-name="{{vm.activeModules[$index]}}"></template-card>

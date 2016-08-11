@@ -386,7 +386,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
 
    function generateGraphData() {
       var data = [];
-      if (vm.graphProperties != null) {
+      if (vm.graphProperties != null && vm.graphProperties.length > 0) {
 
          var propertyToShow = _.find(vm.graphProperties, (p) => {
             return p.visible;

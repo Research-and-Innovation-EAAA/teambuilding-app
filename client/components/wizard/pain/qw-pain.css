@@ -3,7 +3,7 @@
     width: 80%;
 }
 
-.pain-button {
+.flacc-button {
     line-height: 1.5em;
     min-height: 5.0em;
 }
@@ -46,14 +46,6 @@
     .smiley-two-row {
         display: none;
     }
-
-    /*.responsive {*/
-    /*height: 212px;*/
-    /*width: 163px;*/
-    /*box-shadow: 0 0 0 5px white inset;*/
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
-    /*}*/
 }
 
 @media (max-width: 767px) {
@@ -65,12 +57,4 @@
     .smiley-one-row {
         display: none;
     }
-
-    /*.responsive {*/
-    /*height: 150px;*/
-    /*width: 125px;*/
-    /*box-shadow: 0 0 0 5px white inset;*/
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
-    /*}*/
 }

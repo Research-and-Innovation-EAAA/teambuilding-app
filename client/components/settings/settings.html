@@ -1,9 +1,19 @@
 <ion-modal-view class="centervertically" ng-controller="settingsController as vm">
     <ion-header-bar class="bar bar-header bar-stable">
         <h1 class="title">Modules</h1>
-        <!--<button class="button button-clear button-primary" ng-click="vm.closeModal()">Cancel</button>-->
+        <button class="button button-clear button-primary"
+                ng-click="vm.cancelModal()">
+            Cancel
+        </button>
+        <button class="button button-clear button-secondary"
+                ng-click="vm.doneModal()">
+            <strong>Done</strong>
+        </button>
     </ion-header-bar>
-    <ion-content>
+    <ion-content class="default-background">
+        <div id="info-label">
+            Select active modules to be shown on frontpage
+        </div>
         <ul class="list">
             <li class="item item-toggle" ng-repeat="(key,val) in vm.modules">
                 <translate>{{key}}</translate>

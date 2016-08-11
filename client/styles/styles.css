@@ -3,6 +3,11 @@
     background-color: #ecf5f9;
 }
 
+.center-text {
+    text-align: center;
+    margin: auto;
+}
+
 .button-border {
     border: 1px solid grey !important;
 }
