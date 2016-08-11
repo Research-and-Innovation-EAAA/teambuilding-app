@@ -6,15 +6,17 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
 
    //Subscriptions
    //-------------
-   var subHandle = vm.subscribe('graphData',
-      () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')]);
+   vm.subscribe('graphData',
+      () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')],
+      () => {
+         console.log('Subscription ready!', vm.getDataForPeriod);
+         processData();
+      });
 
    //Code to be run every time view becomes visible
    //----------------------------------------------
    $scope.$on('$ionicView.beforeEnter', function (event, data) {
       console.log('Graph-data view is about to enter!');
-      subHandle = vm.subscribe('graphData',
-         () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')]);
       vm.changeDisplayType('table');
    });
 
@@ -502,15 +504,5 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
          //console.log('Running vm.rowBackground for property timestamp!');
       }
    };
-
-   Tracker.autorun(function () {
-      //TODO: Add loading indicator which finishes when sub is ready
-      if (subHandle != null && subHandle.ready()) {
-         console.log('Subscription ready!', vm.getDataForPeriod);
-         processData();
-      }
-   });
-
-
 }
 

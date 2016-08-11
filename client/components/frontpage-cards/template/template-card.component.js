@@ -10,13 +10,18 @@ angular.module('leukemiapp').directive('templateCard', function () {
    }
 });
 
-function TemplateCardController($scope, $reactive, $location, $timeout, $ionicScrollDelegate) {
+function TemplateCardController($scope, $reactive, $location) {
    $reactive(this).attach($scope);
    var vm = this;
 
    vm.module = {};
 
-   var subHandle = vm.subscribe('moduleData', () => [vm.module.name]);
+   var subHandle = vm.subscribe('moduleData',
+      () => [vm.module.name],
+      () => {
+         console.log('Subscription ready on card!');
+         getModuleFromName();
+      });
 
    vm.helpers({
       latestRegistration: () => {
@@ -102,12 +107,4 @@ function TemplateCardController($scope, $reactive, $location, $timeout, $ionicSc
          }
       }
    );
-
-   Tracker.autorun(function () {
-      //TODO: Add loading indicator which finishes when sub is ready
-      if (subHandle != null && subHandle.ready()) {
-         console.log('Subscription ready on card!');
-         getModuleFromName();
-      }
-   });
 }
