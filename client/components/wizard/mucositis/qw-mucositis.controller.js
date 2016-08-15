@@ -11,7 +11,7 @@ function MucositisController($scope, $reactive) {
 
    if (vm.registration.diagnosis === undefined) {
       vm.registration.diagnosis = [];
-      vm.registration.nauseaScore = 5;
+      vm.registration.nauseaScore = 0;
       Session.set('registration', vm.registration);
    }
 
