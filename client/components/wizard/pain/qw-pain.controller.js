@@ -23,44 +23,6 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
       }
    });
 
-   function validateMorphine() {
-      var isValidMorphine = true;
-      console.log('registration.morphineType: ', vm.registration.morphineType);
-      if (vm.registration.morphineType !== undefined) { //if there is a selected morphine type
-         // check there is valid dose
-         console.log(vm.registration.morphineDose);
-         if (vm.registration.morphineDose === undefined || vm.registration.morphineDose == null || vm.registration.morphineDose < 0)
-            isValidMorphine = false;
-      } else { //if there is no selected morphine type
-         // check if there is valid dose
-         // to avoid confusion, if there is valid dose but no valid type do not validate until type is chosen or dose deleted
-         console.log('registration.morphineDose: ', vm.registration.morphineDose, 'when vm.registration.morphineType === undefined');
-         if (vm.registration.morphineDose != null) {
-            isValidMorphine = false;
-         }
-      }
-      return isValidMorphine;
-   }
-
-   //function validateData() {
-   //   var validated = Session.get('regValidated');
-   //   if (validated === undefined)
-   //      validated = [];
-   //   validated[0] = vm.registration.timestamp !== undefined;
-   //   validated[1] = validateMorphine();
-   //   validated[2] = vm.registration.painType !== undefined;
-   //   validated[3] = (vm.registration.flaccvalue != null &&
-   //      vm.registration.flaccvalue[0] != null &&
-   //      vm.registration.flaccvalue[1] != null &&
-   //      vm.registration.flaccvalue[2] != null &&
-   //      vm.registration.flaccvalue[3] != null &&
-   //      vm.registration.flaccvalue[4] != null) || (vm.selectedSmiley != null);
-   //   Session.set('regValidated', validated);
-   //   console.log('regValidated session variable updated: ', validated);
-   //   console.log('validated[3] part one: ', vm.registration.flaccvalue);
-   //   console.log('validated[3] part two: ', vm.selectedSmiley);
-   //}
-
    function validateData() {
       var validated = Session.get('regValidated');
       if (validated === undefined)

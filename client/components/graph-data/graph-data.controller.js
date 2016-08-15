@@ -213,6 +213,10 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
          } else if (dis === "table") {
             vm.chartButtonClass = "button-light display-type-not-selected";
             vm.tableButtonClass = "button-dark";
+
+            if (vm.tableObject != null && vm.isData == false) {
+
+            }
          }
       }
    };
@@ -244,10 +248,20 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
                vm.tableObject[property] = _.pluck(data, property);
 
                //Setup graph object
+               // _.every *
+               // * Returns true if all of the values in the list pass the predicate truth test
+               var isPropertyDisabled = _.every(vm.tableObject[property],
+                  (property) => {
+                     var isProperty = property != null;
+
+                     //property value invalid if string or null
+                     return typeof property == 'string' || !isProperty;
+                  });
                var graphProperty = {
                   name: property,
                   color: vm.colors[propertyIndex],
-                  visible: false
+                  visible: false,
+                  disabled: isPropertyDisabled    //graph disabled for string values
                };
                vm.graphProperties.push(graphProperty);
                propertyIndex++;
@@ -282,14 +296,16 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
 
       } else {
          console.log('No data found :(');
-         noData();
+         vm.tableObject = undefined;
+         vm.graphProperties = undefined;
+         setData(false);
       }
    }
 
    //call when no data to display
-   function noData() {
+   function setData(isData) {
       $timeout(function (scope) {
-            vm.isData = false;
+            vm.isData = isData;
          }
       );
    }
@@ -348,7 +364,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
          height: window.innerHeight / 2,
          showLegend: false,
          interpolate: 'linear',
-         noData: "",
+         noData: "Ingen data valgt til visning",
          margin: {
             top: 30,
             right: 30,
@@ -396,8 +412,14 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
 
          //sets default to first if none
          if (propertyToShow == null) {
-            propertyToShow = vm.graphProperties[0];
-            propertyToShow.visible = true;
+            propertyToShow = _.find(vm.graphProperties, (property) => {
+               return property.disabled == false;
+            });
+            if (propertyToShow == null) {
+               setData(false);
+            } else {
+               propertyToShow.visible = true;
+            }
          }
 
          var graphLine = [];
@@ -415,21 +437,27 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
                );
                timestampValues.forEach(function (element, index, array) {
 
-                  graphLine.push({
-                     x: element,
-                     y: propertyValues[index]
-                  });
-
+                  //Exclude strings from graph if mixed values
+                  var isInvalid = () => {
+                     var isObject = propertyValues[index] != null;
+                     return typeof propertyValues[index] == 'string' || !isObject;
+                  };
+                  if (!isInvalid()) {
+                     graphLine.push({
+                        x: element,
+                        y: propertyValues[index]
+                     });
+                  }
                });
 
             } else {
                console.log('timestampValues or propertyValues is null or undefined!');
-               noData();
+               setData(false);
             }
 
          } else {
             console.log('vm.tableObject is null or undefined!');
-            noData();
+            setData(false);
          }
 
          data.push({
@@ -438,6 +466,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
          });
 
       }
+
       return data;
    }
 
@@ -460,7 +489,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
       if (propertyToShow != null) {
          propertyToShow.visible = true;
       } else {
-         console.log('No matching property to show found for ',propertyName);
+         console.log('No matching property to show found for ', propertyName);
       }
 
       vm.graphData = generateGraphData();
@@ -496,7 +525,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
                + ',' + '0.1)';
 
          } else {
-            console.log('No matching property found for ',propertyName);
+            console.log('No matching property found for ', propertyName);
          }
 
          return background;

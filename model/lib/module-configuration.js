@@ -87,19 +87,27 @@ Modules = [
                validation: (registration) => {
                   var isValidMorphine = true;
                   console.log('registration.morphineType: ', registration.morphineType);
-                  if (registration.morphineType !== undefined) { //if there is a selected morphine type
+                  if (registration.morphineType !== undefined) {
+                     //if there is a selected morphine type
                      // check there is valid dose
                      console.log(registration.morphineDose);
                      if (registration.morphineDose === undefined || registration.morphineDose == null || registration.morphineDose < 0)
                         isValidMorphine = false;
-                  } else { //if there is no selected morphine type
+                  } else {
+                     //if there is no selected morphine type
                      // check if there is valid dose
-                     // to avoid confusion, if there is valid dose but no valid type do not validate until type is chosen or dose deleted
+                     // to avoid confusion, if there is valid dose but no valid type
+                     // do not validate until type is chosen or dose deleted
                      console.log('registration.morphineDose: ', registration.morphineDose, 'when registration.morphineType === undefined');
                      if (registration.morphineDose != null) {
                         isValidMorphine = false;
+                     } else {
+                        registration.morphineType = '-';
+                        registration.morphineDose = '-';
+                        registration.morphineMeasureUnit = '-';
                      }
                   }
+                  console.log('Validate Morphine called!');
                   return isValidMorphine;
                }
             },

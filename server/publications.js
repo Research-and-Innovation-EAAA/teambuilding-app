@@ -49,14 +49,17 @@
             },
             {timestamp: {$exists: true}}
          ]
-      },{
+      }, {
          sort: {timestamp: -1}
       })
    });
 
    Meteor.startup(function () {
-      Registrations._ensureIndex({"moduleName": 1});
-      Registrations._ensureIndex({"createdBy": 1});
+      if (Meteor.isServer) {
+         Registrations._ensureIndex({"moduleName": 1});
+         Registrations._ensureIndex({"createdBy": 1});
+         Registrations._ensureIndex({"timestamp": 1});
+      }
    });
 
    Meteor.publish("notes", function () {
@@ -69,7 +72,9 @@
    });
 
    Meteor.startup(function () {
-      Notes._ensureIndex({"createdBy": 1});
+      if (Meteor.isServer) {
+         Notes._ensureIndex({"createdBy": 1});
+      }
    });
 
    Meteor.publish("reminders", function () {
@@ -86,6 +91,8 @@
    });
 
    Meteor.startup(function () {
-      Reminders._ensureIndex({"createdBy": 1});
+      if (Meteor.isServer) {
+         Reminders._ensureIndex({"createdBy": 1});
+      }
    });
 })();

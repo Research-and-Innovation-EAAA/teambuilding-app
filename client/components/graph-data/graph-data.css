@@ -75,12 +75,18 @@
 }
 
 .display-type-not-selected {
-    background: rgba(230,230,230,0.6) !important;
+    background: rgba(230, 230, 230, 0.6) !important;
 }
 
 svg {
     margin: auto;
 }
+
+/*#graph .nvd3 .nv-point-paths path {*/
+    /*stroke-opacity: 1!important;*/
+    /*stroke-width: 5px!important;*/
+    /*fill-opacity: 1!important;*/
+/*}*/
 
 /*#graphArea, svg {*/
 /*margin: 0;*/

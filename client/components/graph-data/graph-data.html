@@ -62,17 +62,24 @@
                       api="vm.api"></nvd3>
 
                 <div id="buttonArea">
-                    <div id='graph-button-row' class="row">
+                    <div id='graph-button-row' class="row responsive-md">
                         <div class="col"
                              style="padding: 2px"
                              ng-repeat="property in vm.graphProperties">
                             <button class="button"
                                     style="width: 100%; overflow: hidden;"
                                     ng-style="{ background: vm.btnBackground(property)}"
-                                    ng-click="vm.showPropertyGraph(property.name)">
+                                    ng-click="vm.showPropertyGraph(property.name)"
+                                    ng-disabled="property.disabled">
                                 <strong>{{property.name}}</strong>
                             </button>
                         </div>
+                    </div>
+                </div>
+
+                <div style="visibility: hidden" class="row">
+                    <div style="height: 10px" class="col">
+                        Dirty fix for resizing scrolling area
                     </div>
                 </div>
             </div>
