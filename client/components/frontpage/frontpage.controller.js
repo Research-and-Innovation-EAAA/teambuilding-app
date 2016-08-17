@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('frontpageController', FrontpageController);
 
-function FrontpageController($scope, $reactive, $ionicModal, ModuleManagementService, $timeout) {
+function FrontpageController($scope, $rootScope, $reactive, $ionicModal, ModuleManagementService, $timeout, $location) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -11,6 +11,14 @@ function FrontpageController($scope, $reactive, $ionicModal, ModuleManagementSer
 
    Accounts.ui.config({
       passwordSignupFields: "USERNAME_ONLY"
+   });
+
+   $rootScope.$on('$stateChangeSuccess', function (event) {
+      analytics.track("Page View", {
+         eventName: "path",
+         couponValue: $location.path()
+      });
+      analytics.identify
    });
 
    //Settings for turning modules on/off
