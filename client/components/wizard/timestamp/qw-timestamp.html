@@ -2,7 +2,7 @@
 
     <section class="padding-horizontal-50 top-margin">
         <div style="width: 100%">
-           <div ng-hide="ts.dataType == 'Medicine' || ts.dataType == 'Bloodsamples'">
+           <div ng-hide="ts.dataType === 'Medicine' || ts.dataType === 'Bloodsample'">
                 <ionic-timepicker input-obj="ts.timePickerObj">
                     <button class="button button-block button-stable button-border">
                         <strong>{{ts.timePickerObj.displayValue()}}</strong>

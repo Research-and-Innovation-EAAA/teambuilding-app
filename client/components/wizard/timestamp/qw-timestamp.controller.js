@@ -1,8 +1,36 @@
 angular.module('leukemiapp').controller('timestampController', TimestampController);
 
-function TimestampController($scope, $reactive) {
+function TimestampController($scope, $reactive, $timeout) {
    $reactive(this).attach($scope);
    var vm = this;
+
+   var subHandle;
+
+   vm.helpers({
+      registrationWithTimestamp: () => {
+         return Registrations.findOne({
+            $and: [
+               {moduleName: vm.dataType},
+               {timestamp: vm.getReactively('timestamp')}
+            ]
+         });
+      }
+   });
+
+   $scope.$on('stepLoaded', function (event, data) {
+      if (data.stepNumber == 0) {
+         console.log('Timestamp loaded!');
+         subHandle = vm.subscribe('registrationWithTimestamp',
+            () => [vm.getReactively('dataType'), vm.getReactively('timestamp')],
+            () => {
+               updateRegistrationTimestamp();
+               console.log('Subscription ready!');
+            });
+      }
+   });
+
+   //Init
+   vm.dataType = Session.get('registrationType');
 
    if (vm.timePickerObj === undefined)
       vm.timePickerObj = {
@@ -64,25 +92,61 @@ function TimestampController($scope, $reactive) {
 
    function updateRegistrationTimestamp() {
       var date = vm.datePickerObj.inputDate;
-      var hours = Math.floor(vm.timePickerObj.inputEpochTime / 3600);
-      var minutes = Math.floor((vm.timePickerObj.inputEpochTime - hours * 3600) / 60);
-      date.setHours(hours, minutes, 0, 0);
 
-      var registration = Session.get('registration');
-      if (registration === undefined)
-         registration = {};
-      registration.timestamp = date;
-      Session.set('registration', registration);
+      //TODO: Add propriety to module config file which controls if time is ignored
+      if (vm.dataType !== 'Medicine' && vm.dataType !== 'Bloodsample') {
+         var hours = Math.floor(vm.timePickerObj.inputEpochTime / 3600);
+         var minutes = Math.floor((vm.timePickerObj.inputEpochTime - hours * 3600) / 60);
+         date.setHours(hours, minutes, 0, 0);
+      } else {
+         date.setHours(12,0,0,0);
+      }
 
-      var validated = Session.get('regValidated');
-      if (validated === undefined)
-         validated = [];
-      validated[0] = registration.timestamp !== undefined;
-      Session.set('regValidated', validated);
-      console.log('regValidated session variable updated');
+      $timeout(() => {
+         vm.timestamp = new Date(date.getTime());
+      }).then(() => {
 
-      console.log(Session.get('registration'));
+         //Code to execute after vm.timestamp is updated
+
+         var registration = Session.get('registration');
+         var validated = Session.get('regValidated');
+
+         if (validated === undefined)
+            validated = [];
+         if (registration === undefined)
+            registration = {};
+         if (vm.registrationWithTimestamp != null) {
+            console.log('registrationWithTimestamp found!');
+            validated[0] = false;
+            registration = vm.registrationWithTimestamp;
+
+            for (var property in registration) {
+               if (registration.hasOwnProperty(property)) {
+                  console.log('registration:', registration, 'property:', property);
+                  if (registration[property] === '-' ) {
+                     registration[property] = null;
+                  }
+               }
+            }
+            registration.updating = true;
+
+         } else {
+            console.log('registrationWithTimestamp is null!');
+            validated[0] = true;
+            registration = {
+               timestamp: date
+            };
+         }
+         Session.set('regValidated', validated);
+         console.log('regValidated session variable updated', validated);
+         Session.set('registration', registration);
+         console.log('registration session variable updated', registration);
+      });
    }
 
-   updateRegistrationTimestamp();
+   $scope.$watch(() => {
+      return vm.timestamp;
+   }, (newVal, oldVal, scope) => {
+      console.log('vm.timestamp changed from', oldVal, 'to', newVal);
+   })
 }

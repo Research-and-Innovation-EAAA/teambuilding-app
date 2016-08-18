@@ -9,11 +9,25 @@ function MucositisController($scope, $reactive) {
    //Init
    vm.registration = Session.get('registration');
 
-   if (vm.registration.diagnosis === undefined) {
-      vm.registration.diagnosis = [];
-      vm.registration.nauseaScore = 0;
-      Session.set('registration', vm.registration);
+   function initData() {
+      if (vm.registration.diagnosis == null) {
+         vm.registration.diagnosis = [];
+         vm.registration.nauseaScore = 0;
+         Session.set('registration', vm.registration);
+      }
+      validateData();
+      vm.init = true;
    }
+
+   $scope.$on('stepLoaded', (event, data) => {
+      if (data['dataType'] === Session.get('registrationType')) {
+         console.log(data['dataType'], 'step loaded! Step number:', data['stepNumber']);
+
+         if (data['stepNumber'] == 1 && !vm.init) {
+            initData();
+         }
+      }
+   });
 
    vm.setDiagnosis = function (number, value) {
       vm.registration.diagnosis[number] = value;
@@ -35,22 +49,22 @@ function MucositisController($scope, $reactive) {
          return vm.registration.nauseaScore;
       },
       function (newValue, oldValue) {
-         updateRegistration()
+         if (newValue != oldValue)
+            updateRegistration()
       }
    );
 
    function validateData() {
       var validated = Session.get('regValidated');
-      if (validated === undefined)
-         validated = [];
+      if (validated != null) {
 
-      validated[0] = vm.registration.timestamp !== undefined;
-      for (i = 0; i < module.wizard.steps.length; i++) {
-         validated[i + 1] = module.wizard.steps[i].validation(vm.registration);
+         for (i = 0; i < module.wizard.steps.length; i++) {
+            validated[i + 1] = module.wizard.steps[i].validation(vm.registration);
+         }
+
+         Session.set('regValidated', validated);
+         console.log('regValidated session variable updated');
       }
-
-      Session.set('regValidated', validated);
-      console.log('regValidated session variable updated')
    }
 
    function updateRegistration() {
@@ -61,15 +75,7 @@ function MucositisController($scope, $reactive) {
       console.log(vm.registration);
    }
 
-   //Rzslider test
-   vm.slider = {
-      value: 0,
-      options: {
-         floor: 0,
-         ceil: 10,
-         step: 0.5,
-         precision: 1,
-         hideLimitLabels: true
-      }
+   if (!vm.init) {
+      initData();
    }
 }

@@ -1,9 +1,17 @@
 angular.module('leukemiapp').controller('questionWizardController', QuestionWizardController);
 
-function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDelegate, $translate, WizardHandler) {
+function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDelegate, $translate, $rootScope, WizardHandler) {
    $reactive(this).attach($scope);
    var vm = this;
 
+   // ** Data structure **
+   // vm.modules = {
+   //   moduleName: {
+   //      stepName: stepTemplate || stepTemplate.url;
+   //      ...
+   //   }
+   //   ...
+   //}
    vm.modules = {};
 
    for (moduleNumber = 0; moduleNumber < Modules.length; moduleNumber++) {
@@ -11,7 +19,6 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
       moduleSteps["Tid"] = "client/components/wizard/timestamp/qw-timestamp.html";
 
       var module = Modules[moduleNumber];
-      console.log('var module in loop is ',module);
 
       for (stepNumber = 0; stepNumber < module.wizard.steps.length; stepNumber++) {
          var stepName = module.wizard.steps[stepNumber].stepName;
@@ -26,13 +33,11 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
 
       vm.modules[module.name] = moduleSteps;
    }
-   console.log("vm.modules after loop is finished: ", vm.modules);
-
 
    vm.dataType = Session.get('registrationType');
    vm.viewTitle = $translate.instant(vm.dataType);
    vm.steps = Object.keys(vm.modules[vm.dataType]);
-   vm.stepNumber = 0; //First template
+   vm.stepNumber = 0; //First template, goes from 0 .. x
    vm.stepName = "";
 
    vm.helpers({
@@ -43,18 +48,41 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
 
    vm.validateData = () => {
       var validated = Session.get('regValidated');
+      //goes from 1 .. x
       var stepNumber = WizardHandler.wizard().currentStepNumber();
 
       console.log('wizardController validateData: ', validated[stepNumber - 1]);
       console.log('stepNumber: ', stepNumber);
 
+
       if (!validated[stepNumber - 1] && vm.errorPopup === undefined) {
-         vm.errorPopup = $ionicPopup.alert({
-            title: 'Error',
-            content: 'Et eller flere felter er enten ikke udfyldt, eller ikke udfyldt korrekt!'
-         }).then(function (res) {
-            vm.errorPopup = undefined;
-         });
+
+         if (stepNumber == 1) {
+            vm.errorPopup = $ionicPopup.confirm({
+               title: 'Update registration',
+               template: 'There already exists a registration with that timestamp! Do you wish to update it?'
+            }).then((res) => {
+               if (res) {
+                  //update initiated
+                  validated[0] = true;
+                  Session.set('regValidated', validated);
+                  WizardHandler.wizard().next();
+                  vm.stepNumber = vm.stepNumber + 1;
+                  vm.errorPopup = undefined;
+               } else {
+                  //update cancelled
+                  vm.errorPopup = undefined;
+               }
+            });
+         } else {
+            vm.errorPopup = $ionicPopup.alert({
+               title: 'Error',
+               template: 'Et eller flere felter er enten ikke udfyldt, eller ikke udfyldt korrekt!'
+            }).then(function (res) {
+               vm.errorPopup = undefined;
+            });
+         }
+
       }
 
       return validated[stepNumber - 1];
@@ -64,14 +92,48 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
       if (vm.validateData()) {
          var registration = Session.get('registration');
 
-         Meteor.call('addRegistration', registration, vm.dataType, (error, result) => {
-            if (error) {
-               saveError();
-            } else {
-               saveOk();
+         console.log('vm.finishWizard is called!');
+         for (var property in registration) {
+            if (registration.hasOwnProperty(property)) {
+               if (registration[property] == null) {
+                  registration[property] = '-';
+               }
             }
-         });
+         }
+
+         if (registration.updating) {
+            registration.updating = undefined;
+            Meteor.call('updateRegistration', registration, (error, result) => {
+               if (error) {
+                  saveError();
+               } else {
+                  saveOk();
+               }
+            });
+         } else {
+            Meteor.call('addRegistration', registration, vm.dataType, (error, result) => {
+               if (error) {
+                  saveError();
+               } else {
+                  saveOk();
+               }
+            });
+         }
+
       }
+   };
+
+   vm.cancelRegistration = () => {
+      Session.set('registration', undefined);
+      Session.set('regValidated', undefined);
+      $rootScope.$ionicGoBack();
+   };
+
+   vm.stepLoaded = () => {
+      $scope.$broadcast('stepLoaded', {
+         dataType: vm.dataType,
+         stepNumber: vm.stepNumber
+      });
    };
 
    function saveOk() {
@@ -97,6 +159,15 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
       function (newValue, oldValue) {
          if (newValue != oldValue) {
             $ionicScrollDelegate.scrollTop();
+         }
+      }
+   );
+
+   $scope.$watch(
+      Session.get('registrationType'),
+      function (newValue, oldValue) {
+         if (newValue != oldValue) {
+            console.log('Data-type has changed! Session variables cleared.');
          }
       }
    );

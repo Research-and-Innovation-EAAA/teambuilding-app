@@ -9,13 +9,44 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
    //Init
    vm.registration = Session.get('registration');
 
-   if (vm.registration.flaccvalue === undefined) {
-      vm.registration.flaccvalue = [undefined, undefined, undefined, undefined, undefined];
+   function initData() {
+      if (vm.registration.painScore != null) {
+         //registration is being updated
+         if (vm.registration.flaccvalue == null) {
+            //painscore was stored with smileys
+            vm.showFlacc = false;
+            vm.painScale = 'Wong-Baker score';
+            var painScore = vm.registration.painScore;
+            if (painScore % 2 == 0) {
+               vm.selectSmiley(parseInt(painScore), true);
+            } else {
+               vm.selectSmiley(parseInt(painScore - 1), true);
+            }
+         } else {
+            //painscore was stored with flacc
+            vm.showFlacc = true;
+            vm.painScale = 'FLACC score';
+            vm.smileyDescription = "";
+         }
+      } else {
+         vm.registration.flaccvalue = [];
+         vm.showFlacc = true;
+         vm.painScale = 'FLACC score';
+         vm.smileyDescription = "";
+      }
+      validateData();
+      vm.init = true;
    }
-   //vm.selectedSmiley;
-   vm.show = true;
-   vm.painScale = 'FLACC score';
-   validateData();
+
+   $scope.$on('stepLoaded', (event, data) => {
+      if (data['dataType'] === Session.get('registrationType')) {
+         console.log(data['dataType'], 'step loaded! Step number:', data['stepNumber']);
+
+         if (data['stepNumber'] == 1 && !vm.init) {
+            initData();
+         }
+      }
+   });
 
    vm.helpers({
       isSmallScreen: () => {
@@ -25,24 +56,21 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
 
    function validateData() {
       var validated = Session.get('regValidated');
-      if (validated === undefined)
-         validated = [];
+      if (validated != null) {
+         for (i = 0; i < module.wizard.steps.length; i++) {
+            validated[i + 1] = module.wizard.steps[i].validation(vm.registration);
+         }
 
-      validated[0] = vm.registration.timestamp !== undefined;
-      for (i = 0; i < module.wizard.steps.length; i++) {
-         validated[i + 1] = module.wizard.steps[i].validation(vm.registration);
+         Session.set('regValidated', validated);
+         console.log('regValidated session variable updated');
       }
-
-      Session.set('regValidated', validated);
-      console.log('regValidated session variable updated');
    }
 
    vm.updateRegistration = () => {
       validateData();
 
       Session.set('registration', vm.registration);
-      console.log('Registration updated');
-      console.log(vm.registration);
+      console.log('Registration updated',vm.registration);
    };
 
    vm.selectPainType = (value) => {
@@ -52,9 +80,9 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
 
    //flacc selection
    vm.selectFlacc = function (flaccnumber, newvalue) {
-      if (vm.registration.painScore === undefined) {
+      if (vm.registration.painScore == null) {
          vm.registration.painScore = 0;
-      } else if (vm.registration.flaccvalue[flaccnumber] !== undefined) {
+      } else if (vm.registration.flaccvalue[flaccnumber] != null) {
          vm.registration.painScore -= vm.registration.flaccvalue[flaccnumber];
       }
       vm.registration.flaccvalue[flaccnumber] = newvalue;
@@ -63,14 +91,14 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
    };
 
    vm.changeScale = () => {
-      vm.show = !vm.show;
-      vm.show ? vm.painScale = 'FLACC score' : vm.painScale = 'Wong-Baker score';
-      vm.registration.painScore = undefined;
-      vm.selectedSmiley = undefined;
-      if (vm.show) {
-         vm.registration.flaccvalue = [undefined, undefined, undefined, undefined, undefined];
+      vm.showFlacc = !vm.showFlacc;
+      vm.showFlacc ? vm.painScale = 'FLACC score' : vm.painScale = 'Wong-Baker score';
+      vm.registration.painScore = null;
+      vm.selectedSmiley = null;
+      if (vm.showFlacc) {
+         vm.registration.flaccvalue = [];
       } else {
-         vm.registration.flaccvalue = undefined;
+         vm.registration.flaccvalue = null;
       }
       vm.smileyDescription = "";
       $ionicScrollDelegate.resize();
@@ -97,14 +125,14 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
       vm.updateRegistration();
    };
 
-   //smiley selection
-   vm.selectedSmiley = undefined;
-   vm.smileyDescription = "";
-
-   vm.selectSmiley = (smileynumber) => {
+   vm.selectSmiley = (smileynumber, ignorePainScore) => {
       console.log('smileynumber is: ', smileynumber);
       vm.selectedSmiley = smileynumber;
-      vm.registration.painScore = smileynumber;
+
+      //updates painScore if method called from UI
+      if (ignorePainScore === undefined)
+         vm.registration.painScore = smileynumber;
+
       switch (smileynumber) {
          case 0:
             vm.smileyDescription = "Man kan gøre fuldstændig, som man plejer uden at tænke på, at det gør ondt.";
@@ -132,4 +160,8 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
       }
       vm.updateRegistration();
    };
+
+   if (!vm.init) {
+      initData();
+   }
 }

@@ -18,21 +18,11 @@
             createdBy: 0,
             id: 0,
             createdAt: 0,
-            timestamp: 0
+            timestamp: 0,
+            updatedAt: 0
          }
       })
    });
-
-   //Meteor.publish('moduleData', function (module) {
-   //   return Registrations.find({
-   //      $and: [
-   //         {moduleName: module},
-   //         {moduleName: {$exists: true}},
-   //         {createdBy: this.userId},
-   //         {createdBy: {$exists: true}}
-   //      ]
-   //   })
-   //});
 
    Meteor.publish('graphData', function (module, startTimestamp, endTimestamp) {
       return Registrations.find({
@@ -60,6 +50,27 @@
          Registrations._ensureIndex({"createdBy": 1});
          Registrations._ensureIndex({"timestamp": 1});
       }
+   });
+
+   Meteor.publish("registrationWithTimestamp", function (module, timestamp) {
+      if (module == null || timestamp == null) {
+         return this.ready();
+      }
+      return Registrations.find({
+         $and: [
+            {createdBy: this.userId},
+            {createdBy: {$exists: true}},
+            {moduleName: module},
+            {moduleName: {$exists: true}},
+            {timestamp: {$exists: true}},
+            {timestamp: timestamp}
+         ]
+      }, {
+         limit: 1,
+         fields: {
+            createdBy: 0
+         }
+      })
    });
 
    Meteor.publish("notes", function () {
