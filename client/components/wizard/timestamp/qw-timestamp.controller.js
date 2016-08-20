@@ -20,12 +20,25 @@ function TimestampController($scope, $reactive, $timeout) {
    $scope.$on('stepLoaded', function (event, data) {
       if (data.stepNumber == 0) {
          console.log('Timestamp loaded!');
-         subHandle = vm.subscribe('registrationWithTimestamp',
-            () => [vm.getReactively('dataType'), vm.getReactively('timestamp')],
-            () => {
-               updateRegistrationTimestamp();
-               console.log('Subscription ready!');
-            });
+
+         var registration = Session.get('registration');
+         if (registration != null && registration.updating) {
+
+            console.log('Timestamp init skipped because registration is updating');
+            vm.datePickerObj.inputDate = registration.timestamp;
+            vm.timePickerObj.inputEpochTime =
+               (registration.timestamp.getHours() * 60 * 60 +
+               Math.floor(registration.timestamp.getMinutes() / 5) * 5 * 60);
+
+         } else {
+
+            subHandle = vm.subscribe('registrationWithTimestamp',
+               () => [vm.getReactively('dataType'), vm.getReactively('timestamp')],
+               () => {
+                  updateRegistrationTimestamp();
+                  console.log('Subscription ready!');
+               });
+         }
       }
    });
 
@@ -99,7 +112,7 @@ function TimestampController($scope, $reactive, $timeout) {
          var minutes = Math.floor((vm.timePickerObj.inputEpochTime - hours * 3600) / 60);
          date.setHours(hours, minutes, 0, 0);
       } else {
-         date.setHours(12,0,0,0);
+         date.setHours(12, 0, 0, 0);
       }
 
       $timeout(() => {
@@ -123,7 +136,7 @@ function TimestampController($scope, $reactive, $timeout) {
             for (var property in registration) {
                if (registration.hasOwnProperty(property)) {
                   console.log('registration:', registration, 'property:', property);
-                  if (registration[property] === '-' ) {
+                  if (registration[property] === '-') {
                      registration[property] = null;
                   }
                }
@@ -143,10 +156,4 @@ function TimestampController($scope, $reactive, $timeout) {
          console.log('registration session variable updated', registration);
       });
    }
-
-   $scope.$watch(() => {
-      return vm.timestamp;
-   }, (newVal, oldVal, scope) => {
-      console.log('vm.timestamp changed from', oldVal, 'to', newVal);
-   })
 }

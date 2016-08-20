@@ -46,14 +46,28 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
       }
    });
 
+   //Check if registration is newly created or updated
+   $scope.$on('$ionicView.enter',() => {
+      var registration = Session.get('registration');
+      if (registration != null && registration.updating) {
+
+         var validated = Session.get('regValidated');
+         if (validated == null) {
+            validated = [];
+            validated[0] = true;
+         }
+         Session.set('regValidated',validated);
+
+         //Skips timestamp registration
+         vm.stepNumber = 1;
+         WizardHandler.wizard().goTo(vm.stepNumber);
+      }
+   });
+
    vm.validateData = () => {
       var validated = Session.get('regValidated');
       //goes from 1 .. x
       var stepNumber = WizardHandler.wizard().currentStepNumber();
-
-      console.log('wizardController validateData: ', validated[stepNumber - 1]);
-      console.log('stepNumber: ', stepNumber);
-
 
       if (!validated[stepNumber - 1] && vm.errorPopup === undefined) {
 
@@ -82,7 +96,6 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
                vm.errorPopup = undefined;
             });
          }
-
       }
 
       return validated[stepNumber - 1];
@@ -163,14 +176,7 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
       }
    );
 
-   $scope.$watch(
-      Session.get('registrationType'),
-      function (newValue, oldValue) {
-         if (newValue != oldValue) {
-            console.log('Data-type has changed! Session variables cleared.');
-         }
-      }
-   );
+
 
    //$scope.hideIndicators = Object.keys($scope.questions[$scope.dataType]).length <= 1;
 

@@ -24,6 +24,13 @@ Meteor.methods({
       registration.updatedAt = new Date();
 
       Registrations.update(registration._id, registration);
+   },
+   deleteRegistration: (registration) => {
+      if (!Meteor.userId()) {
+         throw new Meteor.Error('not-authorized');
+      }
+
+      Registrations.remove(registration._id);
    }
 });
 
