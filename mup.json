@@ -30,7 +30,7 @@
   // ROOT_URL must be set to your correct domain (https or http)
   "env": {
     "PORT": 80,
-    "ROOT_URL": "http://www.leukemia.sundata.dk"
+    "ROOT_URL": "https://www.leukemia.sundata.dk"
   },
 
 
