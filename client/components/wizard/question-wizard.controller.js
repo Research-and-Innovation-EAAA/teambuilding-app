@@ -81,6 +81,10 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
       });
       Session.set('registration', undefined);
       Session.set('regValidated', undefined);
+
+      analytics.track("Registration Completed", {
+         type: vm.dataType
+      });
    }
 
    function saveError() {
