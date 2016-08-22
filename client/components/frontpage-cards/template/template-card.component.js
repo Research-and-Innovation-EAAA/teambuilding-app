@@ -88,6 +88,8 @@ function TemplateCardController($scope, $reactive, $location) {
 
    vm.newRegistration = () => {
       Session.set('registrationType', vm.module.name);
+      Session.set('registration',undefined);
+      Session.set('regValidated',undefined);
       $location.path("app/questionwizard");
    };
 

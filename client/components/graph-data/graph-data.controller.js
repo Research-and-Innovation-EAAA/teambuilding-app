@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('graphDataController', GraphDataController);
 
-function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
+function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $translate, $location) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -8,16 +8,23 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    //-------------
    vm.subscribe('graphData',
       () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')],
-      () => {
-         console.log('Subscription ready!', vm.getDataForPeriod);
-         processData();
+      {
+         onReady: () => {
+            console.log('Subscription ready!', vm.getDataForPeriod);
+            processData();
+         },
+         onStop: (error) => {
+            //console.log('Subscription stopped!');
+            //processData();
+         }
       });
 
    //Code to be run every time view becomes visible
    //----------------------------------------------
    $scope.$on('$ionicView.beforeEnter', function (event, data) {
-      console.log('Graph-data view is about to enter!');
+      //console.log('Graph-data view is about to enter!');
       vm.changeDisplayType('table');
+      processData();
    });
 
    //Init
@@ -38,23 +45,22 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
    //Helpers
    //-------
    vm.helpers({
-      getDataForPeriod: () => {
-         return Registrations.find({
-            $and: [
-               {moduleName: vm.dataType},
-               {timestamp: {$exists: true}}
-            ]
-
-         }, {
-            sort: {timestamp: -1}
-         });
-      },
+      //getDataForPeriod: () => {
+      //   return Registrations.find({
+      //      $and: [
+      //         {moduleName: vm.dataType},
+      //         {timestamp: {$exists: true}}
+      //      ]
+      //   }, {
+      //      sort: {timestamp: -1}
+      //   });
+      //},
       isSmallScreen: () => {
          return window.innerWidth < 768;
       }
    });
 
-   console.log('Data for period is: ', vm.getDataForPeriod);
+   //console.log('Data for period is: ', vm.getDataForPeriod);
 
 
    //Init of date- and timepickers
@@ -182,8 +188,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
       var hours = Math.floor(vm.startTimePickerObject.inputEpochTime / 3600);
       var minutes = Math.floor((vm.startTimePickerObject.inputEpochTime - hours * 3600) / 60);
       date.setHours(hours, minutes, 0, 0);
-      vm.startTimeStamp = date;
-      console.log("updated start timestamp to ", vm.startTimeStamp);
+      vm.startTimeStamp = new Date(date.getTime());
    };
 
    vm.updateEndTimeStamp = function () {
@@ -191,8 +196,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
       var hours = Math.floor(vm.endTimePickerObject.inputEpochTime / 3600);
       var minutes = Math.floor((vm.endTimePickerObject.inputEpochTime - hours * 3600) / 60);
       date.setHours(hours, minutes, 0, 0);
-      vm.endTimeStamp = date;
-      console.log("updated end timestamp to ", vm.endTimeStamp);
+      vm.endTimeStamp = new Date(date.getTime());
    };
 
    //Display control
@@ -221,6 +225,23 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
       }
    };
 
+   function getDataForPeriod() {
+      return Registrations.find({
+         $and: [
+            {moduleName: vm.dataType},
+            {timestamp: {$exists: true}},
+            {
+               timestamp: {
+                  $gte: vm.getReactively('startTimeStamp'),
+                  $lte: vm.getReactively('endTimeStamp')
+               }
+            }
+         ]
+      }, {
+         sort: {timestamp: -1}
+      }).fetch();
+   }
+
    //Table display helper methods
    //----------------------------
    function processData() {
@@ -229,10 +250,11 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
 
       //Add any properties to be ignored from table/graph display
       var ignoredProperties = [
-         'timestamp', 'createdAt', 'createdBy', 'moduleName', '_id', 'diagnosis', 'flaccvalue'
+         'timestamp', 'createdAt', 'createdBy', 'moduleName', '_id', 'diagnosis', 'flaccvalue',
+         'updatedAt'
       ];
 
-      var data = vm.getDataForPeriod;
+      var data = getDataForPeriod();
       if (data[0] != null) {
 
          //Data found!
@@ -275,7 +297,9 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
 
                var cellWidth = vm.isSmallScreen ? 80 : 100;
                var width = vm.tableObject['timestamp'].length * cellWidth;
-               var height = _.size(vm.tableObject) * 45 + 35;
+
+               //height = registrations * 45px + header + editButtonRow
+               var height = _.size(vm.tableObject) * 45 + 35 + 45;
                vm.tableDimensions = (isFirstRow) => {
                   return {
                      width: width + 'px',
@@ -284,7 +308,7 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
                };
                vm.scrollDimensions = () => {
                   return {
-                     width: '100%',
+                     width: Math.min(width, window.innerWidth) + 'px',
                      height: height + 'px'
                   };
                };
@@ -495,6 +519,9 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
       vm.graphData = generateGraphData();
    };
 
+   //Color settings for background and buttons
+   //-----------------------------------------
+
    vm.btnBackground = (property) => {
       var hex = property.color;
       var selected = property.visible;
@@ -531,6 +558,55 @@ function GraphDataController($scope, $reactive, $timeout, $filter, $translate) {
          return background;
       } else {
          //console.log('Running vm.rowBackground for property timestamp!');
+      }
+   };
+
+   //Editing registrations
+   //--------------------
+
+   function getRegistrationForTimestamp(timestamp) {
+      return Registrations.find({
+         $and: [
+            {moduleName: vm.dataType},
+            {timestamp: timestamp}
+         ]
+      }, {
+         limit: 1
+      }).fetch()[0];
+   }
+
+   vm.editRegistration = (timestamp) => {
+
+      var registration = getRegistrationForTimestamp(timestamp);
+      if (registration != null) {
+
+         var hideActionSheet = $ionicActionSheet.show({
+            buttons: [
+               {text: 'Update'}
+            ],
+            destructiveText: 'Delete',
+            titleText: 'Edit registration',
+            cancelText: 'Cancel',
+            cancel: function () {
+               hideActionSheet();
+            },
+            buttonClicked: function (index) {
+               if (index == 0) {
+                  registration.updating = true;
+                  Session.set('registrationType', vm.dataType);
+                  Session.set('registration', registration);
+                  $location.path("app/questionwizard");
+               }
+               return true;
+            },
+            destructiveButtonClicked: () => {
+               Meteor.call('deleteRegistration', registration);
+               processData();
+               return true;
+            }
+         });
+      } else {
+         console.log('no matching registration found');
       }
    };
 }

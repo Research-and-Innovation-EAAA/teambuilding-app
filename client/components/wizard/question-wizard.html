@@ -3,7 +3,8 @@
         <div>
 
             <ion-content id="wizard-template" class="padding default-background">
-                <div ng-include="qwiz.modules[qwiz.dataType][qwiz.steps[qwiz.stepNumber]]">
+                <div ng-include="qwiz.modules[qwiz.dataType][qwiz.steps[qwiz.stepNumber]]"
+                     onload="qwiz.stepLoaded()">
                 </div>
             </ion-content>
 
@@ -21,7 +22,7 @@
                     <span ng-if="qwiz.stepNumber == 0">
                         <a id="wiz-nav-button"
                            class="button ion-ios-undo button-royal icon-left"
-                           ng-click="$ionicGoBack()"
+                           ng-click="qwiz.cancelRegistration()"
                            value="Cancel">Fortryd</a>
                     </span>
                     <span ng-if="qwiz.stepNumber > 0">

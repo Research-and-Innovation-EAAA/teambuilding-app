@@ -61,14 +61,14 @@ function painScaleSliderController($scope, $reactive, WizardHandler) {
 
    function updateSessionVariables() {
       var validated = Session.get('regValidated');
-      if (validated === undefined)
-         validated = [];
+      if (validated != null) {
 
-      validated[stepNumber - 1] = step.validation(vm.registration);
-      Session.set('regValidated', validated);
-      console.log('regValidated session variable updated: ', validated);
+         validated[stepNumber - 1] = step.validation(vm.registration);
+         Session.set('regValidated', validated);
+         console.log('regValidated session variable updated: ', validated);
 
-      Session.set('registration', vm.registration);
-      console.log('Registration updated: ', vm.registration);
+         Session.set('registration', vm.registration);
+         console.log('Registration updated: ', vm.registration);
+      }
    }
 }

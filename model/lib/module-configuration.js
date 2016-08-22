@@ -43,7 +43,8 @@ Modules = [
                      if (property === "_id" ||
                         property === 'timestamp' ||
                         property === 'createdBy' ||
-                        property === 'createdAt')
+                        property === 'createdAt' ||
+                        property === 'moduleName')
                         continue;
 
                      var bloodsample = registration[property];
@@ -86,28 +87,24 @@ Modules = [
                stepTemplate: "client/components/wizard/pain/qw-pain-01.html",
                validation: (registration) => {
                   var isValidMorphine = true;
-                  console.log('registration.morphineType: ', registration.morphineType);
-                  if (registration.morphineType !== undefined) {
+                  if (registration.morphineType != null) {
                      //if there is a selected morphine type
                      // check there is valid dose
-                     console.log(registration.morphineDose);
-                     if (registration.morphineDose === undefined || registration.morphineDose == null || registration.morphineDose < 0)
+                     if (registration.morphineDose == null || registration.morphineDose < 0)
                         isValidMorphine = false;
                   } else {
                      //if there is no selected morphine type
                      // check if there is valid dose
                      // to avoid confusion, if there is valid dose but no valid type
                      // do not validate until type is chosen or dose deleted
-                     console.log('registration.morphineDose: ', registration.morphineDose, 'when registration.morphineType === undefined');
                      if (registration.morphineDose != null) {
                         isValidMorphine = false;
                      } else {
-                        registration.morphineType = '-';
-                        registration.morphineDose = '-';
-                        registration.morphineMeasureUnit = '-';
+                        registration.morphineType = null;
+                        registration.morphineDose = null;
+                        registration.morphineMeasureUnit = null;
                      }
                   }
-                  console.log('Validate Morphine called!');
                   return isValidMorphine;
                }
             },
