@@ -110,7 +110,7 @@
     Meteor.publish("settings", function () {
         return Settings.find(
             {
-                key: {$exists: true}, value: {$exists: true}
+                key: {$exists: 'analytics'}, value: {$exists: true}
             }
         );
     });

@@ -14,11 +14,14 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, ModuleM
     });
 
     //Analytics
+    Accounts.onLogin(function () {
+        ga('set', 'userId', Meteor.userId()); // Set the user ID using signed-in user_id.
+    });
     Meteor.subscribe("settings", function () {
         var analyticsSettings = Settings.findOne({key: 'analytics'});
         console.log("Analytics settings", analyticsSettings);
         if (!!analyticsSettings.value) {
-            console.log("TURNING ON ANALYTICS");
+            console.log("turning on analytics");
             $rootScope.$on('$stateChangeSuccess', function (event, toState) {
                 $timeout(function () {
                     var type = "", title = "";
@@ -43,7 +46,7 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, ModuleM
                 });
             });
         }
-        else console.log("TURNING OFF ANALYTICS");
+        else console.log("turning off analytics");
     });
 
 

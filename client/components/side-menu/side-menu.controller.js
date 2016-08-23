@@ -15,6 +15,13 @@ function PdfViewerController($scope, $reactive, $ionicPopup) {
             content: 'Denne funktion er kun tilgængelig på howryou.meteorapp.com'
          });
       } else {
+         var analyticsSettings = Settings.findOne({key: 'analytics'});
+         if (!!analyticsSettings.value) {
+            analytics.page("PDF", {
+               title: "PDF document " + url,
+               path: url
+            });
+         }
          window.open(url, "_blank");
       }
    }
