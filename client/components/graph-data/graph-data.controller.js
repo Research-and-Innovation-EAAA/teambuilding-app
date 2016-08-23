@@ -308,7 +308,7 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
                };
                vm.scrollDimensions = () => {
                   return {
-                     width: Math.min(width, window.innerWidth) + 'px',
+                     width: width < window.innerWidth ? width + 'px' : '100%',
                      height: height + 'px'
                   };
                };
@@ -592,6 +592,16 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
             },
             buttonClicked: function (index) {
                if (index == 0) {
+                  //Updating registration
+                  for (var property in registration) {
+                     if (registration.hasOwnProperty(property)) {
+                        console.log('registration:', registration, 'property:', property);
+                        if (registration[property] === '-') {
+                           registration[property] = null;
+                        }
+                     }
+                  }
+
                   registration.updating = true;
                   Session.set('registrationType', vm.dataType);
                   Session.set('registration', registration);

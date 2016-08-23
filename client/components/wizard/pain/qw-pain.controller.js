@@ -34,6 +34,11 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
          vm.painScale = 'FLACC score';
          vm.smileyDescription = "";
       }
+
+      if (!vm.isSmallScreen()) {
+         $ionicScrollDelegate.$getByHandle('painScale').freezeScroll(true);
+      }
+
       validateData();
       vm.init = true;
    }
@@ -45,14 +50,19 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
          if (data['stepNumber'] == 1 && !vm.init) {
             initData();
          }
+
+         if (data['stepNumber'] == 3) {
+            $ionicScrollDelegate.$getByHandle('wizardStepContent').freezeScroll(true);
+         } else {
+            $ionicScrollDelegate.$getByHandle('wizardStepContent').freezeScroll(false);
+         }
       }
    });
 
-   vm.helpers({
-      isSmallScreen: () => {
-         return window.innerWidth < 768;
-      }
-   });
+   vm.isSmallScreen = () => {
+      return window.innerWidth < 768;
+   };
+
 
    function validateData() {
       var validated = Session.get('regValidated');
@@ -70,12 +80,16 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
       validateData();
 
       Session.set('registration', vm.registration);
-      console.log('Registration updated',vm.registration);
+      console.log('Registration updated', vm.registration);
    };
 
    vm.selectPainType = (value) => {
       vm.registration.painType = value;
       vm.updateRegistration();
+   };
+
+   vm.painScaleNoScore = () => {
+      return vm.painScale.substring(0, vm.painScale.indexOf(' score'));
    };
 
    //flacc selection
@@ -102,12 +116,12 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
       }
       vm.smileyDescription = "";
       $ionicScrollDelegate.resize();
-      $ionicScrollDelegate.$getByHandle('smiley-scroll').scrollTop();
+      $ionicScrollDelegate.scrollTop();
       validateData();
    };
 
    function scrollToSmiley() {
-      var smileyWidth = 130;
+      var smileyWidth = vm.isSmallScreen() ? 75 : 125;
       var x = vm.registration.painScore / 2 * smileyWidth;
       $ionicScrollDelegate.$getByHandle('smiley-scroll').scrollTo(x, 0, true);
    }
@@ -120,7 +134,7 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
       if (painScore % 2 == 0) {
          vm.selectSmiley(parseInt(painScore));
       } else {
-         scrollToSmiley();
+         //scrollToSmiley();
       }
       vm.updateRegistration();
    };
@@ -155,8 +169,8 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
          default:
             vm.smileyDescription = "";
       }
-      if (vm.isSmallScreen) {
-         scrollToSmiley();
+      if (vm.isSmallScreen()) {
+         //scrollToSmiley();
       }
       vm.updateRegistration();
    };

@@ -1,193 +1,175 @@
 <div style="width: 100%"
      ng-controller="painController as vm">
 
-    <h3 id="scale-name">
-        {{ vm.painScale }}: {{vm.registration.painScore}}
-    </h3>
-    <button style="float: right; margin-right: 10px;"
-            class="button button-positive"
-            ng-click="vm.changeScale()">
-        Skift skala
-    </button>
+    <div class="bar bar-header bar-royal"
+         style="top: -10px;">
+        <h2 class="title"
+            ng-style="{ 'text-align': vm.isSmallScreen() ? 'left' : 'center' }"
+            ng-show="vm.registration.painScore != null">
+            {{ vm.painScale }}: <b>{{vm.registration.painScore}}</b>
+        </h2>
+        <h2 class="title"
+            ng-style="{ 'text-align': vm.isSmallScreen() ? 'left' : 'center' }"
+            ng-show="vm.registration.painScore == null">
+            {{ vm.painScaleNoScore() }}
+        </h2>
+        <button class="button button-border-white"
+                ng-click="vm.changeScale()">
+            Skift skala
+        </button>
+    </div>
 
-    <div ng-show="vm.showFlacc">
-        <h4 class="flacc-title" style="clear: right">Ansigtsudtryk</h4>
-        <div class="row responsive-md flacc-row">
-            <div class="col">
-                <button ng-click="vm.selectFlacc(0,0)"
-                        ng-class="{
+    <ion-scroll delegate-handle="painScale"
+                direction="y"
+                ng-style="{ width: '100%',
+                            height: vm.isSmallScreen() ? 'calc(100vh - 200px)' : '100%',
+                            top: '40px' }">
+        <div ng-show="vm.showFlacc"
+             ng-style="{ width: '100%',
+                        height: vm.isSmallScreen() ? '90em' : '100%' }">
+            <h4 class="flacc-title" style="clear: right">Ansigtsudtryk</h4>
+            <div class="row responsive-md flacc-row">
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(0,0)"
+                            ng-class="{
                                 'button-dark':vm.registration.flaccvalue[0]===0,
                                 'button-stable':vm.registration.flaccvalue[0]!==0,
                                  'button button-block flacc-button button-border': true}">
-                    Upåvirket/Afslappet
-                </button>
-            </div>
-            <div class="col">
-                <button ng-click="vm.selectFlacc(0,1)"
-                        ng-class="{
+                        Upåvirket/Afslappet
+                    </button>
+                </div>
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(0,1)"
+                            ng-class="{
                             'button-dark':vm.registration.flaccvalue[0]===1,
                             'button-stable':vm.registration.flaccvalue[0]!==1,
                             'button button-block flacc-button button-border': true}">
-                    Bekymret,indadvendt
-                </button>
-            </div>
-            <div class="col">
-                <button ng-click="vm.selectFlacc(0,2)"
-                        ng-class="{
+                        Bekymret,indadvendt
+                    </button>
+                </div>
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(0,2)"
+                            ng-class="{
                             'button-dark':vm.registration.flaccvalue[0]===2,
                             'button-stable':vm.registration.flaccvalue[0]!==2,
                             'button button-block flacc-button button-border': true}">
-                    Hyppigt til konstant dirren omkring munden eller sammenbidt
-                </button>
+                        Hyppigt til konstant dirren omkring munden eller sammenbidt
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <h4 class="flacc-title">Ben</h4>
-        <div class="row responsive-md flacc-row">
-            <div class="col">
-                <button ng-click="vm.selectFlacc(1,0)"
-                        ng-class="{'button-dark':vm.registration.flaccvalue[1]===0,
+            <h4 class="flacc-title">Ben</h4>
+            <div class="row responsive-md flacc-row">
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(1,0)"
+                            ng-class="{'button-dark':vm.registration.flaccvalue[1]===0,
                             'button-stable':vm.registration.flaccvalue[1]!==0,
                             'button button-block flacc-button button-border': true}">
-                    Normal position eller afslappet
-                </button>
-            </div>
-            <div class="col">
-                <button ng-click="vm.selectFlacc(1,1)" ng-class="{'button-dark':vm.registration.flaccvalue[1]===1,
+                        Normal position eller afslappet
+                    </button>
+                </div>
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(1,1)" ng-class="{'button-dark':vm.registration.flaccvalue[1]===1,
                                                   'button-stable':vm.registration.flaccvalue[1]!==1,
                                                   'button button-block flacc-button button-border': true}">
-                    Urolig, spændt
-                </button>
-            </div>
-            <div class="col">
-                <button ng-click="vm.selectFlacc(1,2)" ng-class="{'button-dark':vm.registration.flaccvalue[1]===2,
+                        Urolig, spændt
+                    </button>
+                </div>
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(1,2)" ng-class="{'button-dark':vm.registration.flaccvalue[1]===2,
                                                   'button-stable':vm.registration.flaccvalue[1]!==2,
                                                   'button button-block flacc-button button-border': true}">
-                    Trækker benene op under sig, sparker
-                </button>
+                        Trækker benene op under sig, sparker
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <h4 class="flacc-title">Aktivitet</h4>
-        <div class="row responsive-md flacc-row">
-            <div class="col">
-                <button ng-click="vm.selectFlacc(2,0)" ng-class="{'button-dark':vm.registration.flaccvalue[2]===0,
+            <h4 class="flacc-title">Aktivitet</h4>
+            <div class="row responsive-md flacc-row">
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(2,0)" ng-class="{'button-dark':vm.registration.flaccvalue[2]===0,
                                                   'button-stable':vm.registration.flaccvalue[2]!==0,
                                                   'button button-block flacc-button button-border': true}">
-                    Normal stilling eller ligger stille, bevæger sig frit
-                </button>
-            </div>
-            <div class="col">
-                <button ng-click="vm.selectFlacc(2,1)" ng-class="{'button-dark':vm.registration.flaccvalue[2]===1,
+                        Normal stilling eller ligger stille, bevæger sig frit
+                    </button>
+                </div>
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(2,1)" ng-class="{'button-dark':vm.registration.flaccvalue[2]===1,
                                                   'button-stable':vm.registration.flaccvalue[2]!==1,
                                                   'button button-block flacc-button button-border': true}">
-                    Vrider sig, kan ikke finde ro
-                </button>
-            </div>
-            <div class="col">
-                <button ng-click="vm.selectFlacc(2,2)" ng-class="{'button-dark':vm.registration.flaccvalue[2]===2,
+                        Vrider sig, kan ikke finde ro
+                    </button>
+                </div>
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(2,2)" ng-class="{'button-dark':vm.registration.flaccvalue[2]===2,
                                                   'button-stable':vm.registration.flaccvalue[2]!==2,
                                                   'button button-block flacc-button button-border': true}">
-                    "Går i bro", stiv eller kaster sig rundt
-                </button>
+                        "Går i bro", stiv eller kaster sig rundt
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <h4 class="flacc-title">Gråd</h4>
-        <div class="row responsive-md flacc-row">
-            <div class="col">
-                <button ng-click="vm.selectFlacc(3,0)" ng-class="{'button-dark':vm.registration.flaccvalue[3]===0,
+            <h4 class="flacc-title">Gråd</h4>
+            <div class="row responsive-md flacc-row">
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(3,0)" ng-class="{'button-dark':vm.registration.flaccvalue[3]===0,
                                                   'button-stable':vm.registration.flaccvalue[3]!==0,
                                                   'button button-block flacc-button button-border': true}">
-                    Græder ikke (Vågen eller sovende)
-                </button>
-            </div>
-            <div class="col">
-                <button ng-click="vm.selectFlacc(3,1)" ng-class="{'button-dark':vm.registration.flaccvalue[3]===1,
+                        Græder ikke (Vågen eller sovende)
+                    </button>
+                </div>
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(3,1)" ng-class="{'button-dark':vm.registration.flaccvalue[3]===1,
                                                   'button-stable':vm.registration.flaccvalue[3]!==1,
                                                   'button button-block flacc-button button-border': true}">
-                    Klynker, klager sig af og til
-                </button>
-            </div>
-            <div class="col">
-                <button ng-click="vm.selectFlacc(3,2)" ng-class="{'button-dark':vm.registration.flaccvalue[3]===2,
+                        Klynker, klager sig af og til
+                    </button>
+                </div>
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(3,2)" ng-class="{'button-dark':vm.registration.flaccvalue[3]===2,
                                                   'button-stable':vm.registration.flaccvalue[3]!==2,
                                                   'button button-block flacc-button button-border': true}">
-                    Græder uafbrudt, skriger eller klager sig hyppigt
-                </button>
+                        Græder uafbrudt, skriger eller klager sig hyppigt
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <h4 class="flacc-title">Trøstbarhed</h4>
-        <div class="row responsive-md flacc-row">
-            <div class="col">
-                <button ng-click="vm.selectFlacc(4,0)" ng-class="{'button-dark':vm.registration.flaccvalue[4]===0,
+            <h4 class="flacc-title">Trøstbarhed</h4>
+            <div class="row responsive-md flacc-row">
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(4,0)" ng-class="{'button-dark':vm.registration.flaccvalue[4]===0,
                                                   'button-stable':vm.registration.flaccvalue[4]!==0,
                                                   'button button-block flacc-button button-border': true}">
-                    Tilfreds, afslappet
-                </button>
-            </div>
-            <div class="col">
-                <button ng-click="vm.selectFlacc(4,1)" ng-class="{'button-dark':vm.registration.flaccvalue[4]===1,
+                        Tilfreds, afslappet
+                    </button>
+                </div>
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(4,1)" ng-class="{'button-dark':vm.registration.flaccvalue[4]===1,
                                                   'button-stable':vm.registration.flaccvalue[4]!==1,
                                                   'button button-block flacc-button button-border': true}">
-                    Kan beroliges ved berøring, ved at blive talt til og kan afledes fra smerten
-                </button>
-            </div>
-            <div class="col">
-                <button ng-click="vm.selectFlacc(4,2)" ng-class="{'button-dark':vm.registration.flaccvalue[4]===2,
+                        Kan beroliges ved berøring, ved at blive talt til og kan afledes fra smerten
+                    </button>
+                </div>
+                <div class="col">
+                    <button ng-click="vm.selectFlacc(4,2)" ng-class="{'button-dark':vm.registration.flaccvalue[4]===2,
                                                   'button-stable':vm.registration.flaccvalue[4]!==2,
                                                   'button button-block flacc-button button-border': true}">
-                    Vanskelig at trøste eller utrøstelig
-                </button>
+                        Vanskelig at trøste eller utrøstelig
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <div style="visibility: hidden" class="row">
-            <div style="height: 40px" class="col">
-                Dirty fix for resizing scrolling area
+            <div style="visibility: hidden" class="row">
+                <div style="height: 40px" class="col">
+                    Dirty fix for resizing scrolling area
+                </div>
             </div>
-        </div>
 
-    </div>
-    <div ng-show="!vm.showFlacc" style="clear: right;" class="top-margin padding">
-        <div ng-if="!vm.isSmallScreen">
-            <div class="row responsive-md">
-                <div class="col">
-                    <div class="image responsive"
-                         ng-style="{'background-image': vm.selectedSmiley == 0 ? 'url(/smiley0selected.png)':'url(/smiley0.png)' }"
-                         ng-click="vm.selectSmiley(0)"></div>
-                </div>
-                <div class="col">
-                    <div class="image responsive"
-                         ng-style="{'background-image': vm.selectedSmiley == 2 ? 'url(/smiley2selected.png)':'url(/smiley2.png)' }"
-                         ng-click="vm.selectSmiley(2)"></div>
-                </div>
-                <div class="col">
-                    <div class="image responsive"
-                         ng-style="{'background-image': vm.selectedSmiley == 4 ? 'url(/smiley4selected.png)':'url(/smiley4.png)' }"
-                         ng-click="vm.selectSmiley(4)"></div>
-                </div>
-                <div class="col">
-                    <div class="image responsive"
-                         ng-style="{'background-image': vm.selectedSmiley == 6 ? 'url(/smiley6selected.png)':'url(/smiley6.png)' }"
-                         ng-click="vm.selectSmiley(6)"></div>
-                </div>
-                <div class="col">
-                    <div class="image responsive"
-                         ng-style="{'background-image': vm.selectedSmiley == 8 ? 'url(/smiley8selected.png)':'url(/smiley8.png)' }"
-                         ng-click="vm.selectSmiley(8)"></div>
-                </div>
-                <div class="col">
-                    <div class="image responsive"
-                         ng-style="{'background-image': vm.selectedSmiley == 10 ? 'url(/smiley10selected.png)':'url(/smiley10.png)' }"
-                         ng-click="vm.selectSmiley(10)"></div>
-                </div>
-            </div>
         </div>
-        <div ng-if="vm.isSmallScreen">
-            <ion-scroll id="smiley-scroll" delegate-handle="smiley-scroll" zooming="false" direction="x">
-                <div class="row" style="width: 800px; height: 190px;">
+        <div ng-show="!vm.showFlacc" style="clear: right;"
+             class="">
+            <div ng-if="!vm.isSmallScreen()">
+                <div class="row responsive-md">
                     <div class="col">
                         <div class="image responsive"
                              ng-style="{'background-image': vm.selectedSmiley == 0 ? 'url(/smiley0selected.png)':'url(/smiley0.png)' }"
@@ -219,24 +201,61 @@
                              ng-click="vm.selectSmiley(10)"></div>
                     </div>
                 </div>
-            </ion-scroll>
-        </div>
-        <div class="range range-positive">
-            <input type="range"
-                   name="volume"
-                   min="0"
-                   max="10"
-                   ng-model="vm.registration.painScore"
-                   ng-change="vm.smileySliderChanged()">
-        </div>
-
-        <br>
-        <div class="row responsive-md">
-            <div class="col" style="text-align:center">
-                <h3>{{ vm.smileyDescription }}</h3>
             </div>
-        </div>
+            <div ng-if="vm.isSmallScreen()">
+                <!--<ion-scroll id="smiley-scroll" delegate-handle="smiley-scroll" zooming="false" direction="x">-->
+                <div class="row" style="width: 100%; height: 90px;">
+                    <div class="col" style="padding: 0">
+                        <div class="image responsive"
+                             ng-style="{'background-image': vm.selectedSmiley == 0 ? 'url(/smiley0selected.png)':'url(/smiley0.png)' }"
+                             ng-click="vm.selectSmiley(0)"></div>
+                    </div>
+                    <div class="col" style="padding: 0">
+                        <div class="image responsive"
+                             ng-style="{'background-image': vm.selectedSmiley == 2 ? 'url(/smiley2selected.png)':'url(/smiley2.png)' }"
+                             ng-click="vm.selectSmiley(2)"></div>
+                    </div>
+                    <div class="col" style="padding: 0">
+                        <div class="image responsive"
+                             ng-style="{'background-image': vm.selectedSmiley == 4 ? 'url(/smiley4selected.png)':'url(/smiley4.png)' }"
+                             ng-click="vm.selectSmiley(4)"></div>
+                    </div>
+                    <div class="col" style="padding: 0">
+                        <div class="image responsive"
+                             ng-style="{'background-image': vm.selectedSmiley == 6 ? 'url(/smiley6selected.png)':'url(/smiley6.png)' }"
+                             ng-click="vm.selectSmiley(6)"></div>
+                    </div>
+                    <div class="col" style="padding: 0">
+                        <div class="image responsive"
+                             ng-style="{'background-image': vm.selectedSmiley == 8 ? 'url(/smiley8selected.png)':'url(/smiley8.png)' }"
+                             ng-click="vm.selectSmiley(8)"></div>
+                    </div>
+                    <div class="col" style="padding: 0">
+                        <div class="image responsive"
+                             ng-style="{'background-image': vm.selectedSmiley == 10 ? 'url(/smiley10selected.png)':'url(/smiley10.png)' }"
+                             ng-click="vm.selectSmiley(10)"></div>
+                    </div>
+                </div>
+                <!--</ion-scroll>-->
+            </div>
+            <div class="range range-positive">
+                <input type="range"
+                       name="volume"
+                       min="0"
+                       max="10"
+                       ng-model="vm.registration.painScore"
+                       ng-change="vm.smileySliderChanged()">
+            </div>
 
-    </div>
+            <br>
+            <div class="row responsive-md">
+                <div class="col" style="text-align:center">
+                    <h3>{{ vm.smileyDescription }}</h3>
+                </div>
+            </div>
+
+        </div>
+    </ion-scroll>
+
 
 </div>

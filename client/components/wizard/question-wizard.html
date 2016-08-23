@@ -2,7 +2,8 @@
     <ion-view ng-attr-view-title="{{qwiz.viewTitle}}">
         <div>
 
-            <ion-content id="wizard-template" class="padding default-background">
+            <ion-content id="wizard-template" class="padding default-background"
+                         delegate-handle="wizardStepContent">
                 <div ng-include="qwiz.modules[qwiz.dataType][qwiz.steps[qwiz.stepNumber]]"
                      onload="qwiz.stepLoaded()">
                 </div>
@@ -42,8 +43,9 @@
                         <a id="wiz-nav-button"
                            style="float:right"
                            class="button ion-archive button-royal icon-right"
-                           wz-finish="qwiz.validateData() ? $ionicGoBack() : null"
-                           value="Finish">Gem</a>
+                           wz-finish="qwiz.validateData() ? $ionicGoBack() : null">
+                            {{ qwiz.finishButtonText() }}
+                        </a>
                     </span>
                     <span ng-if="qwiz.stepNumber == qwiz.steps.length - 1 && !qwiz.isLoggedIn">
                         <a id="wiz-nav-button"

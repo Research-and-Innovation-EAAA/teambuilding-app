@@ -1,8 +1,10 @@
 angular.module('leukemiapp').controller('simpleQuestionController', SimpleQuestionController);
 
-function SimpleQuestionController($scope, $reactive, WizardHandler) {
+function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScrollDelegate) {
    $reactive(this).attach($scope);
    var vm = this;
+
+   $ionicScrollDelegate.$getByHandle('wizardStepContent').freezeScroll(false);
 
    var dataType = Session.get('registrationType');
    var stepNumber = WizardHandler.wizard().currentStepNumber();
