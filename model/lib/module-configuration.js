@@ -278,7 +278,7 @@ Modules = [
    },
 
    //Arthritis pain module
-   {
+   /*{
       name: "Arthritis_Pain",
       wizard: {
          steps: [
@@ -309,5 +309,5 @@ Modules = [
          iconUrl: "/smertetransparent.png",
          barClass: "bar-royal"
       }
-   }
+   }*/
 ];
