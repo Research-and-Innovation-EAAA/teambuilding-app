@@ -14,29 +14,38 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, ModuleM
     });
 
     //Analytics
-    $rootScope.$on('$stateChangeSuccess', function (event, toState) { // TODO returns an off function, unsubscribe when turned off
-        $timeout(function () {
-            var type = "", title = "";
+    Meteor.subscribe("settings", function () {
+        var analyticsSettings = Settings.findOne({key: 'analytics'});
+        console.log("Analytics settings", analyticsSettings);
+        if (!!analyticsSettings.value) {
+            console.log("TURNING ON ANALYTICS");
+            $rootScope.$on('$stateChangeSuccess', function (event, toState) {
+                $timeout(function () {
+                    var type = "", title = "";
 
-            if (toState.url == "/questionwizard") {
-                type = Session.get('registrationType');
-                title = Session.get('registrationType');
-            }
-            else if (toState.url == "/graphdata") {
-                type = Session.get('graphDataType');
-                title = Session.get('graphDataType');
-            }
-            else {
-                title = "How-R-you";
-            }
-            console.log(toState.url + "/"+ type + " | " + title);
+                    if (toState.url == "/questionwizard") {
+                        type = Session.get('registrationType');
+                        title = Session.get('registrationType');
+                    }
+                    else if (toState.url == "/graphdata") {
+                        type = Session.get('graphDataType');
+                        title = Session.get('graphDataType');
+                    }
+                    else {
+                        title = "How-R-you";
+                    }
+                    console.log(toState.url + "/" + type + " | " + title);
 
-            analytics.page(title, {
-                title: title,
-                path: toState.url + "/" + type
+                    analytics.page(title, {
+                        title: title,
+                        path: toState.url + "/" + type
+                    });
+                });
             });
-        });
+        }
+        else console.log("TURNING OFF ANALYTICS");
     });
+
 
     //Settings for turning modules on/off
 
