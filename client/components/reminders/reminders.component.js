@@ -66,6 +66,14 @@ function RemindersController($scope, $reactive) {
          date: moment(selectedDate).startOf('day').toDate(),
          description: vm.reminders[number].description
       };
+
+      var analyticsSettings = Settings.findOne({key: 'analytics'});
+      if (!!analyticsSettings.value) {
+         analytics.track("Reminder created " + vm.reminders[number].description, {
+            type: vm.reminders[number].description
+         });
+      }
+
       Meteor.call('addReminder', reminder);
    };
 
@@ -77,6 +85,14 @@ function RemindersController($scope, $reactive) {
       console.log('deleteReminder called with params: ',
          'abstractReminder: ', abstractReminder,
          'reminder: ', reminder);
+
+      var analyticsSettings = Settings.findOne({key: 'analytics'});
+      if (!!analyticsSettings.value) {
+         analytics.track("Reminder removed " + vm.reminders[number].description, {
+            type: vm.reminders[number].description
+         });
+      }
+
       Meteor.call('deleteReminder', reminder);
    };
 

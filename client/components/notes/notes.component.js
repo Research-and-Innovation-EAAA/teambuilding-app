@@ -38,6 +38,12 @@ function NotesController($scope, $reactive, $translate) {
    function saveNote() {
       if (Meteor.userId() === null || (vm.note.description == '' && vm.note._id === undefined))
          return;
+
+      var analyticsSettings = Settings.findOne({key: 'analytics'});
+      if (!!analyticsSettings.value) {
+         analytics.track("Note added");
+      }
+
       if (vm.noteForDay === undefined) {
          Meteor.call('addNewNote', {
             timestamp: moment(vm.selectedDate).startOf('day').toDate(),
