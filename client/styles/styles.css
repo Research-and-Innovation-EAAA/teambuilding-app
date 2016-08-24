@@ -12,6 +12,10 @@
     border: 1px solid grey !important;
 }
 
+.button-border-white {
+    border: 1px solid white !important;
+}
+
 /* Login popover */
 .accounts-dialog {
     margin-left: 0;
