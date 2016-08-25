@@ -1,0 +1,23 @@
+<div>
+    <ion-content id="docctrl-template" class="padding default-background">
+            <canvas id="pdf"></canvas>
+    </ion-content>
+
+<ion-footer-bar class="bar">
+    <h1 class="title">
+        <div class="button-bar">
+            <button class="button button-large button-royal" ng-click="goPrevious()">&lt;</button>
+            <span class="button button-large button-royal">{{pageNum}}/{{pageCount}}</span>
+            <button class="button button-large button-royal" ng-click="goNext()">&gt;</button>
+
+            <span class="button button-large button-royal"></span>
+
+            <button ng-click="zoomIn()" class="button button-large button-royal">+</button>
+            <button ng-click="fit()" class="button button-large button-royal">100%</button>
+            <button ng-click="zoomOut()" class="button button-large button-royal">-</button>
+        </div>
+    </h1>
+</ion-footer-bar>
+
+</div>
+
