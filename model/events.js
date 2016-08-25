@@ -23,20 +23,22 @@ Meteor.methods({
 // Initialise default reminders
 Meteor.startup(() => {
    console.log('Meteor startup called');
-   if (!Reminders.findOne({isListReminders: true})) {
-      var reminders = [
-         {
-            description: 'Blodprøver'
-         },
-         {
-            description: 'Højdosis'
-         }];
-      Reminders.insert({
-         isListReminders: true,
-         reminders: reminders
-      });
-   }
-   if (Meteor.isServer){
-      Reminders._ensureIndex({"createdBy": 1});
-   }
+   Meteor.setTimeout(function() {
+      if (!Reminders.findOne({isListReminders: true})) {
+         var reminders = [
+            {
+               description: 'Blodprøver'
+            },
+            {
+               description: 'Højdosis'
+            }];
+         Reminders.insert({
+            isListReminders: true,
+            reminders: reminders
+         });
+         if (Meteor.isServer){
+            Reminders._ensureIndex({"createdBy": 1});
+         }
+      }
+   }, 10000);
 });
