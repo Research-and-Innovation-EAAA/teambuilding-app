@@ -9,7 +9,13 @@ function PdfViewerController($scope, $reactive, $location) {
    };
 
    vm.openUrl = (url) => {
-      console.log("PdfUrl="+url);
-      $location.path("app/docctrl/"+url);
+
+      if (Meteor.isCordova) {
+         console.log("PdfUrl="+url);
+         $location.path("app/docctrl/"+url);
+      } else {
+         window.open('/pdf/'+url+'.pdf', "_blank");
+      }
+
    }
 }
