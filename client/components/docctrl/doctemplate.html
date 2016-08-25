@@ -1,23 +1,21 @@
 <div>
     <ion-content id="docctrl-template" class="padding default-background">
-            <canvas id="pdf"></canvas>
+        <canvas id="pdf"></canvas>
     </ion-content>
 
-<ion-footer-bar class="bar">
-    <h1 class="title">
-        <div class="button-bar">
-            <button class="button button-large button-royal" ng-click="goPrevious()">&lt;</button>
-            <span class="button button-large button-royal">{{pageNum}}/{{pageCount}}</span>
-            <button class="button button-large button-royal" ng-click="goNext()">&gt;</button>
+    <ion-footer-bar class="bar">
+        <h1 class="title">
+            <div class="button-bar">
+                <button class="button button-small button-royal icon-right ion-arrow-left-b" ng-click="goPrevious()"></button>
+                <span class="button button-small button-royal">{{pageNum}}/{{pageCount}}</span>
+                <button class="button button-small button-royal icon-left ion-arrow-right-b" ng-click="goNext()"></button>
 
-            <span class="button button-large button-royal"></span>
-
-            <button ng-click="zoomIn()" class="button button-large button-royal">+</button>
-            <button ng-click="fit()" class="button button-large button-royal">100%</button>
-            <button ng-click="zoomOut()" class="button button-large button-royal">-</button>
-        </div>
-    </h1>
-</ion-footer-bar>
+                <button ng-click="zoomOut()" class="button button-small button-royal icon-right ion-minus"></button>
+                <button ng-click="fit()" class="button button-small button-royal ion-search"></button>
+                <button ng-click="zoomIn()" class="button button-small button-royal icon-left ion-plus"></button>
+            </div>
+        </h1>
+    </ion-footer-bar>
 
 </div>
 
