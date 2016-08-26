@@ -9,8 +9,7 @@ angular
       'ionic-datepicker',
       'ionic-timepicker',
       'nvd3',
-      'rzModule',
-       'pdf'
+      'rzModule'
    ]);
 
 if (Meteor.isCordova) {

@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('docctrl', docctrl);
 
-
+PDFJS.disableWorker = true;
 
 function docctrl($scope, $stateParams) {
 
@@ -10,41 +10,67 @@ function docctrl($scope, $stateParams) {
     $scope.pdfUrl = "/pdf/"+$stateParams.url+".pdf";
     $scope.canvas = document.getElementById('pdfdocument');
     $scope.ctx = $scope.canvas.getContext('2d');
+    $scope.pageCount = 1;
+    $scope.pageNum = 1;
+    $scope.scale = 1.0;
+    $scope.isNative = Meteor.isCordova;
 
-    $scope.renderPage = function(num) {
-
-        // Update page number
-        $scope.pageNum = num;
-
+    $scope.renderPage = function() {
         // Using promise to fetch the page
-        pdfDoc.getPage($scope.pageNum).then(function(page) {
-            var viewport = page.getViewport($scope.canvas.width / page.getViewport(1.0).width);
+        $scope.pdfDoc.getPage($scope.pageNum).then(function(page) {
+            //Calculate view port scaling
+            var width_scale = window.innerWidth / page.getViewport(1.0).width;
+            var height_scale = window.innerHeight / page.getViewport(1.0).height;
+            var dim_scale = width_scale<height_scale?width_scale:height_scale;
+
+            //Generate viewport and canvas size
+            var viewport = page.getViewport(dim_scale / $scope.scale);
+            $scope.canvas.width = viewport.width;
             $scope.canvas.height = viewport.height;
+
             // Render PDF page into canvas context
             var renderContext = {
-                canvasContext: ctx,
+                canvasContext: $scope.ctx,
                 viewport: viewport
             };
             page.render(renderContext);
         });
     }
 
+    $scope.zoomOut = function() {
+        $scope.scale = $scope.scale*1.25;
+        $scope.renderPage();
+    }
+
+    $scope.zoomIn = function() {
+        $scope.scale = $scope.scale*0.8;
+        $scope.renderPage();
+    }
+
+    $scope.fit = function() {
+        $scope.scale = 1.0;
+        $scope.renderPage();
+    }
+
     $scope.goPrevious = function() {
-        if (pageNum <= 1) return;
-        pageNum--;
-        $scope.renderPage(pageNum);
+        if ($scope.pageNum <= 1) return;
+        $scope.scale = 1.0;
+        $scope.pageNum--;
+        $scope.renderPage();
     }
 
     $scope.goNext = function() {
-        if (pageNum >= pdfDoc.numPages) return;
-        pageNum++;
-        $scope.renderPage(pageNum);
+        if ($scope.pageNum >= $scope.pageCount) return;
+        $scope.scale = 1.0;
+        $scope.pageNum++;
+        $scope.renderPage();
     }
 
-    PDFJS.getDocument($scope.pdfUrl).then(function getPdfHelloWorld(pdfDoc) {
+    PDFJS.getDocument($scope.pdfUrl).then(function(pdfDoc) {
         $scope.pdfDoc = pdfDoc;
         $scope.pageCount = pdfDoc.numPages;
-        $scope.renderPage(pageNum);
+        $scope.renderPage();
     });
 };
+
 
