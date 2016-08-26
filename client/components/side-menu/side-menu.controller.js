@@ -10,12 +10,12 @@ function PdfViewerController($scope, $reactive, $location) {
 
    vm.openUrl = (url) => {
 
-      if (Meteor.isCordova) {
+      //if (Meteor.isCordova) {
          console.log("PdfUrl="+url);
          $location.path("app/docctrl/"+url);
-      } else {
+      /*} else {
          window.open('/pdf/'+url+'.pdf', "_blank");
-      }
+      }*/
 
    }
 }

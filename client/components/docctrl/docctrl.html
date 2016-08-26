@@ -1,5 +1,24 @@
 <div class="wrapper" ng-controller="docctrl">
     <ion-view ng-attr-view-title="{{pdfName}}">
-                <ng-pdf template-url="client/components/docctrl/doctemplate.html" canvasid="pdf" scale="page-fit"></ng-pdf>
+        <div>
+            <ion-content id="pdfcontainer" zooming="false" locking="false" direction="xy">
+                <canvas id="pdfdocument"></canvas>
+            </ion-content>
+
+            <ion-footer-bar class="bar">
+                <h1 class="title">
+                    <div class="button-bar">
+                        <button class="button button-small button-royal icon-right ion-arrow-left-b" ng-click="goPrevious()"></button>
+                        <span class="button button-small button-royal">{{pageNum}}/{{pageCount}}</span>
+                        <button class="button button-small button-royal icon-left ion-arrow-right-b" ng-click="goNext()"></button>
+
+                        <button ng-click="zoomOut()" class="button button-small button-royal icon-right ion-minus"></button>
+                        <button ng-click="fit()" class="button button-small button-royal ion-search"></button>
+                        <button ng-click="zoomIn()" class="button button-small button-royal icon-left ion-plus"></button>
+                    </div>
+                </h1>
+            </ion-footer-bar>
+
+        </div>
     </ion-view>
 </div>
