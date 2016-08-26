@@ -6,34 +6,33 @@ function docctrl($scope, $stateParams) {
 
     console.log("DocCtrl "+ JSON.stringify($stateParams));
 
+    $scope.isNative = Meteor.isCordova==true?true:false;
     $scope.pdfName = $stateParams.url;
     $scope.pdfUrl = "/pdf/"+$stateParams.url+".pdf";
-    $scope.canvas = document.getElementById('pdfdocument');
+    $scope.canvas = document.getElementById($scope.isNative?'pdfdocumentnative':'pdfdocumentweb');
     $scope.ctx = $scope.canvas.getContext('2d');
     $scope.pageCount = 1;
     $scope.pageNum = 1;
     $scope.scale = 1.0;
-    $scope.isNative = Meteor.isCordova;
 
     $scope.renderPage = function() {
+
         // Using promise to fetch the page
         $scope.pdfDoc.getPage($scope.pageNum).then(function(page) {
+
             //Calculate view port scaling
             var width_scale = window.innerWidth / page.getViewport(1.0).width;
             var height_scale = window.innerHeight / page.getViewport(1.0).height;
             var dim_scale = width_scale<height_scale?width_scale:height_scale;
-
-            //Generate viewport and canvas size
             var viewport = page.getViewport(dim_scale / $scope.scale);
             $scope.canvas.width = viewport.width;
             $scope.canvas.height = viewport.height;
 
             // Render PDF page into canvas context
-            var renderContext = {
+            page.render({
                 canvasContext: $scope.ctx,
                 viewport: viewport
-            };
-            page.render(renderContext);
+            });
         });
     }
 
