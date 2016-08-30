@@ -1,4 +1,4 @@
-# README #
+# How-R-you app #
 
 ## Synopsis
 
