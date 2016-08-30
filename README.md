@@ -19,7 +19,7 @@ Application interface is establised by the Meteor framework, https://www.meteor.
 
 ## Contributors
 
-Contribution is welcome. You are free to use the existing code and/or improve it. Make a branch and a branch request to release your changes to the repository.
+Contribution is welcome. You are free to use the existing code and/or improve it. Fork the repository and make pull request to release your changes to the repository.
 
 ### Contact ###
 
