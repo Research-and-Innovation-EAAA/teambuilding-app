@@ -16,7 +16,7 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
 
    for (moduleNumber = 0; moduleNumber < Modules.length; moduleNumber++) {
       var moduleSteps = {};
-      moduleSteps["Tid"] = "client/components/wizard/timestamp/qw-timestamp.html";
+      moduleSteps[$translate.instant("wizard.time")] = "client/components/wizard/timestamp/qw-timestamp.html";
 
       var module = Modules[moduleNumber];
 
@@ -75,8 +75,8 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
 
          if (stepNumber == 1) {
             vm.errorPopup = $ionicPopup.confirm({
-               title: 'Update registration',
-               template: 'There already exists a registration with that timestamp! Do you wish to update it?'
+               title: $translate.instant('wizard.existingRecordTitle'),
+               template: $translate.instant('wizard.existingRecord')
             }).then((res) => {
                if (res) {
                   //update initiated
@@ -92,8 +92,8 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
             });
          } else {
             vm.errorPopup = $ionicPopup.alert({
-               title: 'Error',
-               template: 'Et eller flere felter er enten ikke udfyldt, eller ikke udfyldt korrekt!'
+               title: $translate.instant('wizard.invalidInputTitle'),
+               template: $translate.instant('wizard.invalidInput')
             }).then(function (res) {
                vm.errorPopup = undefined;
             });
@@ -106,7 +106,7 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
    vm.finishButtonText = () => {
       var registration = Session.get('registration');
       if (registration != null)
-         return registration.updating ? 'Opdater' : 'Gem';
+         return registration.updating ? $translate.instant('wizard.update') : $translate.instant('wizard.save');
       else
          return '';
    };
@@ -153,6 +153,21 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
    };
 
    vm.stepLoaded = () => {
+      if (vm.stepNumber > 0) {
+         var analyticsSettings = Settings.findOne({key: 'analytics'});
+         if (!!analyticsSettings.value) {
+            var type = Session.get('registrationType');
+
+            console.log("questionwizard/" + type + "/" + vm.stepNumber);
+
+            var title = $translate.instant(vm.dataType);
+            analytics.page(title, {
+               title: title,
+               path: "questionwizard/" + type + "/" + vm.stepNumber
+            });
+         }
+      }
+
       $scope.$broadcast('stepLoaded', {
          dataType: vm.dataType,
          stepNumber: vm.stepNumber
@@ -161,8 +176,8 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
 
    function saveOk() {
       $ionicPopup.alert({
-         title: vm.dataType,
-         content: 'Registrering gemt!'
+         title: $translate.instant(vm.dataType),
+         content: $translate.instant('wizard.saved')
       });
       Session.set('registration', undefined);
       Session.set('regValidated', undefined);
@@ -178,14 +193,14 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
    function saveError() {
       $ionicPopup.alert({
          title: vm.dataType,
-         content: 'Failed to save registration'
+         content: $translate.instant('wizard.failed')
       });
    }
 
    function updateOk() {
       $ionicPopup.alert({
          title: vm.dataType,
-         content: 'Registrering opdateret!'
+         content: $translate.instant('wizard.updated')
       });
       Session.set('registration', undefined);
       Session.set('regValidated', undefined);

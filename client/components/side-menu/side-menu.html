@@ -14,26 +14,26 @@
 
    <ion-side-menu side="right">
       <ion-header-bar class="bar-stable">
-         <h1 class="title">Behandlinger</h1>
+         <h1 class="title" translate>sidemenu.treatments</h1>
       </ion-header-bar>
       <div ng-controller="pdfController as vm">
          <ion-content>
-            <h4 class="group-title">Leukæmi</h4>
+            <h4 class="group-title" translate>sidemenu.leukemia</h4>
             <ion-list>
-               <ion-item menu-close ng-click="vm.openUrl('standard_intensiv')">
-                  Standard Intensiv
+               <ion-item menu-close ng-click="vm.openUrl('standard_intensiv')" translate>
+                   sidemenu.l_standard
                </ion-item>
-               <ion-item menu-close ng-click="vm.openUrl('intermediaer_intensiv')">
-                  Intermediær Intensiv
+               <ion-item menu-close ng-click="vm.openUrl('intermediaer_intensiv')" translate>
+                   sidemenu.l_intermediate
                </ion-item>
-               <ion-item menu-close ng-click="vm.openUrl('intermediaer_intensiv_cns3')">
-                  Intermediær Intensiv + CNS3
+               <ion-item menu-close ng-click="vm.openUrl('intermediaer_intensiv_cns3')" translate>
+                   sidemenu.l_intermediate_cns3
                </ion-item>
-               <ion-item menu-close ng-click="vm.openUrl('hoej_intensiv')">
-                  Høj Intensiv
+               <ion-item menu-close ng-click="vm.openUrl('hoej_intensiv')" translate>
+                   sidemenu.l_high
                </ion-item>
             </ion-list>
-             <h4 class="group-title">Gigt</h4>
+             <h4 class="group-title" translate>sidemenu.arthritis</h4>
          </ion-content>
       </div>
    </ion-side-menu>

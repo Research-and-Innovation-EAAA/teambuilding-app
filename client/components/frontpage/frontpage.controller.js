@@ -16,7 +16,7 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, ModuleM
     //Analytics
     Accounts.onLogin(function () {
         ga('set', 'userId', Meteor.userId()); // Set the user ID using signed-in user_id.
-        ga('set', 'dimension1', Meteor.userId()); // Set the custom dimension in Google Analytics to store actual userId
+        ga('set', 'dimension1', Meteor.userId()); // Set the custom dimension in Google Analytics to store the actual userId
     });
     Meteor.subscribe("settings", function () {
         var analyticsSettings = Settings.findOne({key: 'analytics'});

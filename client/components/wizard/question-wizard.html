@@ -14,7 +14,7 @@
                         current-step="qwiz.stepName"
                         on-finish="qwiz.finishWizard()">
                     <div ng-repeat="(label,step) in qwiz.modules[qwiz.dataType]">
-                        <wz-step wz-title="{{label}}"
+                        <wz-step wz-title="{{label | translate}}"
                                  canexit="qwiz.validateData">
                         </wz-step>
                     </div>
@@ -24,22 +24,22 @@
                         <a id="wiz-nav-button"
                            class="button ion-ios-undo button-royal icon-left"
                            ng-click="qwiz.cancelRegistration()"
-                           value="Cancel">Fortryd</a>
+                           value="Cancel" translate>wizard.cancel</a>
                     </span>
-                    <span ng-if="qwiz.stepNumber > 0">
+                            <span ng-if="qwiz.stepNumber > 0">
                         <a id="wiz-nav-button"
                            class="button ion-chevron-left button-royal icon-left"
                            wz-previous="qwiz.stepNumber = qwiz.stepNumber - 1"
-                           value="Previous">Forrige</a>
+                           value="Previous" translate>wizard.previous</a>
                     </span>
-                    <span ng-if="qwiz.stepNumber < qwiz.steps.length - 1">
+                            <span ng-if="qwiz.stepNumber < qwiz.steps.length - 1">
                         <a id="wiz-nav-button"
                            style="float:right"
                            class="button ion-chevron-right button-royal icon-right"
                            wz-next="qwiz.validateData() ? qwiz.stepNumber = qwiz.stepNumber + 1 : null"
-                           value="Next">Næste</a>
+                           value="Next" translate>wizard.next</a>
                     </span>
-                    <span ng-if="qwiz.stepNumber == qwiz.steps.length - 1 && qwiz.isLoggedIn">
+                            <span ng-if="qwiz.stepNumber == qwiz.steps.length - 1 && qwiz.isLoggedIn">
                         <a id="wiz-nav-button"
                            style="float:right"
                            class="button ion-archive button-royal icon-right"
@@ -47,11 +47,11 @@
                             {{ qwiz.finishButtonText() }}
                         </a>
                     </span>
-                    <span ng-if="qwiz.stepNumber == qwiz.steps.length - 1 && !qwiz.isLoggedIn">
+                            <span ng-if="qwiz.stepNumber == qwiz.steps.length - 1 && !qwiz.isLoggedIn">
                         <a id="wiz-nav-button"
                            style="float:right"
                            class=""
-                           translate="saveRegistrationLoggedOut"></a>
+                           translate>wizard.saveRegistrationLoggedOut</a>
                     </span>
                         </section>
                     </ion-footer-bar>

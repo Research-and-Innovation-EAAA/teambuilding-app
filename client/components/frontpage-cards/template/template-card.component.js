@@ -55,7 +55,7 @@ function TemplateCardController($scope, $reactive, $location) {
 
                      var propertyName = vm.module.frontPage.properties[rowNumber];
                      if (registration !== undefined && registration[propertyName] != null)
-                        return registration[propertyName];
+                        return registration[propertyName] + "";
                      else return ' - ';
                   } else if (vm.module.frontPage.propertyFunction !== undefined) {
                      return vm.module.frontPage.propertyFunction(registration, rowNumber);

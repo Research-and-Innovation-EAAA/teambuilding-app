@@ -3,24 +3,24 @@
 
     <div style="width: 100%" class="top-margin">
 
-        <h3 class="center-horizontal">Hvor meget morfin er givet?</h3>
+        <h3 class="center-horizontal" translate>pain.howMuchMorphine</h3>
         <br>
 
         <div class="padding-horizontal-50">
             <label class="item item-input item-select">
-                <span class="input-label">
-                 Administration type:
+                <span class="input-label" translate>
+                 pain.administrationType
                 </span>
                 <select ng-change="vm.updateRegistration()"
                         ng-model="vm.registration.morphineType">
-                    <option value='oral'>Tablet</option>
-                    <option value='intravenous'>Intravenous</option>
+                    <option value='pain.oral' translate>pain.oral</option>
+                    <option value='pain.intravenous' translate>pain.intravenous</option>
                 </select>
             </label>
 
             <div class="item item-input padding-right">
             <span class="input-label"
-                  style="width: initial;">Dosis:</span>
+                  style="width: initial;" translate>pain.dose</span>
                 <input type="number"
                        min="0"
                        style="direction: rtl;"
@@ -30,9 +30,9 @@
                 <select class="item item-input item-select"
                         ng-change="vm.updateRegistration()"
                         ng-model="vm.registration.morphineMeasureUnit">
-                    <option value='mg'>mg</option>
-                    <option value='mg/time'>mg/time</option>
-                    <option value='mg/døgn'>mg/døgn</option>
+                    <option value='pain.mg' translate>pain.mg</option>
+                    <option value='pain.mgHour' translate>pain.mgHour</option>
+                    <option value='pain.mgDay' translate>pain.mgDay</option>
                 </select>
             </div>
         </div>

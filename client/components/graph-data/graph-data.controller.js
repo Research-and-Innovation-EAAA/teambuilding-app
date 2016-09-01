@@ -74,9 +74,9 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
          Math.floor((vm.startTimeStamp ? vm.startTimeStamp : new Date()).getMinutes() / 5) * 5 * 60),  //Optional
          step: 5,  //Optional
          format: 24,  //Optional
-         titleLabel: 'Tidspunkt',  //Optional
-         setLabel: 'Vælg',  //Optional
-         closeLabel: 'Luk',  //Optional
+         titleLabel: $translate.instant('graphData.timestamp'),  //Optional
+         setLabel: $translate.instant('graphData.choose'),  //Optional
+         closeLabel: $translate.instant('graphData.close'),  //Optional
          setButtonType: 'button-positive',  //Optional
          closeButtonType: 'button-stable',  //Optional
          callback: function (val) {    //Mandatory
@@ -92,18 +92,18 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
    }
    if (vm.startDatepickerObject == null) {
       vm.startDatepickerObject = {
-         titleLabel: 'Dato',  //Optional
-         todayLabel: 'I dag',  //Optional
-         closeLabel: 'Luk',  //Optional
-         setLabel: 'Vælg',  //Optional
+         titleLabel: $translate.instant('graphData.date'),  //Optional
+         todayLabel: $translate.instant('graphData.today'),  //Optional
+         closeLabel: $translate.instant('graphData.close'),  //Optional
+         setLabel: $translate.instant('graphData.choose'),  //Optional
          setButtonType: 'button-positive',  //Optional
          todayButtonType: 'button-stable',  //Optional
          closeButtonType: 'button-stable',  //Optional
          inputDate: (vm.startTimeStamp ? vm.startTimeStamp : new Date()),  //Optional
          mondayFirst: true,  //Optional
          //disabledDates: disabledDates, //Optional
-         weekDaysList: ["Sø", "Ma", "Ti", "On", "To", "Fr", "Lø"], //Optional
-         monthList: ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"], //Optional
+         weekDaysList: $translate.instant('weekdaysShortList').split("_"), //Optional
+         monthList: $translate.instant('monthsList').split("_"), //Optional
          templateType: 'popup', //Optional
          showTodayButton: 'true', //Optional
          modalHeaderColor: 'bar-positive', //Optional
@@ -129,9 +129,9 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
          Math.floor((vm.endTimeStamp ? vm.endTimeStamp : new Date()).getMinutes() / 5) * 5 * 60),
          step: 5,  //Optional
          format: 24,  //Optional
-         titleLabel: 'Tidspunkt',  //Optional
-         setLabel: 'Vælg',  //Optional
-         closeLabel: 'Luk',  //Optional
+         titleLabel: $translate.instant('graphData.timestamp'),  //Optional
+         setLabel: $translate.instant('graphData.choose'),  //Optional
+         closeLabel: $translate.instant('graphData.close'),  //Optional
          setButtonType: 'button-positive',  //Optional
          closeButtonType: 'button-stable',  //Optional
          callback: function (val) {    //Mandatory
@@ -147,18 +147,18 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
    }
    if (vm.endDatepickerObject == null) {
       vm.endDatepickerObject = {
-         titleLabel: 'Dato',  //Optional
-         todayLabel: 'I dag',  //Optional
-         closeLabel: 'Luk',  //Optional
-         setLabel: 'Vælg',  //Optional
+         titleLabel: $translate.instant('graphData.date'),  //Optional
+         todayLabel: $translate.instant('graphData.today'),  //Optional
+         closeLabel: $translate.instant('graphData.close'),  //Optional
+         setLabel: $translate.instant('graphData.choose'),  //Optional
          setButtonType: 'button-positive',  //Optional
          todayButtonType: 'button-stable',  //Optional
          closeButtonType: 'button-stable',  //Optional
          inputDate: (vm.endTimeStamp ? vm.endTimeStamp : new Date()),  //Optional
          mondayFirst: true,  //Optional
          //disabledDates: disabledDates, //Optional
-         weekDaysList: ["Sø", "Ma", "Ti", "On", "To", "Fr", "Lø"], //Optional
-         monthList: ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"], //Optional
+         weekDaysList: $translate.instant('weekdaysShortList').split("_"), //Optional
+         monthList: $translate.instant('monthsList').split("_"), //Optional
          templateType: 'popup', //Optional
          showTodayButton: 'true', //Optional
          modalHeaderColor: 'bar-positive', //Optional
@@ -388,7 +388,7 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
          height: window.innerHeight / 2,
          showLegend: false,
          interpolate: 'linear',
-         noData: "Ingen data valgt til visning",
+         noData: $translate.instant('graphData.noData'),
          margin: {
             top: 30,
             right: 30,
@@ -582,11 +582,11 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
 
          var hideActionSheet = $ionicActionSheet.show({
             buttons: [
-               {text: 'Update'}
+               {text: $translate.instant('graphData.update')}
             ],
-            destructiveText: 'Delete',
-            titleText: 'Edit registration',
-            cancelText: 'Cancel',
+            destructiveText: $translate.instant('graphData.delete'),
+            titleText: $translate.instant('graphData.edit'),
+            cancelText: $translate.instant('graphData.cancel'),
             cancel: function () {
                hideActionSheet();
             },
