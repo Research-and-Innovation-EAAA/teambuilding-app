@@ -149,22 +149,22 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
 
       switch (smileynumber) {
          case 0:
-            vm.smileyDescription = "Man kan gøre fuldstændig, som man plejer uden at tænke på, at det gør ondt.";
+            vm.smileyDescription = "pain.smiley0";
             break;
          case 2:
-            vm.smileyDescription = "Man kan gøre, som man plejer, men af og til må man standse op, fordi det gør ondt.";
+            vm.smileyDescription = "pain.smiley2";
             break;
          case 4:
-            vm.smileyDescription = "Man har mest lyst til at sidde stille og få læst en historie eller se fjernsyn, fordi det gør ondt.";
+            vm.smileyDescription = "pain.smiley4";
             break;
          case 6:
-            vm.smileyDescription = "Man tænker på, at det gør ondt hele tiden.";
+            vm.smileyDescription = "pain.smiley6";
             break;
          case 8:
-            vm.smileyDescription = "Man har så ondt, at man har lyst til at græde, fordi det gør ondt.";
+            vm.smileyDescription = "pain.smiley8";
             break;
          case 10:
-            vm.smileyDescription = "Man har så ondt, at man slet ikke kan holde det ud."
+            vm.smileyDescription = "pain.smiley10";
             break;
          default:
             vm.smileyDescription = "";

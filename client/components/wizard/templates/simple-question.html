@@ -1,7 +1,7 @@
 <div style="width: 100%" class="top-margin padding-horizontal-50"
      ng-controller="simpleQuestionController as vm">
 
-    <h3 class="center-horizontal">{{vm.question}}</h3>
+    <h3 class="center-horizontal" translate>{{vm.question}}</h3>
     <br>
 
     <div class="padding-horizontal-50">
@@ -10,7 +10,7 @@
                 ng-class="{
                 'button-dark':vm.registration[vm.propertyName] == answer,
                 'button-stable':vm.registration[vm.propertyName] != answer,
-                'button button-block button-border': true}">{{answer}}
+                'button button-block button-border': true}" translate>{{answer}}
         </button>
     </div>
 </div>

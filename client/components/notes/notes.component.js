@@ -28,7 +28,7 @@ function NotesController($scope, $reactive, $translate) {
          return Meteor.userId() !== null;
       },
       placeholder: () => {
-         return Meteor.userId() !== null ? $translate.instant('notesPlaceholderLoggedIn') : $translate.instant('notesPlaceholderLoggedOut');
+         return Meteor.userId() !== null ? $translate.instant('notes.placeholderLoggedIn') : $translate.instant('notes.placeholderLoggedOut');
       }
    });
 

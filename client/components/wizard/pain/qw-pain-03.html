@@ -14,8 +14,8 @@
             {{ vm.painScaleNoScore() }}
         </h2>
         <button class="button button-border-white"
-                ng-click="vm.changeScale()">
-            Skift skala
+                ng-click="vm.changeScale()" translate>
+            pain.changeScale
         </button>
     </div>
 
@@ -27,15 +27,15 @@
         <div ng-show="vm.showFlacc"
              ng-style="{ width: '100%',
                         height: vm.isSmallScreen() ? '90em' : '100%' }">
-            <h4 class="flacc-title" style="clear: right">Ansigtsudtryk</h4>
+            <h4 class="flacc-title" style="clear: right" translate>pain.faceExpression</h4>
             <div class="row responsive-md flacc-row">
                 <div class="col">
                     <button ng-click="vm.selectFlacc(0,0)"
                             ng-class="{
                                 'button-dark':vm.registration.flaccvalue[0]===0,
                                 'button-stable':vm.registration.flaccvalue[0]!==0,
-                                 'button button-block flacc-button button-border': true}">
-                        Upåvirket/Afslappet
+                                 'button button-block flacc-button button-border': true}" translate>
+                        pain.faceExpression0
                     </button>
                 </div>
                 <div class="col">
@@ -43,8 +43,8 @@
                             ng-class="{
                             'button-dark':vm.registration.flaccvalue[0]===1,
                             'button-stable':vm.registration.flaccvalue[0]!==1,
-                            'button button-block flacc-button button-border': true}">
-                        Bekymret,indadvendt
+                            'button button-block flacc-button button-border': true}" translate>
+                        pain.faceExpression1
                     </button>
                 </div>
                 <div class="col">
@@ -52,109 +52,109 @@
                             ng-class="{
                             'button-dark':vm.registration.flaccvalue[0]===2,
                             'button-stable':vm.registration.flaccvalue[0]!==2,
-                            'button button-block flacc-button button-border': true}">
-                        Hyppigt til konstant dirren omkring munden eller sammenbidt
+                            'button button-block flacc-button button-border': true}" translate>
+                        pain.faceExpression2
                     </button>
                 </div>
             </div>
 
-            <h4 class="flacc-title">Ben</h4>
+            <h4 class="flacc-title" translate>pain.legs</h4>
             <div class="row responsive-md flacc-row">
                 <div class="col">
                     <button ng-click="vm.selectFlacc(1,0)"
                             ng-class="{'button-dark':vm.registration.flaccvalue[1]===0,
                             'button-stable':vm.registration.flaccvalue[1]!==0,
-                            'button button-block flacc-button button-border': true}">
-                        Normal position eller afslappet
+                            'button button-block flacc-button button-border': true}" translate>
+                        pain.legs0
                     </button>
                 </div>
                 <div class="col">
                     <button ng-click="vm.selectFlacc(1,1)" ng-class="{'button-dark':vm.registration.flaccvalue[1]===1,
                                                   'button-stable':vm.registration.flaccvalue[1]!==1,
-                                                  'button button-block flacc-button button-border': true}">
-                        Urolig, spændt
+                                                  'button button-block flacc-button button-border': true}" translate>
+                        pain.legs1
                     </button>
                 </div>
                 <div class="col">
                     <button ng-click="vm.selectFlacc(1,2)" ng-class="{'button-dark':vm.registration.flaccvalue[1]===2,
                                                   'button-stable':vm.registration.flaccvalue[1]!==2,
-                                                  'button button-block flacc-button button-border': true}">
-                        Trækker benene op under sig, sparker
+                                                  'button button-block flacc-button button-border': true}" translate>
+                        pain.legs2
                     </button>
                 </div>
             </div>
 
-            <h4 class="flacc-title">Aktivitet</h4>
+            <h4 class="flacc-title" translate>pain.activity</h4>
             <div class="row responsive-md flacc-row">
                 <div class="col">
                     <button ng-click="vm.selectFlacc(2,0)" ng-class="{'button-dark':vm.registration.flaccvalue[2]===0,
                                                   'button-stable':vm.registration.flaccvalue[2]!==0,
-                                                  'button button-block flacc-button button-border': true}">
-                        Normal stilling eller ligger stille, bevæger sig frit
+                                                  'button button-block flacc-button button-border': true}" translate>
+                        pain.activity0
                     </button>
                 </div>
                 <div class="col">
                     <button ng-click="vm.selectFlacc(2,1)" ng-class="{'button-dark':vm.registration.flaccvalue[2]===1,
                                                   'button-stable':vm.registration.flaccvalue[2]!==1,
-                                                  'button button-block flacc-button button-border': true}">
-                        Vrider sig, kan ikke finde ro
+                                                  'button button-block flacc-button button-border': true}" translate>
+                        pain.activity1
                     </button>
                 </div>
                 <div class="col">
                     <button ng-click="vm.selectFlacc(2,2)" ng-class="{'button-dark':vm.registration.flaccvalue[2]===2,
                                                   'button-stable':vm.registration.flaccvalue[2]!==2,
-                                                  'button button-block flacc-button button-border': true}">
-                        "Går i bro", stiv eller kaster sig rundt
+                                                  'button button-block flacc-button button-border': true}" translate>
+                        pain.activity2
                     </button>
                 </div>
             </div>
 
-            <h4 class="flacc-title">Gråd</h4>
+            <h4 class="flacc-title" translate>pain.cry</h4>
             <div class="row responsive-md flacc-row">
                 <div class="col">
                     <button ng-click="vm.selectFlacc(3,0)" ng-class="{'button-dark':vm.registration.flaccvalue[3]===0,
                                                   'button-stable':vm.registration.flaccvalue[3]!==0,
-                                                  'button button-block flacc-button button-border': true}">
-                        Græder ikke (Vågen eller sovende)
+                                                  'button button-block flacc-button button-border': true}" translate>
+                        pain.cry0
                     </button>
                 </div>
                 <div class="col">
                     <button ng-click="vm.selectFlacc(3,1)" ng-class="{'button-dark':vm.registration.flaccvalue[3]===1,
                                                   'button-stable':vm.registration.flaccvalue[3]!==1,
-                                                  'button button-block flacc-button button-border': true}">
-                        Klynker, klager sig af og til
+                                                  'button button-block flacc-button button-border': true}" translate>
+                        pain.cry1
                     </button>
                 </div>
                 <div class="col">
                     <button ng-click="vm.selectFlacc(3,2)" ng-class="{'button-dark':vm.registration.flaccvalue[3]===2,
                                                   'button-stable':vm.registration.flaccvalue[3]!==2,
-                                                  'button button-block flacc-button button-border': true}">
-                        Græder uafbrudt, skriger eller klager sig hyppigt
+                                                  'button button-block flacc-button button-border': true}" translate>
+                        pain.cry2
                     </button>
                 </div>
             </div>
 
-            <h4 class="flacc-title">Trøstbarhed</h4>
+            <h4 class="flacc-title" translate>pain.comfort</h4>
             <div class="row responsive-md flacc-row">
                 <div class="col">
                     <button ng-click="vm.selectFlacc(4,0)" ng-class="{'button-dark':vm.registration.flaccvalue[4]===0,
                                                   'button-stable':vm.registration.flaccvalue[4]!==0,
-                                                  'button button-block flacc-button button-border': true}">
-                        Tilfreds, afslappet
+                                                  'button button-block flacc-button button-border': true}" translate>
+                        pain.comfort0
                     </button>
                 </div>
                 <div class="col">
                     <button ng-click="vm.selectFlacc(4,1)" ng-class="{'button-dark':vm.registration.flaccvalue[4]===1,
                                                   'button-stable':vm.registration.flaccvalue[4]!==1,
-                                                  'button button-block flacc-button button-border': true}">
-                        Kan beroliges ved berøring, ved at blive talt til og kan afledes fra smerten
+                                                  'button button-block flacc-button button-border': true}" translate>
+                        pain.comfort1
                     </button>
                 </div>
                 <div class="col">
                     <button ng-click="vm.selectFlacc(4,2)" ng-class="{'button-dark':vm.registration.flaccvalue[4]===2,
                                                   'button-stable':vm.registration.flaccvalue[4]!==2,
-                                                  'button button-block flacc-button button-border': true}">
-                        Vanskelig at trøste eller utrøstelig
+                                                  'button button-block flacc-button button-border': true}" translate>
+                        pain.comfort2
                     </button>
                 </div>
             </div>
@@ -250,7 +250,7 @@
             <br>
             <div class="row responsive-md">
                 <div class="col" style="text-align:center">
-                    <h3>{{ vm.smileyDescription }}</h3>
+                    <h3 translate>{{ vm.smileyDescription }}</h3>
                 </div>
             </div>
 

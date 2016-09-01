@@ -7,15 +7,12 @@ angular.module('leukemiapp').directive('calendarDate', function () {
    }
 });
 
-function CalendarDateController($scope, $reactive) {
+function CalendarDateController($scope, $reactive, $translate) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   var monthNames = ["Januar", "Februar", "Marts", "April", "Maj", "Juni",
-      "Juli", "August", "September", "Oktober", "November", "December"
-   ];
-   var dayOfWeekNames = ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"
-   ];
+   var monthNames = $translate.instant('monthsList').split("_");
+   var dayOfWeekNames = $translate.instant('weekdaysList').split("_");
 
    vm.helpers({
       selectedDate: () => {
