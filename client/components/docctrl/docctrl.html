@@ -5,6 +5,10 @@
                 <canvas id="pdfdocumentweb"></canvas>
             </ion-content>
 
+            <ion-scroll id="pdfcontainernative" zooming="true" locking="false" direction="xy">
+                <canvas id="pdfdocumentnative"></canvas>
+            </ion-scroll>
+
             <ion-footer-bar class="bar">
                 <h1 class="title">
                     <div class="button-bar">
@@ -12,9 +16,9 @@
                         <span class="button button-small button-royal">{{pageNum}}/{{pageCount}}</span>
                         <button class="button button-small button-royal icon-left ion-arrow-right-b" ng-click="goNext()"></button>
 
-                        <button ng-click="zoomOut()" class="button button-small button-royal icon-right ion-minus"></button>
-                        <button ng-click="fit()" class="button button-small button-royal ion-search"></button>
-                        <button ng-click="zoomIn()" class="button button-small button-royal icon-left ion-plus"></button>
+                        <button ng-if="isNative!==true" ng-click="zoomOut()" class="button button-small button-royal icon-right ion-minus"></button>
+                        <button ng-if="isNative!==true" ng-click="fit()" class="button button-small button-royal ion-search"></button>
+                        <button ng-if="isNative!==true" ng-click="zoomIn()" class="button button-small button-royal icon-left ion-plus"></button>
                     </div>
                 </h1>
             </ion-footer-bar>
