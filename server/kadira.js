@@ -6,8 +6,8 @@ Meteor.startup(function () {
     var kadiraSettings = Settings.findOne({key: 'kadira'});
 
     if (!!kadiraSettings.value) {
-        console.log("turning on kadira");
+        console.log("kadira turned on");
         Kadira.connect('oa9KTw9kahpHAupAS', '62c0c9d9-be0d-4ab5-8982-e01e704bfb54');
     }
-    else console.log("turn off kadira");
+    else console.log("kadira turned off");
 });

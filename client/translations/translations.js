@@ -95,7 +95,6 @@ function config($translateProvider) {
             type: 'Type',
             intensity: 'Intensity',
 
-            //TODO translate questions 1-3↓
             //question 1
             howMuchMorphine: 'How much morphine was given?',
             administrationType: 'Administration type:',
@@ -114,6 +113,7 @@ function config($translateProvider) {
             head: 'Head',
             other: 'Other',
 
+            //TODO translate question 3↓
             //question 3
             changeScale: 'Change scale',
             faceExpression: 'Face expression',
@@ -159,13 +159,13 @@ function config($translateProvider) {
             painQ2: 'Moderat smerte',
             painQ3: 'Kraftige smerter med behov for morfin',
             painQ4: 'Kraftige smerter og behov for store mængder morfin',
-            soresAndRedness: 'Sår og rødme',
+            soresAndRedness: 'Sores and redness',
             soresQ0: 'Ingen',
             soresQ1: 'Rødme (ingen sår)',
             soresQ2: 'Enkelte eller flere mindre sår',
             soresQ3: 'Udtalt rødme, store eller mange sår',
             soresQ4: 'Størstedelen af munden er påvirket af rødme eller sår',
-            foodIntakeInfluence: 'Påvirkning af fødeindtag',
+            foodIntakeInfluence: 'Influence on food intake',
             foodIntakeQ0: 'Ingen',
             foodIntakeQ1: 'Spiser næsten normalt',
             foodIntakeQ2: 'Spiser enkelte typer af fast føde',

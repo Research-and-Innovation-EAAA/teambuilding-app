@@ -1,10 +1,6 @@
 <ion-modal-view class="centervertically" ng-controller="settingsController as vm">
     <ion-header-bar class="bar bar-header bar-stable">
         <h1 class="title" translate>settings.modules</h1>
-        <button class="button button-clear button-primary"
-                ng-click="vm.cancelModal()" translate>
-            settings.cancel
-        </button>
         <button class="button button-clear button-secondary"
                 ng-click="vm.doneModal()">
             <strong translate>settings.done</strong>
@@ -16,7 +12,7 @@
             <li class="item item-toggle" ng-repeat="(key,val) in vm.modules">
                 <translate>{{key}}</translate>
                 <label class="toggle toggle-calm">
-                    <input type="checkbox" ng-model="vm.modules[key]" ng-change="vm.toggleModule({{key}})">
+                    <input type="checkbox" ng-model="vm.modules[key]" ng-change="vm.toggleModule('{{key}}')">
                     <div class="track">
                         <div class="handle"></div>
                     </div>

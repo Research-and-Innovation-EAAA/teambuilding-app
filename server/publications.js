@@ -114,4 +114,12 @@
             }
         );
     });
+
+    Meteor.publish("userSettings", function () {
+        return UserSettings.find(
+            {
+                userId: this.userId
+            }
+        );
+    });
 })();
