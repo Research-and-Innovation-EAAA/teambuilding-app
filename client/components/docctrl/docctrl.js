@@ -6,7 +6,7 @@ function docctrl($scope, $stateParams) {
 
     console.log("DocCtrl "+ JSON.stringify($stateParams));
 
-    $scope.isNative = Meteor.isCordova==true?true:false;
+    $scope.isNative = (Meteor.isCordova==true?true:false);
     $scope.pdfName = $stateParams.url;
     $scope.pdfUrl = "/pdf/"+$stateParams.url+".pdf";
     $scope.canvas = document.getElementById($scope.isNative?'pdfdocumentnative':'pdfdocumentweb');
