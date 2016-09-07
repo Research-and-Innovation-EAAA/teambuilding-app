@@ -1,6 +1,6 @@
-angular.module('leukemiapp').controller('simpleQuestionController', SimpleQuestionController);
+angular.module('leukemiapp').controller('singleQuestionController', singleQuestionController);
 
-function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScrollDelegate) {
+function singleQuestionController($scope, $reactive, WizardHandler, $ionicScrollDelegate) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -31,7 +31,8 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
    }
 
    vm.registration = Session.get('registration');
-   
+
+   console.log("config is " , config);
    vm.question = config.question;
    vm.answers = config.answers;
    vm.propertyName = config.propertyName;

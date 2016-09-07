@@ -1,0 +1,14 @@
+<div class="center-horizontal top-margin"
+     ng-controller="sliderController as vm">
+
+    <div>
+        <h1>{{vm.question}}</h1>
+    </div>
+
+    <div class="padding-horizontal-50">
+        <rzslider rz-slider-model="vm.slider.value"
+                  rz-slider-options="vm.slider.options"></rzslider>
+    </div>
+</div>
+
+

@@ -40,6 +40,22 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
    vm.stepNumber = 0; //First template, goes from 0 .. x
    vm.stepName = "";
 
+
+
+   $scope.$watch(
+       function templateUrl(scope) {
+          return vm.stepNumber;
+       },
+       function (newValue, oldValue) {
+          /*if (newValue != oldValue)
+             updateRegistration()*/
+          vm.template = null;
+          vm.template = vm.modules[vm.dataType][vm.steps[vm.stepNumber]];// + '?step='+ newValue;
+
+          console.error("UŽ SE TO HEJBE " +oldValue + ">"+newValue + " a template je nově " + vm.template);
+       }
+   );
+
    vm.helpers({
       isLoggedIn: () => {
          return Meteor.userId() !== null;
@@ -173,6 +189,15 @@ function QuestionWizardController($scope, $reactive, $ionicPopup, $ionicScrollDe
          stepNumber: vm.stepNumber
       });
    };
+
+  /* vm.nextStep = () =>{
+      if (vm.validateData()) {
+         qwiz.stepNumber = qwiz.stepNumber + 1;
+         return true;
+      }
+      return false;
+   //   qwiz.stepLoaded();
+   };*/
 
    function saveOk() {
       $ionicPopup.alert({
