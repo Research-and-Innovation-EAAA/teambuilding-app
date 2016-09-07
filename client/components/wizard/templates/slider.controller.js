@@ -65,11 +65,18 @@ function sliderController($scope, $reactive, WizardHandler) {
    };
    console.log('vm.slider is ', vm.slider);
 
+   vm.validation = (registration) => {
+      if (vm.mandatory) {
+         return registration[config.propertyName] != null;
+      }
+      else return true;
+   }
+
    function updateSessionVariables() {
       var validated = Session.get('regValidated');
       if (validated != null) {
 
-         validated[stepNumber - 1] = step.validation(vm.registration);
+         validated[stepNumber - 1] = vm.validation(vm.registration);
          Session.set('regValidated', validated);
          console.log('regValidated session variable updated: ', validated);
 
@@ -77,4 +84,6 @@ function sliderController($scope, $reactive, WizardHandler) {
          console.log('Registration updated: ', vm.registration);
       }
    }
+   
+   updateRegistration();
 }

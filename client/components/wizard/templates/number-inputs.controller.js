@@ -1,8 +1,11 @@
-angular.module('leukemiapp').controller('multipleQuestionsController', multipleQuestionsController);
+angular.module('leukemiapp').controller('numberInputsController', numberInputsController);
 
-function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScrollDelegate) {
+function numberInputsController($scope, $reactive, WizardHandler) {
     $reactive(this).attach($scope);
     var vm = this;
+
+    var module = Modules[1];
+
 
     //Init
     var dataType = Session.get('registrationType');
@@ -35,24 +38,26 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
 
     vm.registration = Session.get('registration');
 
+    function initData() {
+        for (question in vm.questions) {
+            console.warn("připravit pozor", vm.questions[question]);
+            if (vm.registration[vm.questions[question].propertyName] === undefined)
+                vm.registration[vm.questions[question].propertyName] = null;
+        }
 
-    vm.selected = (question, answer) => {
-        return vm.registration[question.propertyName] === answer;
+        validateData();
+        vm.init = true;
     }
 
-    vm.isSmallScreen = () => {
-        return window.innerWidth < 768;
-    };
+    $scope.$on('stepLoaded', (event, data) => {
+        if (data['dataType'] === Session.get('registrationType')) {
+            console.log(data['dataType'], 'step loaded! Step number:', data['stepNumber']);
 
-    vm.updateRegistration = () => {
-        updateSessionVariables();
-    };
-
-    vm.selectAnswer = function (questionPropertyName, newValue) {
-        vm.registration[questionPropertyName] = newValue;
-
-        vm.updateRegistration();
-    };
+            if (data['stepNumber'] == 1 && !vm.init) {
+                initData();
+            }
+        }
+    });
 
     vm.validation = (registration) => {
         if (vm.mandatory) {
@@ -66,7 +71,7 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
         else return true;
     }
 
-    function updateSessionVariables() {
+    function validateData() {
         var validated = Session.get('regValidated');
         if (validated === undefined)
             validated = [];
@@ -74,8 +79,16 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
         validated[stepNumber - 1] = vm.validation(vm.registration);
         Session.set('regValidated', validated);
         console.log('regValidated session variable updated: ', validated);
+    }
 
+    vm.updateRegistration = () => {
+        validateData();
         Session.set('registration', vm.registration);
-        console.log('Registration updated: ', vm.registration);
+        console.log('Registration updated');
+        console.log(vm.registration);
+    }
+
+    if (!vm.init) {
+        initData();
     }
 }
