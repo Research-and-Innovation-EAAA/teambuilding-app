@@ -143,7 +143,7 @@
             </div>
 
             <div id="no-data"
-                 ng-show="(!vm.isData && vm.displaytype === 'chart') || (vm.tableObject == null && vm.displaytype === 'table') ">
+                 ng-show="(!vm.isData && vm.displaytype === 'chart') || (vm.tableObject == null && vm.displaytype === 'table')">
                 <label style="font-size: 1.9em;" translate>
                     graphData.noData
                 </label>
@@ -160,7 +160,8 @@
                 </button>
                 <button class="button button-border display-type-footer-button"
                         ng-class="vm.chartButtonClass"
-                        ng-click="vm.changeDisplayType('chart')">
+                        ng-click="vm.changeDisplayType('chart')"
+                        ng-disabled="!vm.isData && vm.tableObject != null">
                     <strong translate>graphData.graph</strong>
                 </button>
             </div>
