@@ -6,46 +6,59 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
 
     $ionicScrollDelegate.$getByHandle('wizardStepContent').freezeScroll(false);
 
-    var dataType = Session.get('registrationType');
-    var stepNumber = WizardHandler.wizard().currentStepNumber();
+    vm.config = {};
 
-    var step = {};
-    var config = {};
-
-    for (i = 0; i < Modules.length; i++) {
-        if (Modules[i].name === dataType) {
-
-            if (Modules[i].wizard.steps[stepNumber - 2] !== undefined) {
-                step = Modules[i].wizard.steps[stepNumber - 2];
-
-                if (step.stepTemplate.config !== undefined) {
-                    config = step.stepTemplate.config;
-                } else {
-                    console.error('No config defined for module ', dataType, ' step number ', stepNumber);
-                }
-            } else {
-                console.error('Step undefined for module ', dataType, ' step number ', stepNumber);
-            }
-            break;
+    $scope.$watch(
+        function stepNumber(scope) {
+            return WizardHandler.wizard().currentStepNumber();
+        },
+        function (newValue, oldValue) {
+            initUi();
         }
+    );
+
+    initUi();
+    function initUi(){
+        var dataType = Session.get('registrationType');
+        vm.stepNumber = WizardHandler.wizard().currentStepNumber();
+
+        var step = {};
+
+        for (i = 0; i < Modules.length; i++) {
+            if (Modules[i].name === dataType) {
+
+                if (Modules[i].wizard.steps[vm.stepNumber - 2] !== undefined) {
+                    step = Modules[i].wizard.steps[vm.stepNumber - 2];
+
+                    if (step.stepTemplate.config !== undefined) {
+                        vm.config = step.stepTemplate.config;
+                    } else {
+                        console.error('No config defined for module ', dataType, ' step number ', vm.stepNumber);
+                    }
+                } else {
+                    console.error('Step undefined for module ', dataType, ' step number ', vm.stepNumber);
+                }
+                break;
+            }
+        }
+
+        vm.registration = Session.get('registration');
+
+        console.log("config is ", vm.config);
+        vm.question = vm.config.question;
+        vm.answers = vm.config.answers;
+        vm.mandatory = vm.config.mandatory;
+        vm.propertyName = vm.config.propertyName;
     }
 
-    vm.registration = Session.get('registration');
-
-    console.log("config is ", config);
-    vm.question = config.question;
-    vm.answers = config.answers;
-    vm.mandatory = config.mandatory;
-    vm.propertyName = config.propertyName;
-
     vm.selectAnswer = (answer) => {
-        vm.registration[config.propertyName] = answer;
+        vm.registration[vm.config.propertyName] = answer;
         updateSessionVariables();
     };
 
     vm.validation = (registration) => {
         if (vm.mandatory) {
-            return registration[config.propertyName] != null;
+            return registration[vm.config.propertyName] != null;
         }
         else return true;
     }
@@ -55,7 +68,7 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
         if (validated === undefined)
             validated = [];
 
-        validated[stepNumber - 1] = vm.validation(vm.registration);
+        validated[vm.stepNumber - 1] = vm.validation(vm.registration);
         Session.set('regValidated', validated);
         console.log('regValidated session variable updated: ', validated);
 
