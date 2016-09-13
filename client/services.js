@@ -9,7 +9,6 @@ angular.module('leukemiapp')
 
         for (moduleNumber = 0; moduleNumber < Modules.length; moduleNumber++) {
             var moduleName = Modules[moduleNumber].name;
-
             service.modules[moduleName] = true;
         }
 
@@ -18,9 +17,8 @@ angular.module('leukemiapp')
         Tracker.autorun(() => {
             const isReady = handle.ready();
             const isReady2 = handle2.ready();
-            console.error("něco se hnulo");
+
             if (isReady && isReady2) {
-                console.error("a už je to tady");
                 console.log(CustomModules.find().fetch());
                 startup();
             }
