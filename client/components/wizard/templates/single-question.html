@@ -8,8 +8,8 @@
         <button ng-repeat="answer in vm.answers"
                 ng-click="vm.selectAnswer(answer)"
                 ng-class="{
-                'button-dark':vm.registration[vm.propertyName] == answer,
-                'button-stable':vm.registration[vm.propertyName] != answer,
+                'button-dark': vm.isSelected(answer),
+                'button-stable': !vm.isSelected(answer),
                 'button button-block button-border': true}">{{answer}}
         </button>
     </div>

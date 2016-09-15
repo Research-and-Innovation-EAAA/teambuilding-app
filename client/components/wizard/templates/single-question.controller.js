@@ -18,7 +18,7 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
     );
 
     initUi();
-    function initUi(){
+    function initUi() {
         var dataType = Session.get('registrationType');
         vm.stepNumber = WizardHandler.wizard().currentStepNumber();
 
@@ -48,17 +48,34 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
         vm.question = vm.config.question;
         vm.answers = vm.config.answers;
         vm.mandatory = vm.config.mandatory;
+        vm.multipleChoice = vm.config.multipleChoice;
         vm.propertyName = vm.config.propertyName;
+
+        if (vm.registration[vm.config.propertyName] === undefined)
+            vm.registration[vm.config.propertyName] = [];
+
+        console.log("reg is", vm.registration);
     }
 
     vm.selectAnswer = (answer) => {
-        vm.registration[vm.config.propertyName] = answer;
+        if (vm.isSelected(answer)) {
+            vm.registration[vm.config.propertyName].splice(vm.registration[vm.config.propertyName].indexOf(answer), 1);
+        } else {
+            if (!vm.multipleChoice){
+                vm.registration[vm.config.propertyName] = []; // reset previous choice
+            }
+            vm.registration[vm.config.propertyName].push(answer);
+        }
         updateSessionVariables();
+    };
+
+    vm.isSelected = (answer) => {
+        return $.inArray(answer, vm.registration[vm.config.propertyName]) > -1;
     };
 
     vm.validation = (registration) => {
         if (vm.mandatory) {
-            return registration[vm.config.propertyName] != null;
+            return registration[vm.config.propertyName].length > 0;
         }
         else return true;
     }
