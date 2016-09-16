@@ -12,6 +12,7 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
         },
         function (newValue, oldValue) {
             initUi();
+            updateSessionVariables();
         }
     );
 
@@ -30,7 +31,10 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
                     step = Modules[i].wizard.steps[vm.stepNumber - 2];
 
                     if (step.stepTemplate.config !== undefined) {
+                        if (vm.stepTemplateUrl !== undefined && vm.stepTemplateUrl !== step.stepTemplate.url)
+                            return;
                         vm.config = step.stepTemplate.config;
+                        vm.stepTemplateUrl = step.stepTemplate.url;
                     } else {
                         console.error('No config defined for module ', dataType, ' step number ', vm.stepNumber);
                     }

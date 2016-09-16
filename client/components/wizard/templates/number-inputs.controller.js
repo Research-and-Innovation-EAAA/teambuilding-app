@@ -12,6 +12,7 @@ function numberInputsController($scope, $reactive, WizardHandler) {
         },
         function (newValue, oldValue) {
             initUi();
+            vm.updateRegistration();
         }
     );
 
@@ -30,7 +31,10 @@ function numberInputsController($scope, $reactive, WizardHandler) {
                     step = Modules[i].wizard.steps[vm.stepNumber - 2];
 
                     if (step.stepTemplate.config !== undefined) {
+                        if (vm.stepTemplateUrl !== undefined && vm.stepTemplateUrl !== step.stepTemplate.url)
+                            return; //
                         config = step.stepTemplate.config;
+                        vm.stepTemplateUrl = step.stepTemplate.url;
                     } else {
                         console.error('No config defined for module ', dataType, ' step number ', vm.stepNumber);
                     }
@@ -50,7 +54,6 @@ function numberInputsController($scope, $reactive, WizardHandler) {
 
     function initData() {
         for (question in vm.questions) {
-            console.warn("připravit pozor", vm.questions[question]);
             if (vm.registration[vm.questions[question].propertyName] === undefined)
                 vm.registration[vm.questions[question].propertyName] = null;
         }

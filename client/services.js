@@ -77,7 +77,6 @@ angular.module('leukemiapp')
                     item["frontPage"] = frontpage;
                 }
 
-                console.log("přihodim, přidám, osolim", item);
                 Modules.push(item);
                 service.modules[item.name] = true;
             });

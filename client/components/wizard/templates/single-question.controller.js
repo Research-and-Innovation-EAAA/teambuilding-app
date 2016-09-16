@@ -13,7 +13,10 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
             return WizardHandler.wizard().currentStepNumber();
         },
         function (newValue, oldValue) {
+            //    if (oldValue !== vm.stepNumber) {
             initUi();
+            updateSessionVariables();
+            //   }
         }
     );
 
@@ -31,7 +34,10 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
                     step = Modules[i].wizard.steps[vm.stepNumber - 2];
 
                     if (step.stepTemplate.config !== undefined) {
+                        if (vm.stepTemplateUrl !== undefined && vm.stepTemplateUrl !== step.stepTemplate.url)
+                            return; 
                         vm.config = step.stepTemplate.config;
+                        vm.stepTemplateUrl = step.stepTemplate.url;
                     } else {
                         console.error('No config defined for module ', dataType, ' step number ', vm.stepNumber);
                     }
@@ -51,17 +57,18 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
         vm.multipleChoice = vm.config.multipleChoice;
         vm.propertyName = vm.config.propertyName;
 
-        if (vm.registration[vm.config.propertyName] === undefined)
+        if (vm.registration[vm.config.propertyName] == undefined || vm.registration[vm.config.propertyName] == null || vm.registration[vm.config.propertyName] == 0)
             vm.registration[vm.config.propertyName] = [];
 
         console.log("reg is", vm.registration);
+
     }
 
     vm.selectAnswer = (answer) => {
         if (vm.isSelected(answer)) {
             vm.registration[vm.config.propertyName].splice(vm.registration[vm.config.propertyName].indexOf(answer), 1);
         } else {
-            if (!vm.multipleChoice){
+            if (!vm.multipleChoice) {
                 vm.registration[vm.config.propertyName] = []; // reset previous choice
             }
             vm.registration[vm.config.propertyName].push(answer);
@@ -75,7 +82,7 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
 
     vm.validation = (registration) => {
         if (vm.mandatory) {
-            return registration[vm.config.propertyName].length > 0;
+            return registration[vm.config.propertyName] === undefined || registration[vm.config.propertyName].length > 0;
         }
         else return true;
     }

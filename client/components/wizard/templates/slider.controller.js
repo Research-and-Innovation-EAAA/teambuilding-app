@@ -11,7 +11,8 @@ function sliderController($scope, $reactive, WizardHandler) {
             return WizardHandler.wizard().currentStepNumber();
         },
         function (newValue, oldValue) {
-            initUi();
+                initUi();
+                updateRegistration();
         }
     );
 
@@ -29,7 +30,10 @@ function sliderController($scope, $reactive, WizardHandler) {
                     step = Modules[i].wizard.steps[vm.stepNumber - 2];
 
                     if (step.stepTemplate.config !== undefined) {
+                        if (vm.stepTemplateUrl !== undefined && vm.stepTemplateUrl !== step.stepTemplate.url)
+                            return;
                         vm.config = step.stepTemplate.config;
+                        vm.stepTemplateUrl = step.stepTemplate.url;
                         console.log('Config defined as ', vm.config);
                     } else {
                         console.error('No config defined for module ', dataType, ' step number ', vm.stepNumber);
@@ -47,8 +51,13 @@ function sliderController($scope, $reactive, WizardHandler) {
         console.log("config is ", vm.config);
         console.log("vm.question is " + vm.question);
 
+        var value = 0;
+        if (typeof vm.registration[vm.config.propertyName] === 'number'){
+            value = vm.registration[vm.config.propertyName];
+        }
+
         vm.slider = {
-            value: 0,
+            value: value,
             options: {
                 floor: vm.config.minValue,
                 ceil: vm.config.maxValue,
@@ -59,6 +68,8 @@ function sliderController($scope, $reactive, WizardHandler) {
             }
         };
         console.log('vm.slider is ', vm.slider);
+
+
     }
 
     vm.validateConfig = () => {
@@ -80,7 +91,7 @@ function sliderController($scope, $reactive, WizardHandler) {
 
     vm.validation = (registration) => {
         if (vm.mandatory) {
-            return registration[vm.config.propertyName] != null;
+            return registration[vm.config.propertyName] !== undefined;
         }
         else return true;
     }
