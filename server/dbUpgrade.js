@@ -1,5 +1,5 @@
 Meteor.startup(() => {
-    Meteor.requiredDatabaseVersion = 2;
+    Meteor.requiredDatabaseVersion = 3;
 
     Meteor.setTimeout(function () {
         //Upgrade database if needed.
@@ -12,8 +12,8 @@ Meteor.startup(() => {
         }
 
         if (dbVersion < Meteor.requiredDatabaseVersion) {
-            console.log("UPGRADE DB from " + dbVersion + " to " + Meteor.requiredDatabaseVersion);
-            if (dbVersion === 1){
+            console.log("DB UPGRADE from " + dbVersion + " to " + Meteor.requiredDatabaseVersion);
+            if (dbVersion < 2){ // i18n db attributes rename -----------------------------------------------------------
                 // moduleNames
                 Registrations.update({moduleName: "Mucositis"}, {$set:{moduleName: "mucositis"}}, {multi: true});
                 Registrations.update({moduleName: "Bloodsamples"}, {$set:{moduleName: "bloodsamples"}}, {multi: true});
@@ -32,13 +32,152 @@ Meteor.startup(() => {
                 Registrations.update({moduleName: "pain", painType: "Arme"}, {$set:{painType: "pain.arms"}}, {multi: true});
                 Registrations.update({moduleName: "pain", painType: "Hoved"}, {$set:{painType: "pain.head"}}, {multi: true});
                 Registrations.update({moduleName: "pain", painType: "Andet"}, {$set:{painType: "pain.other"}}, {multi: true});
-            }
-            else {
-                // ...
+
+                Settings.update({ key: "databaseVersion" }, { $set: { value: 2 }}, { upsert: true }); // update db version in database
             }
 
-            // update the current version value in DB
-            Settings.update({ key: "databaseVersion" }, { $set: { value: Meteor.requiredDatabaseVersion }}, { upsert: true });
+            if (dbVersion < 3){ // arthritis modules -------------------------------------------------------------------
+                CustomModules.insert({
+                        "name" : "Smerter",
+                        "wizard" : {
+                            "steps" : [
+                                {
+                                    "stepName" : "Intensitet",
+                                    "stepTemplate" : {
+                                        "url" : "client/components/wizard/templates/slider.html",
+                                        "config" : {
+                                            "question" : "Hvor mange smerter har du haft i dag?",
+                                            "propertyName" : "intensitet",
+                                            "minValue" : 0,
+                                            "maxValue" : 10,
+                                            "step" : 0.5,
+                                            "mandatory" : true
+                                        }
+                                    }
+                                },
+                                {
+                                    "stepName" : "Placering",
+                                    "stepTemplate" : {
+                                        "url" : "client/components/wizard/templates/single-question.html",
+                                        "config" : {
+                                            "propertyName" : "placering",
+                                            "question" : "Hvor har du haft ondt i dag?",
+                                            "answers" : [
+                                                "hoved",
+                                                "nakke",
+                                                "ryg",
+                                                "ben",
+                                                "fødder",
+                                                "arme",
+                                                "hænder",
+                                                "ingen"
+                                            ],
+                                            "multipleChoice" : true,
+                                            "mandatory" : true
+                                        }
+                                    }
+                                },
+                                {
+                                    "stepName" : "Fysik",
+                                    "stepTemplate" : {
+                                        "url" : "client/components/wizard/templates/slider.html",
+                                        "config" : {
+                                            "question" : "Har smerten betydet at du ikke kunne være så fysisk aktiv som du ellers ville? (fx løbe, hoppe, skrive, klippe med saks)",
+                                            "propertyName" : "fysik",
+                                            "minValue" : 0,
+                                            "maxValue" : 10,
+                                            "step" : 0.5,
+                                            "mandatory" : true
+                                        }
+                                    }
+                                },
+                                {
+                                    "stepName" : "Aktivitet",
+                                    "stepTemplate" : {
+                                        "url" : "client/components/wizard/templates/slider.html",
+                                        "config" : {
+                                            "question" : "Har smerten forhindret dig i at lave det du ellers ville lave i dag? (fx skole, lege med kammerater, gå til sport)",
+                                            "propertyName" : "aktivitet",
+                                            "minValue" : 0,
+                                            "maxValue" : 10,
+                                            "step" : 0.5,
+                                            "mandatory" : true
+                                        }
+                                    }
+                                },
+                                {
+                                    "stepName" : "Humør",
+                                    "stepTemplate" : {
+                                        "url" : "client/components/wizard/templates/slider.html",
+                                        "config" : {
+                                            "question" : "Hvor meget har smerten haft af betydning for dit humør i løbet af dagen?",
+                                            "propertyName" : "humør",
+                                            "minValue" : 0,
+                                            "maxValue" : 10,
+                                            "step" : 0.5,
+                                            "mandatory" : true
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "frontPage" : {
+                            "properties" : [
+                                "intensitet",
+                                "placering"
+                            ],
+                            "propertyDescription" : [
+                                "Intensitet",
+                                "Placering"
+                            ],
+                            "iconUrl" : "/question-mark.png",
+                            "barClass" : "bar-calm"
+                        }
+                    }
+                );
+
+                CustomModules.insert({
+                        "name" : "Smertelindring",
+                        "wizard" : {
+                            "steps" : [
+                                {
+                                    "stepName" : "Smertelindring",
+                                    "stepTemplate" : {
+                                        "url" : "client/components/wizard/templates/single-question.html",
+                                        "config" : {
+                                            "propertyName" : "smertelindring",
+                                            "question" : "Har I forsøgt smertelindring?",
+                                            "answers" : [
+                                                "nej",
+                                                "tænkte på noget andet",
+                                                "massage",
+                                                "motion",
+                                                "medicin",
+                                                "andet"
+                                            ],
+                                            "multipleChoice" : true,
+                                            "mandatory" : true
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "frontPage" : {
+                            "properties" : [
+                                "smertelindring"
+                            ],
+                            "propertyDescription" : [
+                                "Smertelindring"
+                            ],
+                            "iconUrl" : "/question-mark.png",
+                            "barClass" : "bar-calm"
+                        }
+                    }
+                );
+
+                Settings.update({ key: "databaseVersion" }, { $set: { value: 3 }}, { upsert: true }); // update db version in database
+            }
+
         }
     }, 1000);
 
