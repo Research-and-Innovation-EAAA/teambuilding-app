@@ -4,9 +4,11 @@ function PdfViewerController($scope, $reactive, $location) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   vm.clickTester = () => {
-      console.log('Click registered.');
-   };
+    $scope.isNative = (Meteor.isCordova==true?true:false);
+
+    vm.clickTester = () => {
+        console.log('Click registered.');
+    };
 
    vm.openUrl = (url) => {
 
