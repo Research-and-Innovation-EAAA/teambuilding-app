@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('frontpageController', FrontpageController);
 
-function FrontpageController($scope, $rootScope, $reactive, $ionicModal, ModuleManagementService, $timeout) {
+function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicNavBarDelegate, ModuleManagementService, $timeout) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -11,6 +11,14 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, ModuleM
 
     Accounts.ui.config({
         passwordSignupFields: "USERNAME_ONLY"
+    });
+
+    $scope.$on('$ionicView.enter', function()
+    {
+        $timeout(function()
+        {
+            $ionicNavBarDelegate.align('center');
+        });
     });
 
     //Analytics
