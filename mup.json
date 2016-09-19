@@ -50,4 +50,4 @@
 }
 
 // Build native apps
-// meteor build ~/tmp/build/ --server https://www.leukemia.sundata.dk --mobile-settings settings.json
+// meteor build ~/tmp/build/ --server https://www.leukemia.sundata.dk --mobile-settings settings-sundata.json
