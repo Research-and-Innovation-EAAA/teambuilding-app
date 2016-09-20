@@ -236,8 +236,8 @@ Modules = [
             iconUrl: "/mucositistransparent.png",
             barClass: "bar-energized"
         }
-    },
-
+    }
+/*
     //Arthritis pain module
     {
         name: "arthritis",
@@ -270,5 +270,5 @@ Modules = [
             iconUrl: "/smertetransparent.png",
             barClass: "bar-royal"
         }
-    }
+    }*/
 ];

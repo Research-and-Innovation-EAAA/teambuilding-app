@@ -276,8 +276,8 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
                   (property) => {
                      var isProperty = property != null;
 
-                     //property value invalid if string or null
-                     return typeof property == 'string' || !isProperty;
+                     //property value invalid if string or array or null
+                     return typeof property == 'string' || $.isArray(property) || !isProperty;
                   });
                var graphProperty = {
                   name: property,
