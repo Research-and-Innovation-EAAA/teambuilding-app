@@ -38,7 +38,7 @@ Meteor.startup(() => {
 
             if (dbVersion < 3){ // arthritis modules -------------------------------------------------------------------
                 CustomModules.insert({
-                        "name" : "Smerter",
+                        "name" : "Gigtsmerter",
                         "wizard" : {
                             "steps" : [
                                 {
@@ -130,14 +130,14 @@ Meteor.startup(() => {
                                 "Intensitet",
                                 "Placering"
                             ],
-                            "iconUrl" : "/question-mark.png",
-                            "barClass" : "bar-calm"
+                            "iconUrl" : "/smertetransparent.png",
+                            "barClass" : "bar-balanced"
                         }
                     }
                 );
 
                 CustomModules.insert({
-                        "name" : "Smertelindring",
+                        "name" : "Gigtlindring",
                         "wizard" : {
                             "steps" : [
                                 {
@@ -169,8 +169,8 @@ Meteor.startup(() => {
                             "propertyDescription" : [
                                 "Smertelindring"
                             ],
-                            "iconUrl" : "/question-mark.png",
-                            "barClass" : "bar-calm"
+                            "iconUrl" : "/lindringtransparent.png",
+                            "barClass" : "bar-energized"
                         }
                     }
                 );
