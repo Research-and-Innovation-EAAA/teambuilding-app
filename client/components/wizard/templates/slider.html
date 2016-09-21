@@ -2,7 +2,7 @@
      ng-controller="sliderController as vm">
 
     <div>
-        <h1>{{vm.question}}</h1>
+        <h1>{{ vm.question }}</h1>
     </div>
 
     <div class="range range-positive padding-horizontal-50">
@@ -11,7 +11,14 @@
                   rz-slider-options="vm.slider.options"></rzslider>
         <i class="icon ion-sad-outline slider-smiley"></i>
     </div>
-
+    <div class="row">
+        <span class="col slider-desc" style="text-align: left">
+            {{ vm.positiveText }}
+        </span>
+        <span class="col slider-desc" style="text-align: right">
+            {{ vm.negativeText }}
+        </span>
+    </div>
 </div>
 
 
