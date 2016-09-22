@@ -1,5 +1,5 @@
 Meteor.startup(() => {
-    Meteor.requiredDatabaseVersion = 4;
+    Meteor.requiredDatabaseVersion = 5;
 
     Meteor.setTimeout(function () {
         //Upgrade database if needed.
@@ -13,7 +13,7 @@ Meteor.startup(() => {
 
         if (dbVersion < Meteor.requiredDatabaseVersion) {
             console.log("DB UPGRADE from " + dbVersion + " to " + Meteor.requiredDatabaseVersion);
-            if (dbVersion < 2) { // i18n db attributes rename -----------------------------------------------------------
+            if (dbVersion === 1) { // i18n db attributes rename -----------------------------------------------------------
                 // moduleNames
                 Registrations.update({moduleName: "Mucositis"}, {$set: {moduleName: "mucositis"}}, {multi: true});
                 Registrations.update({moduleName: "Bloodsamples"}, {$set: {moduleName: "bloodsamples"}}, {multi: true});
@@ -63,10 +63,11 @@ Meteor.startup(() => {
                     painType: "Andet"
                 }, {$set: {painType: "pain.other"}}, {multi: true});
 
-                Settings.update({key: "databaseVersion"}, {$set: {value: 2}}, {upsert: true}); // update db version in database
+                dbVersion = 2;
+                Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
             }
 
-            if (dbVersion < 3) { // arthritis modules -------------------------------------------------------------------
+            if (dbVersion === 2) { // arthritis modules -------------------------------------------------------------------
                 CustomModules.insert({
                         "name": "Gigtsmerter",
                         "wizard": {
@@ -205,10 +206,11 @@ Meteor.startup(() => {
                     }
                 );
 
-                Settings.update({key: "databaseVersion"}, {$set: {value: 3}}, {upsert: true}); // update db version in database
+                dbVersion = 3;
+                Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
             }
 
-            if (dbVersion < 4) { // arthritis modules fix ---------------------------------------------------------------
+            if (dbVersion === 3) { // arthritis modules fix ---------------------------------------------------------------
                 CustomModules.remove({name: "Gigtsmerter"});
                 CustomModules.remove({name: "Gigtlindring"});
                 Registrations.remove({moduleName: "Gigtsmerter"});
@@ -376,10 +378,55 @@ Meteor.startup(() => {
                     }
                 );
 
-
-                Settings.update({key: "databaseVersion"}, {$set: {value: 4}}, {upsert: true}); // update db version in database
+                dbVersion = 4;
+                Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
             }
-        }
+
+
+            if (dbVersion === 4) { // set dash on empty fields in database registrations ---------------------------------------------------------------
+
+                /* Blood samples */
+                Registrations.update({
+                    moduleName: "bloodsamples",
+                    Leukocytter: {'$exists':false}
+                }, {$set: {Leukocytter: "-"}}, {multi: true});
+                Registrations.update({
+                    moduleName: "bloodsamples",
+                    Neutrofile: {'$exists':false}
+                }, {$set: {Neutrofile: "-"}}, {multi: true});
+                Registrations.update({
+                    moduleName: "bloodsamples",
+                    Thrombocytter: {'$exists':false}
+                }, {$set: {Thrombocytter: "-"}}, {multi: true});
+                Registrations.update({
+                    moduleName: "bloodsamples",
+                    Hemoglobin: {'$exists':false}
+                }, {$set: {Hemoglobin: "-"}}, {multi: true});
+                Registrations.update({
+                    moduleName: "bloodsamples",
+                    Alat: {'$exists':false}
+                }, {$set: {Alat: "-"}}, {multi: true});
+                Registrations.update({
+                    moduleName: "bloodsamples",
+                    CRP: {'$exists':false}
+                }, {$set: {CRP: "-"}}, {multi: true});
+
+                /* Medicine */
+                Registrations.update({
+                    moduleName: "medicine",
+                    MTX: {'$exists':false}
+                }, {$set: {MTX: "-"}}, {multi: true});
+                Registrations.update({
+                    moduleName: "medicine",
+                    SixMP: {'$exists':false}
+                }, {$set: {SixMP: "-"}}, {multi: true});
+
+
+                dbVersion = 5;
+                Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
+            }
+
+            }
     }, 1000);
 
 });
