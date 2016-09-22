@@ -16,7 +16,7 @@ function PdfViewerController($scope, $reactive, $location) {
          console.log("PdfUrl="+url);
          $location.path("app/docctrl/"+url);
       /*} else {
-         window.open('/pdf/'+url+'.pdf', "_blank");
+         window.open('/pdf/'+url+'.pdf', "_blank"); destination _system for mobile browsers needed.
       }*/
 
    }
