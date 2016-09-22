@@ -48,6 +48,9 @@ function sliderController($scope, $reactive, WizardHandler) {
         vm.registration = Session.get('registration');
 
         vm.question = vm.config.question;
+        vm.positiveText = vm.config.positiveText;
+        vm.negativeText = vm.config.negativeText;
+
         console.log("config is ", vm.config);
         console.log("vm.question is " + vm.question);
 
