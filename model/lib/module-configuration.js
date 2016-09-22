@@ -11,7 +11,7 @@ Modules = [
                     stepName: "medicine",
                     stepTemplate: "client/components/wizard/medicine/qw-medicine-01.html",
                     validation: (registration) => {
-                        return (registration.SixMP !== undefined) && (registration.MTX !== undefined);
+                        return (registration.SixMP !== "-") || (registration.MTX !== "-");
                     }
                 }
             ]
@@ -40,17 +40,18 @@ Modules = [
                     stepName: "bloodsamples",
                     stepTemplate: "client/components/wizard/bloodsample/qw-bloodsample-01.html",
                     validation: (registration) => {
-                        var isValid = true;
+                        var isValid = false;
                         for (var property in registration) {
                             if (property === "_id" ||
                                 property === 'timestamp' ||
                                 property === 'createdBy' ||
                                 property === 'createdAt' ||
+                                property === 'updating' ||
                                 property === 'moduleName')
                                 continue;
 
                             var bloodsample = registration[property];
-                            if (bloodsample != null) {
+                            if (bloodsample != "-") {
                                 isValid = 0 <= parseFloat(bloodsample);
                                 if (!isValid) {
                                     //invalid data

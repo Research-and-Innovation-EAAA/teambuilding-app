@@ -10,6 +10,11 @@ function MedicineController($scope, $reactive) {
    vm.registration = Session.get('registration');
 
    function initData() {
+      if (vm.registration.MTX == undefined)
+         vm.registration.MTX = "-";
+      if (vm.registration.SixMP == undefined)
+         vm.registration.SixMP = "-";
+
       var inputSixMP = document.getElementById('inputSixMP');
       inputSixMP.addEventListener('blur', updateRegistration, true);
 

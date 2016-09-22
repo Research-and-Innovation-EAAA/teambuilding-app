@@ -250,7 +250,7 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
 
       //Add any properties to be ignored from table/graph display
       var ignoredProperties = [
-         'timestamp', 'createdAt', 'createdBy', 'moduleName', '_id', 'diagnosis', 'flaccvalue',
+         'timestamp', 'createdAt', 'createdBy', 'moduleName', '_id', 'diagnosis', 'flaccvalue', 'updating',
          'updatedAt'
       ];
 

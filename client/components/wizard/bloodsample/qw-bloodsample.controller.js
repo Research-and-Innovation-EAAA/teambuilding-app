@@ -10,18 +10,18 @@ function BloodsampleController($scope, $reactive) {
    vm.registration = Session.get('registration');
 
    function initData() {
-      if (vm.registration.Leukocytter === undefined)
-         vm.registration.Leukocytter = null;
-      if (vm.registration.Neutrofile === undefined)
-         vm.registration.Neutrofile = null;
-      if (vm.registration.Thrombocytter === undefined)
-         vm.registration.Thrombocytter = null;
-      if (vm.registration.Hemoglobin === undefined)
-         vm.registration.Hemoglobin = null;
-      if (vm.registration.Alat === undefined)
-         vm.registration.Alat = null;
-      if (vm.registration.CRP === undefined)
-         vm.registration.CRP = null;
+      if (vm.registration.Leukocytter == undefined)
+         vm.registration.Leukocytter = "-";
+      if (vm.registration.Neutrofile == undefined)
+         vm.registration.Neutrofile = "-";
+      if (vm.registration.Thrombocytter == undefined)
+         vm.registration.Thrombocytter = "-";
+      if (vm.registration.Hemoglobin == undefined)
+         vm.registration.Hemoglobin = "-";
+      if (vm.registration.Alat == undefined)
+         vm.registration.Alat = "-";
+      if (vm.registration.CRP == undefined)
+         vm.registration.CRP = "-";
 
       var inputLeukocytter = document.getElementById('inputLeukocytter');
       inputLeukocytter.addEventListener('blur', updateRegistration, true);

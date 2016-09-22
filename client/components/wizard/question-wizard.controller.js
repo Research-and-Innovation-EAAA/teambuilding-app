@@ -132,7 +132,7 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
             for (var property in registration) {
                 if (registration.hasOwnProperty(property)) {
                     if (registration[property] == null) {
-                        registration[property] = '-';
+                        registration[property] = "-";
                     }
                 }
             }
