@@ -1,5 +1,5 @@
 Meteor.startup(() => {
-    Meteor.requiredDatabaseVersion = 5;
+    Meteor.requiredDatabaseVersion = 6;
 
     Meteor.setTimeout(function () {
         //Upgrade database if needed.
@@ -423,6 +423,49 @@ Meteor.startup(() => {
 
 
                 dbVersion = 5;
+                Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
+            }
+
+            if (dbVersion === 5) { // set dash on empty fields in database registrations ---------------------------------------------------------------
+
+                /* Blood samples */
+                Registrations.update({
+                    moduleName: "bloodsamples",
+                    Leukocytter: "-"
+                }, {$set: {Leukocytter: NaN}}, {multi: true});
+                Registrations.update({
+                    moduleName: "bloodsamples",
+                    Neutrofile: "-"
+                }, {$set: {Neutrofile: NaN}}, {multi: true});
+                Registrations.update({
+                    moduleName: "bloodsamples",
+                    Thrombocytter: "-"
+                }, {$set: {Thrombocytter: NaN}}, {multi: true});
+                Registrations.update({
+                    moduleName: "bloodsamples",
+                    Hemoglobin: "-"
+                }, {$set: {Hemoglobin: NaN}}, {multi: true});
+                Registrations.update({
+                    moduleName: "bloodsamples",
+                    Alat: "-"
+                }, {$set: {Alat: NaN}}, {multi: true});
+                Registrations.update({
+                    moduleName: "bloodsamples",
+                    CRP: "-"
+                }, {$set: {CRP: NaN}}, {multi: true});
+
+                /* Medicine */
+                Registrations.update({
+                    moduleName: "medicine",
+                    MTX: "-"
+                }, {$set: {MTX: NaN}}, {multi: true});
+                Registrations.update({
+                    moduleName: "medicine",
+                    SixMP: "-"
+                }, {$set: {SixMP: NaN}}, {multi: true});
+
+
+                dbVersion = 6;
                 Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
             }
 

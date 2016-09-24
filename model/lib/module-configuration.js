@@ -11,7 +11,7 @@ Modules = [
                     stepName: "medicine",
                     stepTemplate: "client/components/wizard/medicine/qw-medicine-01.html",
                     validation: (registration) => {
-                        return (registration.SixMP !== "-") || (registration.MTX !== "-");
+                        return registration.SixMP || registration.MTX;
                     }
                 }
             ]
@@ -51,7 +51,7 @@ Modules = [
                                 continue;
 
                             var bloodsample = registration[property];
-                            if (bloodsample != "-") {
+                            if (bloodsample) {
                                 isValid = 0 <= parseFloat(bloodsample);
                                 if (!isValid) {
                                     //invalid data

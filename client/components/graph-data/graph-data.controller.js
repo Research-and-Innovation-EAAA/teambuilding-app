@@ -150,6 +150,7 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
          titleLabel: $translate.instant('graphData.date'),  //Optional
          todayLabel: $translate.instant('graphData.today'),  //Optional
          closeLabel: $translate.instant('graphData.close'),  //Optional
+         closeLabel: $translate.instant('graphData.close'),  //Optional
          setLabel: $translate.instant('graphData.choose'),  //Optional
          setButtonType: 'button-positive',  //Optional
          todayButtonType: 'button-stable',  //Optional

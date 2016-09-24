@@ -11,17 +11,17 @@ function BloodsampleController($scope, $reactive) {
 
    function initData() {
       if (vm.registration.Leukocytter == undefined)
-         vm.registration.Leukocytter = "-";
+         vm.registration.Leukocytter = NaN;
       if (vm.registration.Neutrofile == undefined)
-         vm.registration.Neutrofile = "-";
+         vm.registration.Neutrofile = NaN;
       if (vm.registration.Thrombocytter == undefined)
-         vm.registration.Thrombocytter = "-";
+         vm.registration.Thrombocytter = NaN;
       if (vm.registration.Hemoglobin == undefined)
-         vm.registration.Hemoglobin = "-";
+         vm.registration.Hemoglobin = NaN;
       if (vm.registration.Alat == undefined)
-         vm.registration.Alat = "-";
+         vm.registration.Alat = NaN;
       if (vm.registration.CRP == undefined)
-         vm.registration.CRP = "-";
+         vm.registration.CRP = NaN;
 
       var inputLeukocytter = document.getElementById('inputLeukocytter');
       inputLeukocytter.addEventListener('blur', updateRegistration, true);
