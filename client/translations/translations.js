@@ -30,7 +30,8 @@ function config($translateProvider) {
         reminders: {
             reminders: 'Reminders',
             bloodsamples: 'Blood collection',
-            highdoses: 'High doses'
+            highdoses: 'High doses',
+            appointments: "Appointments"
         },
 
         notes: {
@@ -273,7 +274,8 @@ function config($translateProvider) {
         reminders: {
             reminders: 'Påmindelse',
             bloodsamples: 'Blodprøver',
-            highdoses: 'Højdosis'
+            highdoses: 'Højdosis',
+            appointments: 'Aftaler'
         },
 
         notes: {
