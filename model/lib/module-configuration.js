@@ -67,7 +67,7 @@ Modules = [
         },
         frontPage: {
             properties: [
-                "Leukocytter", "Thrombocytter", "Hemoglobin"
+                "leukocytes", "thrombocytes", "hemoglobin"
             ],
             propertyDescription: [
                 "bloodsamples.leukocytes", "bloodsamples.thrombocytes", "bloodsamples.hemoglobin"

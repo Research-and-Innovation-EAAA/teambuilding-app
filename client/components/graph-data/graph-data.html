@@ -95,9 +95,10 @@
                              ng-repeat="(key,value) in vm.tableObject"
                              ng-style="{ height: $first ? '60px' : '45px',
                                          overflow: 'hidden'}">
-                            <span class="center-text">
-                                <b>{{$first ? '' : key}}</b>
-                            </span>
+                            <b class="center-text" ng-if="!($first)">
+                                <span ng-if="['pain','medicine','mucositis','bloodsamples'].indexOf(vm.dataType)>-1" translate="{{vm.dataType+'.'+key}}"></span>
+                                <span ng-if="['pain','medicine','mucositis','bloodsamples'].indexOf(vm.dataType)==-1">{{key}}</span>
+                            </b>
                         </div>
                     </div>
                     <div class="col col-value">

@@ -61,6 +61,8 @@ function config($translateProvider) {
 
         medicine: {
             medicine: 'Medicine',
+            SixMP: '6 MP',
+            MTX: 'MTX',
 
             //question 1
             tablet6MP: 'Tablet 6 MP',
@@ -80,13 +82,13 @@ function config($translateProvider) {
             leukocytes: 'Leukocytes',
             neutrophiles: 'Neutrophiles',
             crp: 'CRP',
+            thrombocytes: 'Thrombocytes',
+            alat: 'ALAT',
+            hemoglobin: 'Hemoglobin',
 
             //frontside
-            thrombocytes: 'Thrombocytes',
             thrombocytes_measure: '10^9 L',
-            hemoglobin: 'Hemoglobin',
             hemoglobin_measure: 'mmol / L',
-            alat: 'ALAT',
             alat_measure: 'U / L'
         },
 
@@ -95,6 +97,12 @@ function config($translateProvider) {
             morphine: 'Morfine',
             type: 'Type',
             intensity: 'Intensity',
+
+            //Pain key
+            painScore: "Pain score",
+            morphineType: "Morphine type",
+            morphineDose: "Morphine dose",
+            morphineMeasureUnit: "Measure unit",
 
             //question 1
             howMuchMorphine: 'How much morphine was given?',
@@ -152,6 +160,9 @@ function config($translateProvider) {
             mucositis: 'Mucositis',
             mouthSores: 'Oral sores',
             nausea: 'Nausea',
+            nauseaScore: 'Nausea',
+            ulcers: 'Ulcers',
+            food: 'Food intake',
 
             // TODO translate question 1↓
             //question 1
@@ -305,6 +316,8 @@ function config($translateProvider) {
 
         medicine: {
             medicine: 'Medicin',
+            SixMP: '6 MP',
+            MTX: 'MTX',
 
             //question 1
             tablet6MP: 'Tablet 6 MP',
@@ -320,19 +333,19 @@ function config($translateProvider) {
         },
 
         bloodsamples: {
+            // names
             bloodsamples: 'Blodprøver',
             leukocytes: 'Leukocytter',
+            thrombocytes: 'Thrombocytter',
             neutrophiles: 'Neutrofile',
             crp: 'CRP',
-
-            //frontside
-            leukocytes: 'Leukocytter',
-            leukocytes_measure: '10^9 L',
-            thrombocytes: 'Thrombocytter',
-            thrombocytes_measure: '10^9 L',
-            hemoglobin: 'Hæmoglobin',
-            hemoglobin_measure: 'mmol / L',
             alat: 'ALAT',
+            hemoglobin: 'Hæmoglobin',
+
+            // measure types
+            leukocytes_measure: '10^9 L',
+            thrombocytes_measure: '10^9 L',
+            hemoglobin_measure: 'mmol / L',
             alat_measure: 'U / L'
         },
 
@@ -341,6 +354,13 @@ function config($translateProvider) {
             morphine: 'Morfin',
             type: 'Type',
             intensity: 'Styrke',
+
+            //Pain key
+            painScore: "Smerte",
+            morphineType: "Morfin type",
+            morphineDose: "Morfin dosis",
+            morphineMeasureUnit: "Dosis enhed",
+
 
             //question 1
             howMuchMorphine: 'Hvor meget morfin er givet?',
@@ -397,6 +417,9 @@ function config($translateProvider) {
             mucositis: 'Mucositis',
             mouthSores: 'Mundsår',
             nausea: 'Kvalme',
+            nauseaScore: 'Kvalme',
+            ulcers: 'Mundsår',
+            food: 'Fødeindtag',
 
             //question 1
             painQ0: 'Ingen',
