@@ -8,31 +8,23 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
 
     //Init
     vm.registration = Session.get('registration');
+    vm.wongBakerScale = "Wong-Baker score";
+    vm.flaccScale = "FLACC score";
 
     function initData() {
+        var usrSettings = UserSettings.findOne();
+
+        //Initialize pain scale
         if (vm.registration.painScore != null) {
             //registration is being updated
-            if (vm.registration.flaccvalue == null) {
-                //painscore was stored with smileys
-                vm.showFlacc = false;
-                vm.painScale = 'Wong-Baker score';
-                var painScore = vm.registration.painScore;
-                if (painScore % 2 == 0) {
-                    vm.selectSmiley(parseInt(painScore), true);
-                } else {
-                    vm.selectSmiley(parseInt(painScore - 1), true);
-                }
-            } else {
-                //painscore was stored with flacc
-                vm.showFlacc = true;
-                vm.painScale = 'FLACC score';
-                vm.smileyDescription = "";
-            }
+            vm.changeScale(vm.registration.flaccvalue?vm.flaccScale:vm.wongBakerScale);
         } else {
-            vm.registration.flaccvalue = [];
-            vm.showFlacc = true;
-            vm.painScale = 'FLACC score';
-            vm.smileyDescription = "";
+            //registration is being created
+            if (usrSettings && usrSettings.painScale) {
+                vm.changeScale(usrSettings.painScale);
+            } else {
+                vm.changeScale(vm.flaccScale);
+            }
         }
 
         if (!vm.isSmallScreen()) {
@@ -104,9 +96,9 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
         vm.updateRegistration();
     };
 
-    vm.changeScale = () => {
-        vm.showFlacc = !vm.showFlacc;
-        vm.showFlacc ? vm.painScale = 'FLACC score' : vm.painScale = 'Wong-Baker score';
+    vm.changeScale = (destinationScale) => {
+        vm.showFlacc = destinationScale?destinationScale===vm.flaccScale:!vm.showFlacc;
+        vm.painScale = vm.showFlacc?vm.flaccScale:vm.wongBakerScale;
         vm.registration.painScore = 0;
         vm.selectedSmiley = null;
         vm.smileyDescription = "";
@@ -120,6 +112,14 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
         $ionicScrollDelegate.resize();
         $ionicScrollDelegate.scrollTop();
         validateData();
+
+        //Store current scale as the preferred one
+        var usrSettings = UserSettings.findOne();
+        if (usrSettings && usrSettings.painScale!==vm.painScale) {
+            Meteor.call('setSelectedPainScale', vm.painScale, (error, result) => {
+                console.log("SetSelectedPainScale ", vm.painScale," err: ", error,", result: ",result);
+            });
+        }
     };
 
     function scrollToSmiley() {
