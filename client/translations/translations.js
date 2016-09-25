@@ -326,6 +326,8 @@ function config($translateProvider) {
             crp: 'CRP',
 
             //frontside
+            leukocytes: 'Leukocytter',
+            leukocytes_measure: '10^9 L',
             thrombocytes: 'Thrombocytter',
             thrombocytes_measure: '10^9 L',
             hemoglobin: 'Hæmoglobin',

@@ -67,13 +67,13 @@ Modules = [
         },
         frontPage: {
             properties: [
-                "Thrombocytter", "Hemoglobin", "Alat"
+                "Leukocytter", "Thrombocytter", "Hemoglobin"
             ],
             propertyDescription: [
-                "bloodsamples.thrombocytes", "bloodsamples.hemoglobin", "bloodsamples.alat"
+                "bloodsamples.leukocytes", "bloodsamples.thrombocytes", "bloodsamples.hemoglobin"
             ],
             propertyMeasurement: [
-                "bloodsamples.thrombocytes_measure", "bloodsamples.hemoglobin_measure", "bloodsamples.alat_measure"
+                "bloodsamples.leukocytes_measure", "bloodsamples.thrombocytes_measure", "bloodsamples.hemoglobin_measure"
             ],
             iconUrl: "/blodtransparent.png",
             barClass: "bar-assertive"
