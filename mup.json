@@ -51,3 +51,6 @@
 
 // Build native apps
 // meteor build ~/tmp/build/ --server https://www.leukemia.sundata.dk --mobile-settings settings-sundata.json
+
+// Deploy app
+// mupx deploy --settings=settings-sundata.json
