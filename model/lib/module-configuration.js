@@ -11,7 +11,7 @@ Modules = [
                     stepName: "medicine",
                     stepTemplate: "client/components/wizard/medicine/qw-medicine-01.html",
                     validation: (registration) => {
-                        return (registration.SixMP !== "-") || (registration.MTX !== "-");
+                        return registration.SixMP || registration.MTX;
                     }
                 }
             ]
@@ -51,7 +51,7 @@ Modules = [
                                 continue;
 
                             var bloodsample = registration[property];
-                            if (bloodsample != "-") {
+                            if (bloodsample) {
                                 isValid = 0 <= parseFloat(bloodsample);
                                 if (!isValid) {
                                     //invalid data
@@ -67,13 +67,13 @@ Modules = [
         },
         frontPage: {
             properties: [
-                "Thrombocytter", "Hemoglobin", "Alat"
+                "leukocytes", "thrombocytes", "hemoglobin"
             ],
             propertyDescription: [
-                "bloodsamples.thrombocytes", "bloodsamples.hemoglobin", "bloodsamples.alat"
+                "bloodsamples.leukocytes", "bloodsamples.thrombocytes", "bloodsamples.hemoglobin"
             ],
             propertyMeasurement: [
-                "bloodsamples.thrombocytes_measure", "bloodsamples.hemoglobin_measure", "bloodsamples.alat_measure"
+                "bloodsamples.leukocytes_measure", "bloodsamples.thrombocytes_measure", "bloodsamples.hemoglobin_measure"
             ],
             iconUrl: "/blodtransparent.png",
             barClass: "bar-assertive"

@@ -10,38 +10,39 @@ function BloodsampleController($scope, $reactive) {
    vm.registration = Session.get('registration');
 
    function initData() {
-      if (vm.registration.Leukocytter == undefined)
-         vm.registration.Leukocytter = "-";
-      if (vm.registration.Neutrofile == undefined)
-         vm.registration.Neutrofile = "-";
-      if (vm.registration.Thrombocytter == undefined)
-         vm.registration.Thrombocytter = "-";
-      if (vm.registration.Hemoglobin == undefined)
-         vm.registration.Hemoglobin = "-";
-      if (vm.registration.Alat == undefined)
-         vm.registration.Alat = "-";
-      if (vm.registration.CRP == undefined)
-         vm.registration.CRP = "-";
+      if (vm.registration.leukocytes == undefined)
+         vm.registration.leukocytes = NaN;
+      if (vm.registration.neutrophiles == undefined)
+         vm.registration.neutrophiles = NaN;
+      if (vm.registration.thrombocytes == undefined)
+         vm.registration.thrombocytes = NaN;
+      if (vm.registration.hemoglobin == undefined)
+         vm.registration.hemoglobin = NaN;
+      if (vm.registration.alat == undefined)
+         vm.registration.alat = NaN;
+      if (vm.registration.crp == undefined)
+         vm.registration.crp = NaN;
 
-      var inputLeukocytter = document.getElementById('inputLeukocytter');
-      inputLeukocytter.addEventListener('blur', updateRegistration, true);
+      var inputleukocytes = document.getElementById('inputleukocytes');
+      inputleukocytes.addEventListener('blur', updateRegistration, true);
 
-      var inputNeutrofile = document.getElementById('inputNeutrofile');
-      inputNeutrofile.addEventListener('blur', updateRegistration, true);
+      var inputneutrophiles = document.getElementById('inputneutrophiles');
+      inputneutrophiles.addEventListener('blur', updateRegistration, true);
 
-      var inputThrombocytter = document.getElementById('inputThrombocytter');
-      inputThrombocytter.addEventListener('blur', updateRegistration, true);
+      var inputthrombocytes = document.getElementById('inputthrombocytes');
+      inputthrombocytes.addEventListener('blur', updateRegistration, true);
 
-      var inputHemoglobin = document.getElementById('inputHemoglobin');
-      inputHemoglobin.addEventListener('blur', updateRegistration, true);
+      var inputhemoglobin = document.getElementById('inputhemoglobin');
+      inputhemoglobin.addEventListener('blur', updateRegistration, true);
 
-      var inputAlat = document.getElementById('inputAlat');
-      inputAlat.addEventListener('blur', updateRegistration, true);
+      var inputalat = document.getElementById('inputalat');
+      inputalat.addEventListener('blur', updateRegistration, true);
 
-      var inputCRP = document.getElementById('inputCRP');
-      inputCRP.addEventListener('blur', updateRegistration, true);
+      var inputcrp = document.getElementById('inputcrp');
+      inputcrp.addEventListener('blur', updateRegistration, true);
 
       validateData();
+      vm.init = true;
       vm.init = true;
    }
 

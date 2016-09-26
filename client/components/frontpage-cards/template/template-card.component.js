@@ -48,36 +48,33 @@ function TemplateCardController($scope, $reactive, $location) {
                     vm.barClass = vm.module.frontPage.barClass;
 
                     vm.rowProperty = (rowNumber) => {
+                        var value = undefined;
                         var registration = vm.latestRegistration;
-                        if (vm.module.frontPage.properties !== undefined) {
+                        if (vm.module.frontPage.properties) {
                             if (rowNumber >= vm.module.frontPage.properties.length)
                                 return "";
-
                             var propertyName = vm.module.frontPage.properties[rowNumber];
-                            if (registration !== undefined && registration[propertyName] !== undefined && registration[propertyName] !== null)
-                                return registration[propertyName] + "";
-                            else return ' - ';
-                        } else if (vm.module.frontPage.propertyFunction !== undefined) {
-                            return vm.module.frontPage.propertyFunction(registration, rowNumber);
-                        } else return "";
+                                if (registration && registration[propertyName])
+                                    value =  registration[propertyName] + "";
+                        } else if (vm.module.frontPage.propertyFunction) {
+                            value = vm.module.frontPage.propertyFunction(registration, rowNumber);
+                        };
+
+                        return value?value:"-";
                     };
 
                     vm.rowDescription = (rowNumber) => {
-                        if (vm.module.frontPage.propertyDescription !== undefined) {
-                            if (rowNumber >= vm.module.frontPage.propertyDescription.length)
-                                return "";
-
-                            return vm.module.frontPage.propertyDescription[rowNumber];
-                        } else return "";
+                        var value = vm.module.frontPage.propertyDescription[rowNumber];
+                        if (value)
+                            return value;
+                        return "";
                     };
 
                     vm.rowMeasurement = (rowNumber) => {
-                        if (vm.module.frontPage.propertyMeasurement !== undefined) {
-                            if (rowNumber >= vm.module.frontPage.propertyMeasurement.length)
-                                return "";
-
-                            return vm.module.frontPage.propertyMeasurement[rowNumber];
-                        } else return "";
+                        var measurement = vm.module.frontPage.propertyMeasurement;
+                        if (measurement && rowNumber<measurement.length)
+                            return measurement[rowNumber];
+                        return "";
                     };
                 }
             }

@@ -10,5 +10,15 @@ Meteor.methods({
         updateVal["modules." + module] = active;
 
         UserSettings.update({userId: Meteor.userId()}, {$set: updateVal}, {upsert: true});
+    },
+    setSelectedPainScale: (painScale) => {
+        if (!Meteor.userId()) {
+            throw new Meteor.Error('not-authorized');
+        }
+
+        var updateVal = {};
+        updateVal["painScale"] = painScale;
+
+        UserSettings.update({userId: Meteor.userId()}, {$set: updateVal}, {upsert: true});
     }
 });
