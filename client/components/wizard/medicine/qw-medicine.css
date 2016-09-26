@@ -1,4 +1,22 @@
-/*Measurement unit label*/
-.mu-label {
-    width: 70px;
+.med-input-row {
+    padding: 5px 20px;
+    border: 1px solid #DDD;
+    background-color: white;
+}
+
+.row.med-input-row + .row.med-input-row{
+    margin: 0px;
+    margin-top: -5px;
+    padding: 5px 20px;
+}
+
+.med-input-row input {
+    width: 60%;
+    display: inline;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+.med-input-row .input-label{
+    width: auto !important;
 }

@@ -2,31 +2,48 @@
 
    <section class="padding-horizontal-50 top-margin">
         <div style="width: 100%">
-            <label class="item item-input">
-                <span class="input-label" translate>medicine.tablet6MP</span>
-                <input id="inputSixMP"
-                       type="number"
-                       min="0"
-                       style="direction: rtl;"
-                       placeholder="0.0"
-                       onfocus="this.placeholder = ''"
-                       onblur="this.placeholder = '0.0'"
-                       ng-model="vm.registration.SixMP">
-               <span class="input-label mu-label" translate>medicine.mgDay</span>
-            </label>
 
-            <label class="item item-input">
-                <span class="input-label" translate>medicine.tabletMTX</span>
-                <input id="inputMTX"
-                       type="number"
-                       min="0"
-                       style="direction: rtl;"
-                       placeholder="0.0"
-                       onfocus="this.placeholder = ''"
-                       onblur="this.placeholder = '0.0'"
-                       ng-model="vm.registration.MTX">
-               <span class="input-label mu-label" translate>medicine.mgWeek</span>
-            </label>
+            <div class="row med-input-row responsive-sm row-center">
+                <div class="col">
+                    <span class="input-label" translate>medicine.tablet6MP</span>
+                </div>
+                <div class="col col-75">
+
+                    <input id="inputSixMP"
+                           type="number"
+                           min="0"
+                           style="direction: rtl;"
+                           placeholder="0.0"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '0.0'"
+                           ng-model="vm.registration.SixMP">
+
+                    <span class="measurement-label" translate>medicine.mgDay</span>
+
+                </div>
+            </div>
+
+
+            <div class="row med-input-row responsive-sm row-center">
+                <div class="col">
+                    <span class="input-label" translate>medicine.tabletMTX</span>
+                </div>
+                <div class="col col-75">
+
+                    <input id="inputMTX"
+                           type="number"
+                           min="0"
+                           style="direction: rtl;"
+                           placeholder="0.0"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '0.0'"
+                           ng-model="vm.registration.MTX">
+
+                    <span class="measurement-label" translate>medicine.mgWeek</span>
+
+                </div>
+            </div>
+
         </div>
     </section>
 

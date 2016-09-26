@@ -1,66 +1,121 @@
 <div id="Bloodsample" ng-controller="bloodsampleController as vm">
 
-   <section class="padding-horizontal-50 top-margin">
+    <section class="padding-horizontal-50 top-margin">
         <div style="width: 100%">
-            <label class="item item-input">
-                <span class="input-label" translate>bloodsamples.leukocytes</span>
-                <input id="inputLeukocytter"
-                       type="number"
-                       min="0"
-                       style="direction: rtl;"
-                       ng-model="vm.registration.Leukocytter">
-                <span class="input-label measurement-label">10<sup>9</sup> L</span>
-            </label>
 
-            <label class="item item-input">
-                <span class="input-label" translate>bloodsamples.neutrophiles</span>
-                <input id="inputNeutrofile"
-                       type="number"
-                       min="0"
-                       style="direction: rtl;"
-                       ng-model="vm.registration.Neutrofile">
-                <span class="input-label measurement-label">10<sup>9</sup> L</span>
-            </label>
 
-            <label class="item item-input">
-                <span class="input-label" translate>bloodsamples.thrombocytes</span>
-                <input id="inputThrombocytter"
-                       type="number"
-                       min="0"
-                       style="direction: rtl;"
-                       ng-model="vm.registration.Thrombocytter">
-                <span class="input-label measurement-label">10<sup>9</sup> L</span>
-            </label>
+            <div class="row input-row responsive-sm row-center">
+                <div class="col">
+                    <span class="input-label" translate>bloodsamples.leukocytes</span>
+                </div>
+                <div class="col col-75">
+                    <input id="inputLeukocytter"
+                           type="number"
+                           min="0"
+                           style="direction: rtl; font-weight: bold;"
+                           placeholder="0.0"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '0.0'"
+                           ng-model="vm.registration.Leukocytter">
 
-            <label class="item item-input">
-                <span class="input-label" translate>bloodsamples.hemoglobin</span>
-                <input id="inputHemoglobin"
-                       type="number"
-                       min="0"
-                       style="direction: rtl;"
-                       ng-model="vm.registration.Hemoglobin">
-               <span class="input-label measurement-label">mmol/L</span>
-            </label>
+                    <span class="measurement-label">10<sup>9</sup> L</span>
+                </div>
+            </div>
 
-            <label class="item item-input">
-               <span class="input-label" translate>bloodsamples.alat</span>
-                <input id="inputAlat"
-                       type="number"
-                       min="0"
-                       style="direction: rtl;"
-                       ng-model="vm.registration.Alat">
-                <span class="input-label measurement-label">U/L</span>
-            </label>
 
-            <label class="item item-input">
-                <span class="input-label" translate>bloodsamples.crp</span>
-                <input id="inputCRP"
-                       type="number"
-                       min="0"
-                       style="direction: rtl;"
-                       ng-model="vm.registration.CRP">
-                <span class="input-label measurement-label">mg/L</span>
-            </label>
+            <div class="row input-row responsive-sm row-center">
+                <div class="col">
+                    <span class="input-label" translate>bloodsamples.neutrophiles</span>
+                </div>
+                <div class="col col-75">
+                    <input id="inputNeutrofile"
+                           type="number"
+                           min="0"
+                           style="direction: rtl; font-weight: bold;"
+                           placeholder="0.0"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '0.0'"
+                           ng-model="vm.registration.Neutrofile">
+
+                    <span class="measurement-label">10<sup>9</sup> L</span>
+                </div>
+            </div>
+
+
+            <div class="row input-row responsive-sm row-center">
+                <div class="col">
+                    <span class="input-label" translate>bloodsamples.thrombocytes</span>
+                </div>
+                <div class="col col-75">
+                    <input id="inputThrombocytter"
+                           type="number"
+                           min="0"
+                           style="direction: rtl; font-weight: bold;"
+                           placeholder="0.0"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '0.0'"
+                           ng-model="vm.registration.Thrombocytter">
+                    <span class="measurement-label">10<sup>9</sup> L</span>
+                </div>
+            </div>
+
+
+            <div class="row input-row responsive-sm row-center">
+                <div class="col">
+                    <span class="input-label" translate>bloodsamples.hemoglobin</span>
+                </div>
+
+                <div class="col col-75">
+                    <input id="inputHemoglobin"
+                           type="number"
+                           min="0"
+                           style="direction: rtl;  font-weight: bold;"
+                           placeholder="0.0"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '0.0'"
+                           ng-model="vm.registration.Hemoglobin">
+                    <span class="measurement-label">mmol/L</span>
+                </div>
+            </div>
+
+
+            <div class="row input-row responsive-sm row-center">
+                <div class="col">
+                    <span class="input-label" translate>bloodsamples.alat</span>
+                </div>
+                <div class="col col-75">
+                    <input id="inputAlat"
+                           type="number"
+                           min="0"
+                           style="direction: rtl;  font-weight: bold;"
+                           placeholder="0.0"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '0.0'"
+                           ng-model="vm.registration.Alat">
+                    <span class="measurement-label">U/L</span>
+                </div>
+            </div>
+
+
+            <div class="row input-row responsive-sm row-center">
+                <div class="col">
+                    <span class="input-label" translate>bloodsamples.crp</span>
+                </div>
+                <div class="col col-75">
+                    <input id="inputCRP"
+                           type="number"
+                           min="0"
+                           style="direction: rtl;  font-weight: bold;"
+                           placeholder="0.0"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '0.0'"
+                           ng-model="vm.registration.CRP">
+
+                    <span class="measurement-label">mg/L</span>
+                </div>
+            </div>
+
+
         </div>
     </section>
 

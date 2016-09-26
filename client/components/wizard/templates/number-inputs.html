@@ -2,17 +2,27 @@
 
     <section class="padding-horizontal-50 top-margin">
         <div style="width: 100%">
-            <label class="item item-input" ng-repeat="question in vm.questions">
-                <span class="input-label">{{question.question}}</span>
-                <input
-                        type="number"
-                        min="0"
-                        style="direction: rtl;"
-                        step="{{(question.decimal) ? 0.01 : 1}}"
-                        ng-model="vm.registration[question.propertyName]"
-                        ng-blur="vm.updateRegistration()">
-                <span class="input-label measurement-label">{{question.measure}}</span>
-            </label>
+
+            <div class="row num-input-row responsive-sm row-center" ng-repeat="question in vm.questions">
+                <div class="col">
+                    <span class="input-label">{{question.question}}</span>
+                </div>
+                <div class="col col-75">
+                    <input id="inputLeukocytter"
+                           type="number"
+                           min="0"
+                           step="{{(question.decimal) ? 0.01 : 1}}"
+                           style="direction: rtl; font-weight: bold;"
+                           placeholder="0.0"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '0.0'"
+                           ng-model="vm.registration[question.propertyName]"
+                           ng-blur="vm.updateRegistration()">
+
+                    <span>{{question.measure}}</span>
+                </div>
+            </div>
+
         </div>
     </section>
 
