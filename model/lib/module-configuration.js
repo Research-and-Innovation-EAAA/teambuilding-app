@@ -11,7 +11,7 @@ Modules = [
                     stepName: "medicine",
                     stepTemplate: "client/components/wizard/medicine/qw-medicine-01.html",
                     validation: (registration) => {
-                        return registration.SixMP || registration.MTX;
+                        return !(isNaN(registration.SixMP) && isNaN(registration.MTX));
                     }
                 }
             ]
@@ -40,7 +40,7 @@ Modules = [
                     stepName: "bloodsamples",
                     stepTemplate: "client/components/wizard/bloodsample/qw-bloodsample-01.html",
                     validation: (registration) => {
-                        var isValid = false;
+                        var allEmpt = true;
                         for (var property in registration) {
                             if (property === "_id" ||
                                 property === 'timestamp' ||
@@ -51,16 +51,9 @@ Modules = [
                                 continue;
 
                             var bloodsample = registration[property];
-                            if (bloodsample) {
-                                isValid = 0 <= parseFloat(bloodsample);
-                                if (!isValid) {
-                                    //invalid data
-                                    console.log('Data is invalid at property ', property, '. Value is ', bloodsample);
-                                    return isValid;
-                                }
-                            }
+                            allEmpt = allEmpt && isNaN(bloodsample);
                         }
-                        return isValid;
+                        return !allEmpt;
                     }
                 }
             ]
