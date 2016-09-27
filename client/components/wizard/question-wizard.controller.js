@@ -125,38 +125,43 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
     };
 
     vm.finishWizard = function () {
-        if (vm.validateData()) {
-            var registration = Session.get('registration');
+        setTimeout(function () {
+            console.log("Run finish wizard");
+            if (vm.validateData()) {
+                var registration = Session.get('registration');
 
-            console.log('vm.finishWizard is called!');
-            for (var property in registration) {
-                if (registration.hasOwnProperty(property)) {
-                    if (registration[property] == null) {
-                        registration[property] = "-";
+                console.log('vm.finishWizard is called!');
+                for (var property in registration) {
+                    if (registration.hasOwnProperty(property)) {
+                        if (registration[property] == null) {
+                            registration[property] = "-";
+                        }
                     }
                 }
-            }
 
-            if (registration.updating) {
-                registration.updating = undefined;
-                Meteor.call('updateRegistration', registration, (error, result) => {
-                    if (error) {
-                        saveError();
-                    } else {
-                        updateOk();
-                    }
-                });
-            } else {
-                Meteor.call('addRegistration', registration, vm.dataType, (error, result) => {
-                    if (error) {
-                        saveError();
-                    } else {
-                        saveOk();
-                    }
-                });
-            }
+                console.log("Save reg: ",registration);
 
-        }
+                if (registration.updating) {
+                    registration.updating = undefined;
+                    Meteor.call('updateRegistration', registration, (error, result) => {
+                        if (error) {
+                            saveError();
+                        } else {
+                            updateOk();
+                        }
+                    });
+                } else {
+                    Meteor.call('addRegistration', registration, vm.dataType, (error, result) => {
+                        if (error) {
+                            saveError();
+                        } else {
+                            saveOk();
+                        }
+                    });
+                }
+
+            }
+        }, 100);
     };
 
     vm.cancelRegistration = () => {
