@@ -50,17 +50,22 @@ function TemplateCardController($scope, $reactive, $location) {
                     vm.rowProperty = (rowNumber) => {
                         var value = undefined;
                         var registration = vm.latestRegistration;
-                        if (vm.module.frontPage.properties) {
-                            if (rowNumber >= vm.module.frontPage.properties.length)
-                                return "";
-                            var propertyName = vm.module.frontPage.properties[rowNumber];
-                                if (registration && registration[propertyName])
-                                    value =  registration[propertyName] + "";
-                        } else if (vm.module.frontPage.propertyFunction) {
-                            value = vm.module.frontPage.propertyFunction(registration, rowNumber);
-                        };
+                        if (registration) {
+                            if (vm.module.frontPage.properties) {
+                                if (rowNumber >= vm.module.frontPage.properties.length)
+                                    return "";
+                                var propertyName = vm.module.frontPage.properties[rowNumber];
+                                if (registration)
+                                    value = registration[propertyName];
+                            } else if (vm.module.frontPage.propertyFunction) {
+                                value = vm.module.frontPage.propertyFunction(registration, rowNumber);
+                            };
+                        }
 
-                        return value?value:"-";
+                        if (value || (typeof value=="number" && !isNaN(value)))
+                            return value+"";
+                        else
+                            return "-";
                     };
 
                     vm.rowDescription = (rowNumber) => {

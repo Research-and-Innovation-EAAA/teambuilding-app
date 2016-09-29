@@ -121,10 +121,10 @@
                                                 {{number | date:'dd/MM'}}<br>{{number | date:'HH:mm'}}
                                             </strong>
                                         </span>
-                                        <span ng-if='!isFirstRow && number' translate>
+                                        <span ng-if='!isFirstRow && (number || number===0)' translate>
                                             {{number + ''}}
                                         </span>
-                                        <span ng-if='!isFirstRow && !number' translate>
+                                        <span ng-if='!isFirstRow && !(number || number===0)' translate>
                                             -
                                         </span>
                                     </div>
