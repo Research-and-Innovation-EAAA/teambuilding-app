@@ -1,20 +1,25 @@
 angular.module('leukemiapp').controller('mucositisController', MucositisController);
 
-function MucositisController($scope, $reactive) {
+function MucositisController($scope, $reactive, WizardState, WizardStateAccessor) {
    $reactive(this).attach($scope);
    var vm = this;
+
+   vm.dataType = Session.get('registrationType');
+   WizardState[vm.dataType] = WizardStateAccessor.getRegistration(vm.dataType);
+   vm.registration = WizardState[vm.dataType];
 
    var module = Modules[3];
 
    //Init
-   vm.registration = Session.get('registration');
-
    function initData() {
-      if (vm.registration.diagnosis == null) {
+      if (!vm.registration.diagnosis) {
          vm.registration.diagnosis = [];
          vm.registration.nauseaScore = 0;
          Session.set('registration', vm.registration);
       }
+      if (vm.registration._validate == undefined)
+         vm.registration._validate = validateData;
+
       validateData();
       vm.init = true;
    }
@@ -41,18 +46,7 @@ function MucositisController($scope, $reactive) {
          case 2:
             vm.registration.food = value;
       }
-      updateRegistration();
    };
-
-   $scope.$watch(
-      function nauseaScore(scope) {
-         return vm.registration.nauseaScore;
-      },
-      function (newValue, oldValue) {
-         if (newValue != oldValue)
-            updateRegistration()
-      }
-   );
 
    function validateData() {
       var validated = Session.get('regValidated');
@@ -65,14 +59,6 @@ function MucositisController($scope, $reactive) {
          Session.set('regValidated', validated);
          console.log('regValidated session variable updated');
       }
-   }
-
-   function updateRegistration() {
-      validateData();
-      vm.registration.nauseaScore = parseInt(vm.registration.nauseaScore);
-      Session.set('registration', vm.registration);
-      console.log('Registration updated');
-      console.log(vm.registration);
    }
 
    if (!vm.init) {

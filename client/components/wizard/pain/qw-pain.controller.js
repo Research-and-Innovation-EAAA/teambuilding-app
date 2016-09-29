@@ -1,17 +1,23 @@
 angular.module('leukemiapp').controller('painController', PainController);
 
-function PainController($scope, $reactive, $ionicScrollDelegate) {
+function PainController($scope, $reactive, $ionicScrollDelegate, WizardState, WizardStateAccessor) {
     $reactive(this).attach($scope);
     var vm = this;
+
+    vm.dataType = Session.get('registrationType');
+    WizardState[vm.dataType] = WizardStateAccessor.getRegistration(vm.dataType);
+    vm.registration = WizardState[vm.dataType];
 
     var module = Modules[2];
 
     //Init
-    vm.registration = Session.get('registration');
     vm.wongBakerScale = "Wong-Baker score";
     vm.flaccScale = "FLACC score";
 
     function initData() {
+        if (vm.registration._validate == undefined)
+            vm.registration._validate = validateData;
+
         var usrSettings = UserSettings.findOne();
 
         //Initialize pain scale
@@ -68,16 +74,8 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
         }
     }
 
-    vm.updateRegistration = () => {
-        validateData();
-
-        Session.set('registration', vm.registration);
-        console.log('Registration updated', vm.registration);
-    };
-
     vm.selectPainType = (value) => {
         vm.registration.painType = value;
-        vm.updateRegistration();
     };
 
     vm.painScaleNoScore = () => {
@@ -93,7 +91,6 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
         }
         vm.registration.flaccvalue[flaccnumber] = newvalue;
         vm.registration.painScore += newvalue;
-        vm.updateRegistration();
     };
 
     vm.changeScale = (destinationScale) => {
@@ -138,7 +135,6 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
         } else {
             //scrollToSmiley();
         }
-        vm.updateRegistration();
     };
 
     vm.selectSmiley = (smileynumber, ignorePainScore) => {
@@ -174,7 +170,6 @@ function PainController($scope, $reactive, $ionicScrollDelegate) {
         if (vm.isSmallScreen()) {
             //scrollToSmiley();
         }
-        vm.updateRegistration();
     };
 
     if (!vm.init) {

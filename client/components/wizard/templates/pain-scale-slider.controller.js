@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('painScaleSliderController', painScaleSliderController);
 
-function painScaleSliderController($scope, $reactive, WizardHandler) {
+function painScaleSliderController($scope, $reactive, WizardHandler, WizardState) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -9,6 +9,18 @@ function painScaleSliderController($scope, $reactive, WizardHandler) {
 
    var step = {};
    var config = {};
+
+   $scope.$watch(
+       function stepNumber(scope) {
+          return WizardHandler.wizard().currentStepNumber();
+       },
+       function (newValue, oldValue) {
+          //    if (oldValue !== vm.stepNumber) {
+          initUi();
+          updateSessionVariables();
+          //   }
+       }
+   );
 
    for (i = 0; i < Modules.length; i++) {
       if (Modules[i].name === dataType) {
@@ -39,12 +51,7 @@ function painScaleSliderController($scope, $reactive, WizardHandler) {
       config.step !== undefined)
    };
 
-   vm.registration = Session.get('registration');
-
-   function updateRegistration() {
-      vm.registration[config.propertyName] = vm.slider.value;
-      updateSessionVariables();
-   }
+   vm.registration = WizardState[dataType];
 
    vm.slider = {
       value: 0,
@@ -53,8 +60,9 @@ function painScaleSliderController($scope, $reactive, WizardHandler) {
          ceil: config.maxValue,
          step: config.step,
          precision: (config.step % 1 == 0) ? 0 : 1, //decimal precision, 1 if step is a decimal
-         hideLimitLabels: true,
-         onEnd: updateRegistration
+         hideLimitLabels: true
+         //,
+         //onEnd: updateRegistration
       }
    };
    console.log('vm.slider is ', vm.slider);
@@ -66,9 +74,6 @@ function painScaleSliderController($scope, $reactive, WizardHandler) {
          validated[stepNumber - 1] = step.validation(vm.registration);
          Session.set('regValidated', validated);
          console.log('regValidated session variable updated: ', validated);
-
-         Session.set('registration', vm.registration);
-         console.log('Registration updated: ', vm.registration);
       }
    }
 }

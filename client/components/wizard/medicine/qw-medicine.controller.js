@@ -1,11 +1,12 @@
 angular.module('leukemiapp').controller('medicineController', MedicineController);
 
-function MedicineController($scope, $reactive, WizardState) {
+function MedicineController($scope, $reactive, WizardState, WizardStateAccessor) {
    $reactive(this).attach($scope);
    var vm = this;
-   
-   WizardState[Session.get('registrationType')] = Session.get('registration');
-   vm.registration = WizardState[Session.get('registrationType')];
+
+   vm.dataType = Session.get('registrationType');
+   WizardState[vm.dataType] = WizardStateAccessor.getRegistration(vm.dataType);
+   vm.registration = WizardState[vm.dataType];
    
    var module = Modules[0];
 
@@ -18,11 +19,6 @@ function MedicineController($scope, $reactive, WizardState) {
       if (vm.registration._validate == undefined)
          vm.registration._validate = validateData;
 
-      var inputSixMP = document.getElementById('inputSixMP');
-      //inputSixMP.addEventListener('blur', updateRegistration, true);
-
-      var inputMTX = document.getElementById('inputMTX');
-      //inputMTX.addEventListener('blur', updateRegistration, true);
       validateData();
       vm.init = true;
    }
@@ -48,14 +44,6 @@ function MedicineController($scope, $reactive, WizardState) {
          Session.set('regValidated', validated);
          console.log('regValidated session variable updated');
       }
-   }
-
-   function updateRegistration() {
-      validateData();
-      //Session.set('registration', vm.registration);
-      Session.set('registration', undefined);
-      console.log('Registration updated');
-      console.log(vm.registration);
    }
 
    if (!vm.init) {

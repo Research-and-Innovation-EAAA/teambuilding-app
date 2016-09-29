@@ -6,16 +6,6 @@ function numberInputsController($scope, $reactive, WizardHandler) {
 
     vm.config = {};
 
-    $scope.$watch(
-        function stepNumber(scope) {
-            return WizardHandler.wizard().currentStepNumber();
-        },
-        function (newValue, oldValue) {
-            initUi();
-            vm.updateRegistration();
-        }
-    );
-
     initUi();
     function initUi() {
         var dataType = Session.get('registrationType');
@@ -49,7 +39,7 @@ function numberInputsController($scope, $reactive, WizardHandler) {
         vm.questions = config.questions;
         vm.mandatory = config.mandatory;
 
-        vm.registration = Session.get('registration');
+        vm.registration = WizardState[dataType];
     }
 
     function initData() {
@@ -92,13 +82,6 @@ function numberInputsController($scope, $reactive, WizardHandler) {
         validated[vm.stepNumber - 1] = vm.validation(vm.registration);
         Session.set('regValidated', validated);
         console.log('regValidated session variable updated: ', validated);
-    }
-
-    vm.updateRegistration = () => {
-        validateData();
-        Session.set('registration', vm.registration);
-        console.log('Registration updated');
-        console.log(vm.registration);
     }
 
     if (!vm.init) {

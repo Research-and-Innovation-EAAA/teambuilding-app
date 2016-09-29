@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('singleQuestionController', singleQuestionController);
 
-function singleQuestionController($scope, $reactive, WizardHandler, $ionicScrollDelegate) {
+function singleQuestionController($scope, $reactive, WizardHandler, $ionicScrollDelegate, WizardState) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -48,7 +48,7 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
             }
         }
 
-        vm.registration = Session.get('registration');
+        vm.registration = WizardState[dataType];
 
         console.log("config is ", vm.config);
         vm.question = vm.config.question;

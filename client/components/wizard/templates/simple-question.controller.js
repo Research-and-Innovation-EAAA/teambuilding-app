@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('simpleQuestionController', SimpleQuestionController);
 
-function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScrollDelegate) {
+function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScrollDelegate, WizardState) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -11,6 +11,18 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
 
    var step = {};
    var config = {};
+
+   $scope.$watch(
+       function stepNumber(scope) {
+          return WizardHandler.wizard().currentStepNumber();
+       },
+       function (newValue, oldValue) {
+          //    if (oldValue !== vm.stepNumber) {
+          initUi();
+          updateSessionVariables();
+          //   }
+       }
+   );
 
    for (i = 0; i < Modules.length; i++) {
       if (Modules[i].name === dataType) {
@@ -30,7 +42,7 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
       }
    }
 
-   vm.registration = Session.get('registration');
+   vm.registration = WizardState[dataType];
    
    vm.question = config.question;
    vm.answers = config.answers;
@@ -49,8 +61,5 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
       validated[stepNumber - 1] = step.validation(vm.registration);
       Session.set('regValidated', validated);
       console.log('regValidated session variable updated: ', validated);
-
-      Session.set('registration', vm.registration);
-      console.log('Registration updated: ', vm.registration);
    }
 }

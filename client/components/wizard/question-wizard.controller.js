@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('questionWizardController', QuestionWizardController);
 
-function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $ionicScrollDelegate, $translate, WizardHandler, WizardState) {
+function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $ionicScrollDelegate, $translate, WizardHandler, WizardState, WizardStateAccessor) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -123,10 +123,7 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
     };
 
     var getRegistation = () => {
-        var registration = WizardState[Session.get('registrationType')];
-        if (!registration)
-            registration = Session.get('registration');
-        return registration;
+        return WizardStateAccessor.getRegistration(Session.get('registrationType'));
     }
 
     vm.finishButtonText = () => {

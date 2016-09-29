@@ -1,14 +1,17 @@
 angular.module('leukemiapp').controller('bloodsampleController', BloodsampleController);
 
-function BloodsampleController($scope, $reactive) {
+function BloodsampleController($scope, $reactive, WizardState, WizardStateAccessor) {
    $reactive(this).attach($scope);
    var vm = this;
+
+   vm.dataType = Session.get('registrationType');
+   WizardState[vm.dataType] = WizardStateAccessor.getRegistration(vm.dataType);
+   vm.registration = WizardState[vm.dataType];
+
 
    var module = Modules[1];
 
    //Init
-   vm.registration = Session.get('registration');
-
    function initData() {
       if (vm.registration.leukocytes == undefined)
          vm.registration.leukocytes = NaN;
@@ -22,27 +25,10 @@ function BloodsampleController($scope, $reactive) {
          vm.registration.alat = NaN;
       if (vm.registration.crp == undefined)
          vm.registration.crp = NaN;
-
-      var inputleukocytes = document.getElementById('inputleukocytes');
-      inputleukocytes.addEventListener('blur', updateRegistration, true);
-
-      var inputneutrophiles = document.getElementById('inputneutrophiles');
-      inputneutrophiles.addEventListener('blur', updateRegistration, true);
-
-      var inputthrombocytes = document.getElementById('inputthrombocytes');
-      inputthrombocytes.addEventListener('blur', updateRegistration, true);
-
-      var inputhemoglobin = document.getElementById('inputhemoglobin');
-      inputhemoglobin.addEventListener('blur', updateRegistration, true);
-
-      var inputalat = document.getElementById('inputalat');
-      inputalat.addEventListener('blur', updateRegistration, true);
-
-      var inputcrp = document.getElementById('inputcrp');
-      inputcrp.addEventListener('blur', updateRegistration, true);
+      if (vm.registration._validate == undefined)
+         vm.registration._validate = validateData;
 
       validateData();
-      vm.init = true;
       vm.init = true;
    }
 
@@ -67,13 +53,6 @@ function BloodsampleController($scope, $reactive) {
          Session.set('regValidated', validated);
          console.log('regValidated session variable updated');
       }
-   }
-
-   function updateRegistration() {
-      validateData();
-      Session.set('registration', vm.registration);
-      console.log('Registration updated');
-      console.log(vm.registration);
    }
 
    if (!vm.init) {

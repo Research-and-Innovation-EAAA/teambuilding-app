@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('multipleQuestionsController', multipleQuestionsController);
 
-function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScrollDelegate) {
+function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScrollDelegate, WizardState) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -49,7 +49,7 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
         vm.questions = vm.config.questions;
         vm.mandatory = vm.config.mandatory;
 
-        vm.registration = Session.get('registration');
+        vm.registration = WizardState[dataType];
     }
 
 
@@ -91,8 +91,5 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
         validated[vm.stepNumber - 1] = vm.validation(vm.registration);
         Session.set('regValidated', validated);
         console.log('regValidated session variable updated: ', validated);
-
-        Session.set('registration', vm.registration);
-        console.log('Registration updated: ', vm.registration);
     }
 }

@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('timestampController', TimestampController);
 
-function TimestampController($scope, $reactive, $timeout, $translate) {
+function TimestampController($scope, $reactive, $timeout, $translate, WizardState, WizardStateAccessor) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -120,8 +120,7 @@ function TimestampController($scope, $reactive, $timeout, $translate) {
       }).then(() => {
 
          //Code to execute after vm.timestamp is updated
-
-         var registration = Session.get('registration');
+         var registration = WizardStateAccessor.getRegistration(vm.dataType);
          var validated = Session.get('regValidated');
 
          if (validated === undefined)
@@ -152,7 +151,7 @@ function TimestampController($scope, $reactive, $timeout, $translate) {
          }
          Session.set('regValidated', validated);
          console.log('regValidated session variable updated', validated);
-         Session.set('registration', registration);
+         WizardStateAccessor.setRegistration(vm.dataType, registration);
          console.log('registration session variable updated', registration);
       });
    }

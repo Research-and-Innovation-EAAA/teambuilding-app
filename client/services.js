@@ -104,5 +104,23 @@ angular.module('leukemiapp')
     })
 
     .factory('WizardState', function () {
-        return {} //type:objwithvalues
+        return {};
+    })
+
+    .factory('WizardStateAccessor', function (WizardState) {
+        return {
+            getRegistration: (type) => {
+                var registration = WizardState[type];
+                if (!registration) {
+                    registration = Session.get('registration');
+                    if (!registration)
+                        registration = {};
+                    WizardState[type] = registration;
+                }
+                return registration;
+            },
+            setRegistration: (type, registration) => {
+                WizardState[type] = typeof registration==="object"?registration:{};
+            }
+        } //type:objwithvalues
     });

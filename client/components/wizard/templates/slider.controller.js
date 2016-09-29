@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('sliderController', sliderController);
 
-function sliderController($scope, $reactive, WizardHandler) {
+function sliderController($scope, $reactive, WizardHandler, WizardState) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -45,7 +45,7 @@ function sliderController($scope, $reactive, WizardHandler) {
             }
         }
 
-        vm.registration = Session.get('registration');
+        vm.registration  = WizardState[dataType];
 
         vm.question = vm.config.question;
         vm.positiveText = vm.config.positiveText;
