@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('questionWizardController', QuestionWizardController);
 
-function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $ionicScrollDelegate, $translate, WizardHandler) {
+function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $ionicScrollDelegate, $translate, WizardHandler, WizardState) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -66,6 +66,9 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
         var registration = Session.get('registration');
         if (registration != null && registration.updating) {
 
+            var registration = getRegistation();
+            if (registration && typeof registration._validate === "function")
+                registration._validate();
             var validated = Session.get('regValidated');
             if (validated == null) {
                 validated = [];
@@ -80,6 +83,9 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
     });
 
     vm.validateData = () => {
+        var registration = getRegistation();
+        if (registration && typeof registration._validate === "function")
+            registration._validate();
         var validated = Session.get('regValidated');
         //goes from 1 .. x
         var stepNumber = WizardHandler.wizard().currentStepNumber();
@@ -116,19 +122,26 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
         return validated[stepNumber - 1];
     };
 
+    var getRegistation = () => {
+        var registration = WizardState[Session.get('registrationType')];
+        if (!registration)
+            registration = Session.get('registration');
+        return registration;
+    }
+
     vm.finishButtonText = () => {
-        var registration = Session.get('registration');
-        if (registration != null)
+        var registration = getRegistation();
+        if (registration)
             return registration.updating ? $translate.instant('wizard.update') : $translate.instant('wizard.save');
         else
             return '';
     };
 
     vm.finishWizard = function () {
-        setTimeout(function () {
+        //setTimeout(function () {
             console.log("Run finish wizard");
             if (vm.validateData()) {
-                var registration = Session.get('registration');
+                var registration = getRegistation();
 
                 console.log('vm.finishWizard is called!');
                 for (var property in registration) {
@@ -161,7 +174,7 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
                 }
 
             }
-        }, 100);
+        //}, 100);
     };
 
     vm.cancelRegistration = () => {

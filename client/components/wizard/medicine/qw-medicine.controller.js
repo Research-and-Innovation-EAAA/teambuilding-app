@@ -1,25 +1,28 @@
 angular.module('leukemiapp').controller('medicineController', MedicineController);
 
-function MedicineController($scope, $reactive) {
+function MedicineController($scope, $reactive, WizardState) {
    $reactive(this).attach($scope);
    var vm = this;
-
+   
+   WizardState[Session.get('registrationType')] = Session.get('registration');
+   vm.registration = WizardState[Session.get('registrationType')];
+   
    var module = Modules[0];
 
    //Init
-   vm.registration = Session.get('registration');
-
    function initData() {
       if (vm.registration.MTX == undefined)
          vm.registration.MTX = NaN;
       if (vm.registration.SixMP == undefined)
          vm.registration.SixMP = NaN;
+      if (vm.registration._validate == undefined)
+         vm.registration._validate = validateData;
 
       var inputSixMP = document.getElementById('inputSixMP');
-      inputSixMP.addEventListener('blur', updateRegistration, true);
+      //inputSixMP.addEventListener('blur', updateRegistration, true);
 
       var inputMTX = document.getElementById('inputMTX');
-      inputMTX.addEventListener('blur', updateRegistration, true);
+      //inputMTX.addEventListener('blur', updateRegistration, true);
       validateData();
       vm.init = true;
    }
@@ -49,7 +52,8 @@ function MedicineController($scope, $reactive) {
 
    function updateRegistration() {
       validateData();
-      Session.set('registration', vm.registration);
+      //Session.set('registration', vm.registration);
+      Session.set('registration', undefined);
       console.log('Registration updated');
       console.log(vm.registration);
    }

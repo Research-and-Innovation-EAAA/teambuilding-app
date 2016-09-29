@@ -101,4 +101,8 @@ angular.module('leukemiapp')
         }
 
         return service;
+    })
+
+    .factory('WizardState', function () {
+        return {} //type:objwithvalues
     });
