@@ -423,7 +423,7 @@ Meteor.startup(() => {
             Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
         }
 
-        if (dbVersion === 5) { // set dash on empty fields in database registrations ---------------------------------------------------------------
+        if (dbVersion === 5) { // remove dash on empty fields in database registrations ---------------------------------------------------------------
 
             /* Blood samples */
             Registrations.update({
@@ -466,7 +466,7 @@ Meteor.startup(() => {
             Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
         }
 
-        if (dbVersion === 6) { // set dash on empty fields in database registrations ---------------------------------------------------------------
+        if (dbVersion === 6) { // rename module names ---------------------------------------------------------------
 
             /* Blood samples */
             Registrations.update({
