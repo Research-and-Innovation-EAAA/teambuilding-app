@@ -25,8 +25,10 @@ function BloodsampleController($scope, $reactive, WizardState, WizardStateAccess
          vm.registration.alat = NaN;
       if (vm.registration.crp == undefined)
          vm.registration.crp = NaN;
-      if (vm.registration._validate == undefined)
-         vm.registration._validate = validateData;
+
+      WizardStateAccessor.registerValidateFunction(vm.dataType, validateData);
+      /* if (vm.registration._validate == undefined)
+         vm.registration._validate = validateData; */
 
       validateData();
       vm.init = true;

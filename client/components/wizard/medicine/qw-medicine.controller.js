@@ -16,8 +16,10 @@ function MedicineController($scope, $reactive, WizardState, WizardStateAccessor)
          vm.registration.MTX = NaN;
       if (vm.registration.SixMP == undefined)
          vm.registration.SixMP = NaN;
-      if (vm.registration._validate == undefined)
-         vm.registration._validate = validateData;
+
+      WizardStateAccessor.registerValidateFunction(vm.dataType, validateData);
+      /* if (vm.registration._validate == undefined)
+       vm.registration._validate = validateData; */
 
       validateData();
       vm.init = true;

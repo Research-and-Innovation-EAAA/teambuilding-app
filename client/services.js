@@ -108,8 +108,11 @@ angular.module('leukemiapp')
     })
 
     .factory('WizardStateAccessor', function (WizardState) {
-        return {
-            getRegistration: (type) => {
+        var service = {
+            validateFunction: []
+        };
+
+        service.getRegistration = (type) => {
                 var registration = WizardState[type];
                 if (!registration) {
                     registration = Session.get('registration');
@@ -118,9 +121,22 @@ angular.module('leukemiapp')
                     WizardState[type] = registration;
                 }
                 return registration;
-            },
-            setRegistration: (type, registration) => {
+            };
+
+        service.setRegistration = (type, registration) => {
                 WizardState[type] = typeof registration==="object"?registration:{};
-            }
-        } //type:objwithvalues
+            };
+
+        service.registerValidateFunction = (type, validateFunction) => {
+                service.validateFunction[type] = validateFunction;
+            };
+
+        service.validate = (type) => {
+                if (service.validateFunction[type]) {
+                    return service.validateFunction[type]();
+                }
+                return undefined;
+            };
+
+        return service;
     });

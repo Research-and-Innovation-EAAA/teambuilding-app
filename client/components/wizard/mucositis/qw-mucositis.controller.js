@@ -17,8 +17,10 @@ function MucositisController($scope, $reactive, WizardState, WizardStateAccessor
          vm.registration.nauseaScore = 0;
          Session.set('registration', vm.registration);
       }
-      if (vm.registration._validate == undefined)
-         vm.registration._validate = validateData;
+
+      WizardStateAccessor.registerValidateFunction(vm.dataType, validateData);
+      /* if (vm.registration._validate == undefined)
+       vm.registration._validate = validateData; */
 
       validateData();
       vm.init = true;

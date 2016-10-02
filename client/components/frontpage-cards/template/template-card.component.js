@@ -25,12 +25,21 @@ function TemplateCardController($scope, $reactive, $location) {
 
     getModuleFromName();
 
-    vm.helpers({
-        latestRegistration: () => {
-            return Registrations.findOne({
+    /*    vm.helpers({
+            latestRegistration: () => {
+                return Registrations.findOne({
+                    moduleName: vm.getReactively('module.name')
+                }, {
+                    sort: {timestamp: -1}
+                });
+            }
+        }); */
+    Meteor.autorun(function () {
+        vm.latestRegistration = Registrations.findOne({
                 moduleName: vm.getReactively('module.name')
+            }, {
+                sort: {timestamp: -1}
             });
-        }
     });
 
     //Find module from name

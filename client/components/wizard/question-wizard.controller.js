@@ -57,9 +57,11 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
         var registration = Session.get('registration');
         if (registration != null && registration.updating) {
 
-            var registration = getRegistation();
+            WizardStateAccessor.validate(vm.dataType);
+
+            /*    var registration = getRegistation();
             if (registration && typeof registration._validate === "function")
-                registration._validate();
+                registration._validate(); */
             var validated = Session.get('regValidated');
             if (validated == null) {
                 validated = [];
@@ -75,13 +77,14 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
 
     vm.validateData = () => {
         var registration = getRegistation();
-        if (registration && typeof registration._validate === "function")
-            registration._validate();
+        WizardStateAccessor.validate(vm.dataType, registration);
+        /* if (registration && typeof registration._validate === "function")
+            registration._validate(); */
         var validated = Session.get('regValidated');
         //goes from 1 .. x
         var stepNumber = WizardHandler.wizard().currentStepNumber();
 
-        if (!validated[stepNumber - 1] && vm.errorPopup === undefined) {
+        if (validated && !validated[stepNumber - 1] && vm.errorPopup === undefined) {
 
             if (stepNumber == 1) {
                 vm.errorPopup = $ionicPopup.confirm({

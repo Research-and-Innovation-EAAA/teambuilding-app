@@ -15,8 +15,10 @@ function PainController($scope, $reactive, $ionicScrollDelegate, WizardState, Wi
     vm.flaccScale = "FLACC score";
 
     function initData() {
-        if (vm.registration._validate == undefined)
-            vm.registration._validate = validateData;
+
+        WizardStateAccessor.registerValidateFunction(vm.dataType, validateData);
+        /* if (vm.registration._validate == undefined)
+         vm.registration._validate = validateData; */
 
         var usrSettings = UserSettings.findOne();
 
