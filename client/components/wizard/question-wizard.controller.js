@@ -3,15 +3,6 @@ angular.module('leukemiapp').controller('questionWizardController', QuestionWiza
 function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $ionicScrollDelegate, $translate, WizardHandler, WizardState, WizardStateAccessor) {
     $reactive(this).attach($scope);
     var vm = this;
-
-    // ** Data structure **
-    // vm.modules = {
-    //   moduleName: {
-    //      stepName: stepTemplate || stepTemplate.url;
-    //      ...
-    //   }
-    //   ...
-    //}
     vm.modules = {};
 
     for (moduleNumber = 0; moduleNumber < Modules.length; moduleNumber++) {
@@ -260,8 +251,4 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
             }
         }
     );
-
-
-    //$scope.hideIndicators = Object.keys($scope.questions[$scope.dataType]).length <= 1;
-
 }

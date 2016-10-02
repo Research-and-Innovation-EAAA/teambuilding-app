@@ -1,47 +1,63 @@
 (function () {
 
-    Meteor.publish('moduleData', function (module) {
-        return Registrations.find({
-            $and: [
-                {moduleName: module},
-                {moduleName: {$exists: true}},
-                {createdBy: this.userId},
-                {createdBy: {$exists: true}}
-            ]
-        }, {
-            sort: {
-                timestamp: -1,
-                createdAt: -1
-            },
-            limit: 1,
-            fields: {
-                createdBy: 0,
-                id: 0,
-                createdAt: 0,
-                timestamp: 0,
-                updatedAt: 0
+    Meteor.publish('moduleData', function () {
+        /* Return all most recent registrations per (user,moduletype) combination */
+        this.autorun(function () {
+            //Build singleton list of of all modules
+            var modules = [];
+            for (var moduleNumber = 0; moduleNumber < Modules.length; moduleNumber++) {
+                modules.push(Modules[moduleNumber].name);
             }
-        })
+            CustomModules.find().forEach(function (item) {
+                modules.push(item.name);
+            });
+
+            //Build list of document ids
+            var ids = [];
+            for (i=0 ; i<modules.length ; i++) {
+                var regDocument = Registrations.findOne({
+                    $and: [
+                        {moduleName: modules[i]},
+                        {moduleName: {$exists: true}},
+                        {createdBy: this.userId},
+                        {createdBy: {$exists: true}}
+                    ]
+                }, {
+                    sort: {timestamp: -1},
+                    fields: {
+                        _id: 1
+                    }
+                });
+                if (regDocument)
+                    ids.push(regDocument._id);
+            }
+
+            //return registration documents
+            console.log("ModuleData ids: ",ids);
+            return Registrations.find({_id: {$in:ids}});
+        });
     });
 
     Meteor.publish('graphData', function (module, startTimestamp, endTimestamp) {
-        return Registrations.find({
-            $and: [
-                {moduleName: module},
-                {moduleName: {$exists: true}},
-                {createdBy: this.userId},
-                {createdBy: {$exists: true}},
-                {
-                    timestamp: {
-                        $gte: startTimestamp,
-                        $lte: endTimestamp
-                    }
-                },
-                {timestamp: {$exists: true}}
-            ]
-        }, {
-            sort: {timestamp: -1}
-        })
+        this.autorun(function () {
+            return Registrations.find({
+                $and: [
+                    {moduleName: module},
+                    {moduleName: {$exists: true}},
+                    {createdBy: this.userId},
+                    {createdBy: {$exists: true}},
+                    {
+                        timestamp: {
+                            $gte: startTimestamp,
+                            $lte: endTimestamp
+                        }
+                    },
+                    {timestamp: {$exists: true}}
+                ]
+            }, {
+                sort: {timestamp: -1}
+            })
+        });
     });
 
     Meteor.startup(function () {

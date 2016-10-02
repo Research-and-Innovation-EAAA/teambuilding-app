@@ -6,18 +6,22 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
 
    //Subscriptions
    //-------------
-   vm.subscribe('graphData',
-      () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')],
-      {
-         onReady: () => {
-            console.log('Subscription ready!', vm.getDataForPeriod);
-            processData();
-         },
-         onStop: (error) => {
-            //console.log('Subscription stopped!');
-            //processData();
-         }
-      });
+   Meteor.autorun( function() {
+      vm.subscribe('graphData',
+          () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')],
+          {
+             onReady: () => {
+                console.log('Subscription ready!', vm.getDataForPeriod);
+                processData();
+             },
+             onStop: (error) => {
+                //console.log('Subscription stopped!');
+                //processData();
+             }
+          }
+      );
+   });
+
 
    //Code to be run every time view becomes visible
    //----------------------------------------------

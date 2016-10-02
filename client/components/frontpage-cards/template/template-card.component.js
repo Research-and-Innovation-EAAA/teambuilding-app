@@ -16,12 +16,14 @@ function TemplateCardController($scope, $reactive, $location) {
 
     vm.module = {};
 
-    var subHandle = vm.subscribe('moduleData',
+    /*var subHandle = vm.subscribe('moduleData',
         () => [vm.module.name],
         () => {
             console.log('Subscription ready on card!');
             getModuleFromName();
-        });
+        });*/
+
+    getModuleFromName();
 
     vm.helpers({
         latestRegistration: () => {
@@ -39,7 +41,7 @@ function TemplateCardController($scope, $reactive, $location) {
                 vm.module = Modules[moduleIndex];
                 vm.moduleTitle = vm.module.name;
 
-                subHandle = vm.subscribe('moduleData', () => [vm.module.name]);
+                //subHandle = vm.subscribe('moduleData', () => [vm.module.name]);
 
                 if (vm.module.frontPage !== undefined) {
                     vm.iconStyle = {
