@@ -169,7 +169,7 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
     };
 
     vm.cancelRegistration = () => {
-        Session.set('registration', undefined);
+        WizardStateAccessor.setRegistration(vm.dataType,undefined);
         Session.set('regValidated', undefined);
         $rootScope.$ionicGoBack();
     };
@@ -210,7 +210,7 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
             title: $translate.instant(vm.dataType),
             content: $translate.instant('wizard.saved')
         });
-        Session.set('registration', undefined);
+        WizardStateAccessor.setRegistration(vm.dataType,undefined);
         Session.set('regValidated', undefined);
 
         var analyticsSettings = Settings.findOne({key: 'analytics'});
@@ -233,7 +233,7 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
             title: vm.dataType,
             content: $translate.instant('wizard.updated')
         });
-        Session.set('registration', undefined);
+        WizardStateAccessor.setRegistration(vm.dataType,undefined);
         Session.set('regValidated', undefined);
 
         var analyticsSettings = Settings.findOne({key: 'analytics'});

@@ -15,7 +15,7 @@ function MucositisController($scope, $reactive, WizardState, WizardStateAccessor
       if (!vm.registration.diagnosis) {
          vm.registration.diagnosis = [];
          vm.registration.nauseaScore = 0;
-         Session.set('registration', vm.registration);
+         WizardStateAccessor.setRegistration(vm.dataType,vm.registration);
       }
 
       WizardStateAccessor.registerValidateFunction(vm.dataType, validateData);

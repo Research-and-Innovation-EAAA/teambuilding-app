@@ -10,7 +10,7 @@ angular.module('leukemiapp').directive('templateCard', function () {
     }
 });
 
-function TemplateCardController($scope, $reactive, $location) {
+function TemplateCardController($scope, $reactive, $location, WizardStateAccessor) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -101,7 +101,7 @@ function TemplateCardController($scope, $reactive, $location) {
 
     vm.newRegistration = () => {
         Session.set('registrationType', vm.module.name);
-        Session.set('registration', undefined);
+        WizardStateAccessor.setRegistration(undefined);
         Session.set('regValidated', undefined);
         $location.path("app/questionwizard");
     };

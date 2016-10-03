@@ -21,8 +21,8 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
       if (data.stepNumber == 0) {
          console.log('Timestamp loaded!');
 
-         var registration = Session.get('registration');
-         if (registration != null && registration.updating) {
+         var registration = WizardStateAccessor.getRegistration(vm.dataType);
+         if (registration && registration.updating) {
 
             console.log('Timestamp init skipped because registration is updating');
             vm.datePickerObj.inputDate = registration.timestamp;
@@ -44,6 +44,7 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
 
    //Init
    vm.dataType = Session.get('registrationType');
+   WizardStateAccessor.registerValidateFunction(vm.dataType, updateRegistrationTimestamp);
 
    if (vm.timePickerObj === undefined)
       vm.timePickerObj = {

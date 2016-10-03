@@ -107,7 +107,7 @@ function sliderController($scope, $reactive, WizardHandler, WizardState) {
             Session.set('regValidated', validated);
             console.log('regValidated session variable updated: ', validated);
 
-            Session.set('registration', vm.registration);
+            WizardStateAccessor.setRegistration(vm.dataType, vm.registration);
             console.log('Registration updated: ', vm.registration);
         }
     }

@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('graphDataController', GraphDataController);
 
-function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $translate, $location) {
+function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $translate, $location, WizardStateAccessor) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -609,7 +609,7 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
 
                   registration.updating = true;
                   Session.set('registrationType', vm.dataType);
-                  Session.set('registration', registration);
+                  WizardStateAccessor.setRegistration(vm.dataType, registration);
                   $location.path("app/questionwizard");
                }
                return true;
