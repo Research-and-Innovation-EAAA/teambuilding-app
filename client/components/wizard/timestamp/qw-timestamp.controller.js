@@ -22,11 +22,7 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
          console.log('Timestamp loaded!');
 
          var registration = WizardStateAccessor.getRegistration(vm.dataType);
-         if (!registration) {
-            storeTimeStamp();
-            registration = WizardStateAccessor.getRegistration(vm.dataType);
-         }
-         if (registration._id) {
+         if (registration && registration._id) {
 
             console.log('Timestamp init skipped because registration is updating');
             vm.datePickerObj.inputDate = registration.timestamp;
@@ -40,7 +36,7 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
                () => [vm.getReactively('dataType'), vm.getReactively('timestamp')],
                () => {
                   updateRegistrationTimestamp();
-                  console.log('Subscription ready!');
+                  console.log('Subscription done!');
                });
          }
       }
@@ -111,22 +107,29 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
    function intializeTimeStamp() {
       var date = vm.datePickerObj.inputDate;
 
-      //TODO: Add propriety to module config file which controls if time is ignored
-      if (vm.dataType !== 'Medicine' && vm.dataType !== 'Bloodsample') {
-         var hours = Math.floor(vm.timePickerObj.inputEpochTime / 3600);
-         var minutes = Math.floor((vm.timePickerObj.inputEpochTime - hours * 3600) / 60);
-         date.setHours(hours, minutes, 0, 0);
-      } else {
-         date.setHours(12, 0, 0, 0);
+      if (date) {
+         //TODO: Add propriety to module config file which controls if time is ignored
+         if (vm.dataType !== 'Medicine' && vm.dataType !== 'Bloodsample') {
+            var hours = Math.floor(vm.timePickerObj.inputEpochTime / 3600);
+            var minutes = Math.floor((vm.timePickerObj.inputEpochTime - hours * 3600) / 60);
+            date.setHours(hours, minutes, 0, 0);
+         } else {
+            date.setHours(12, 0, 0, 0);
+         }
       }
    }
 
    function updateRegistrationTimestamp() {
       intializeTimeStamp();
+      var date = vm.datePickerObj.inputDate;
 
-      $timeout(() => {
-         vm.timestamp = new Date(date.getTime());
-      }).then(storeTimeStamp);
+      if (date) {
+         $timeout(() => {
+            vm.timestamp = new Date(date.getTime());
+         }).then(storeTimeStamp);
+      } else {
+         storeTimeStamp()
+      }
    }
 
    function storeTimeStamp() {

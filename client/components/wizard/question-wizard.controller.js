@@ -41,10 +41,10 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
     $scope.$on('$ionicView.enter', () => {
         $ionicScrollDelegate.$getByHandle('wizardStepContent').freezeScroll(false);
 
-        var registration = Session.get('registration');
-        if (registration && registration._id) {
+        var registration = WizardStateAccessor.getRegistration(vm.dataType);
+        if (vm.stepNumber==1 && registration && registration._id && Session.get('updating')) {
             //Skips timestamp registration
-            vm.stepNumber = 1;
+            vm.stepNumber = 2;
         }
     });
 
@@ -63,8 +63,9 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
                     if (res) {
                         //update initiated
                         valid=true;
-                        Session.set('updating',true);
                         vm.errorPopup = undefined;
+                        Session.set('updating',true);
+                        vm.stepNumber++;
                     } else {
                         //update cancelled
                         vm.errorPopup = undefined;

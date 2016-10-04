@@ -606,7 +606,7 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
                         }
                      }
                   }
-
+                  Session.set('updating', true);
                   Session.set('registrationType', vm.dataType);
                   WizardStateAccessor.setRegistration(vm.dataType, registration);
                   $location.path("app/questionwizard");
