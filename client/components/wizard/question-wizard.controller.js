@@ -31,19 +31,6 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
     vm.stepNumber = 0; //First template, goes from 0 .. x
     vm.stepName = "";
 
-
-    $scope.$watch(
-        function templateUrl(scope) {
-            return vm.stepNumber;
-        },
-        function (newValue, oldValue) {
-
-            vm.template = vm.modules[vm.dataType][vm.steps[newValue]];
-
-        }
-    );
-
-
     vm.helpers({
         isLoggedIn: () => {
             return Meteor.userId() !== null;
@@ -55,48 +42,28 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
         $ionicScrollDelegate.$getByHandle('wizardStepContent').freezeScroll(false);
 
         var registration = Session.get('registration');
-        if (registration != null && registration.updating) {
-
-            WizardStateAccessor.validate(vm.dataType);
-
-            /*    var registration = getRegistation();
-            if (registration && typeof registration._validate === "function")
-                registration._validate(); */
-            var validated = Session.get('regValidated');
-            if (validated == null) {
-                validated = [];
-                validated[0] = true;
-            }
-            Session.set('regValidated', validated);
-
+        if (registration && registration._id) {
             //Skips timestamp registration
             vm.stepNumber = 1;
-            WizardHandler.wizard().goTo(vm.stepNumber);
         }
     });
 
     vm.validateData = () => {
-        var registration = getRegistation();
-        WizardStateAccessor.validate(vm.dataType, registration);
-        /* if (registration && typeof registration._validate === "function")
-            registration._validate(); */
-        var validated = Session.get('regValidated');
-        //goes from 1 .. x
-        var stepNumber = WizardHandler.wizard().currentStepNumber();
+        var registration = getRegistration();
+        var valid = WizardStateAccessor.validate(vm.dataType, registration, vm.stepNumber, vm.stepNumber);
 
-        if (validated && !validated[stepNumber - 1] && vm.errorPopup === undefined) {
+        if (!valid && vm.errorPopup === undefined) {
 
-            if (stepNumber == 1) {
+            var stepno = WizardHandler.wizard().currentStepNumber();
+            if (vm.stepNumber == 1) {
                 vm.errorPopup = $ionicPopup.confirm({
                     title: $translate.instant('wizard.existingRecordTitle'),
                     template: $translate.instant('wizard.existingRecord')
                 }).then((res) => {
                     if (res) {
                         //update initiated
-                        validated[0] = true;
-                        Session.set('regValidated', validated);
-                        WizardHandler.wizard().next();
-                        vm.stepNumber = vm.stepNumber + 1;
+                        valid=true;
+                        Session.set('updating',true);
                         vm.errorPopup = undefined;
                     } else {
                         //update cancelled
@@ -113,17 +80,17 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
             }
         }
 
-        return validated[stepNumber - 1];
+        return valid;
     };
 
-    var getRegistation = () => {
-        return WizardStateAccessor.getRegistration(Session.get('registrationType'));
+    var getRegistration = () => {
+        return WizardStateAccessor.getRegistration(vm.dataType);
     }
 
     vm.finishButtonText = () => {
-        var registration = getRegistation();
+        var registration = getRegistration();
         if (registration)
-            return registration.updating ? $translate.instant('wizard.update') : $translate.instant('wizard.save');
+            return registration._id ? $translate.instant('wizard.update') : $translate.instant('wizard.save');
         else
             return '';
     };
@@ -132,7 +99,7 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
         //setTimeout(function () {
             console.log("Run finish wizard");
             if (vm.validateData()) {
-                var registration = getRegistation();
+                var registration = getRegistration();
 
                 console.log('vm.finishWizard is called!');
                 for (var property in registration) {
@@ -145,8 +112,8 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
 
                 console.log("Save reg: ",registration);
 
-                if (registration.updating) {
-                    registration.updating = undefined;
+                if (registration._id) {
+                    //registration.updating = undefined;
                     Meteor.call('updateRegistration', registration, (error, result) => {
                         if (error) {
                             saveError();
@@ -246,9 +213,21 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
 
     $scope.$watch(
         function steps() {
+            return vm.stepName;
+        },
+        function (newValue, oldValue) {
+            vm.stepNumber = WizardHandler.wizard().currentStepNumber();
+        }
+    );
+
+    $scope.$watch(
+        function steps() {
             return vm.stepNumber;
         },
         function (newValue, oldValue) {
+            vm.template = vm.modules[vm.dataType][vm.steps[newValue-1]];
+            if (WizardHandler.wizard().currentStepNumber()!=newValue)
+                WizardHandler.wizard().goTo(newValue);
             if (newValue != oldValue) {
                 $ionicScrollDelegate.scrollTop();
             }

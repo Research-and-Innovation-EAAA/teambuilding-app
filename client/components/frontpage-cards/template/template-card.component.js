@@ -101,8 +101,8 @@ function TemplateCardController($scope, $reactive, $location, WizardStateAccesso
 
     vm.newRegistration = () => {
         Session.set('registrationType', vm.module.name);
-        WizardStateAccessor.setRegistration(undefined);
-        Session.set('regValidated', undefined);
+        WizardStateAccessor.setRegistration(vm.module.name, undefined);
+        Session.set('updating', undefined);
         $location.path("app/questionwizard");
     };
 

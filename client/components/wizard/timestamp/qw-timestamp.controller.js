@@ -18,11 +18,15 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
    });
 
    $scope.$on('stepLoaded', function (event, data) {
-      if (data.stepNumber == 0) {
+      if (data.stepNumber == 1) {
          console.log('Timestamp loaded!');
 
          var registration = WizardStateAccessor.getRegistration(vm.dataType);
-         if (registration && registration.updating) {
+         if (!registration) {
+            storeTimeStamp();
+            registration = WizardStateAccessor.getRegistration(vm.dataType);
+         }
+         if (registration._id) {
 
             console.log('Timestamp init skipped because registration is updating');
             vm.datePickerObj.inputDate = registration.timestamp;
@@ -44,7 +48,7 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
 
    //Init
    vm.dataType = Session.get('registrationType');
-   WizardStateAccessor.registerValidateFunction(vm.dataType, updateRegistrationTimestamp);
+   WizardStateAccessor.registerValidateFunction(vm.dataType, validateRegistrationTimestamp);
 
    if (vm.timePickerObj === undefined)
       vm.timePickerObj = {
@@ -104,7 +108,7 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
       return (hours < 10 ? '0' : '') + hours + ' : ' + (minutes < 10 ? '0' : '') + minutes;
    }
 
-   function updateRegistrationTimestamp() {
+   function intializeTimeStamp() {
       var date = vm.datePickerObj.inputDate;
 
       //TODO: Add propriety to module config file which controls if time is ignored
@@ -115,45 +119,45 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
       } else {
          date.setHours(12, 0, 0, 0);
       }
+   }
+
+   function updateRegistrationTimestamp() {
+      intializeTimeStamp();
 
       $timeout(() => {
          vm.timestamp = new Date(date.getTime());
-      }).then(() => {
+      }).then(storeTimeStamp);
+   }
 
-         //Code to execute after vm.timestamp is updated
-         var registration = WizardStateAccessor.getRegistration(vm.dataType);
-         var validated = Session.get('regValidated');
+   function storeTimeStamp() {
+      intializeTimeStamp();
 
-         if (validated === undefined)
-            validated = [];
-         if (registration === undefined)
+      //Code to execute after vm.timestamp is updated
+      var registration = WizardStateAccessor.getRegistration(vm.dataType);
+      var validated = Session.get('regValidated');
+
+      if (validated === undefined)
+         validated = [];
+      if (vm.registrationWithTimestamp) {
+         console.log('registrationWithTimestamp found!');
+         validated[0] = false;
+         registration = vm.registrationWithTimestamp;
+      } else {
+         if (!registration)
             registration = {};
-         if (vm.registrationWithTimestamp != null) {
-            console.log('registrationWithTimestamp found!');
-            validated[0] = false;
-            registration = vm.registrationWithTimestamp;
+         console.log('registrationWithTimestamp is null!');
+         validated[0] = true;
+         registration = {
+            timestamp: vm.datePickerObj.inputDate
+         };
+      }
+      Session.set('regValidated', validated);
+      console.log('regValidated session variable updated', validated);
+      WizardStateAccessor.setRegistration(vm.dataType, registration);
+      console.log('registration session variable updated', registration);
+   }
 
-            for (var property in registration) {
-               if (registration.hasOwnProperty(property)) {
-                  console.log('registration:', registration, 'property:', property);
-                  if (registration[property] === '-') {
-                     registration[property] = null;
-                  }
-               }
-            }
-            registration.updating = true;
-
-         } else {
-            console.log('registrationWithTimestamp is null!');
-            validated[0] = true;
-            registration = {
-               timestamp: date
-            };
-         }
-         Session.set('regValidated', validated);
-         console.log('regValidated session variable updated', validated);
-         WizardStateAccessor.setRegistration(vm.dataType, registration);
-         console.log('registration session variable updated', registration);
-      });
+   function validateRegistrationTimestamp(registration, from, to) {
+      return !registration._id || Session.get('updating');
    }
 }
