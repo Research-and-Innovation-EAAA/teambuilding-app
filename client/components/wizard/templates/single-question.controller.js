@@ -7,6 +7,7 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
     $ionicScrollDelegate.$getByHandle('wizardStepContent').freezeScroll(false);
 
     vm.config = {};
+    WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
 
     $scope.$watch(
         function stepNumber(scope) {
@@ -73,7 +74,6 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
             }
             vm.registration[vm.config.propertyName].push(answer);
         }
-        updateSessionVariables();
     };
 
     vm.isSelected = (answer) => {
@@ -87,18 +87,8 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
         else return true;
     }
 
-    function updateSessionVariables() {
-        var validated = Session.get('regValidated');
-        if (validated === undefined)
-            validated = [];
 
-        validated[vm.stepNumber - 1] = vm.validation(vm.registration);
-        Session.set('regValidated', validated);
-        console.log('regValidated session variable updated: ', validated);
-
-        WizardStateAccessor.setRegistration(vm.dataType, vm.registration);
-        console.log('Registration updated: ', vm.registration);
+    vm.validateData = (registration, from, to) => {
+        return step.validation(registration);
     }
-
-    updateSessionVariables();
 }

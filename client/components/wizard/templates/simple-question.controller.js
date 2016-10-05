@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('simpleQuestionController', SimpleQuestionController);
 
-function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScrollDelegate, WizardState) {
+function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScrollDelegate, WizardState, WizardStateAccessor) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -12,6 +12,8 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
    var step = {};
    var config = {};
 
+   WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
+
    $scope.$watch(
        function stepNumber(scope) {
           return WizardHandler.wizard().currentStepNumber();
@@ -19,7 +21,6 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
        function (newValue, oldValue) {
           //    if (oldValue !== vm.stepNumber) {
           initUi();
-          updateSessionVariables();
           //   }
        }
    );
@@ -50,16 +51,9 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
 
    vm.selectAnswer = (answer) => {
       vm.registration[config.propertyName] = answer;
-      updateSessionVariables();
    };
 
-   function updateSessionVariables() {
-      var validated = Session.get('regValidated');
-      if (validated === undefined)
-         validated = [];
-
-      validated[stepNumber - 1] = step.validation(vm.registration);
-      Session.set('regValidated', validated);
-      console.log('regValidated session variable updated: ', validated);
+   vm.validateData = (registration, from, to) => {
+      return step.validation(registration);
    }
 }

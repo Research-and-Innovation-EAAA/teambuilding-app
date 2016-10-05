@@ -1,11 +1,12 @@
 angular.module('leukemiapp').controller('painScaleSliderController', painScaleSliderController);
 
-function painScaleSliderController($scope, $reactive, WizardHandler, WizardState) {
+function painScaleSliderController($scope, $reactive, WizardHandler, WizardState, WizardStateAccessor) {
    $reactive(this).attach($scope);
    var vm = this;
 
    var dataType = Session.get('registrationType');
    var stepNumber = WizardHandler.wizard().currentStepNumber();
+   WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
 
    var step = {};
    var config = {};
@@ -17,7 +18,6 @@ function painScaleSliderController($scope, $reactive, WizardHandler, WizardState
        function (newValue, oldValue) {
           //    if (oldValue !== vm.stepNumber) {
           initUi();
-          updateSessionVariables();
           //   }
        }
    );
@@ -67,13 +67,7 @@ function painScaleSliderController($scope, $reactive, WizardHandler, WizardState
    };
    console.log('vm.slider is ', vm.slider);
 
-   function updateSessionVariables() {
-      var validated = Session.get('regValidated');
-      if (validated != null) {
-
-         validated[stepNumber - 1] = step.validation(vm.registration);
-         Session.set('regValidated', validated);
-         console.log('regValidated session variable updated: ', validated);
-      }
+   vm.validateData = (registration, from, to) => {
+      return step.validation(vm.registration);
    }
 }

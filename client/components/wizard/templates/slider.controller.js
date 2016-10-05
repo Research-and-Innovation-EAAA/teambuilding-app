@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('sliderController', sliderController);
 
-function sliderController($scope, $reactive, WizardHandler, WizardState) {
+function sliderController($scope, $reactive, WizardHandler, WizardState, WizardStateAccessor) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -89,7 +89,6 @@ function sliderController($scope, $reactive, WizardHandler, WizardState) {
 
     function updateRegistration() {
         vm.registration[vm.config.propertyName] = vm.slider.value;
-        updateSessionVariables();
     }
 
     vm.validation = (registration) => {
@@ -99,18 +98,10 @@ function sliderController($scope, $reactive, WizardHandler, WizardState) {
         else return true;
     }
 
-    function updateSessionVariables() {
-        var validated = Session.get('regValidated');
-        if (validated != null) {
-
-            validated[vm.stepNumber - 1] = vm.validation(vm.registration);
-            Session.set('regValidated', validated);
-            console.log('regValidated session variable updated: ', validated);
-
-            WizardStateAccessor.setRegistration(vm.dataType, vm.registration);
-            console.log('Registration updated: ', vm.registration);
-        }
+    vm.validateData = (registration, from, to) => {
+        return vm.validation(registration);
     }
 
+    WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
     updateRegistration();
 }

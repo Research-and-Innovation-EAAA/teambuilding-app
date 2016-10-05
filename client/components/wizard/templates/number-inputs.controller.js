@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('numberInputsController', numberInputsController);
 
-function numberInputsController($scope, $reactive, WizardHandler) {
+function numberInputsController($scope, $reactive, WizardHandler, WizardStateAccessor) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -48,7 +48,7 @@ function numberInputsController($scope, $reactive, WizardHandler) {
                 vm.registration[vm.questions[question].propertyName] = null;
         }
 
-        validateData();
+        WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
         vm.init = true;
     }
 
@@ -62,26 +62,20 @@ function numberInputsController($scope, $reactive, WizardHandler) {
         }
     });
 
-    vm.validation = (registration) => {
+    vm.validateData = (registration, from, to) => {
         if (vm.mandatory) {
-            for (question in vm.questions) {
-                if (registration[vm.questions[question].propertyName] == null) {
-                    return false;
+            var valid = true;
+            var start = (typeof from=="number"&&from>=0)?from:0;
+            var end = (typeof to=="number" && to<=module.wizard.steps.length)?to:module.wizard.steps.length-1;
+
+            if (registration) {
+                for (i=start; i<=end; i++) {
+                    valid = valid && module.wizard.steps[i].validation(registration);
                 }
             }
-            return true;
+            return valid;
         }
         else return true;
-    }
-
-    function validateData() {
-        var validated = Session.get('regValidated');
-        if (validated === undefined)
-            validated = [];
-
-        validated[vm.stepNumber - 1] = vm.validation(vm.registration);
-        Session.set('regValidated', validated);
-        console.log('regValidated session variable updated: ', validated);
     }
 
     if (!vm.init) {

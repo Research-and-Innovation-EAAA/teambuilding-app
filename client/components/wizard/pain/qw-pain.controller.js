@@ -17,8 +17,6 @@ function PainController($scope, $reactive, $ionicScrollDelegate, WizardState, Wi
     function initData() {
 
         WizardStateAccessor.registerValidateFunction(vm.dataType, validateData);
-        /* if (vm.registration._validate == undefined)
-         vm.registration._validate = validateData; */
 
         var usrSettings = UserSettings.findOne();
 
@@ -63,17 +61,18 @@ function PainController($scope, $reactive, $ionicScrollDelegate, WizardState, Wi
         return window.innerWidth < 768;
     };
 
+    function validateData(registration, from, to) {
+        var valid = true;
+        var start = (typeof from=="number"&&from>=0)?from:0;
+        var end = (typeof to=="number" && to<=module.wizard.steps.length)?to:module.wizard.steps.length-1;
 
-    function validateData() {
-        var validated = Session.get('regValidated');
-        if (validated != null) {
-            for (i = 0; i < module.wizard.steps.length; i++) {
-                validated[i + 1] = module.wizard.steps[i].validation(vm.registration);
+        if (registration) {
+            for (i=start; i<=end; i++) {
+                valid = valid && module.wizard.steps[i].validation(registration);
             }
-
-            Session.set('regValidated', validated);
-            console.log('regValidated session variable updated');
         }
+
+        return valid;
     }
 
     vm.selectPainType = (value) => {
@@ -110,7 +109,6 @@ function PainController($scope, $reactive, $ionicScrollDelegate, WizardState, Wi
 
         $ionicScrollDelegate.resize();
         $ionicScrollDelegate.scrollTop();
-        validateData();
 
         //Store current scale as the preferred one
         var usrSettings = UserSettings.findOne();

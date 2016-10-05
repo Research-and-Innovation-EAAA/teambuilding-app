@@ -44,17 +44,18 @@ function BloodsampleController($scope, $reactive, WizardState, WizardStateAccess
       }
    });
 
-   function validateData() {
-      var validated = Session.get('regValidated');
-      if (validated != null) {
+   function validateData(registration, from, to) {
+      var invalid = true;
+      var start = (typeof from=="number"&&from>=0)?from:0;
+      var end = (typeof to=="number" && to<=module.wizard.steps.length)?to:module.wizard.steps.length-1;
 
-         for (i = 0; i < module.wizard.steps.length; i++) {
-            validated[i + 1] = module.wizard.steps[i].validation(vm.registration);
+      if (registration) {
+         for (i=start; i<=end; i++) {
+            invalid = invalid && !module.wizard.steps[i].validation(registration);
          }
-
-         Session.set('regValidated', validated);
-         console.log('regValidated session variable updated');
       }
+
+      return !invalid;
    }
 
    if (!vm.init) {

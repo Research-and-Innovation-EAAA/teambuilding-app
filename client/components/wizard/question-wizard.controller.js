@@ -42,15 +42,12 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
         $ionicScrollDelegate.$getByHandle('wizardStepContent').freezeScroll(false);
 
         var registration = WizardStateAccessor.getRegistration(vm.dataType);
-        if (vm.stepNumber==1 && registration && registration._id && Session.get('updating')) {
-            //Skips timestamp registration
-            vm.stepNumber = 2;
-        }
+        if (vm.validateData() && vm.stepNumber==1 && Session.get('updating'))
+            WizardHandler.wizard().next();
     });
 
-    vm.validateData = () => {
-        var registration = getRegistration();
-        var valid = WizardStateAccessor.validate(vm.dataType, registration, vm.stepNumber, vm.stepNumber);
+    vm.nextWizardStep = () => {
+        var valid = vm.validateData();
 
         if (!valid && vm.errorPopup === undefined) {
 
@@ -62,14 +59,11 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
                 }).then((res) => {
                     if (res) {
                         //update initiated
-                        valid=true;
-                        vm.errorPopup = undefined;
                         Session.set('updating',true);
-                        vm.stepNumber++;
-                    } else {
-                        //update cancelled
-                        vm.errorPopup = undefined;
+                        valid=vm.validateData();
+                        WizardHandler.wizard().next();
                     }
+                    vm.errorPopup = undefined;
                 });
             } else {
                 vm.errorPopup = $ionicPopup.alert({
@@ -82,6 +76,10 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
         }
 
         return valid;
+    };
+
+    vm.validateData = () => {
+        return WizardStateAccessor.validate(vm.dataType, getRegistration(), vm.stepNumber, vm.stepNumber);
     };
 
     var getRegistration = () => {
@@ -145,7 +143,7 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
     vm.stepLoaded = () => {
         if (vm.stepNumber > 0) {
             var analyticsSettings = Settings.findOne({key: 'analytics'});
-            if (!!analyticsSettings.value) {
+            if (analyticsSettings && analyticsSettings.value) {
                 var type = Session.get('registrationType');
 
                 console.log("questionwizard/" + type + "/" + vm.stepNumber);
@@ -226,10 +224,8 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
             return vm.stepNumber;
         },
         function (newValue, oldValue) {
-            vm.template = vm.modules[vm.dataType][vm.steps[newValue-1]];
-            if (WizardHandler.wizard().currentStepNumber()!=newValue)
-                WizardHandler.wizard().goTo(newValue);
             if (newValue != oldValue) {
+                vm.template = vm.modules[vm.dataType][vm.steps[newValue-1]];
                 $ionicScrollDelegate.scrollTop();
             }
         }
