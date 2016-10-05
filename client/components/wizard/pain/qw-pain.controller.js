@@ -16,7 +16,7 @@ function PainController($scope, $reactive, $ionicScrollDelegate, WizardState, Wi
 
     function initData() {
 
-        WizardStateAccessor.registerValidateFunction(vm.dataType, validateData);
+        WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
 
         var usrSettings = UserSettings.findOne();
 
@@ -37,7 +37,6 @@ function PainController($scope, $reactive, $ionicScrollDelegate, WizardState, Wi
             $ionicScrollDelegate.$getByHandle('painScale').freezeScroll(true);
         }
 
-        validateData();
         vm.init = true;
     }
 
@@ -61,7 +60,7 @@ function PainController($scope, $reactive, $ionicScrollDelegate, WizardState, Wi
         return window.innerWidth < 768;
     };
 
-    function validateData(registration, from, to) {
+    vm.validateData = function(registration, from, to) {
         var valid = true;
         var start = (typeof from=="number"&&from>=0)?from:0;
         var end = (typeof to=="number" && to<=module.wizard.steps.length)?to:module.wizard.steps.length-1;

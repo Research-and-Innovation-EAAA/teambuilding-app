@@ -14,13 +14,12 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
         },
         function (newValue, oldValue) {
             //    if (oldValue !== vm.stepNumber) {
-            initUi();
+            vm.initUi();
             //   }
         }
     );
 
-    initUi();
-    function initUi() {
+    vm.initUi = function() {
         vm.dataType = Session.get('registrationType');
         WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
 
@@ -90,4 +89,6 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
         }
         else return true;
     }
+
+    vm.initUi();
 }

@@ -12,8 +12,6 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
    var step = {};
    var config = {};
 
-   WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
-
    $scope.$watch(
        function stepNumber(scope) {
           return WizardHandler.wizard().currentStepNumber();
@@ -52,8 +50,4 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
    vm.selectAnswer = (answer) => {
       vm.registration[config.propertyName] = answer;
    };
-
-   vm.validateData = (registration, from, to) => {
-      return true;
-   }
 }
