@@ -216,18 +216,13 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
         },
         function (newValue, oldValue) {
             vm.stepNumber = WizardHandler.wizard().currentStepNumber();
-        }
-    );
-
-    $scope.$watch(
-        function steps() {
-            return vm.stepNumber;
-        },
-        function (newValue, oldValue) {
-            if (newValue != oldValue) {
-                vm.template = vm.modules[vm.dataType][vm.steps[newValue-1]];
-                $ionicScrollDelegate.scrollTop();
-            }
+            vm.template = undefined;
+            setTimeout(function () {
+                vm.template = vm.modules[vm.dataType][vm.steps[vm.stepNumber-1]];
+                if (newValue != oldValue) {
+                    $ionicScrollDelegate.scrollTop();
+                }
+            });
         }
     );
 }

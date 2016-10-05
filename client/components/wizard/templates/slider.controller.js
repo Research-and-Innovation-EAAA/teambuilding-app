@@ -18,13 +18,14 @@ function sliderController($scope, $reactive, WizardHandler, WizardState, WizardS
 
     initUi();
     function initUi() {
-        var dataType = Session.get('registrationType');
+        vm.dataType = Session.get('registrationType');
+        WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
         vm.stepNumber = WizardHandler.wizard().currentStepNumber();
 
         var step = {};
 
         for (i = 0; i < Modules.length; i++) {
-            if (Modules[i].name === dataType) {
+            if (Modules[i].name === vm.dataType) {
 
                 if (Modules[i].wizard.steps[vm.stepNumber - 2] !== undefined) {
                     step = Modules[i].wizard.steps[vm.stepNumber - 2];
@@ -36,16 +37,16 @@ function sliderController($scope, $reactive, WizardHandler, WizardState, WizardS
                         vm.stepTemplateUrl = step.stepTemplate.url;
                         console.log('Config defined as ', vm.config);
                     } else {
-                        console.error('No config defined for module ', dataType, ' step number ', vm.stepNumber);
+                        console.error('No config defined for module ', vm.dataType, ' step number ', vm.stepNumber);
                     }
                 } else {
-                    console.error('Step undefined for module ', dataType, ' step number ', vm.stepNumber);
+                    console.error('Step undefined for module ', vm.dataType, ' step number ', vm.stepNumber);
                 }
                 break;
             }
         }
 
-        vm.registration  = WizardState[dataType];
+        vm.registration  = WizardState[vm.dataType];
 
         vm.question = vm.config.question;
         vm.positiveText = vm.config.positiveText;
@@ -91,15 +92,8 @@ function sliderController($scope, $reactive, WizardHandler, WizardState, WizardS
         vm.registration[vm.config.propertyName] = vm.slider.value;
     }
 
-    vm.validation = (registration) => {
-        if (vm.mandatory) {
-            return registration[vm.config.propertyName] !== undefined;
-        }
-        else return true;
-    }
-
     vm.validateData = (registration, from, to) => {
-        return vm.validation(registration);
+        return true;
     }
 
     WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);

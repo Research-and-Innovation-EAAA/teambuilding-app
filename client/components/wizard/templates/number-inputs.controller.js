@@ -1,21 +1,22 @@
 angular.module('leukemiapp').controller('numberInputsController', numberInputsController);
 
-function numberInputsController($scope, $reactive, WizardHandler, WizardStateAccessor) {
+function numberInputsController($scope, $reactive, WizardHandler, WizardState, WizardStateAccessor) {
     $reactive(this).attach($scope);
     var vm = this;
 
     vm.config = {};
+    vm.dataType = Session.get('registrationType');
 
     initUi();
     function initUi() {
-        var dataType = Session.get('registrationType');
+
         vm.stepNumber = WizardHandler.wizard().currentStepNumber();
 
         var step = {};
         var config = {};
 
         for (i = 0; i < Modules.length; i++) {
-            if (Modules[i].name === dataType) {
+            if (Modules[i].name === vm.dataType) {
 
                 if (Modules[i].wizard.steps[vm.stepNumber - 2] !== undefined) {
                     step = Modules[i].wizard.steps[vm.stepNumber - 2];
@@ -26,10 +27,10 @@ function numberInputsController($scope, $reactive, WizardHandler, WizardStateAcc
                         config = step.stepTemplate.config;
                         vm.stepTemplateUrl = step.stepTemplate.url;
                     } else {
-                        console.error('No config defined for module ', dataType, ' step number ', vm.stepNumber);
+                        console.error('No config defined for module ', vm.dataType, ' step number ', vm.stepNumber);
                     }
                 } else {
-                    console.error('Step undefined for module ', dataType, ' step number ', vm.stepNumber);
+                    console.error('Step undefined for module ', vm.dataType, ' step number ', vm.stepNumber);
                 }
                 break;
             }
@@ -39,22 +40,23 @@ function numberInputsController($scope, $reactive, WizardHandler, WizardStateAcc
         vm.questions = config.questions;
         vm.mandatory = config.mandatory;
 
-        vm.registration = WizardState[dataType];
+        vm.registration = WizardState[vm.dataType];
     }
 
     function initData() {
+        WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
+
         for (question in vm.questions) {
             if (vm.registration[vm.questions[question].propertyName] === undefined)
                 vm.registration[vm.questions[question].propertyName] = null;
         }
 
-        WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
         vm.init = true;
     }
 
     $scope.$on('stepLoaded', (event, data) => {
-        if (data['dataType'] === Session.get('registrationType')) {
-            console.log(data['dataType'], 'step loaded! Step number:', data['stepNumber']);
+        if (data['vm.dataType'] === Session.get('registrationType')) {
+            console.log(data['vm.dataType'], 'step loaded! Step number:', data['stepNumber']);
 
             if (data['stepNumber'] == 1 && !vm.init) {
                 initData();
@@ -62,23 +64,20 @@ function numberInputsController($scope, $reactive, WizardHandler, WizardStateAcc
         }
     });
 
-    vm.validateData = (registration, from, to) => {
+    vm.validateData = (registration) => {
         if (vm.mandatory) {
-            var valid = true;
-            var start = (typeof from=="number"&&from>=0)?from:0;
-            var end = (typeof to=="number" && to<=module.wizard.steps.length)?to:module.wizard.steps.length-1;
-
-            if (registration) {
-                for (i=start; i<=end; i++) {
-                    valid = valid && module.wizard.steps[i].validation(registration);
+            for (question in vm.questions) {
+                var prop = registration[vm.questions[question].propertyName];
+                if (!prop && prop!==0) {
+                    return false;
                 }
             }
-            return valid;
         }
-        else return true;
+        return true;
     }
 
     if (!vm.init) {
         initData();
     }
+
 }

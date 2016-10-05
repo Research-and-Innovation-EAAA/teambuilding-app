@@ -7,7 +7,6 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
     $ionicScrollDelegate.$getByHandle('wizardStepContent').freezeScroll(false);
 
     vm.config = {};
-    WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
 
     $scope.$watch(
         function stepNumber(scope) {
@@ -16,20 +15,21 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
         function (newValue, oldValue) {
             //    if (oldValue !== vm.stepNumber) {
             initUi();
-            updateSessionVariables();
             //   }
         }
     );
 
     initUi();
     function initUi() {
-        var dataType = Session.get('registrationType');
+        vm.dataType = Session.get('registrationType');
+        WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
+
         vm.stepNumber = WizardHandler.wizard().currentStepNumber();
 
         var step = {};
 
         for (i = 0; i < Modules.length; i++) {
-            if (Modules[i].name === dataType) {
+            if (Modules[i].name === vm.dataType) {
 
                 if (Modules[i].wizard.steps[vm.stepNumber - 2] !== undefined) {
                     step = Modules[i].wizard.steps[vm.stepNumber - 2];
@@ -40,16 +40,16 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
                         vm.config = step.stepTemplate.config;
                         vm.stepTemplateUrl = step.stepTemplate.url;
                     } else {
-                        console.error('No config defined for module ', dataType, ' step number ', vm.stepNumber);
+                        console.error('No config defined for module ', vm.dataType, ' step number ', vm.stepNumber);
                     }
                 } else {
-                    console.error('Step undefined for module ', dataType, ' step number ', vm.stepNumber);
+                    console.error('Step undefined for module ', vm.dataType, ' step number ', vm.stepNumber);
                 }
                 break;
             }
         }
 
-        vm.registration = WizardState[dataType];
+        vm.registration = WizardState[vm.dataType];
 
         console.log("config is ", vm.config);
         vm.question = vm.config.question;
@@ -80,15 +80,14 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
         return $.inArray(answer, vm.registration[vm.config.propertyName]) > -1;
     };
 
-    vm.validation = (registration) => {
+    vm.validateData = (registration, from, to) => {
         if (vm.mandatory) {
-            return registration[vm.config.propertyName] === undefined || registration[vm.config.propertyName].length > 0;
+            var prop = registration[vm.config.propertyName];
+            if ($.isArray(prop))
+                return  prop.length > 0;
+            else
+               return prop;
         }
         else return true;
-    }
-
-
-    vm.validateData = (registration, from, to) => {
-        return step.validation(registration);
     }
 }

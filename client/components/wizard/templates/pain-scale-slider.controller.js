@@ -4,7 +4,7 @@ function painScaleSliderController($scope, $reactive, WizardHandler, WizardState
    $reactive(this).attach($scope);
    var vm = this;
 
-   var dataType = Session.get('registrationType');
+   vm.dataType = Session.get('registrationType');
    var stepNumber = WizardHandler.wizard().currentStepNumber();
    WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
 
@@ -23,7 +23,7 @@ function painScaleSliderController($scope, $reactive, WizardHandler, WizardState
    );
 
    for (i = 0; i < Modules.length; i++) {
-      if (Modules[i].name === dataType) {
+      if (Modules[i].name === vm.dataType) {
 
          if (Modules[i].wizard.steps[stepNumber - 2] !== undefined) {
             step = Modules[i].wizard.steps[stepNumber - 2];
@@ -32,10 +32,10 @@ function painScaleSliderController($scope, $reactive, WizardHandler, WizardState
                config = step.stepTemplate.config;
                console.log('Config defined as ',config);
             } else {
-               console.error('No config defined for module ', dataType, ' step number ', stepNumber);
+               console.error('No config defined for module ', vm.dataType, ' step number ', stepNumber);
             }
          } else {
-            console.error('Step undefined for module ', dataType, ' step number ', stepNumber);
+            console.error('Step undefined for module ', vm.dataType, ' step number ', stepNumber);
          }
          break;
       }
@@ -51,7 +51,7 @@ function painScaleSliderController($scope, $reactive, WizardHandler, WizardState
       config.step !== undefined)
    };
 
-   vm.registration = WizardState[dataType];
+   vm.registration = WizardState[vm.dataType];
 
    vm.slider = {
       value: 0,
@@ -68,6 +68,6 @@ function painScaleSliderController($scope, $reactive, WizardHandler, WizardState
    console.log('vm.slider is ', vm.slider);
 
    vm.validateData = (registration, from, to) => {
-      return step.validation(vm.registration);
+      return true;
    }
 }

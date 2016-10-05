@@ -6,7 +6,7 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
 
    $ionicScrollDelegate.$getByHandle('wizardStepContent').freezeScroll(false);
 
-   var dataType = Session.get('registrationType');
+   vm.dataType = Session.get('registrationType');
    var stepNumber = WizardHandler.wizard().currentStepNumber();
 
    var step = {};
@@ -26,7 +26,7 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
    );
 
    for (i = 0; i < Modules.length; i++) {
-      if (Modules[i].name === dataType) {
+      if (Modules[i].name === vm.dataType) {
 
          if (Modules[i].wizard.steps[stepNumber - 2] !== undefined) {
             step = Modules[i].wizard.steps[stepNumber - 2];
@@ -34,16 +34,16 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
             if (step.stepTemplate.config !== undefined) {
                config = step.stepTemplate.config;
             } else {
-               console.error('No config defined for module ', dataType, ' step number ', stepNumber);
+               console.error('No config defined for module ', vm.dataType, ' step number ', stepNumber);
             }
          } else {
-            console.error('Step undefined for module ', dataType, ' step number ', stepNumber);
+            console.error('Step undefined for module ', vm.dataType, ' step number ', stepNumber);
          }
          break;
       }
    }
 
-   vm.registration = WizardState[dataType];
+   vm.registration = WizardState[vm.dataType];
    
    vm.question = config.question;
    vm.answers = config.answers;
@@ -54,6 +54,6 @@ function SimpleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
    };
 
    vm.validateData = (registration, from, to) => {
-      return step.validation(registration);
+      return true;
    }
 }

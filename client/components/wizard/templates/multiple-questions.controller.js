@@ -5,6 +5,7 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
     var vm = this;
 
     vm.config = {};
+    vm.dataType = Session.get('registrationType');
 
     $scope.$watch(
         function stepNumber(scope) {
@@ -12,13 +13,12 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
         },
         function (newValue, oldValue) {
             initUi();
-            updateSessionVariables();
         }
     );
 
     initUi();
     function initUi() {
-        var dataType = Session.get('registrationType');
+
         vm.stepNumber = WizardHandler.wizard().currentStepNumber();
         WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
 
@@ -26,7 +26,7 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
         var config = {};
 
         for (i = 0; i < Modules.length; i++) {
-            if (Modules[i].name === dataType) {
+            if (Modules[i].name === vm.dataType) {
 
                 if (Modules[i].wizard.steps[vm.stepNumber - 2] !== undefined) {
                     step = Modules[i].wizard.steps[vm.stepNumber - 2];
@@ -37,10 +37,10 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
                         vm.config = step.stepTemplate.config;
                         vm.stepTemplateUrl = step.stepTemplate.url;
                     } else {
-                        console.error('No config defined for module ', dataType, ' step number ', vm.stepNumber);
+                        console.error('No config defined for module ', vm.dataType, ' step number ', vm.stepNumber);
                     }
                 } else {
-                    console.error('Step undefined for module ', dataType, ' step number ', vm.stepNumber);
+                    console.error('Step undefined for module ', vm.dataType, ' step number ', vm.stepNumber);
                 }
                 break;
             }
@@ -50,7 +50,7 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
         vm.questions = vm.config.questions;
         vm.mandatory = vm.config.mandatory;
 
-        vm.registration = WizardState[dataType];
+        vm.registration = WizardState[vm.dataType];
     }
 
 
@@ -62,39 +62,18 @@ function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScr
         return window.innerWidth < 768;
     };
 
-    vm.updateRegistration = () => {
-        updateSessionVariables();
-    };
-
     vm.selectAnswer = function (questionPropertyName, newValue) {
         vm.registration[questionPropertyName] = newValue;
-
-        vm.updateRegistration();
     };
 
-    vm.validateData = (registration, from, to) => {
+    vm.validateData = (registration) => {
         if (vm.mandatory) {
-            var valid = true;
-            var start = (typeof from=="number"&&from>=0)?from:0;
-            var end = (typeof to=="number" && to<=module.wizard.steps.length)?to:module.wizard.steps.length-1;
-
-            if (registration) {
-                for (i=start; i<=end; i++) {
-                    valid = valid && module.wizard.steps[i].validation(registration);
+            for (question in vm.questions) {
+                if (!registration[vm.questions[question].propertyName]) {
+                    return false;
                 }
             }
-            return valid;
         }
-        else return true;
-    }
-
-    function updateSessionVariables() {
-        var validated = Session.get('regValidated');
-        if (validated === undefined)
-            validated = [];
-
-        validated[vm.stepNumber - 1] = vm.validation(vm.registration);
-        Session.set('regValidated', validated);
-        console.log('regValidated session variable updated: ', validated);
+        return true;
     }
 }
