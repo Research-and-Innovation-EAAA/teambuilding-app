@@ -25,7 +25,7 @@ function TemplateCardController($scope, $reactive, $location, WizardStateAccesso
 
     getModuleFromName();
 
-    /*    vm.helpers({
+    vm.helpers({
             latestRegistration: () => {
                 return Registrations.findOne({
                     moduleName: vm.getReactively('module.name')
@@ -33,14 +33,14 @@ function TemplateCardController($scope, $reactive, $location, WizardStateAccesso
                     sort: {timestamp: -1}
                 });
             }
-        }); */
-    Meteor.autorun(function () {
+        });
+    /*Meteor.autorun(function () {
         vm.latestRegistration = Registrations.findOne({
                 moduleName: vm.getReactively('module.name')
             }, {
                 sort: {timestamp: -1}
             });
-    });
+    });*/
 
     //Find module from name
     function getModuleFromName() {
@@ -50,7 +50,7 @@ function TemplateCardController($scope, $reactive, $location, WizardStateAccesso
                 vm.module = Modules[moduleIndex];
                 vm.moduleTitle = vm.module.name;
 
-                //subHandle = vm.subscribe('moduleData', () => [vm.module.name]);
+                subHandle = vm.subscribe('moduleData', () => [vm.module.name]);
 
                 if (vm.module.frontPage !== undefined) {
                     vm.iconStyle = {
