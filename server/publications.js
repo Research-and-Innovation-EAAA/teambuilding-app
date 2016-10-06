@@ -2,7 +2,7 @@
 
     Meteor.publish('moduleData', function () {
         /* Return all most recent registrations per (user,moduletype) combination */
-        this.autorun(function () {
+      //  this.autorun(function () {
             //Build singleton list of of all modules
             var modules = [];
             for (var moduleNumber = 0; moduleNumber < Modules.length; moduleNumber++) {
@@ -35,11 +35,11 @@
             //return registration documents
             //console.log("ModuleData ids: ",ids);
             return Registrations.find({_id: {$in:ids}});
-        });
+       // });
     });
 
     Meteor.publish('graphData', function (module, startTimestamp, endTimestamp) {
-        this.autorun(function () {
+        //this.autorun(function () {
             return Registrations.find({
                 $and: [
                     {moduleName: module},
@@ -57,7 +57,7 @@
             }, {
                 sort: {timestamp: -1}
             })
-        });
+        //});
     });
 
     Meteor.startup(function () {
