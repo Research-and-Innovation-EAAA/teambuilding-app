@@ -33,7 +33,7 @@
             }
 
             //return registration documents
-            console.log("ModuleData ids: ",ids);
+            //console.log("ModuleData ids: ",ids);
             return Registrations.find({_id: {$in:ids}});
         });
     });
