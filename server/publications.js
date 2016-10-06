@@ -1,7 +1,7 @@
 (function () {
 
-   /* Meteor.publish('moduleData', function () {
-        // Return all most recent registrations per (user,moduletype) combination
+    Meteor.publish('moduleData', function () {
+        /* Return all most recent registrations per (user,moduletype) combination */
         this.autorun(function () {
             //Build singleton list of of all modules
             var modules = [];
@@ -35,32 +35,6 @@
             //return registration documents
             //console.log("ModuleData ids: ",ids);
             return Registrations.find({_id: {$in:ids}});
-        });
-    }); */
-
-    Meteor.publish('moduleData', function (module) {
-        this.autorun(function () {
-            return Registrations.find({
-                $and: [
-                    {moduleName: module},
-                    {moduleName: {$exists: true}},
-                    {createdBy: this.userId},
-                    {createdBy: {$exists: true}}
-                ]
-            }, {
-                sort: {
-                    timestamp: -1,
-                    createdAt: -1
-                },
-                limit: 1,
-                fields: {
-                    createdBy: 0,
-                    id: 0,
-                    createdAt: 0,
-                    timestamp: 0,
-                    updatedAt: 0
-                }
-            })
         });
     });
 
