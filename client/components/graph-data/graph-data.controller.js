@@ -6,22 +6,23 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
 
    //Subscriptions
    //-------------
-   Meteor.autorun( function() {
-      vm.subscribe('graphData',
-          () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')],
-          {
-             onReady: () => {
-                console.log('Subscription ready!', vm.getDataForPeriod);
-                processData();
-             },
-             onStop: (error) => {
-                //console.log('Subscription stopped!');
-                //processData();
+   $scope.$on('$ionicView.beforeEnter', function (event, data) {
+      vm.autorun(() => {
+         vm.subscribe('graphData',
+             () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')],
+             {
+                onReady: () => {
+                   //console.log('Subscription ready!', vm.getDataForPeriod);
+                   processData();
+                },
+                onStop: (error) => {
+                   //console.log('Subscription stopped!');
+                   //processData();
+                }
              }
-          }
-      );
+         );
+      });
    });
-
 
    //Code to be run every time view becomes visible
    //----------------------------------------------
@@ -87,9 +88,6 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
             if (val) {
                vm.startTimePickerObject.inputEpochTime = val;
                vm.updateStartTimeStamp();
-
-               subHandle = vm.subscribe('graphData',
-                  () => [vm.dataType, vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')]);
             }
          }
       }
@@ -142,9 +140,6 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
             if (val) {
                vm.endTimePickerObject.inputEpochTime = val;
                vm.updateEndTimeStamp();
-
-               subHandle = vm.subscribe('graphData',
-                  () => [vm.dataType, vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')]);
             }
          }
       };

@@ -12,11 +12,13 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
     //Code to be run every time view becomes visible
     //----------------------------------------------
     $scope.$on('$ionicView.beforeEnter', function (event, data) {
-        vm.subscribe('moduleData',
-            () => [],
-            () => {
-                console.log('Subscription ready for frontpage card!');
-            });
+        vm.autorun(() => {
+            vm.subscribe('moduleData',
+                () => [],
+                () => {
+                    console.log('Subscription ready for frontpage card!');
+                });
+        });
     });
 
     Accounts.ui.config({
