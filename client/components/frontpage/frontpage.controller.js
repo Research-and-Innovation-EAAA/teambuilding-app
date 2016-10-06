@@ -9,8 +9,11 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
 
     console.log('activeModules are: ', vm.activeModules);
 
-    Meteor.autorun(function(){
+    //Code to be run every time view becomes visible
+    //----------------------------------------------
+    $scope.$on('$ionicView.beforeEnter', function (event, data) {
         vm.subscribe('moduleData',
+            () => [],
             () => {
                 console.log('Subscription ready for frontpage card!');
             });

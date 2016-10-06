@@ -16,13 +16,6 @@ function TemplateCardController($scope, $reactive, $location, WizardStateAccesso
 
     vm.module = {};
 
-    /*var subHandle = vm.subscribe('moduleData',
-        () => [vm.module.name],
-        () => {
-            console.log('Subscription ready on card!');
-            getModuleFromName();
-        });*/
-
     getModuleFromName();
 
     vm.helpers({
@@ -34,12 +27,6 @@ function TemplateCardController($scope, $reactive, $location, WizardStateAccesso
                 });
             }
         });
-
-    //Code to be run every time view becomes visible
-    //----------------------------------------------
-    $scope.$on('$ionicView.beforeEnter', function (event, data) {
-        vm.subHandle = vm.subscribe('moduleData', () => [vm.module.name]);
-    });
 
     //Find module from name
     function getModuleFromName() {
