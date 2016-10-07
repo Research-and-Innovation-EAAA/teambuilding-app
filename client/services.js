@@ -43,7 +43,7 @@ angular.module('leukemiapp')
                 if (userModules === undefined) { // no settings => default settings (turn all modules on)
                     for (var module in service.modules) {
                         service.modules[module] = true;
-                        console.log("userIDDD " + Meteor.userId());
+                        console.log("userID " + Meteor.userId());
                         if (!!Meteor.userId()) {
                             setTimeout(Meteor.call('setActiveModule', module, true), 1000);
                         }
@@ -78,7 +78,7 @@ angular.module('leukemiapp')
                 }
 
                 Modules.push(item);
-                service.modules[item.name] = true;
+                service.modules[item.name] = false; // default value for newly created modules
             });
         }
 
