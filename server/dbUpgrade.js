@@ -486,6 +486,214 @@ Meteor.startup(() => {
             Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
         }
 
+        if (dbVersion === 7) { // nutrition module ---------------------------------------------------------------------
+
+            CustomModules.insert({
+                "name": "Ernæring",
+                "wizard": {
+                    "steps": [
+                        {
+                            "stepName": "Vægt 1",
+                            "stepTemplate": {
+                                "url": "client/components/wizard/templates/single-question.html",
+                                "config": {
+                                    "propertyName": "tagetPå",
+                                    "question": "Har dit barn taget på i vægt siden sidste registrering?",
+                                    "answers": [
+                                        "ja",
+                                        "nej"
+                                    ],
+                                    "mandatory": true
+                                }
+                            }
+                        },
+                        {
+                            "stepName": "Vægt 2",
+                            "stepTemplate": {
+                                "url": "client/components/wizard/templates/single-question.html",
+                                "config": {
+                                    "propertyName": "tabtSig",
+                                    "question": "Har dit barn tabt sig siden sidste registrering?",
+                                    "answers": [
+                                        "ja",
+                                        "nej"
+                                    ],
+                                    "mandatory": true
+                                }
+                            }
+                        },
+                        {
+                            "stepName": "Sondeernæring",
+                            "stepTemplate": {
+                                "url": "client/components/wizard/templates/single-question.html",
+                                "config": {
+                                    "propertyName": "sondeernæring",
+                                    "question": "Får dit barn sondeernæring?",
+                                    "answers": [
+                                        "ja",
+                                        "nej"
+                                    ],
+                                    "mandatory": true
+                                }
+                            }
+                        },
+                        {
+                            "stepName": "Type",
+                            "stepTemplate": {
+                                "url": "client/components/wizard/templates/single-question.html",
+                                "config": {
+                                    "propertyName": "type",
+                                    "question": "Hvilken type sondeernæring er der tale om?",
+                                    "answers": [
+                                        "ingen",
+                                        "A",
+                                        "B",
+                                        "C"
+                                    ],
+                                    "mandatory": true
+                                }
+                            }
+                        },
+                        {
+                            "stepName": "Sondemad",
+                            "stepTemplate": {
+                                "url": "client/components/wizard/templates/single-question.html",
+                                "config": {
+                                    "propertyName": "sondemad",
+                                    "question": "Hvor stor en del af den aftalte mængde sondemad har dit barn fået det sidste døgn?",
+                                    "answers": [
+                                        "0 %",
+                                        "25 %",
+                                        "50 %",
+                                        "75 %",
+                                        "100 %"
+                                    ],
+                                    "mandatory": true
+                                }
+                            }
+                        },
+                        {
+                            "stepName": "Appetit 1",
+                            "stepTemplate": {
+                                "url": "client/components/wizard/templates/slider.html",
+                                "config": {
+                                    "question": "Vurder dit barns appetit inden for det sidste døgn hvis 5 anses som middel/normalt.",
+                                    "propertyName": "appetit",
+                                    "minValue": 0,
+                                    "maxValue": 10,
+                                    "step": 0.5,
+                                    "mandatory": true
+                                }
+                            }
+                        },
+                        {
+                            "stepName": "Appetit 2",
+                            "stepTemplate": {
+                                "url": "client/components/wizard/templates/single-question.html",
+                                "config": {
+                                    "propertyName": "appetit2",
+                                    "question": "Appetit",
+                                    "answers": [
+                                        "Barnet spiser slet ikke/meget sparsom",
+                                        "Barnet spiser kun enkelte fødevarer",
+                                        "Barnet spiser normalt og varieret",
+                                        "Barnet spiser mere end det plejer"
+                                    ],
+                                    "mandatory": true
+                                }
+                            }
+                        },
+                        {
+                            "stepName": "Kvalme",
+                            "stepTemplate": {
+                                "url": "client/components/wizard/templates/slider.html",
+                                "config": {
+                                    "question": "Kvalme",
+                                    "propertyName": "kvalme",
+                                    "minValue": 0,
+                                    "maxValue": 10,
+                                    "step": 1,
+                                    "mandatory": true
+                                }
+                            }
+                        },
+                        {
+                            "stepName": "Opkasting",
+                            "stepTemplate": {
+                                "url": "client/components/wizard/templates/single-question.html",
+                                "config": {
+                                    "propertyName": "opkastning",
+                                    "question": "Har dit barn haft opkastninger?",
+                                    "answers": [
+                                        "ja",
+                                        "nej"
+                                    ],
+                                    "mandatory": true
+                                }
+                            }
+                        },
+                        {
+                            "stepName": "Afføringsmønster",
+                            "stepTemplate": {
+                                "url": "client/components/wizard/templates/multiple-questions.html",
+                                "config": {
+                                    "questions": [
+                                        {
+                                            "propertyName": "hyppighed",
+                                            "question": "Hyppighed",
+                                            "answers": [
+                                                "sjælderne en vanligt",
+                                                "som vanligt",
+                                                "oftere end vanligt"
+                                            ]
+                                        },
+                                        {
+                                            "propertyName": "konsistens",
+                                            "question": "Konsistens",
+                                            "answers": [
+                                                "tynd",
+                                                "normal",
+                                                "hård"
+                                            ]
+                                        },
+                                        {
+                                            "propertyName": "smerter",
+                                            "question": "Smerter",
+                                            "answers": [
+                                                "ingen",
+                                                "milde",
+                                                "svære"
+                                            ]
+                                        }
+                                    ],
+                                    "mandatory": true
+                                }
+                            }
+                        }
+                    ]
+                },
+                "frontPage": {
+                    "properties": [
+                        "sondeernæring",
+                        "opkastning",
+                        "appetit2"
+                    ],
+                    "propertyDescription": [
+                        "Sondeernærring",
+                        "Opkastninger",
+                        "Appetit"
+                    ],
+                    "iconUrl": "/ernaeringtransparent.png",
+                    "barClass": "bar-royal"
+                }
+            });
+
+
+            dbVersion = 8;
+            Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
+        }
+
+
     }, 1000);
 
 });
