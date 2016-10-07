@@ -73,7 +73,7 @@ observe-sequence@1.0.7
 okgrow:analytics@1.0.9
 ordered-dict@1.0.4
 pbastowski:angular-babel@1.0.9
-planettraining:angular-translate@2.9.0
+planettraining:angular-translate@2.10.0
 promise@0.5.1
 random@1.0.5
 rate-limit@1.0.0
