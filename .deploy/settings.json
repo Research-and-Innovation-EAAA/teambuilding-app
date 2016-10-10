@@ -1,0 +1,18 @@
+{
+  "public": {
+    "analyticsSettings": {
+      "Google Analytics" : {
+        "trackingId": "UA-82492528-2"
+      },
+      "KadiraAccount": {
+        "appId": "vjeTviT7BditRahWr",
+        "appSecret": "fce22962-2ab4-4a82-9fa4-9a9dfc2e70fb"
+      }
+    }
+  },
+  "kadira": {
+    "debug": {
+      "authKey": "googleglass02sundata"
+    }
+  }
+}
