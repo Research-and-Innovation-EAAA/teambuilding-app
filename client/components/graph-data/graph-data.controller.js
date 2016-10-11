@@ -12,12 +12,7 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
              () => [vm.getReactively('dataType'), vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')],
              {
                 onReady: () => {
-                   //console.log('Subscription ready!', vm.getDataForPeriod);
                    processData();
-                },
-                onStop: (error) => {
-                   //console.log('Subscription stopped!');
-                   //processData();
                 }
              }
          );
@@ -27,7 +22,6 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
    //Code to be run every time view becomes visible
    //----------------------------------------------
    $scope.$on('$ionicView.beforeEnter', function (event, data) {
-      //console.log('Graph-data view is about to enter!');
       vm.changeDisplayType('table');
       processData();
    });
@@ -50,23 +44,10 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
    //Helpers
    //-------
    vm.helpers({
-      //getDataForPeriod: () => {
-      //   return Registrations.find({
-      //      $and: [
-      //         {moduleName: vm.dataType},
-      //         {timestamp: {$exists: true}}
-      //      ]
-      //   }, {
-      //      sort: {timestamp: -1}
-      //   });
-      //},
       isSmallScreen: () => {
          return window.innerWidth < 768;
       }
    });
-
-   //console.log('Data for period is: ', vm.getDataForPeriod);
-
 
    //Init of date- and timepickers
    //-----------------------------
@@ -211,16 +192,11 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
 
             var chart = nv.models.lineChart();
             vm.graphData = generateGraphData();
-            console.log('vm.graphData is ', vm.graphData);
             d3.select("graph svg").datum(vm.graphData).call(chart);
 
          } else if (dis === "table") {
             vm.chartButtonClass = "button-light display-type-not-selected";
             vm.tableButtonClass = "button-dark";
-
-            if (vm.tableObject != null && vm.isData == false) {
-
-            }
          }
       }
    };
@@ -256,9 +232,6 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
 
       var data = getDataForPeriod();
       if (data[0] != null) {
-
-         //Data found!
-         vm.isData = true;
 
          //Generating table object by extracting data
          //object = { 'property': [value, value, value ...], ... }
@@ -322,16 +295,8 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
          console.log('No data found :(');
          vm.tableObject = undefined;
          vm.graphProperties = undefined;
-         setData(false);
+         vm.graphData=[];
       }
-   }
-
-   //call when no data to display
-   function setData(isData) {
-      $timeout(function (scope) {
-            vm.isData = isData;
-         }
-      );
    }
 
    //Init of graph options
@@ -440,7 +405,7 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
                return property.disabled == false;
             });
             if (propertyToShow == null) {
-               setData(false);
+               vm.graphData=[];
             } else {
                propertyToShow.visible = true;
             }
@@ -455,10 +420,6 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
             if (timestampValues != null && propertyValues != null) {
 
                //Data found!
-               $timeout(function (scope) {
-                     vm.isData = true;
-                  }
-               );
                timestampValues.forEach(function (element, index, array) {
 
                   //Exclude strings from graph if mixed values
@@ -476,12 +437,12 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
 
             } else {
                console.log('timestampValues or propertyValues is null or undefined!');
-               setData(false);
+               return [];
             }
 
          } else {
             console.log('vm.tableObject is null or undefined!');
-            setData(false);
+            return [];
          }
 
          data.push({
@@ -618,5 +579,15 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
          console.log('no matching registration found');
       }
    };
+
+   $scope.$watch(
+       function () {
+          return vm.graphData;
+       },
+       function (newValue, oldValue) {
+          console.log('vm.graphData is ', newValue);
+          vm.isData = Array.isArray(newValue) && newValue.length>0;
+       }
+   );
 }
 
