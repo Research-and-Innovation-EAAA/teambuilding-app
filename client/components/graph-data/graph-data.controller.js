@@ -417,20 +417,15 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
             var timestampValues = vm.tableObject['timestamp'];
             var propertyValues = vm.tableObject[propertyToShow.name];
 
-            if (timestampValues != null && propertyValues != null) {
+            if (Array.isArray(timestampValues) && Array.isArray(propertyValues) && timestampValues.length==propertyValues.length) {
 
                //Data found!
-               timestampValues.forEach(function (element, index, array) {
-
-                  //Exclude strings from graph if mixed values
-                  var isInvalid = () => {
-                     var isObject = propertyValues[index] != null;
-                     return typeof propertyValues[index] == 'string' || !isObject;
-                  };
-                  if (!isInvalid()) {
+               timestampValues.forEach(function (timestamp, index, array) {
+                  var value = propertyValues[index];
+                  if (value && typeof value=='number' && timestamp) {
                      graphLine.push({
-                        x: element,
-                        y: propertyValues[index]
+                        x: timestamp,
+                        y: value
                      });
                   }
                });
