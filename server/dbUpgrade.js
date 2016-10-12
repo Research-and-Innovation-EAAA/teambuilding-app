@@ -694,6 +694,48 @@ Meteor.startup(() => {
         }
 
 
+        if (dbVersion === 8) { // re-update missing number values ---------------------------------------------------------------
+
+            /* Blood samples */
+            Registrations.update({
+                moduleName: "bloodsamples",
+                $or: [ {leukocytes: {$exists: false}}, {leukocytes: "-"} ]
+            }, {$set: {leukocytes: NaN}}, {multi: true});
+            Registrations.update({
+                moduleName: "bloodsamples",
+                $or: [ {neutrophiles: {$exists: false}}, {neutrophiles: "-"} ]
+            }, {$set: {neutrophiles: NaN}}, {multi: true});
+            Registrations.update({
+                moduleName: "bloodsamples",
+                $or: [ {thrombocytes: {$exists: false}}, {thrombocytes: "-"} ]
+            }, {$set: {thrombocytes: NaN}}, {multi: true});
+            Registrations.update({
+                moduleName: "bloodsamples",
+                $or: [ {hemoglobin: {$exists: false}}, {hemoglobin: "-"} ]
+            }, {$set: {hemoglobin: NaN}}, {multi: true});
+            Registrations.update({
+                moduleName: "bloodsamples",
+                $or: [ {alat: {$exists: false}}, {alat: "-"} ]
+            }, {$set: {alat: NaN}}, {multi: true});
+            Registrations.update({
+                moduleName: "bloodsamples",
+                $or: [ {crp: {$exists: false}}, {crp: "-"} ]
+            }, {$set: {crp: NaN}}, {multi: true});
+
+            /* Medicine */
+            Registrations.update({
+                moduleName: "bloodsamples",
+                $or: [ {SixMP: {$exists: false}}, {SixMP: "-"} ]
+            }, {$set: {SixMP: NaN}}, {multi: true});
+            Registrations.update({
+                moduleName: "bloodsamples",
+                $or: [ {MTX: {$exists: false}}, {MTX: "-"} ]
+            }, {$set: {MTX: NaN}}, {multi: true});
+
+            dbVersion = 9;
+            Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
+        }
+
     }, 1000);
 
 });
