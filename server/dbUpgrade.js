@@ -736,6 +736,32 @@ Meteor.startup(() => {
             Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
         }
 
+        if (dbVersion === 9) { // re-update missing number values ---------------------------------------------------------------
+
+            /* Remove SixMP and MTX from bloodsamples */
+            Registrations.update({
+                moduleName: "bloodsamples",
+                SixMP: {$exists: true}
+            }, {$unset: {SixMP: ""}}, {multi: true});
+            Registrations.update({
+                moduleName: "bloodsamples",
+                MTX: {$exists: true}
+            }, {$unset: {MTX: ""}}, {multi: true});
+
+            /* Medicine */
+            Registrations.update({
+                moduleName: "medicine",
+                $or: [ {SixMP: {$exists: false}}, {SixMP: "-"} ]
+            }, {$set: {SixMP: NaN}}, {multi: true});
+            Registrations.update({
+                moduleName: "medicine",
+                $or: [ {MTX: {$exists: false}}, {MTX: "-"} ]
+            }, {$set: {MTX: NaN}}, {multi: true});
+
+            dbVersion = 10;
+            Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
+        }
+
     }, 1000);
 
 });
