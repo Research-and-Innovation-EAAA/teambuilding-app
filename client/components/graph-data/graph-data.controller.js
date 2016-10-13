@@ -422,7 +422,7 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
                //Data found!
                timestampValues.forEach(function (timestamp, index, array) {
                   var value = propertyValues[index];
-                  if (value && typeof value=='number' && timestamp) {
+                  if (typeof value=='number' && !isNaN(value) && timestamp) {
                      graphLine.push({
                         x: timestamp,
                         y: value
