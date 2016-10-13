@@ -71,7 +71,10 @@
                                     ng-style="{ background: vm.btnBackground(property)}"
                                     ng-click="vm.showPropertyGraph(property.name)"
                                     ng-disabled="property.disabled">
-                                <strong>{{property.name}}</strong>
+                                <strong>
+                                    <span ng-if="['pain','medicine','mucositis','bloodsamples'].indexOf(vm.dataType)>-1" translate="{{vm.dataType+'.'+property.name}}"></span>
+                                    <span ng-if="['pain','medicine','mucositis','bloodsamples'].indexOf(vm.dataType)==-1">{{property.name}}</span>
+                                </strong>
                             </button>
                         </div>
                     </div>
