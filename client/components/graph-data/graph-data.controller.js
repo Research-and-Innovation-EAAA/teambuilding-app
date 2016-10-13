@@ -374,7 +374,7 @@ function GraphDataController($scope, $reactive, $timeout, $ionicActionSheet, $tr
                if (!d)if (d == null) {
                   return 'N/A';
                }
-               return d3.format(',.1f')(d);
+               return d3.format('.0f')(d);
             }
          }
       }
