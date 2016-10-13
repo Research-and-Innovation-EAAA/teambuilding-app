@@ -762,6 +762,22 @@ Meteor.startup(() => {
             Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
         }
 
+        if (dbVersion === 10) { // Change nauseaScore type int on existing string values
+            var regs = Registrations.find({
+                moduleName: "mucositis",
+                nauseaScore: {$type: 2}
+            });
+            regs.forEach(function(reg){
+                var intValue = parseInt(reg.nauseaScore);
+                    Registrations.update({
+                        moduleName: "mucositis",
+                        _id: reg._id
+                    }, {$set: {nauseaScore: intValue}});
+            });
+            dbVersion = 11;
+            Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
+        }
+
     }, 1000);
 
 });

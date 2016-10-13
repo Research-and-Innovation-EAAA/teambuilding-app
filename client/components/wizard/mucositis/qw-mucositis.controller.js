@@ -62,6 +62,12 @@ function MucositisController($scope, $reactive, WizardState, WizardStateAccessor
       return valid;
    }
 
+   vm.updateRegistration = function() {
+      var neaseaScore = vm.registration.nauseaScore;
+      if (typeof neaseaScore !== "number")
+            vm.registration.nauseaScore = parseInt(neaseaScore);
+   }
+
    if (!vm.init) {
       initData();
    }
