@@ -769,12 +769,215 @@ Meteor.startup(() => {
             });
             regs.forEach(function(reg){
                 var intValue = parseInt(reg.nauseaScore);
-                    Registrations.update({
-                        moduleName: "mucositis",
-                        _id: reg._id
-                    }, {$set: {nauseaScore: intValue}});
+                Registrations.update({
+                    moduleName: "mucositis",
+                    _id: reg._id
+                }, {$set: {nauseaScore: intValue}});
             });
             dbVersion = 11;
+            Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
+        }
+
+        if (dbVersion === 11) { // Change nauseaScore type int on existing string values
+
+            CustomModules.insert(
+                {
+                    "name" : "Vincristin bivirkninger",
+                    "wizard" : {
+                        "steps" : [
+                            {
+                                "stepName" : "Mave",
+                                "stepTemplate" : {
+                                    "url" : "client/components/wizard/templates/slider.html",
+                                    "config" : {
+                                        "question" : "Har du mavesmerter?",
+                                        "propertyName" : "mavesmerter",
+                                        "minValue" : 0,
+                                        "maxValue" : 10,
+                                        "step" : 1,
+                                        "mandatory" : true
+                                    }
+                                }
+                            },
+                            {
+                                "stepName" : "Forstoppelse?",
+                                "stepTemplate" : {
+                                    "url" : "client/components/wizard/templates/single-question.html",
+                                    "config" : {
+                                        "propertyName" : "forstoppelse",
+                                        "question" : "Har du forstoppelse?",
+                                        "answers" : [
+                                            "Normal afføring uden brug af afføringsmidler",
+                                            "Normal afføring men brug for afføringsmidler",
+                                            "Hård eller manglende afføring selvom du får afføringsmidler"
+                                        ],
+                                        "mandatory" : true
+                                    }
+                                }
+                            },
+                            {
+                                "stepName" : "Lemmer",
+                                "stepTemplate" : {
+                                    "url" : "client/components/wizard/templates/slider.html",
+                                    "config" : {
+                                        "question" : "Har du smerter i arme eller ben?",
+                                        "propertyName" : "lemmersmerter",
+                                        "minValue" : 0,
+                                        "maxValue" : 10,
+                                        "step" : 1,
+                                        "mandatory" : true
+                                    }
+                                }
+                            },
+                            {
+                                "stepName" : "Fysik",
+                                "stepTemplate" : {
+                                    "url" : "client/components/wizard/templates/multiple-questions.html",
+                                    "config" : {
+                                        "questions" : [
+                                            {
+                                                "propertyName" : "Folesansnedsaetttelse",
+                                                "question" : "Har du ændret følesans i fingrene?",
+                                                "answers" : [
+                                                    "Nej",
+                                                    "Lidt nedsat eller let anderledes",
+                                                    "Moderat nedsat eller let anderledes",
+                                                    "Meget nedsat eller meget anderledes"
+                                                ]
+                                            },
+                                            {
+                                                "propertyName" : "Folesansudbredelse",
+                                                "question" : "Hvor udbredt er den nedsatte følesans?",
+                                                "answers" : [
+                                                    "Ingen",
+                                                    "Fingre eller tær",
+                                                    "Håndled eller ankler",
+                                                    "Albuer eller knæ"
+                                                ]
+                                            },
+                                            {
+                                                "propertyName" : "Armstyrke",
+                                                "question" : "Styrke i arme?",
+                                                "answers" : [
+                                                    "Normal",
+                                                    "Let nedsat men kan alt selv",
+                                                    "Moderat nedsat brug for hjælp",
+                                                    "Kraftig nedsat og har brug for hjælp til næsten alt"
+                                                ]
+                                            },
+                                            {
+                                                "propertyName" : "Benstyrke",
+                                                "question" : "Styrke i ben?",
+                                                "answers" : [
+                                                    "Normal",
+                                                    "Let nedsat",
+                                                    "Moderat nedsat, brug for hjælp til gang",
+                                                    "Kraftig nedsat - kan ikke gå med støtte"
+                                                ]
+                                            },
+                                            {
+                                                "propertyName" : "Aktivitet",
+                                                "question" : "Hvor aktiv er du?",
+                                                "answers" : [
+                                                    "Jeg er aktiv som normalt",
+                                                    "Jeg er lidt mindre fysisk aktiv",
+                                                    "Jeg ligger i sengen og er kun oppe få minutter",
+                                                    "Jeg ligger i sengen og kommer ikke op hele dagen"
+                                                ]
+                                            }
+                                        ],
+                                        "mandatory" : false
+                                    }
+                                }
+                            },
+                            {
+                                "stepName" : "Medicin",
+                                "stepTemplate" : {
+                                    "url" : "client/components/wizard/templates/multiple-questions.html",
+                                    "config" : {
+                                        "questions" : [
+                                            {
+                                                "propertyName" : "Morfin",
+                                                "question" : "Morfin",
+                                                "answers" : [
+                                                    "Ja",
+                                                    "Nej"
+                                                ]
+                                            },
+                                            {
+                                                "propertyName" : "Paracetamol",
+                                                "question" : "Paracetamol",
+                                                "answers" : [
+                                                    "Ja",
+                                                    "Nej"
+                                                ]
+                                            },
+                                            {
+                                                "propertyName" : "Amitriptylin",
+                                                "question" : "Amitriptylin",
+                                                "answers" : [
+                                                    "Ja",
+                                                    "Nej"
+                                                ]
+                                            },
+                                            {
+                                                "propertyName" : "Nortriptylin",
+                                                "question" : "Nortriptylin",
+                                                "answers" : [
+                                                    "Ja",
+                                                    "Nej"
+                                                ]
+                                            },
+                                            {
+                                                "propertyName" : "Gabapentin",
+                                                "question" : "Gabapentin",
+                                                "answers" : [
+                                                    "Ja",
+                                                    "Nej"
+                                                ]
+                                            },
+                                            {
+                                                "propertyName" : "Andet smertestillende",
+                                                "question" : "Andet",
+                                                "answers" : [
+                                                    "Ja",
+                                                    "Nej"
+                                                ]
+                                            },
+                                            {
+                                                "propertyName" : "Smertestillende hjælper",
+                                                "question" : "Virkning",
+                                                "answers" : [
+                                                    "Nej",
+                                                    "Lidt",
+                                                    "Meget"
+                                                ]
+                                            }
+                                        ],
+                                        "mandatory" : false
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "frontPage" : {
+                        "properties" : [
+                            "mavesmerter",
+                            "lemmersmerter",
+                            "Aktivitet"
+                        ],
+                        "propertyDescription" : [
+                            "Smerter i mave",
+                            "Smerter i lemmer",
+                            "Fysisk aktivitet"
+                        ],
+                        "iconUrl" : "/smertetransparent.png",
+                        "barClass" : "bar-balanced"
+                    }
+                }
+            );
+
+            dbVersion = 12;
             Settings.update({key: "databaseVersion"}, {$set: {value: dbVersion}}, {upsert: true}); // update db version in database
         }
 
