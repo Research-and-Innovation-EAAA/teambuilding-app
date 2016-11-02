@@ -45,9 +45,6 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                     "name": "MIT"
                 }
             },
-            "schemes": [
-                "http"
-            ],
             "consumes": [
                 "application/x-www-form-urlencoded",
                 "application/json"
