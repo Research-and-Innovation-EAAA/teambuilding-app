@@ -26,7 +26,7 @@ ApiV1.addRoute('registrations/:id', {authRequired: true}, {
 
 ApiV1.addRoute('swagger.json', {authRequired: false}, {
     get: function () {
-        var pat = /[^https?://](.[^\/]*)/g
+        var pat = /[^https?://][^/]*/i;
         var absurl = Meteor.absoluteUrl();
         var urlarr = pat.exec(absurl);
         var host = urlarr[0];
