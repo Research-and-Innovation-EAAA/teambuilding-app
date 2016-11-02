@@ -1,7 +1,7 @@
 // Global API configuration
 var ApiV1 = new Restivus({
     useDefaultAuth: true,
-    prettyJson: false,
+    prettyJson: true,
     enableCors: true,
     version: "v1"
 });
@@ -26,6 +26,11 @@ ApiV1.addRoute('registrations/:id', {authRequired: true}, {
 
 ApiV1.addRoute('swagger.json', {authRequired: false}, {
     get: function () {
+        var pat = /([^http:\/\/]|[^https:\/\/])(.[^\/]*)/g
+        var absurl = Meteor.absoluteUrl();
+        var urlarr = pat.exec(absurl);
+        var host = urlarr[0];
+
         return {
             "swagger": "2.0",
             "info": {
@@ -47,7 +52,7 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                 "application/x-www-form-urlencoded",
                 "application/json"
             ],
-            "host": "localhost:3000",
+            "host": host,
             "basePath": "/api/v1",
             "paths": {
                 "/login": {
