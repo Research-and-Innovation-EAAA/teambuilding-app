@@ -29,52 +29,61 @@ ApiV1.addRoute('registrations/:id', {authRequired: true}, {
 });
 
 //picker
-var pickerAuthorized = Picker.filter(function(req, res) {
+var pickerAuthorized = Picker.filter(function (req, res) {
     return true;
 });
 pickerAuthorized.route(
-    ApiV1config.apipath+"/"+ApiV1config.version +"/upload",
-    function(params, req, res, next) {
-        console.log('x-user-id ',req.headers['x-user-id']);
-        console.log('x-auth-token ',req.headers['x-auth-token']);
+    ApiV1config.apipath + "/" + ApiV1config.version + "/upload",
+    function (params, req, res, next) {
+        console.log('x-user-id ', req.headers['x-user-id']);
+        console.log('x-auth-token ', req.headers['x-auth-token']);
         var userSelector = {
             "_id": req.headers['x-user-id'],
-           // "token": req.headers['x-auth-token']
+            // "token": req.headers['x-auth-token']
             "services.resume.loginTokens.hashedToken": Accounts._hashLoginToken(req.headers['x-auth-token'])
         };
         console.log("userSelector: ", userSelector);
         var user = Meteor.users.findOne(userSelector);
         console.log("User: ", user);
         if (!user) {
-            res.writeHead(401, { Connection: 'close' });
+            res.writeHead(401, {Connection: 'close'});
             res.end("Not authorized");
             return;
         }
 
-        var busboy = new Busboy({ headers: req.headers });
-        busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+        var busboy = new Busboy({headers: req.headers});
+        busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
             console.log('Receiving file [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
-            file.on('data', function(data) {
+
+            if (mimetype != 'application/octet-stream') {
+                console.log('Wrong file type!');
+                res.writeHead(415, {Connection: 'close'});
+                res.end("Wrong file type, must be CSV in a ZIP file!");
+                return;
+            }
+
+            file.on('data', function (data) {
                 console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
             });
-            file.on('end', function() {
+            file.on('end', function () {
                 console.log('File [' + fieldname + '] Finished');
             });
+
         });
-        busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+        busboy.on('field', function (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
             console.log('Field [' + fieldname + ']: value: ' + inspect(val));
         });
-        busboy.on('finish', function() {
+        busboy.on('finish', function () {
             console.log('Done parsing form!');
-            res.writeHead(303, { Connection: 'close', Location: '/' });
-            res.end();
+            res.writeHead(200, {Connection: 'close'});
+            res.end("Done uploading");
         });
         req.pipe(busboy);
     });
 pickerAuthorized.route(
-    ApiV1config.apipath+
-    "/"+ApiV1config.version
-    +'/download', function(params, req, res, next) {
+    ApiV1config.apipath +
+    "/" + ApiV1config.version
+    + '/download', function (params, req, res, next) {
         console.log("download");
         res.end("download");
     }
