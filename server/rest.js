@@ -29,10 +29,28 @@ ApiV1.addRoute('registrations/:id', {authRequired: true}, {
 });
 
 //picker
-var pickerAuthorized = Picker.filter(function(req, res) {
-    return true;
-});
-pickerAuthorized.route(
+Picker.route("*",
+    function(params, req, res, next) {
+        //Authenticate user before further action
+        console.log('x-user-id ',req.headers['x-user-id']);
+        console.log('x-auth-token ',req.headers['x-auth-token']);
+        var userSelector = {
+            "_id": req.headers['x-user-id'],
+            // "token": req.headers['x-auth-token']
+            "services.resume.loginTokens.hashedToken": Accounts._hashLoginToken(req.headers['x-auth-token'])
+        };
+        console.log("userSelector: ", userSelector);
+        var user = Meteor.users.findOne(userSelector);
+        console.log("User: ", user);
+        if (!user) {
+            res.writeHead(401, { Connection: 'close' });
+            res.end("Not authorized");
+            return;
+        }
+        next();
+    }
+);
+Picker.route(
     ApiV1config.apipath+"/"+ApiV1config.version +"/upload",
     function(params, req, res, next) {
         console.log('x-user-id ',req.headers['x-user-id']);
@@ -66,12 +84,12 @@ pickerAuthorized.route(
         });
         busboy.on('finish', function() {
             console.log('Done parsing form!');
-            res.writeHead(303, { Connection: 'close', Location: '/' });
-            res.end();
+            res.writeHead(200, { Connection: 'close'});
+            res.end('Done!');
         });
         req.pipe(busboy);
     });
-pickerAuthorized.route(
+Picker.route(
     ApiV1config.apipath+
     "/"+ApiV1config.version
     +'/download', function(params, req, res, next) {
