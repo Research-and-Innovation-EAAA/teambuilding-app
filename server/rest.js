@@ -52,7 +52,7 @@ pickerAuthorized.route(
         }
 
         var busboy = new Busboy({headers: req.headers});
-        busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+        busboy.on('file',  Meteor.bindEnvironment(function (fieldname, file, filename, encoding, mimetype) {
             console.log('Receiving file [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
 
             if (mimetype != 'application/octet-stream') {
@@ -62,14 +62,27 @@ pickerAuthorized.route(
                 return;
             }
 
+            var today = moment(new Date()).format("YYYYMMDDHHmm"); //TODO change to data's first date
+
+            writeStream = SmartWatchFiles.upsertStream({
+                filename: filename,
+                contentType: mimetype,
+                metadata: {owner: req.headers['x-user-id'], date: today}
+            });
+
+            file.pipe(writeStream);
+
+/*
             file.on('data', function (data) {
                 console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
+                writeStream.write(buf2.toString());
             });
             file.on('end', function () {
                 console.log('File [' + fieldname + '] Finished');
+                writeStream.end();
             });
-
-        });
+*/
+        }));
         busboy.on('field', function (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
             console.log('Field [' + fieldname + ']: value: ' + inspect(val));
         });
@@ -85,6 +98,8 @@ pickerAuthorized.route(
     "/" + ApiV1config.version
     + '/download', function (params, req, res, next) {
         console.log("download");
+
+
         res.end("download");
     }
 );
