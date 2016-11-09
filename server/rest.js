@@ -36,12 +36,20 @@ pickerAuthorized.route(
     ApiV1config.apipath+"/"+ApiV1config.version +"/upload",
     function(params, req, res, next) {
         console.log('x-user-id ',req.headers['x-user-id']);
-        /*var userSelector = {
-            "userId": req.headers['x-user-id'],
-            "token": req.headers['x-auth-token']
-            "token": Accounts._hashLoginToken(req.headers['x-auth-token'])
+        console.log('x-auth-token ',req.headers['x-auth-token']);
+        var userSelector = {
+            "_id": req.headers['x-user-id'],
+           // "token": req.headers['x-auth-token']
+            "services.resume.loginTokens.hashedToken": Accounts._hashLoginToken(req.headers['x-auth-token'])
+        };
+        console.log("userSelector: ", userSelector);
+        var user = Meteor.users.findOne(userSelector);
+        console.log("User: ", user);
+        if (!user) {
+            res.writeHead(401, { Connection: 'close' });
+            res.end("Not authorized");
+            return;
         }
-        Meteor.users.findOne(userSelector); */
 
         var busboy = new Busboy({ headers: req.headers });
         busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
