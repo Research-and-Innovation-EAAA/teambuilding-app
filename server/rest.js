@@ -1,10 +1,14 @@
+var Busboy = Meteor.npmRequire('busboy');
+
 // Global API configuration
-var ApiV1 = new Restivus({
+var ApiV1config = {
     useDefaultAuth: true,
     prettyJson: true,
     enableCors: true,
+    apipath: "/api",
     version: "v1"
-});
+};
+var ApiV1 = new Restivus(ApiV1config);
 
 // Maps to: /api/registrations
 ApiV1.addRoute('registrations', {authRequired: true}, {
@@ -23,6 +27,51 @@ ApiV1.addRoute('registrations/:id', {authRequired: true}, {
         return Registrations.findOne({_id: this.urlParams.id, createdBy: this.userId});
     }
 });
+
+//picker
+var pickerAuthorized = Picker.filter(function(req, res) {
+    return true;
+});
+pickerAuthorized.route(
+    ApiV1config.apipath+"/"+ApiV1config.version +"/upload",
+    function(params, req, res, next) {
+        console.log('x-user-id ',req.headers['x-user-id']);
+        /*var userSelector = {
+            "userId": req.headers['x-user-id'],
+            "token": req.headers['x-auth-token']
+            "token": Accounts._hashLoginToken(req.headers['x-auth-token'])
+        }
+        Meteor.users.findOne(userSelector); */
+
+        var busboy = new Busboy({ headers: req.headers });
+        busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+            console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
+            file.on('data', function(data) {
+                console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
+            });
+            file.on('end', function() {
+                console.log('File [' + fieldname + '] Finished');
+            });
+        });
+        busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+            console.log('Field [' + fieldname + ']: value: ' + inspect(val));
+        });
+        busboy.on('finish', function() {
+            console.log('Done parsing form!');
+            res.writeHead(303, { Connection: 'close', Location: '/' });
+            res.end();
+        });
+        req.pipe(busboy);
+    });
+pickerAuthorized.route(
+    ApiV1config.apipath+
+    "/"+ApiV1config.version
+    +'/download', function(params, req, res, next) {
+        console.log("download");
+        res.end("download");
+    }
+);
+
 
 ApiV1.addRoute('swagger.json', {authRequired: false}, {
     get: function () {
@@ -91,6 +140,39 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                             "in": "header",
                             "description": "User identifier to access How-R-you",
                             "type": "string",
+                            "required": true
+                        }
+                    ],
+                    "post": {
+                        "responses": {
+                            "200": {
+                                "description": "Logout has successfully disabled retrieved authentication token and user id."
+                            }
+                        }
+                    }
+                },
+                "/upload": {
+                    "parameters": [
+                        {
+                            "name": "X-Auth-Token",
+                            "in": "header",
+                            "description": "Token used to access How-R-you",
+                            "type": "string",
+                            "required": true
+                        },
+                        {
+                            "name": "X-User-id",
+                            "in": "header",
+                            "description": "User identifier to access How-R-you",
+                            "type": "string",
+                            "required": true
+                        },
+                        {
+                            "name": "payload",
+                            "in": "formData",
+                            "description": "File to upload to How-R-you server",
+                            "type": "file",
+                            "format": "binary",
                             "required": true
                         }
                     ],

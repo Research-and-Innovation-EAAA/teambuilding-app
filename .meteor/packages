@@ -35,3 +35,5 @@ force-ssl
 meteorhacks:kadira
 kadira:debug
 nimble:restivus
+meteorhacks:picker
+meteorhacks:npm
