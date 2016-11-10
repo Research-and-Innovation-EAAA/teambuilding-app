@@ -33,7 +33,7 @@ var pickerAuthorized = Picker.filter(function (req, res) {
     return true;
 });
 pickerAuthorized.route(
-    ApiV1config.apipath + "/" + ApiV1config.version + "/upload",
+    ApiV1config.apipath + "/" + ApiV1config.version + "/smartwatch",
     function (params, req, res, next) {
         console.log('x-user-id ', req.headers['x-user-id']);
         console.log('x-auth-token ', req.headers['x-auth-token']);
@@ -52,26 +52,52 @@ pickerAuthorized.route(
         }
 
         var busboy = new Busboy({headers: req.headers});
-        busboy.on('file',  Meteor.bindEnvironment(function (fieldname, file, filename, encoding, mimetype) {
+        busboy.on('file', Meteor.bindEnvironment(function (fieldname, file, filename, encoding, mimetype) {
             console.log('Receiving file [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
 
-            if (mimetype != 'application/octet-stream') {
+       /* TODO let only ZIP to be uploaded
+           if (mimetype != 'application/octet-stream') {
                 console.log('Wrong file type!');
                 res.writeHead(415, {Connection: 'close'});
                 res.end("Wrong file type, must be CSV in a ZIP file!");
                 return;
-            }
+            }*/
 
-            var today = moment(new Date()).format("YYYYMMDDHHmm"); //TODO change to data's first date
+          /*  var today = moment(new Date()).format("YYYYMMDDHHmm"); //TODO change to data's first date
 
             writeStream = SmartWatchFiles.upsertStream({
                 filename: filename,
                 contentType: mimetype,
-                metadata: {owner: req.headers['x-user-id'], date: today}
+                metadata: {owner: req.headers['x-user-id'], date: today} //TODO this.userId not working
+            });
+*/
+   //         file.setEncoding('binary');
+       //     file.pipe(writeStream);
+
+            res.writeHead(200, {
+                'Content-Type': mimetype,
+                'Content-Disposition': 'attachment; filename=test.png'
             });
 
-            file.pipe(writeStream);
+            file.pipe(res);
 
+            var bufs = [];
+            var bufSize = 0;
+         /*   file.on('data', function (data) {
+                bufs[bufs.length] = data;
+                bufSize += data.length;
+                console.log('data + ' + bufSize + ':' + data);
+            });*/
+            file.on('end', function () {
+            //    res.write();
+              //  res.end(Buffer.concat(bufs, bufSize));
+                res.end();
+            });
+
+           /* file.on('end', function () {
+                console.log('File [' + fieldname + '] Finished');
+                res.end();
+            });*/
 /*
             file.on('data', function (data) {
                 console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
@@ -88,22 +114,63 @@ pickerAuthorized.route(
         });
         busboy.on('finish', function () {
             console.log('Done parsing form!');
-            res.writeHead(200, {Connection: 'close'});
-            res.end("Done uploading");
+        /*    res.writeHead(200, {Connection: 'close'});
+            res.end("Done uploading");*/
         });
         req.pipe(busboy);
     });
+/*
 pickerAuthorized.route(
-    ApiV1config.apipath +
-    "/" + ApiV1config.version
-    + '/download', function (params, req, res, next) {
+    ApiV1config.apipath + "/" + ApiV1config.version + '/smartwatch/:date',
+    function (params, req, res, next) {
         console.log("download");
 
+        var file = SmartWatchFiles.findOne({
+            "metadata.date": params.date,
+            "metadata.owner": req.headers['x-user-id']
+        });
+        console.log(file);
+        if (file == null){
+            console.log('No file found!');
+            res.writeHead(204, {Connection: 'close'});
+            res.end("No Content found");
+            return;
+        }
 
-        res.end("download");
+        var fileStream = SmartWatchFiles.findOneStream({
+            "metadata.date": params.date,
+            "metadata.owner": req.headers['x-user-id']
+        });
+
+  //      fileStream.setEncoding('binary');
+
+        res.writeHead(200, {
+            'Content-Type': 'application/octet-stream',
+            'Content-Disposition': 'attachment; filename=test.zip'
+        });
+
+        fileStream.pipe(res);
+
+        fileStream.on('error', function (err) {
+            console.log('err:' + err);
+        });
+
+        var bufs = [];
+        var bufSize = 0;
+        fileStream.on('data', function (data) {
+            bufs[bufs.length] = data;
+            bufSize += data.length;
+            console.log('data + ' + bufSize + ':' + data);
+        });
+        fileStream.on('end', function () {
+            //res.write(data);
+            res.write(Buffer.concat(bufs, bufSize));
+            res.end();
+        });
+
     }
 );
-
+*/
 
 ApiV1.addRoute('swagger.json', {authRequired: false}, {
     get: function () {
@@ -183,7 +250,7 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                         }
                     }
                 },
-                "/upload": {
+                "/smartwatch": {
                     "parameters": [
                         {
                             "name": "X-Auth-Token",
@@ -209,13 +276,62 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                         }
                     ],
                     "post": {
+                        "produces": [
+                            "application/octet-stream"
+                        ],
                         "responses": {
+                            "200": {
+                                "description": "Response contains users registration for requested ID.",
+                                "schema": {
+                                    "type": "file"
+                                }
+                            }
+                        }
+                        /*"responses": {
                             "200": {
                                 "description": "Logout has successfully disabled retrieved authentication token and user id."
                             }
-                        }
+                        }*/
                     }
                 },
+        /*        "/smartwatch/{date}": {
+                    "parameters": [
+                        {
+                            "name": "X-Auth-Token",
+                            "in": "header",
+                            "description": "Token used to access How-R-you",
+                            "type": "string",
+                            "required": true
+                        },
+                        {
+                            "name": "X-User-id",
+                            "in": "header",
+                            "description": "User identifier to access How-R-you",
+                            "type": "string",
+                            "required": true
+                        },
+                        {
+                            "name": "date",
+                            "in": "path",
+                            "description": "Date of the file",
+                            "type": "string",
+                            "required": true
+                        }
+                    ],
+                    "get": {
+                        "produces": [
+                            "application/octet-stream"
+                        ],
+                        "responses": {
+                            "200": {
+                                "description": "Response contains users registration for requested ID.",
+                                "schema": {
+                                    "type": "file"
+                                }
+                            }
+                        }
+                    }
+                },*/
                 "/registrations": {
                     "parameters": [
                         {
