@@ -1,4 +1,5 @@
 var Busboy = Meteor.npmRequire('busboy');
+var unzip = Meteor.npmRequire('unzip2');
 
 // Global API configuration
 var ApiV1config = {
@@ -28,13 +29,32 @@ ApiV1.addRoute('registrations/:id', {authRequired: true}, {
     }
 });
 
+// Maps to: /api/smartwatchview
+ApiV1.addRoute('smartwatchview', {authRequired: true}, {
+    post: function () {
+        console.log('Adding view data');
+
+        var data = JSON.parse(this.bodyParams.data);
+
+        SmartWatchView.insert({
+            "date": this.bodyParams.date,
+            "userId": this.userId,
+            "data": data
+        });
+
+        return {
+            statusCode: 201
+        };
+    }
+});
+
 //picker
 var pickerAuthorized = Picker.filter(function (req, res) {
     return true;
 });
 pickerAuthorized.route(
     ApiV1config.apipath + "/" + ApiV1config.version + "/smartwatch",
-    function (params, req, res, next) {
+    Meteor.bindEnvironment(function (params, req, res, next) {
         console.log('x-user-id ', req.headers['x-user-id']);
         console.log('x-auth-token ', req.headers['x-auth-token']);
         var userSelector = {
@@ -55,122 +75,139 @@ pickerAuthorized.route(
         busboy.on('file', Meteor.bindEnvironment(function (fieldname, file, filename, encoding, mimetype) {
             console.log('Receiving file [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
 
-       /* TODO let only ZIP to be uploaded
-           if (mimetype != 'application/octet-stream') {
-                console.log('Wrong file type!');
-                res.writeHead(415, {Connection: 'close'});
-                res.end("Wrong file type, must be CSV in a ZIP file!");
-                return;
-            }*/
+            /* TODO let only ZIP to be uploaded
+             if (mimetype != 'application/octet-stream') {
+             console.log('Wrong file type!');
+             res.writeHead(415, {Connection: 'close'});
+             res.end("Wrong file type, must be CSV in a ZIP file!");
+             return;
+             }*/
 
-          /*  var today = moment(new Date()).format("YYYYMMDDHHmm"); //TODO change to data's first date
+            var today = moment(new Date()).format("YYYYMMDDHHmm"); //TODO change to data's first date
 
-            writeStream = SmartWatchFiles.upsertStream({
-                filename: filename,
-                contentType: mimetype,
-                metadata: {owner: req.headers['x-user-id'], date: today} //TODO this.userId not working
-            });
-*/
-   //         file.setEncoding('binary');
-       //     file.pipe(writeStream);
+            //         file.setEncoding('binary');
+            //     file.pipe(writeStream);
 
-            res.writeHead(200, {
-                'Content-Type': mimetype,
-                'Content-Disposition': 'attachment; filename=test.png'
-            });
+            /*    res.writeHead(200, {
+             'Content-Type': 'text/csv',
+             'Content-Disposition': 'attachment; filename=test.csv'
+             });*/
 
-            file.pipe(res);
+            file.pipe(unzip.Parse())
+                .on('entry', Meteor.bindEnvironment(function (entry) {
+                    console.log(entry);
 
-            var bufs = [];
-            var bufSize = 0;
-         /*   file.on('data', function (data) {
-                bufs[bufs.length] = data;
-                bufSize += data.length;
-                console.log('data + ' + bufSize + ':' + data);
-            });*/
+                    var fileName = entry.path;
+                    var type = entry.type; // 'Directory' or 'File'
+                    var size = entry.size;
+                    if (type === "File") {
+                        writeStream = SmartWatchFiles.upsertStream({
+                            filename: fileName,
+                            contentType: "text/csv",
+                            metadata: {owner: req.headers['x-user-id'], date: today} //TODO this.userId not working
+                        });
+
+                        entry.pipe(writeStream);
+                    } else {
+                        entry.autodrain();
+                    }
+                }));
+
+
+            //.pipe(writeStream).on('finish', function () { console.log("UNZIPPING DONE") });
+
+            /*var bufs = [];
+             var bufSize = 0;
+             file.on('data', function (data) {
+             bufs[bufs.length] = data;
+             bufSize += data.length;
+             console.log('data + ' + bufSize + ':' + data);
+             });*/
             file.on('end', function () {
-            //    res.write();
-              //  res.end(Buffer.concat(bufs, bufSize));
-                res.end();
+                // res.end(Buffer.concat(bufs, bufSize));
+                //          res.end();
+                res.writeHead(200, {Connection: 'close'});
+                res.end("Done uploading");
             });
 
-           /* file.on('end', function () {
-                console.log('File [' + fieldname + '] Finished');
-                res.end();
-            });*/
-/*
-            file.on('data', function (data) {
-                console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
-                writeStream.write(buf2.toString());
-            });
-            file.on('end', function () {
-                console.log('File [' + fieldname + '] Finished');
-                writeStream.end();
-            });
-*/
+            /* file.on('end', function () {
+             console.log('File [' + fieldname + '] Finished');
+             res.end();
+             });*/
+            /*
+             file.on('data', function (data) {
+             console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
+             writeStream.write(buf2.toString());
+             });
+             file.on('end', function () {
+             console.log('File [' + fieldname + '] Finished');
+             writeStream.end();
+             });
+             */
         }));
         busboy.on('field', function (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
-            console.log('Field [' + fieldname + ']: value: ' + inspect(val));
+            console.log('Field [' + fieldname + ']: value: ' + val);
         });
         busboy.on('finish', function () {
             console.log('Done parsing form!');
-        /*    res.writeHead(200, {Connection: 'close'});
-            res.end("Done uploading");*/
+            /*            res.writeHead(200, {Connection: 'close'});
+             res.end("Done uploading");*/
         });
         req.pipe(busboy);
-    });
-/*
+    })
+);
+
 pickerAuthorized.route(
     ApiV1config.apipath + "/" + ApiV1config.version + '/smartwatch/:date',
-    function (params, req, res, next) {
-        console.log("download");
+    Meteor.bindEnvironment(function (params, req, res, next) {
+        if (req.method == "GET") {
+            console.log("download");
 
-        var file = SmartWatchFiles.findOne({
-            "metadata.date": params.date,
-            "metadata.owner": req.headers['x-user-id']
-        });
-        console.log(file);
-        if (file == null){
-            console.log('No file found!');
-            res.writeHead(204, {Connection: 'close'});
-            res.end("No Content found");
-            return;
+            var file = SmartWatchFiles.findOne({
+                "metadata.date": params.date,
+                "metadata.owner": req.headers['x-user-id']
+            });
+            console.log(file);
+            if (file == null) {
+                console.log('No file found!');
+                res.writeHead(204, {Connection: 'close'});
+                res.end("No Content found");
+                return;
+            }
+
+            var fileStream = SmartWatchFiles.findOneStream({
+                "metadata.date": params.date,
+                "metadata.owner": req.headers['x-user-id']
+            });
+
+            //      fileStream.setEncoding('binary');
+
+            res.writeHead(200, {
+                'Content-Type': 'text/csv',
+                'Content-Disposition': 'attachment; filename=test.csv'
+            });
+
+            fileStream.pipe(res);
+
+            fileStream.on('error', function (err) {
+                console.log('err:' + err);
+            });
+
+            /*   var bufs = [];
+             var bufSize = 0;
+             fileStream.on('data', function (data) {
+             bufs[bufs.length] = data;
+             bufSize += data.length;
+             console.log('data + ' + bufSize + ':' + data);
+             });*/
+            fileStream.on('end', function () {
+                //res.write(data);
+                //     res.write(Buffer.concat(bufs, bufSize));
+                res.end();
+            });
         }
-
-        var fileStream = SmartWatchFiles.findOneStream({
-            "metadata.date": params.date,
-            "metadata.owner": req.headers['x-user-id']
-        });
-
-  //      fileStream.setEncoding('binary');
-
-        res.writeHead(200, {
-            'Content-Type': 'application/octet-stream',
-            'Content-Disposition': 'attachment; filename=test.zip'
-        });
-
-        fileStream.pipe(res);
-
-        fileStream.on('error', function (err) {
-            console.log('err:' + err);
-        });
-
-        var bufs = [];
-        var bufSize = 0;
-        fileStream.on('data', function (data) {
-            bufs[bufs.length] = data;
-            bufSize += data.length;
-            console.log('data + ' + bufSize + ':' + data);
-        });
-        fileStream.on('end', function () {
-            //res.write(data);
-            res.write(Buffer.concat(bufs, bufSize));
-            res.end();
-        });
-
-    }
+    })
 );
-*/
 
 ApiV1.addRoute('swagger.json', {authRequired: false}, {
     get: function () {
@@ -276,25 +313,14 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                         }
                     ],
                     "post": {
-                        "produces": [
-                            "application/octet-stream"
-                        ],
                         "responses": {
-                            "200": {
-                                "description": "Response contains users registration for requested ID.",
-                                "schema": {
-                                    "type": "file"
-                                }
-                            }
-                        }
-                        /*"responses": {
                             "200": {
                                 "description": "Logout has successfully disabled retrieved authentication token and user id."
                             }
-                        }*/
+                        }
                     }
                 },
-        /*        "/smartwatch/{date}": {
+                "/smartwatch/{date}": {
                     "parameters": [
                         {
                             "name": "X-Auth-Token",
@@ -320,18 +346,58 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                     ],
                     "get": {
                         "produces": [
-                            "application/octet-stream"
+                            "text/csv"
                         ],
                         "responses": {
                             "200": {
-                                "description": "Response contains users registration for requested ID.",
+                                "description": "File for specified date.",
                                 "schema": {
                                     "type": "file"
                                 }
                             }
                         }
                     }
-                },*/
+                },
+                "/smartwatchview": {
+                    "parameters": [
+                        {
+                            "name": "X-Auth-Token",
+                            "in": "header",
+                            "description": "Token used to access How-R-you",
+                            "type": "string",
+                            "required": true
+                        },
+                        {
+                            "name": "X-User-id",
+                            "in": "header",
+                            "description": "User identifier to access How-R-you",
+                            "type": "string",
+                            "required": true
+                        },
+                        {
+                            "name": "date",
+                            "in": "formData",
+                            "description": "Date of the file",
+                            "type": "string",
+                            "format": "date-time",
+                            "required": true
+                        },
+                        {
+                            "name": "data",
+                            "in": "formData",
+                            "description": "View data",
+                            "type": "string",
+                            "required": true
+                        },
+                    ],
+                    "post": {
+                        "responses": {
+                            "200": {
+                                "description": "Successfully uploaded view data", //TODO check if full data exist for this view data
+                            }
+                        }
+                    }
+                },
                 "/registrations": {
                     "parameters": [
                         {
