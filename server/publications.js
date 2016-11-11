@@ -14,7 +14,7 @@
 
         //Build list of document ids
         var ids = [];
-        for (i=0 ; i<modules.length ; i++) {
+        for (i = 0; i < modules.length; i++) {
             var regDocument = Registrations.findOne({
                 $and: [
                     {moduleName: modules[i]},
@@ -34,7 +34,7 @@
 
         //return registration documents
         //console.log("ModuleData ids: ",ids);
-        return Registrations.find({_id: {$in:ids}});
+        return Registrations.find({_id: {$in: ids}});
 //        });
     });
 
@@ -145,5 +145,17 @@
                 // TODO add only for this user
             }
         );
+    });
+
+    Meteor.publish("smartWatchView", function (device) {
+        console.log("we are here and device is " + device);
+        var r = SmartWatchView.find(
+            {
+                userId: this.userId,
+                device: device
+            }
+        );
+        console.log(r);
+        return r;
     });
 })();

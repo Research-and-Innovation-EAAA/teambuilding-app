@@ -1,0 +1,102 @@
+<div ng-controller="graphDataMeasurementsController as vm">
+    <ion-view ng-attr-view-title="{{vm.viewTitle}}">
+        <ion-content class="default-background">
+            <div class="graph-data-flex-parent graph-data-flex-child">
+                <div class="graph-data-flex-child">
+
+                    <div class="row">
+                    <span class="col" style="text-align: center">
+                        <strong translate>graphData.from</strong>
+                    </span>
+                        <span class="col" style="text-align: center">
+                        <strong translate>graphData.till</strong>
+                    </span>
+                    </div>
+                    <div class="row">
+
+                        <div class="col">
+                            <div class="row responsive-sm">
+                                <div class="col">
+                                    <ionic-datepicker input-obj="vm.startDatepickerObject">
+                                        <button class="button button-block button-stable button-border">
+                                            <strong>{{vm.startDatepickerObject.inputDate | date:'dd/MM, yyyy'}}</strong>
+                                        </button>
+                                    </ionic-datepicker>
+                                </div>
+                                <div class="col">
+                                    <ionic-timepicker input-obj="vm.startTimePickerObject">
+                                        <button class="button button-block button-stable button-border">
+                                            <strong>{{vm.startTimePickerObject.displayValue()}}</strong>
+                                        </button>
+                                    </ionic-timepicker>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row responsive-sm">
+                                <ionic-datepicker input-obj="vm.endDatepickerObject" class="col">
+                                    <button class="button button-block button-stable button-border">
+                                        <strong>{{vm.endDatepickerObject.inputDate | date:'dd/MM, yyyy'}}</strong>
+                                    </button>
+                                </ionic-datepicker>
+                                <ionic-timepicker input-obj="vm.endTimePickerObject" class="col">
+                                    <button class="button button-block button-stable button-border">
+                                        <strong>{{vm.endTimePickerObject.displayValue()}}</strong>
+                                    </button>
+                                </ionic-timepicker>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div ng-show="vm.isData">
+                <nvd3 id="graph"
+                      options="vm.graph.options"
+                      data="vm.graphData"
+                      config="vm.graph.config"
+                      events="vm.events"
+                      api="vm.api"></nvd3>
+
+                <div id="buttonArea">
+                    <div id='graph-button-row' class="row responsive-md">
+                        <div class="col"
+                             style="padding: 2px"
+                             ng-repeat="property in vm.graphProperties">
+                            <button class="button"
+                                    style="width: 100%; overflow: hidden;"
+                                    ng-style="{ background: vm.btnBackground(property)}"
+                                    ng-click="vm.showPropertyGraph(property.name)"
+                                    ng-disabled="property.disabled">
+                                <strong>
+                                    <span ng-if="['pain','medicine','mucositis','bloodsamples'].indexOf(vm.dataType)>-1"
+                                          translate="{{vm.dataType+'.'+property.name}}"></span>
+                                    <span ng-if="['pain','medicine','mucositis','bloodsamples'].indexOf(vm.dataType)==-1">{{property.name}}</span>
+                                </strong>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="visibility: hidden" class="row">
+                    <div style="height: 10px" class="col">
+                        Dirty fix for resizing scrolling area
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="no-data"
+                 ng-show="!vm.isData">
+                <label style="font-size: 1.9em;" translate>
+                    graphData.noData
+                </label>
+            </div>
+
+        </ion-content>
+
+    </ion-view>
+</div>

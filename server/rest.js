@@ -38,6 +38,7 @@ ApiV1.addRoute('smartwatchview', {authRequired: true}, {
 
         SmartWatchView.insert({
             "date": this.bodyParams.date,
+            "device": this.bodyParams.device,
             "userId": this.userId,
             "data": data
         });

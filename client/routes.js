@@ -39,6 +39,14 @@ angular.module('leukemiapp')
                     templateUrl: 'client/components/graph-data/graph-data.html'
                  }
               }
+           })
+           .state('app.graphdatameasurements', {
+               url: '/graphdatameasurements',
+               views: {
+                   'menuContent': {
+                       templateUrl: 'client/components/graph-data-measurements/graph-data-measurements.html'
+                   }
+               }
            });
 
        // if none of the above states are matched, use this as the fallback
