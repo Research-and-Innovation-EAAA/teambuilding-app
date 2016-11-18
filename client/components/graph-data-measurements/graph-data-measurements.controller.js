@@ -333,7 +333,7 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
                     if (d == null) {
                         return 'N/A';
                     }
-                    return d3.time.format('%d/%m')(new Date(d));
+                    return d3.time.format('%d/%m %X')(new Date(d));
                 }
             },
             yAxis: {
@@ -341,7 +341,7 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
                     if (!d)if (d == null) {
                         return 'N/A';
                     }
-                    return d3.format('.0f')(d);
+                    return d3.format('.4f')(d);
                 }
             }
         }
