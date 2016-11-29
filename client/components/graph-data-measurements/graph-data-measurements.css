@@ -4,6 +4,12 @@
     margin-top: 25px;
 }
 
+.dateLabel{
+    vertical-align: middle;
+    line-height: 45px;
+    margin: 10px;
+}
+
 @media (min-width: 768px) {
     .col-property {
         -webkit-box-flex: 0;
@@ -46,10 +52,6 @@
         flex: 0 0 75%;
         max-width: 75%;
     }
-}
-
-#table-value-row, #table-property-row, #table-button-row {
-    margin-top: 0;
 }
 
 #no-data {

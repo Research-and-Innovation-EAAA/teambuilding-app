@@ -103,7 +103,6 @@ Picker.route(
              return;
              }*/
 
-            var today = moment(new Date()).format("YYYYMMDDHHmm"); //TODO change to data's first date
 
             //         file.setEncoding('binary');
             //     file.pipe(writeStream);
@@ -121,10 +120,12 @@ Picker.route(
                     var type = entry.type; // 'Directory' or 'File'
                     var size = entry.size;
                     if (type === "File") {
+                        var date = /_(\d*).csv/i.exec(fileName)[1];
+
                         writeStream = SmartWatchFiles.upsertStream({
                             filename: fileName,
                             contentType: "text/csv",
-                            metadata: {owner: req.headers['x-user-id'], date: today} //TODO this.userId not working
+                            metadata: {owner: req.headers['x-user-id'], date: date} //TODO this.userId not working
                         });
 
                         entry.pipe(writeStream);
@@ -205,7 +206,7 @@ Picker.route(
 
             res.writeHead(200, {
                 'Content-Type': 'text/csv',
-                'Content-Disposition': 'attachment; filename=test.csv'
+                'Content-Disposition': 'attachment; filename=file.csv'
             });
 
             fileStream.pipe(res);

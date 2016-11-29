@@ -4,50 +4,14 @@
             <div class="graph-data-flex-parent graph-data-flex-child">
                 <div class="graph-data-flex-child">
 
+
                     <div class="row">
-                    <span class="col" style="text-align: center">
-                        <strong translate>graphData.from</strong>
-                    </span>
-                        <span class="col" style="text-align: center">
-                        <strong translate>graphData.till</strong>
-                    </span>
-                    </div>
-                    <div class="row">
-
-                        <div class="col">
-                            <div class="row responsive-sm">
-                                <div class="col">
-                                    <ionic-datepicker input-obj="vm.startDatepickerObject">
-                                        <button class="button button-block button-stable button-border">
-                                            <strong>{{vm.startDatepickerObject.inputDate | date:'dd/MM, yyyy'}}</strong>
-                                        </button>
-                                    </ionic-datepicker>
-                                </div>
-                                <div class="col">
-                                    <ionic-timepicker input-obj="vm.startTimePickerObject">
-                                        <button class="button button-block button-stable button-border">
-                                            <strong>{{vm.startTimePickerObject.displayValue()}}</strong>
-                                        </button>
-                                    </ionic-timepicker>
-                                </div>
-
-                            </div>
+                        <div class="col" ng-if="vm.isData">
+                            <strong translate class="dateLabel">graphDataMeasurements.date</strong>
+                            <select class="button button-stable button-border" ng-model="vm.startDate"
+                                    ng-options="recordDate.formatted for recordDate in vm.recordDates"
+                                    ng-change="vm.processData()" style="text-align: center"></select>
                         </div>
-                        <div class="col">
-                            <div class="row responsive-sm">
-                                <ionic-datepicker input-obj="vm.endDatepickerObject" class="col">
-                                    <button class="button button-block button-stable button-border">
-                                        <strong>{{vm.endDatepickerObject.inputDate | date:'dd/MM, yyyy'}}</strong>
-                                    </button>
-                                </ionic-datepicker>
-                                <ionic-timepicker input-obj="vm.endTimePickerObject" class="col">
-                                    <button class="button button-block button-stable button-border">
-                                        <strong>{{vm.endTimePickerObject.displayValue()}}</strong>
-                                    </button>
-                                </ionic-timepicker>
-                            </div>
-                        </div>
-
                     </div>
 
                 </div>
@@ -72,9 +36,7 @@
                                     ng-click="vm.showPropertyGraph(property.name)"
                                     ng-disabled="property.disabled">
                                 <strong>
-                                    <span ng-if="['pain','medicine','mucositis','bloodsamples'].indexOf(vm.dataType)>-1"
-                                          translate="{{vm.dataType+'.'+property.name}}"></span>
-                                    <span ng-if="['pain','medicine','mucositis','bloodsamples'].indexOf(vm.dataType)==-1">{{property.name}}</span>
+                                    <span translate="{{'graphDataMeasurements.' + property.name}}"></span>
                                 </strong>
                             </button>
                         </div>
@@ -92,7 +54,7 @@
             <div id="no-data"
                  ng-show="!vm.isData">
                 <label style="font-size: 1.9em;" translate>
-                    graphData.noData
+                    graphDataMeasurements.noData
                 </label>
             </div>
 

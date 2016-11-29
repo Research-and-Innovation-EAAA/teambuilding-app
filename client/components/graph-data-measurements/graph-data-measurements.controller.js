@@ -9,10 +9,11 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
     $scope.$on('$ionicView.beforeEnter', function (event, data) {
         vm.autorun(() => {
             vm.subscribe('smartWatchView',
-                () => [vm.getReactively('dataType')], //, vm.getReactively('startTimeStamp'), vm.getReactively('endTimeStamp')
+                () => [vm.getReactively('dataType')],
                 {
                     onReady: () => {
-                        processData();
+                        showDateSelect();
+                        vm.processData();
                     }
                 }
             );
@@ -22,7 +23,8 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
     //Code to be run every time view becomes visible
     //----------------------------------------------
     $scope.$on('$ionicView.beforeEnter', function (event, data) {
-        processData();
+        showDateSelect();
+        vm.processData();
     });
 
     //Init
@@ -30,12 +32,6 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
     vm.dataType = Session.get('graphDataType');
     vm.viewTitle = $translate.instant(vm.dataType);
 
-
-    if (!vm.endTimeStamp || !vm.startTimeStamp) {
-        vm.endTimeStamp = new Date();
-        vm.startTimeStamp = new Date();
-        vm.startTimeStamp.setMonth(vm.startTimeStamp.getMonth() - 1);
-    }
 
     //Stores property names, colors, and visibility attributes
     // object = { name: String, color: String, visible: bool }
@@ -49,168 +45,46 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
         }
     });
 
-    //Init of date- and timepickers
-    //-----------------------------
-    if (vm.startTimePickerObject == null) {
-        vm.startTimePickerObject = {
-            displayValue: function () {
-                return formatTime(vm.startTimePickerObject.inputEpochTime);
-            },
-            inputEpochTime: ((vm.startTimeStamp ? vm.startTimeStamp : new Date()).getHours() * 60 * 60 +
-            Math.floor((vm.startTimeStamp ? vm.startTimeStamp : new Date()).getMinutes() / 5) * 5 * 60),  //Optional
-            step: 5,  //Optional
-            format: 24,  //Optional
-            titleLabel: $translate.instant('graphData.timestamp'),  //Optional
-            setLabel: $translate.instant('graphData.choose'),  //Optional
-            closeLabel: $translate.instant('graphData.close'),  //Optional
-            setButtonType: 'button-positive',  //Optional
-            closeButtonType: 'button-stable',  //Optional
-            callback: function (val) {    //Mandatory
-                if (val) {
-                    vm.startTimePickerObject.inputEpochTime = val;
-                    vm.updateStartTimeStamp();
-                }
-            }
+
+    function formatDate(inputDatabaseDate) {
+        return inputDatabaseDate.replace(/(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/g, '$3. $2. $1 $4:$5:$6');
+    }
+
+    function showDateSelect() {
+        vm.recordDates = SmartWatchView.find({}, {sort: {date: -1}});
+        vm.recordDates = vm.recordDates.fetch();
+
+        for (var i = 0; i < vm.recordDates.length; i++) {
+            vm.recordDates[i].formatted = formatDate(vm.recordDates[i].date);
+        }
+        console.log(vm.recordDates);
+
+        if (!vm.startDate) { // for the first time select the newest set of data
+            vm.startDate = vm.recordDates[0];
         }
     }
-    if (vm.startDatepickerObject == null) {
-        vm.startDatepickerObject = {
-            titleLabel: $translate.instant('graphData.date'),  //Optional
-            todayLabel: $translate.instant('graphData.today'),  //Optional
-            closeLabel: $translate.instant('graphData.close'),  //Optional
-            setLabel: $translate.instant('graphData.choose'),  //Optional
-            setButtonType: 'button-positive',  //Optional
-            todayButtonType: 'button-stable',  //Optional
-            closeButtonType: 'button-stable',  //Optional
-            inputDate: (vm.startTimeStamp ? vm.startTimeStamp : new Date()),  //Optional
-            mondayFirst: true,  //Optional
-            //disabledDates: disabledDates, //Optional
-            weekDaysList: $translate.instant('weekdaysShortList').split("_"), //Optional
-            monthList: $translate.instant('monthsList').split("_"), //Optional
-            templateType: 'popup', //Optional
-            showTodayButton: 'true', //Optional
-            modalHeaderColor: 'bar-positive', //Optional
-            modalFooterColor: 'bar-positive', //Optional
-            //from: new Date(2012, 8, 2), //Optional
-            //to: new Date(2018, 8, 25),  //Optional
-            dateFormat: 'dd-MM-yyyy', //Optional
-            closeOnSelect: false, //Optional
-            callback: function (val) {  //Mandatory
-                if (val) {
-                    vm.startDatepickerObject.inputDate = val;
-                    vm.updateStartTimeStamp();
-                }
-            }
-        };
-    }
-    if (vm.endTimePickerObject == null) {
-        vm.endTimePickerObject = {
-            displayValue: function () {
-                return formatTime(vm.endTimePickerObject.inputEpochTime);
-            },
-            inputEpochTime: ((vm.endTimeStamp ? vm.endTimeStamp : new Date()).getHours() * 60 * 60 +
-            Math.floor((vm.endTimeStamp ? vm.endTimeStamp : new Date()).getMinutes() / 5) * 5 * 60),
-            step: 5,  //Optional
-            format: 24,  //Optional
-            titleLabel: $translate.instant('graphData.timestamp'),  //Optional
-            setLabel: $translate.instant('graphData.choose'),  //Optional
-            closeLabel: $translate.instant('graphData.close'),  //Optional
-            setButtonType: 'button-positive',  //Optional
-            closeButtonType: 'button-stable',  //Optional
-            callback: function (val) {    //Mandatory
-                if (val) {
-                    vm.endTimePickerObject.inputEpochTime = val;
-                    vm.updateEndTimeStamp();
-                }
-            }
-        };
-    }
-    if (vm.endDatepickerObject == null) {
-        vm.endDatepickerObject = {
-            titleLabel: $translate.instant('graphData.date'),  //Optional
-            todayLabel: $translate.instant('graphData.today'),  //Optional
-            closeLabel: $translate.instant('graphData.close'),  //Optional
-            closeLabel: $translate.instant('graphData.close'),  //Optional
-            setLabel: $translate.instant('graphData.choose'),  //Optional
-            setButtonType: 'button-positive',  //Optional
-            todayButtonType: 'button-stable',  //Optional
-            closeButtonType: 'button-stable',  //Optional
-            inputDate: (vm.endTimeStamp ? vm.endTimeStamp : new Date()),  //Optional
-            mondayFirst: true,  //Optional
-            //disabledDates: disabledDates, //Optional
-            weekDaysList: $translate.instant('weekdaysShortList').split("_"), //Optional
-            monthList: $translate.instant('monthsList').split("_"), //Optional
-            templateType: 'popup', //Optional
-            showTodayButton: 'true', //Optional
-            modalHeaderColor: 'bar-positive', //Optional
-            modalFooterColor: 'bar-positive', //Optional
-            //from: new Date(2012, 8, 2), //Optional
-            //to: new Date(2018, 8, 25),  //Optional
-            dateFormat: 'dd-MM-yyyy', //Optional
-            closeOnSelect: false, //Optional
-            callback: function (val) {  //Mandatory
-                if (val) {
-                    vm.endDatepickerObject.inputDate = val;
-                    vm.updateEndTimeStamp();
-                }
-            }
-        };
-    }
-
-    function formatTime(inputEpochTime) {
-        var selectedTime = new Date(inputEpochTime * 1000);
-        var hours = selectedTime.getUTCHours();
-        var minutes = selectedTime.getUTCMinutes();
-        return (hours < 10 ? '0' : '') + hours + ' : ' + (minutes < 10 ? '0' : '') + minutes;
-    }
-
-    vm.updateStartTimeStamp = function () {
-        var date = vm.startDatepickerObject.inputDate;
-        var hours = Math.floor(vm.startTimePickerObject.inputEpochTime / 3600);
-        var minutes = Math.floor((vm.startTimePickerObject.inputEpochTime - hours * 3600) / 60);
-        date.setHours(hours, minutes, 0, 0);
-        vm.startTimeStamp = new Date(date.getTime());
-    };
-
-    vm.updateEndTimeStamp = function () {
-        var date = vm.endDatepickerObject.inputDate;
-        var hours = Math.floor(vm.endTimePickerObject.inputEpochTime / 3600);
-        var minutes = Math.floor((vm.endTimePickerObject.inputEpochTime - hours * 3600) / 60);
-        date.setHours(hours, minutes, 0, 0);
-        vm.endTimeStamp = new Date(date.getTime());
-    };
 
     function getDataForPeriod() {
-        var r = SmartWatchView.findOne({});
+        console.log("looking for:" + vm.startDate.date);
+        var r = SmartWatchView.findOne({date: vm.startDate.date});
         console.log("getperiod");
         console.log(r);
         return r;
-
-        /*return Registrations.find({
-         $and: [
-         {moduleName: vm.dataType},
-         {timestamp: {$exists: true}},
-         {
-         timestamp: {
-         $gte: vm.getReactively('startTimeStamp'),
-         $lte: vm.getReactively('endTimeStamp')
-         }
-         }
-         ]
-         }, {
-         sort: {timestamp: -1}
-         }).fetch();*/
     }
 
     //Table display helper methods
     //----------------------------
-    function processData() {
+    vm.processData = () => {
+
+
+        // from  before ↓
+
         vm.tableObject = {};
         vm.graphProperties = [];
 
         //Add any properties to be ignored from table/graph display
         var ignoredProperties = [
-            'date', 'userId', 'device', 'timestamp', 'B'
+            'date', 'userId', 'device', 'timestamp', 'button'
         ];
 
         var data = getDataForPeriod();
@@ -221,9 +95,9 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
             //object = { 'property': [value, value, value ...], ... }
             vm.tableObject['timestamp'] = _.pluck(data, 'timestamp');
             vm.tableObject['timestamp'].forEach(function (timestamp, index) {
-                    var value = vm.tableObject['timestamp'][index];
-                    vm.tableObject['timestamp'][index] = Date.parse(value);
-                });
+                var value = vm.tableObject['timestamp'][index];
+                vm.tableObject['timestamp'][index] = Date.parse(value);
+            });
 
             var propertyIndex = 0;
             for (var property in data[0]) {
@@ -241,6 +115,13 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
                             //property value invalid if string or array or null
                             return typeof property == 'string' || $.isArray(property) || !isProperty;
                         });
+
+                /*    var propertyName;
+                    if (property == 'G') propertyName = 'graphDataMeasurements.activity';
+                    if (property == 'T') propertyName = 'graphDataMeasurements.temperature';
+                    if (property == 'L') propertyName = 'graphDataMeasurements.lightIntensity';
+                    else propertyName = property;*/
+
                     var graphProperty = {
                         name: property,
                         color: vm.colors[propertyIndex],
@@ -317,7 +198,7 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
     vm.graph.options = {
         chart: {
             type: 'lineChart',
-            height: window.innerHeight / 2,
+            height: window.innerHeight / 3 * 2,
             showLegend: false,
             interpolate: 'linear',
             noData: $translate.instant('graphData.noData'),
@@ -483,7 +364,6 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
             //console.log('Running vm.rowBackground for property timestamp!');
         }
     };
-
 
 
     $scope.$watch(

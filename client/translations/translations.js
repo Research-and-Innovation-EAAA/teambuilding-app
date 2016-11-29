@@ -254,6 +254,16 @@ function config($translateProvider) {
             delete: 'Delete',
             cancel: 'Cancel',
             edit: 'Edit registration'
+        },
+
+        graphDataMeasurements: {
+            date: 'Date:',
+
+            noData: 'No data available.',
+            activity: 'Activity',
+            temperature: 'Temperature',
+            lightIntensity: 'Light intensity',
+            button: 'Button'
         }
     });
 
@@ -493,6 +503,7 @@ function config($translateProvider) {
         graphData: {
             from: 'Fra:',
             till: 'Til:',
+            startDate: 'Dato:', // TODO different text
 
             noData: 'Ingen data tilgængelige for denne periode.',
             table: 'Tabel',
@@ -510,6 +521,16 @@ function config($translateProvider) {
             delete: 'Slet',
             cancel: 'Annuller',
             edit: 'Ændre registrering'
+        },
+
+        graphDataMeasurements: {
+            date: 'Dato:', // TODO different text
+
+            noData: 'Ingen data tilgængelige.',
+            activity: 'Bevægelse',
+            temperature: 'Temperatur',
+            lightIntensity: 'Lysintensistet',
+            button: 'Trykknap', // TODO translate
         }
 
     });
