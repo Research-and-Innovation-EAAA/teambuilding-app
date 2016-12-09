@@ -7,7 +7,7 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
     //Subscriptions
     //-------------
     $scope.$on('$ionicView.beforeEnter', function (event, data) {
-        vm.autorun(() => {
+     //   vm.autorun(() => {
             vm.subscribe('smartWatchView',
                 () => [vm.getReactively('dataType')],
                 {
@@ -17,7 +17,7 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
                     }
                 }
             );
-        });
+     //   });
     });
 
     //Code to be run every time view becomes visible
@@ -59,9 +59,8 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
         }
         console.log(vm.recordDates);
 
-        if (!vm.startDate) { // for the first time select the newest set of data
-            vm.startDate = vm.recordDates[0];
-        }
+        // by default, select the newest set of data
+        vm.startDate = vm.recordDates[0];
     }
 
     function getDataForPeriod() {

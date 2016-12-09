@@ -7,6 +7,8 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
     vm.activeModules = ModuleManagementService.activeModules;
     vm.modules = ModuleManagementService.modules;
 
+    vm.smartWatchShow = false;
+
     console.log('activeModules are: ', vm.activeModules);
 
     //Code to be run every time view becomes visible
@@ -25,16 +27,26 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
         passwordSignupFields: "USERNAME_ONLY"
     });
 
-    $scope.$on('$ionicView.enter', function()
-    {
-        $timeout(function()
-        {
+    $scope.$on('$ionicView.enter', function () {
+        $timeout(function () {
             $ionicNavBarDelegate.align('center');
         });
     });
 
     //Analytics
     Accounts.onLogin(function () {
+        //   vm.autorun(() => { // show or hide the smart watch box
+        vm.subscribe('smartWatchView',
+            () => ["smartwatch"],
+            {
+                onReady: () => {
+                    console.error(SmartWatchView.find({}).fetch());
+                    vm.smartWatchShow = Meteor.userId() && (SmartWatchView.find({}).count() != 0);
+                }
+            }
+        );
+        //   });
+
         ga('set', 'userId', Meteor.userId()); // Set the user ID using signed-in user_id.
         ga('set', 'dimension1', Meteor.userId()); // Set the custom dimension in Google Analytics to store the actual userId
     });
@@ -69,6 +81,17 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
         }
         else console.log("turning off analytics");
     });
+
+
+    // show or hide the smart watch box, depending on if there is data in DB, default: hidden
+    vm.subscribe('smartWatchView',
+        () => ["smartwatch"],
+        {
+            onReady: () => {
+                vm.smartWatchShow = (SmartWatchView.find({}).count() != 0);
+            }
+        }
+    );
 
 
     //Settings for turning modules on/off

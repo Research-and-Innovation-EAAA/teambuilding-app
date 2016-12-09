@@ -18,73 +18,18 @@ function MeasurementsCardController($scope, $reactive, $location) {
 
 
     vm.helpers({
-            latestRegistration: () => {
-                return SmartWatchView.findOne({
-                    device: 'smartwatch' //vm.getReactively('module.name')
-                }, {
-                    sort: {date: -1}
-                });
-            }
-        });
-
-    /*//Find module from name
-    function getModuleFromName() {
-        for (moduleIndex = 0; moduleIndex < Modules.length; moduleIndex++) {
-            if (Modules[moduleIndex].name === $scope.moduleName) {
-
-                vm.module = Modules[moduleIndex];
-                vm.moduleTitle = vm.module.name;
-
-                if (vm.module.frontPage !== undefined) {
-                    vm.iconStyle = {
-                        content: 'url(' + vm.module.frontPage.iconUrl + ')'
-                    };
-                    vm.barClass = vm.module.frontPage.barClass;
-
-                    vm.rowProperty = (rowNumber) => {
-                        var value = undefined;
-                        var registration = vm.latestRegistration;
-                        if (registration) {
-                            if (vm.module.frontPage.properties) {
-                                if (rowNumber >= vm.module.frontPage.properties.length)
-                                    return "";
-                                var propertyName = vm.module.frontPage.properties[rowNumber];
-                                if (registration)
-                                    value = registration[propertyName];
-                            } else if (vm.module.frontPage.propertyFunction) {
-                                value = vm.module.frontPage.propertyFunction(registration, rowNumber);
-                            };
-                        }
-
-                        if (value || (typeof value=="number" && !isNaN(value)))
-                            return value+"";
-                        else
-                            return "-";
-                    };
-
-                    vm.rowDescription = (rowNumber) => {
-                        var value = vm.module.frontPage.propertyDescription[rowNumber];
-                        if (value)
-                            return value;
-                        return "";
-                    };
-
-                    vm.rowMeasurement = (rowNumber) => {
-                        var measurement = vm.module.frontPage.propertyMeasurement;
-                        if (measurement && rowNumber<measurement.length)
-                            return measurement[rowNumber];
-                        return "";
-                    };
-                }
-            }
+        latestRegistration: () => {
+            return SmartWatchView.findOne({
+                device: 'smartwatch'
+            }, {
+                sort: {date: -1}
+            });
         }
-        console.log('getModuleFromName() called! module is', vm.module);
-        console.log('vm.moduleTitle is ', vm.moduleTitle);
-    }*/
+    });
 
     vm.moduleTitle = "Smart Watch Sleep";
     vm.iconStyle = "/question-mark.png";
-    vm.barClass= "bar-positive";
+    vm.barClass = "bar-positive";
 
     vm.showGraphData = () => {
         Session.set('graphDataType', "smartwatch");
@@ -99,7 +44,6 @@ function MeasurementsCardController($scope, $reactive, $location) {
             if (newValue != oldValue) {
                 console.log('Module name changed for component from ', oldValue, ' to ', newValue);
             }
-       //     getModuleFromName();
         }
     );
 }
