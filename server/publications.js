@@ -148,14 +148,14 @@
     });
 
     Meteor.publish("smartWatchView", function (device) {
-        console.log("we are here and device is " + device);
+        //console.log("we are here and device is " + device);
         var r = SmartWatchView.find(
             {
                 userId: this.userId,
                 device: device
             }
         );
-        console.log(r);
+        //console.log(r);
         return r;
     });
 })();
