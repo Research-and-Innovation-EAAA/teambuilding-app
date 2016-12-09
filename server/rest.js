@@ -1,5 +1,5 @@
 var Busboy = Meteor.npmRequire('busboy');
-var unzip = Meteor.npmRequire('unzip2');
+var Unzip = Meteor.npmRequire('unzip2');
 
 // Global API configuration
 var ApiV1config = {
@@ -57,7 +57,6 @@ Picker.route("*",
         console.log('x-auth-token ', req.headers['x-auth-token']);
         var userSelector = {
             "_id": req.headers['x-user-id'],
-            // "token": req.headers['x-auth-token']
             "services.resume.loginTokens.hashedToken": Accounts._hashLoginToken(req.headers['x-auth-token'])
         };
         console.log("userSelector: ", userSelector);
@@ -79,7 +78,6 @@ Picker.route(
 
         var userSelector = {
             "_id": req.headers['x-user-id'],
-            // "token": req.headers['x-auth-token']
             "services.resume.loginTokens.hashedToken": Accounts._hashLoginToken(req.headers['x-auth-token'])
         };
         console.log("userSelector: ", userSelector);
@@ -95,24 +93,7 @@ Picker.route(
         busboy.on('file', Meteor.bindEnvironment(function (fieldname, file, filename, encoding, mimetype) {
             console.log('Receiving file [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
 
-            /* TODO let only ZIP to be uploaded
-             if (mimetype != 'application/octet-stream') {
-             console.log('Wrong file type!');
-             res.writeHead(415, {Connection: 'close'});
-             res.end("Wrong file type, must be CSV in a ZIP file!");
-             return;
-             }*/
-
-
-            //         file.setEncoding('binary');
-            //     file.pipe(writeStream);
-
-            /*    res.writeHead(200, {
-             'Content-Type': 'text/csv',
-             'Content-Disposition': 'attachment; filename=test.csv'
-             });*/
-
-            file.pipe(unzip.Parse())
+            file.pipe(Unzip.Parse())
                 .on('entry', Meteor.bindEnvironment(function (entry) {
                     console.log(entry);
 
@@ -122,10 +103,11 @@ Picker.route(
                     if (type === "File") {
                         var date = /_(\d*).csv/i.exec(fileName)[1];
 
+                        // get stream to database
                         writeStream = SmartWatchFiles.upsertStream({
                             filename: fileName,
                             contentType: "text/csv",
-                            metadata: {owner: req.headers['x-user-id'], date: date} //TODO this.userId not working
+                            metadata: {owner: req.headers['x-user-id'], date: date}
                         });
 
                         entry.pipe(writeStream);
@@ -134,16 +116,6 @@ Picker.route(
                     }
                 }));
 
-
-            //.pipe(writeStream).on('finish', function () { console.log("UNZIPPING DONE") });
-
-            /*var bufs = [];
-             var bufSize = 0;
-             file.on('data', function (data) {
-             bufs[bufs.length] = data;
-             bufSize += data.length;
-             console.log('data + ' + bufSize + ':' + data);
-             });*/
             file.on('end', function () {
                 // res.end(Buffer.concat(bufs, bufSize));
                 //          res.end();
@@ -151,30 +123,14 @@ Picker.route(
                 res.end("Done uploading");
             });
 
-            /* file.on('end', function () {
-             console.log('File [' + fieldname + '] Finished');
-             res.end();
-             });*/
-            /*
-             file.on('data', function (data) {
-             console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
-             writeStream.write(buf2.toString());
-             });
-             file.on('end', function () {
-             console.log('File [' + fieldname + '] Finished');
-             writeStream.end();
-             });
-             */
         }));
         busboy.on('field', function (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
             console.log('Field [' + fieldname + ']: value: ' + val);
         });
         busboy.on('finish', function () {
             console.log('Done parsing form!');
-
-            /*            res.writeHead(200, {Connection: 'close'});
-             res.end("Done uploading");*/
         });
+
         req.pipe(busboy);
     });
 
@@ -182,6 +138,22 @@ Picker.route(
 Picker.route(
     ApiV1config.apipath + "/" + ApiV1config.version + '/smartwatch/:date',
     Meteor.bindEnvironment(function (params, req, res, next) {
+        console.log('x-user-id ', req.headers['x-user-id']);
+        console.log('x-auth-token ', req.headers['x-auth-token']);
+
+        var userSelector = {
+            "_id": req.headers['x-user-id'],
+            "services.resume.loginTokens.hashedToken": Accounts._hashLoginToken(req.headers['x-auth-token'])
+        };
+        console.log("userSelector: ", userSelector);
+        var user = Meteor.users.findOne(userSelector);
+        console.log("User: ", user);
+        if (!user) {
+            res.writeHead(401, {Connection: 'close'});
+            res.end("Not authorized");
+            return;
+        }
+
         if (req.method == "GET") {
             console.log("download");
 
@@ -202,8 +174,6 @@ Picker.route(
                 "metadata.owner": req.headers['x-user-id']
             });
 
-            //      fileStream.setEncoding('binary');
-
             res.writeHead(200, {
                 'Content-Type': 'text/csv',
                 'Content-Disposition': 'attachment; filename=file.csv'
@@ -215,16 +185,7 @@ Picker.route(
                 console.log('err:' + err);
             });
 
-            /*   var bufs = [];
-             var bufSize = 0;
-             fileStream.on('data', function (data) {
-             bufs[bufs.length] = data;
-             bufSize += data.length;
-             console.log('data + ' + bufSize + ':' + data);
-             });*/
             fileStream.on('end', function () {
-                //res.write(data);
-                //     res.write(Buffer.concat(bufs, bufSize));
                 res.end();
             });
         }
