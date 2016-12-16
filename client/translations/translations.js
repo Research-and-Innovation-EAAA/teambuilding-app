@@ -524,13 +524,12 @@ function config($translateProvider) {
         },
 
         graphDataMeasurements: {
-            date: 'Dato:', // TODO different text
+            date: 'Dato:',
 
             noData: 'Ingen data tilgængelige.',
             activity: 'Bevægelse',
             temperature: 'Temperatur',
-            lightIntensity: 'Lysintensistet',
-            button: 'Trykknap', // TODO translate
+            lightIntensity: 'Lysintensitet',
         }
 
     });

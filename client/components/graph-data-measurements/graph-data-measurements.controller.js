@@ -95,7 +95,7 @@ function GraphDataMeasurementsController($scope, $reactive, $timeout, $ionicActi
             vm.tableObject['timestamp'] = _.pluck(data, 'timestamp');
             vm.tableObject['timestamp'].forEach(function (timestamp, index) {
                 var value = vm.tableObject['timestamp'][index];
-                vm.tableObject['timestamp'][index] = Date.parse(value);
+                vm.tableObject['timestamp'][index] = moment(value);
             });
 
             var propertyIndex = 0;
