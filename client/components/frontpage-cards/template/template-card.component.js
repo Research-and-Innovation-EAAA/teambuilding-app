@@ -37,9 +37,7 @@ function TemplateCardController($scope, $reactive, $location, WizardStateAccesso
                 vm.moduleTitle = vm.module.name;
 
                 if (vm.module.frontPage !== undefined) {
-                    vm.iconStyle = {
-                        content: 'url(' + vm.module.frontPage.iconUrl + ')'
-                    };
+                    vm.iconSrc = vm.module.frontPage.iconUrl;
                     vm.barClass = vm.module.frontPage.barClass;
 
                     vm.rowProperty = (rowNumber) => {

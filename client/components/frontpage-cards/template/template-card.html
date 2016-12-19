@@ -1,8 +1,7 @@
 <div class="card frontpage-card">
     <div class="item item-divider bar ng-class: vm.barClass;">
-            <span class="frontpage-card-icon" ng-style=vm.iconStyle>
-            </span>
-        <strong translate>{{vm.moduleTitle}}</strong>
+        <span class="frontpage-card-icon"><img height="100%" ng-src="{{vm.iconSrc}}" /></span>
+        <strong style="float: left" translate>{{vm.moduleTitle}}</strong>
         <button style="float: right" class="button button-icon ion-plus-round"
                 ng-click="vm.newRegistration()"></button>
         <span style="padding-left: 50px; float: right;"></span>
