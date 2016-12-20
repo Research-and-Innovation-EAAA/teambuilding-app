@@ -22,6 +22,17 @@ ApiV1.addRoute('registrations', {authRequired: true}, {
     }
 });
 
+// Maps to: /api/registrations/metadata
+ApiV1.addRoute('registrations/metadata', {authRequired: true}, {
+    get: function () {
+        var regs = [];
+        Registrations.find({createdBy: this.userId}).forEach(function (reg) {
+            regs.push(reg);
+        });
+        return regs;
+    }
+});
+
 // Maps to: /api/registrations/:id
 ApiV1.addRoute('registrations/:id', {authRequired: true}, {
     get: function () {
@@ -402,6 +413,31 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                         "responses": {
                             "200": {
                                 "description": "Response contains all registrations owned by user."
+                            }
+                        }
+                    }
+                },
+                "/registrations/metadata": {
+                    "parameters": [
+                        {
+                            "name": "X-Auth-Token",
+                            "in": "header",
+                            "description": "Token used to access How-R-you",
+                            "type": "string",
+                            "required": true
+                        },
+                        {
+                            "name": "X-User-id",
+                            "in": "header",
+                            "description": "User identifier to access How-R-you",
+                            "type": "string",
+                            "required": true
+                        }
+                    ],
+                    "get": {
+                        "responses": {
+                            "200": {
+                                "description": "Response contains module annd field namess for registrations owned by user."
                             }
                         }
                     }
