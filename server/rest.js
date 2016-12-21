@@ -25,11 +25,19 @@ ApiV1.addRoute('registrations', {authRequired: true}, {
 // Maps to: /api/registrations/metadata
 ApiV1.addRoute('registrations/metadata', {authRequired: true}, {
     get: function () {
-        var regs = [];
-        Registrations.find({createdBy: this.userId}).forEach(function (reg) {
-            regs.push(reg);
+        var modules = {};
+        Registrations.find({createdBy: this.userId}).forEach(function(doc){
+            for (var key in doc){
+                var name = doc.moduleName;
+                if (!modules[name]) {
+                    modules[name] = [];
+                }
+                if(modules[name].indexOf(key) < 0){
+                    modules[name].push(key);
+                }
+            }
         });
-        return regs;
+        return modules;
     }
 });
 
