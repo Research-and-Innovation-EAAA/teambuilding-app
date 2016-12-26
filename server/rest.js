@@ -1,5 +1,6 @@
 var Busboy = Meteor.npmRequire('busboy');
 var Unzip = Meteor.npmRequire('unzip2');
+var Flat = Meteor.npmRequire('flat');
 
 // Global API configuration
 var ApiV1config = {
@@ -16,7 +17,7 @@ ApiV1.addRoute('registrations', {authRequired: true}, {
     get: function () {
         var regs = [];
         Registrations.find({createdBy: this.userId}).forEach(function (reg) {
-            regs.push(reg);
+            regs.push(Flat(reg));
         });
         return regs;
     }
@@ -27,7 +28,8 @@ ApiV1.addRoute('registrations/metadata', {authRequired: true}, {
     get: function () {
         var modules = {};
         Registrations.find({createdBy: this.userId}).forEach(function(doc){
-            for (var key in doc){
+            var flatdoc = Flat(doc);
+            for (var key in flatdoc){
                 var name = doc.moduleName;
                 if (!modules[name]) {
                     modules[name] = [];
