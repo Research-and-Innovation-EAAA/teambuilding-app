@@ -36,45 +36,6 @@ function TemplateCardController($scope, $reactive, $location, WizardStateAccesso
                 vm.module = Modules[moduleIndex];
                 vm.moduleTitle = vm.module.name;
 
-                if (vm.module.frontPage !== undefined) {
-                    vm.iconSrc = vm.module.frontPage.iconUrl;
-                    vm.barClass = vm.module.frontPage.barClass;
-
-                    vm.rowProperty = (rowNumber) => {
-                        var value = undefined;
-                        var registration = vm.latestRegistration;
-                        if (registration) {
-                            if (vm.module.frontPage.properties) {
-                                if (rowNumber >= vm.module.frontPage.properties.length)
-                                    return "";
-                                var propertyName = vm.module.frontPage.properties[rowNumber];
-                                if (registration)
-                                    value = registration[propertyName];
-                            } else if (vm.module.frontPage.propertyFunction) {
-                                value = vm.module.frontPage.propertyFunction(registration, rowNumber);
-                            };
-                        }
-
-                        if (value || (typeof value=="number" && !isNaN(value)))
-                            return value+"";
-                        else
-                            return "-";
-                    };
-
-                    vm.rowDescription = (rowNumber) => {
-                        var value = vm.module.frontPage.propertyDescription[rowNumber];
-                        if (value)
-                            return value;
-                        return "";
-                    };
-
-                    vm.rowMeasurement = (rowNumber) => {
-                        var measurement = vm.module.frontPage.propertyMeasurement;
-                        if (measurement && rowNumber<measurement.length)
-                            return measurement[rowNumber];
-                        return "";
-                    };
-                }
             }
         }
         console.log('getModuleFromName() called! module is', vm.module);
@@ -86,11 +47,6 @@ function TemplateCardController($scope, $reactive, $location, WizardStateAccesso
         WizardStateAccessor.setRegistration(vm.module.name, undefined);
         Session.set('updating', undefined);
         $location.path("app/questionwizard");
-    };
-
-    vm.showGraphData = () => {
-        Session.set('graphDataType', vm.module.name);
-        $location.path("app/graphdata")
     };
 
     $scope.$watch(

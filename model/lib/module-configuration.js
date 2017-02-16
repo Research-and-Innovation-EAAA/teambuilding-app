@@ -1,7 +1,7 @@
 // use translation IDs for names, propertyDescriptions, propertyMeasurements, questions and answers
 
 Modules = [
-
+/*
     //Medicine module
     {
         name: "medicine",
@@ -230,7 +230,7 @@ Modules = [
             iconUrl: "/mucositistransparent.png",
             barClass: "bar-energized"
         }
-    }
+    }*/
 /*
     //Arthritis pain module
     {

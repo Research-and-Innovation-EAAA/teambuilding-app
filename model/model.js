@@ -1,8 +1,3 @@
-//Medicine = new Mongo.Collection("Medicine");
-//Bloodsample = new Mongo.Collection("Bloodsample");
-//Pain = new Mongo.Collection("Pain");
-//Mucositis = new Mongo.Collection("Mucositis");
-
 Registrations = new Mongo.Collection("Registrations");
 
 Meteor.methods({
