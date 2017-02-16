@@ -55,7 +55,7 @@ function sliderController($scope, $reactive, WizardHandler, WizardState, WizardS
         console.log("config is ", vm.config);
         console.log("vm.question is " + vm.question);
 
-        var value = 0;
+        var value = vm.config.defaultValue;
         if (typeof vm.registration[vm.config.propertyName] === 'number'){
             value = vm.registration[vm.config.propertyName];
         }

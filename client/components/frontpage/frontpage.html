@@ -11,19 +11,19 @@
                  delegate-handle="front-page-scroll">
         <div class="row responsive-md bigScreen-topRow">
             <div class="col">
-                <calendar></calendar>
-            </div>
-            <div class="col">
                 <div class="card item item-text-wrap frontpage-topcomponent">
                     <div class="row">
                         <div id="calendar-date" class="col-33">
                             <calendar-date></calendar-date>
                         </div>
                         <div class="col">
-                            <reminders></reminders>
+                            <h1>Event name</h1>
                         </div>
                     </div>
-                    <notes></notes>
+                    <div>More information coming here<br>
+                        <b>12:00-14:00</b> Hello<br>
+                        <b>16:00-17:00</b> Bye<br>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,11 +35,6 @@
             <div class="col-50 frontpage-col" ng-if="$index + 1 < vm.activeModules.length">
                 <template-card
                         module-name="{{vm.activeModules[$index+1]}}"></template-card>
-            </div>
-        </div>
-        <div class="row responsive-md">
-            <div class="col-50 frontpage-col">
-                <measurements-card module-name="smartwatch" ng-show="vm.smartWatchShow"></measurements-card>
             </div>
         </div>
     </ion-content>

@@ -1,4 +1,4 @@
-# How-R-you app #
+# Teambuilding feedback app #
 
 ## Synopsis
 
