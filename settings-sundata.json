@@ -2,17 +2,17 @@
   "public": {
     "analyticsSettings": {
       "Google Analytics" : {
-        "trackingId": "UA-82492528-2NONONO"
+        "trackingId": "XXX"
       },
       "KadiraAccount": {
-        "appId": "vjeTviT7BditRahWrNONONO",
-        "appSecret": "fce22962-2ab4-4a82-9fa4-9a9dfc2e70fbNONONO"
+        "appId": "XXX",
+        "appSecret": "XXX"
       }
     }
   },
   "kadira": {
     "debug": {
-      "authKey": "googleglass02sundataNONONO"
+      "authKey": "XXX"
     }
   }
 }
