@@ -89,39 +89,6 @@
         })
     });
 
-    Meteor.publish("notes", function () {
-        return Notes.find({
-            $and: [
-                {createdBy: this.userId},
-                {createdBy: {$exists: true}}
-            ]
-        });
-    });
-
-    Meteor.startup(function () {
-        if (Meteor.isServer) {
-            Notes._ensureIndex({"createdBy": 1});
-        }
-    });
-
-    Meteor.publish("reminders", function () {
-        return Reminders.find({
-            $or: [
-                {isListReminders: true},
-                {
-                    $and: [
-                        {createdBy: this.userId},
-                        {createdBy: {$exists: true}}
-                    ]
-                }]
-        });
-    });
-
-    Meteor.startup(function () {
-        if (Meteor.isServer) {
-            Reminders._ensureIndex({"createdBy": 1});
-        }
-    });
 
     Meteor.publish("settings", function () {
         return Settings.find(
@@ -147,15 +114,12 @@
         );
     });
 
-    Meteor.publish("smartWatchView", function (device) {
-        //console.log("we are here and device is " + device);
-        var r = SmartWatchView.find(
+    Meteor.publish("events", function () {
+        return Events.find(
             {
-                userId: this.userId,
-                device: device
+                // TODO add only upcoming? events
             }
         );
-        //console.log(r);
-        return r;
     });
+
 })();

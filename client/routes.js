@@ -8,6 +8,14 @@ angular.module('leukemiapp')
               url: '/app',
               templateUrl: 'client/components/side-menu/side-menu.html'
            })
+           .state('app.eventselect', {
+               url: '/eventselect',
+               views: {
+                   'menuContent': {
+                       templateUrl: 'client/components/event-select/event-select.html'
+                   }
+               }
+           })
            .state('app.frontpage', {
               url: '/frontpage',
               views: {
@@ -31,24 +39,8 @@ angular.module('leukemiapp')
                     templateUrl: 'client/components/wizard/question-wizard.html'
                  }
               }
-           })
-           .state('app.graphdata', {
-              url: '/graphdata',
-              views: {
-                 'menuContent': {
-                    templateUrl: 'client/components/graph-data/graph-data.html'
-                 }
-              }
-           })
-           .state('app.graphdatameasurements', {
-               url: '/graphdatameasurements',
-               views: {
-                   'menuContent': {
-                       templateUrl: 'client/components/graph-data-measurements/graph-data-measurements.html'
-                   }
-               }
            });
 
        // if none of the above states are matched, use this as the fallback
-       $urlRouterProvider.otherwise('/app/frontpage');
+       $urlRouterProvider.otherwise('/app/eventselect');
     });

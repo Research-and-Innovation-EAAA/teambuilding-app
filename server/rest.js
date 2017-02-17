@@ -1,3 +1,4 @@
+
 var Busboy = Meteor.npmRequire('busboy');
 var Unzip = Meteor.npmRequire('unzip2');
 var Flat = Meteor.npmRequire('flat');
@@ -50,25 +51,6 @@ ApiV1.addRoute('registrations/:id', {authRequired: true}, {
     }
 });
 
-// Maps to: /api/smartwatchview
-ApiV1.addRoute('smartwatchview', {authRequired: true}, {
-    post: function () {
-        console.log('Adding view data');
-
-        var data = JSON.parse(this.bodyParams.data);
-
-        SmartWatchView.insert({
-            "date": this.bodyParams.date,
-            "device": this.bodyParams.device,
-            "userId": this.userId,
-            "data": data
-        });
-
-        return {
-            statusCode: 201
-        };
-    }
-});
 
 //picker
 Picker.route("*",
