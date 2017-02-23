@@ -16,11 +16,11 @@ angular.module('leukemiapp')
                    }
                }
            })
-           .state('app.frontpage', {
-              url: '/frontpage',
+           .state('app.event', {
+              url: '/event',
               views: {
                  'menuContent': {
-                    templateUrl: 'client/components/frontpage/frontpage.html'
+                    templateUrl: 'client/components/event/event.html'
                  }
               }
            })

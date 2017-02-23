@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('eventSelectController', EventSelectController);
 
-function EventSelectController($scope, $rootScope, $reactive, $ionicNavBarDelegate, $timeout) {
+function EventSelectController($scope, $rootScope, $location, $reactive, $ionicNavBarDelegate, $timeout) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -29,6 +29,21 @@ function EventSelectController($scope, $rootScope, $reactive, $ionicNavBarDelega
             $ionicNavBarDelegate.align('center');
         });
     });
+
+    vm.showEvent = function(){
+        var event = Events.findOne({password:vm.eventPassword});
+        console.log(event);
+
+        if (event != null) {
+            Session.set('eventId', event._id);
+            Session.set('event', event);
+            $location.path("app/event");
+        }
+        else alert("No event found!");
+    }
+
+
+
 
  /*   //Analytics
     Accounts.onLogin(function () {

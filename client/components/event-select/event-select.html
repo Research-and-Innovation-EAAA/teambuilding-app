@@ -1,18 +1,9 @@
 <ion-view view-title="Teambuilding" ng-controller="eventSelectController as vm">
-    <!-- Login button
+    <!-- Login button -->
     <ion-nav-buttons side="left">
         <login-buttons></login-buttons>
-    </ion-nav-buttons>-->
+    </ion-nav-buttons>
     <ion-content class="default-background">
-        <div class="row responsive-md bigScreen-topRow">
-            <div class="col">
-                <h1>SELECT YOUR EVENT PLS</h1>
-                <div>More information coming here<br>
-                    <b>12:00-14:00</b> Hello<br>
-                    <b>16:00-17:00</b> Bye<br>
-                </div>
-            </div>
-        </div>
 
         <div ng-repeat="event in vm.events" class="row responsive-md">
             <div class="col-50 frontpage-col">
@@ -24,10 +15,18 @@
             </div>
         </div>
 
-        <input id="eventpassword"
-               type="text"
-               ng-model="vm.eventPassword">
+        <div class="eventPasswordInput">
+        <form>
+            <input id="eventpassword"
+                   type="text"
+                   autocomplete="off"
+                   ng-model="vm.eventPassword">
+            <ion-input type="text" placeholder="Username"></ion-input>
 
-        <button class="ion-button round"><ion-icon name="arrow-forward"></ion-icon>Enter</button>
+            <button id="enterBtn" ng-click="vm.showEvent()">Enter</button>
+        </form>
+        </div>
+
+
     </ion-content>
 </ion-view>

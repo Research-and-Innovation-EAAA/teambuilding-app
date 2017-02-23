@@ -1,0 +1,20 @@
+<div ng-controller="textInputController as vm">
+
+    <section class="padding-horizontal-50 top-margin">
+        <div style="width: 100%">
+
+            <div class="row num-input-row responsive-sm row-center" ng-repeat="question in vm.questions">
+                <div class="col">
+                    <span class="input-label">{{question.question}}</span>
+                </div>
+                <div class="col col-75">
+                    <textarea
+                            ng-model="vm.registration[question.propertyName]"
+                            ng-blur="vm.updateRegistration()"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>

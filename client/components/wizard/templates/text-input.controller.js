@@ -1,6 +1,6 @@
-angular.module('leukemiapp').controller('numberInputsController', numberInputsController);
+angular.module('leukemiapp').controller('textInputController', textInputController);
 
-function numberInputsController($scope, $reactive, WizardHandler, WizardState, WizardStateAccessor) {
+function textInputController($scope, $reactive, WizardHandler, WizardState, WizardStateAccessor) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -35,9 +35,10 @@ function numberInputsController($scope, $reactive, WizardHandler, WizardState, W
                 break;
             }
         }
+        vm.config = config;
         console.log("config is ", config);
 
-        vm.questions = config.questions;
+        vm.question = config.question;
         vm.mandatory = config.mandatory;
 
         vm.registration = WizardState[vm.dataType];
@@ -46,10 +47,8 @@ function numberInputsController($scope, $reactive, WizardHandler, WizardState, W
     function initData() {
         WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
 
-        for (question in vm.questions) {
-            if (vm.registration[vm.questions[question].propertyName] === undefined)
-                vm.registration[vm.questions[question].propertyName] = null;
-        }
+        if (vm.registration[vm.config.propertyName] == undefined || vm.registration[vm.config.propertyName] == null || vm.registration[vm.config.propertyName] == 0)
+            vm.registration[vm.config.propertyName] = [];
 
         vm.init = true;
     }
@@ -66,11 +65,10 @@ function numberInputsController($scope, $reactive, WizardHandler, WizardState, W
 
     vm.validateData = (registration) => {
         if (vm.mandatory) {
-            for (question in vm.questions) {
-                var prop = registration[vm.questions[question].propertyName];
-                if (!prop && prop!==0) {
-                    return false;
-                }
+
+            var prop = registration[registration[vm.config.propertyName]];
+            if (!prop && prop !== 0) {
+                return false;
             }
         }
         return true;

@@ -7,6 +7,8 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
     vm.activeModules = ModuleManagementService.activeModules;
     vm.modules = ModuleManagementService.modules;
 
+    vm.event = Session.get('event');
+
     console.log('activeModules are: ', vm.activeModules);
 
     //Code to be run every time view becomes visible
@@ -16,14 +18,14 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
             vm.subscribe('moduleData',
                 () => [],
                 () => {
-                    console.log('Subscription ready for frontpage card!');
+                    console.log('Subscription ready for event card!');
                 });
         });
     });
 
-    Accounts.ui.config({
+/*    Accounts.ui.config({
         passwordSignupFields: "USERNAME_ONLY"
-    });
+    });*/
 
     $scope.$on('$ionicView.enter', function () {
         $timeout(function () {
@@ -67,17 +69,6 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
         }
         else console.log("turning off analytics");
     });
-
-
-    // show or hide the smart watch box, depending on if there is data in DB, default: hidden
-    vm.subscribe('smartWatchView',
-        () => ["smartwatch"],
-        {
-            onReady: () => {
-                vm.smartWatchShow = (SmartWatchView.find({}).count() != 0);
-            }
-        }
-    );
 
 
     //Settings for turning modules on/off

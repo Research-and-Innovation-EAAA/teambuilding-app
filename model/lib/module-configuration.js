@@ -105,20 +105,6 @@ Modules = [
                     }
                 },
                 {
-                    stepName: "pain.type",
-                    stepTemplate: {
-                        url: "client/components/wizard/templates/simple-question.html",
-                        config: {
-                            propertyName: "painType",
-                            question: "pain.whereIsPain",
-                            answers: ["pain.stomach", "pain.legs", "pain.arms", "pain.head", "pain.other"]
-                        }
-                    },
-                    validation: (registration) => {
-                        return registration.painType !== undefined;
-                    }
-                },
-                {
                     stepName: "pain.intensity",
                     stepTemplate: "client/components/wizard/pain/qw-pain-03.html",
                     validation: (registration) => {

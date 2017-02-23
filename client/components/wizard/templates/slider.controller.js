@@ -27,8 +27,8 @@ function sliderController($scope, $reactive, WizardHandler, WizardState, WizardS
         for (i = 0; i < Modules.length; i++) {
             if (Modules[i].name === vm.dataType) {
 
-                if (Modules[i].wizard.steps[vm.stepNumber - 2] !== undefined) {
-                    step = Modules[i].wizard.steps[vm.stepNumber - 2];
+                if (Modules[i].wizard.steps[vm.stepNumber - 1] !== undefined) {
+                    step = Modules[i].wizard.steps[vm.stepNumber - 1];
 
                     if (step.stepTemplate.config !== undefined) {
                         if (vm.stepTemplateUrl !== undefined && vm.stepTemplateUrl !== step.stepTemplate.url)
@@ -47,6 +47,9 @@ function sliderController($scope, $reactive, WizardHandler, WizardState, WizardS
         }
 
         vm.registration  = WizardState[vm.dataType];
+        if(vm.registration === undefined){
+            vm.registration = {};
+        }
 
         vm.question = vm.config.question;
         vm.positiveText = vm.config.positiveText;

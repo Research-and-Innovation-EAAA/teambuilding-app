@@ -19,39 +19,39 @@
                     </div>
                     <ion-footer-bar class="bar">
                         <section style="width: 100%">
-                    <span ng-if="qwiz.stepNumber == 1">
-                        <a id="wiz-nav-button"
-                           class="button ion-ios-undo button-royal icon-left"
-                           ng-click="qwiz.cancelRegistration()"
-                           value="Cancel" translate>wizard.cancel</a>
-                    </span>
+                            <span ng-if="qwiz.stepNumber == 1">
+                                <a id="wiz-nav-button"
+                                   class="button ion-ios-undo button-royal icon-left"
+                                   ng-click="qwiz.cancelRegistration()"
+                                   value="Cancel" translate>wizard.cancel</a>
+                            </span>
                             <span ng-if="qwiz.stepNumber > 1">
-                        <a id="wiz-nav-button"
-                           class="button ion-chevron-left button-royal icon-left"
-                           wz-previous="qwiz.stepNumber = qwiz.stepNumber - 1"
-                           value="Previous" translate>wizard.previous</a>
-                    </span>
+                                <a id="wiz-nav-button"
+                                   class="button ion-chevron-left button-royal icon-left"
+                                   wz-previous="qwiz.stepNumber = qwiz.stepNumber - 1"
+                                   value="Previous" translate>wizard.previous</a>
+                            </span>
                             <span ng-if="qwiz.stepNumber < qwiz.steps.length">
-                        <a id="wiz-nav-button"
-                           style="float:right"
-                           class="button ion-chevron-right button-royal icon-right"
-                           wz-next="qwiz.nextWizardStep()"
-                           value="Next" translate>wizard.next</a>
-                    </span>
+                                <a id="wiz-nav-button"
+                                   style="float:right"
+                                   class="button ion-chevron-right button-royal icon-right"
+                                   wz-next="qwiz.nextWizardStep()"
+                                   value="Next" translate>wizard.next</a>
+                            </span>
                             <span ng-if="qwiz.stepNumber == qwiz.steps.length && qwiz.isLoggedIn">
-                        <a id="wiz-nav-button"
-                           style="float:right"
-                           class="button ion-archive button-royal icon-right"
-                           wz-finish="qwiz.nextWizardStep() ? $ionicGoBack() : null">
-                            {{ qwiz.finishButtonText() }}
-                        </a>
-                    </span>
+                                <a id="wiz-nav-button"
+                                   style="float:right"
+                                   class="button ion-archive button-royal icon-right"
+                                   wz-finish="qwiz.nextWizardStep() ? $ionicGoBack() : null">
+                                    {{ qwiz.finishButtonText() }}
+                                </a>
+                            </span>
                             <span ng-if="qwiz.stepNumber == qwiz.steps.length - 1 && !qwiz.isLoggedIn">
-                        <a id="wiz-nav-button"
-                           style="float:right"
-                           class=""
-                           translate>wizard.saveRegistrationLoggedOut</a>
-                    </span>
+                                <a id="wiz-nav-button"
+                                   style="float:right"
+                                   class=""
+                                   translate>wizard.saveRegistrationLoggedOut</a>
+                            </span>
                         </section>
                     </ion-footer-bar>
                 </wizard>

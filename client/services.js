@@ -113,20 +113,20 @@ angular.module('leukemiapp')
         };
 
         service.getRegistration = (type) => {
-                return WizardState[type];
+            return WizardState[type];
         };
 
         service.setRegistration = (type, registration) => {
-                WizardState[type] = registration;
-            };
+            WizardState[type] = registration;
+        };
 
         service.registerValidateFunction = (type, validateFunction) => {
-                service.validateFunction[type] = validateFunction;
-            };
+            service.validateFunction[type] = validateFunction;
+        };
 
         service.validate = (type, registration, from, to) => {
             if (registration && service.validateFunction[type]) {
-                return service.validateFunction[type](registration, from?from-2:from, to?to-2:to);
+                return service.validateFunction[type](registration, from ? from - 1 : from, to ? to - 1 : to);
             }
 
             return undefined;

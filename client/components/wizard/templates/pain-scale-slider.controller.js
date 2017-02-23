@@ -25,8 +25,8 @@ function painScaleSliderController($scope, $reactive, WizardHandler, WizardState
    for (i = 0; i < Modules.length; i++) {
       if (Modules[i].name === vm.dataType) {
 
-         if (Modules[i].wizard.steps[stepNumber - 2] !== undefined) {
-            step = Modules[i].wizard.steps[stepNumber - 2];
+         if (Modules[i].wizard.steps[stepNumber - 1] !== undefined) {
+            step = Modules[i].wizard.steps[stepNumber - 1];
 
             if (step.stepTemplate.config !== undefined) {
                config = step.stepTemplate.config;

@@ -18,16 +18,6 @@ function TemplateCardController($scope, $reactive, $location, WizardStateAccesso
 
     getModuleFromName();
 
-    vm.helpers({
-            latestRegistration: () => {
-                return Registrations.findOne({
-                    moduleName: vm.getReactively('module.name')
-                }, {
-                    sort: {timestamp: -1}
-                });
-            }
-        });
-
     //Find module from name
     function getModuleFromName() {
         for (moduleIndex = 0; moduleIndex < Modules.length; moduleIndex++) {

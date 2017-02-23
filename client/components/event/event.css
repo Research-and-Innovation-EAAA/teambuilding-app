@@ -1,11 +1,11 @@
 @media (min-width: 768px) {
     .frontpage-topcomponent {
-        min-height: 365px;
+        min-height: 200px;
         /*height: 100%;*/
     }
 
     .frontpage-card {
-        min-height: 200px;
+        min-height: 70px;
     }
 }
 

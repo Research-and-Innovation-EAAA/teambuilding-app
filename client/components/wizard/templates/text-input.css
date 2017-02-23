@@ -1,0 +1,21 @@
+.num-input-row {
+    padding: 5px 20px;
+    border: 1px solid #DDD;
+    background-color: white;
+}
+
+.row.num-input-row + .row.num-input-row{
+    margin: 0px;
+    margin-top: -5px;
+    padding: 5px 20px;
+}
+
+.num-input-row input {
+    width: 65%;
+    display: inline;
+    margin-right: 20px;
+}
+
+.num-input-row .input-label{
+    width: auto !important;
+}
