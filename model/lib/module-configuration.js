@@ -47,7 +47,7 @@ Modules = [
                                 property === 'createdBy' ||
                                 property === 'createdAt' ||
                                 property === 'updating' ||
-                                property === 'moduleName')
+                                property === 'moduleId')
                                 continue;
 
                             var bloodsample = registration[property];

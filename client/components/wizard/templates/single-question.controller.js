@@ -28,7 +28,7 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
         var step = {};
 
         for (i = 0; i < Modules.length; i++) {
-            if (Modules[i].name === vm.dataType) {
+            if (Modules[i]._id === vm.dataType) {
 
                 if (Modules[i].wizard.steps[vm.stepNumber - 1] !== undefined) {
                     step = Modules[i].wizard.steps[vm.stepNumber - 1];

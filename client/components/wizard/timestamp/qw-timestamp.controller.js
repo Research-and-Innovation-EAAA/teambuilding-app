@@ -10,7 +10,7 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
       registrationWithTimestamp: () => {
          return Registrations.findOne({
             $and: [
-               {moduleName: vm.dataType},
+               {moduleId: vm.dataType},
                {timestamp: vm.getReactively('timestamp')}
             ]
          });

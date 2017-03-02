@@ -7,7 +7,7 @@ Meteor.methods({
       }
       registration.createdBy = Meteor.userId();
       registration.createdAt = new Date();
-      registration.moduleName = collection;
+      registration.moduleId = collection;
 
       Registrations.insert(registration);
    },

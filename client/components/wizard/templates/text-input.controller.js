@@ -16,7 +16,7 @@ function textInputController($scope, $reactive, WizardHandler, WizardState, Wiza
         var config = {};
 
         for (i = 0; i < Modules.length; i++) {
-            if (Modules[i].name === vm.dataType) {
+            if (Modules[i]._id === vm.dataType) {
 
                 if (Modules[i].wizard.steps[vm.stepNumber - 1] !== undefined) {
                     step = Modules[i].wizard.steps[vm.stepNumber - 1];

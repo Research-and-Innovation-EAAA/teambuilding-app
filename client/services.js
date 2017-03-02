@@ -22,21 +22,19 @@ angular.module('leukemiapp')
             }
         });
 
-        service.toggleModule = (moduleName) => {
+        service.toggleModule = (moduleId) => {
             if (!!Meteor.userId()) {
-                if (moduleName !== undefined) {
-                    setTimeout(Meteor.call('setActiveModule', moduleName, service.modules[moduleName]), 1000);
+                if (moduleId !== undefined) {
+                    setTimeout(Meteor.call('setActiveModule', moduleId, service.modules[moduleId]), 1000);
                 }
             }
 
         };
 
         function startup() {
-
             if (!!Meteor.userId()) {
                 addCustomModules();
             }
-
         }
 
         function addCustomModules() {

@@ -17,8 +17,8 @@
         for (i = 0; i < modules.length; i++) {
             var regDocument = Registrations.findOne({
                 $and: [
-                    {moduleName: modules[i]},
-                    {moduleName: {$exists: true}},
+                    {moduleId: modules[i]},
+                    {moduleId: {$exists: true}},
                     {createdBy: this.userId},
                     {createdBy: {$exists: true}}
                 ]
@@ -42,8 +42,8 @@
 //        this.autorun(function () {
         return Registrations.find({
             $and: [
-                {moduleName: module},
-                {moduleName: {$exists: true}},
+                {moduleId: module},
+                {moduleId: {$exists: true}},
                 {createdBy: this.userId},
                 {createdBy: {$exists: true}},
                 {
@@ -62,7 +62,7 @@
 
     Meteor.startup(function () {
         if (Meteor.isServer) {
-            Registrations._ensureIndex({"moduleName": 1});
+            Registrations._ensureIndex({"moduleId": 1});
             Registrations._ensureIndex({"createdBy": 1});
             Registrations._ensureIndex({"timestamp": 1});
         }
@@ -76,8 +76,8 @@
             $and: [
                 {createdBy: this.userId},
                 {createdBy: {$exists: true}},
-                {moduleName: module},
-                {moduleName: {$exists: true}},
+                {moduleId: module},
+                {moduleId: {$exists: true}},
                 {timestamp: {$exists: true}},
                 {timestamp: timestamp}
             ]
@@ -107,8 +107,20 @@
     });
 
     Meteor.publish("customModules", function () {
+        var reg =  Registrations.find({
+            $and: [
+                {moduleId: {$exists: true}},
+                {createdBy: this.userId},
+                {createdBy: {$exists: true}}
+            ]},
+            {moduleId: 1, _id: 0} // projection is not working
+        ).fetch();
+        reg = _.pluck(reg, 'moduleId');
+        reg = _.uniq(reg);
+
         return CustomModules.find(
             {
+                _id : {$nin: reg}
                 // TODO only allowed modules by timestamp?
             }
         );

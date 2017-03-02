@@ -31,7 +31,7 @@ ApiV1.addRoute('registrations/metadata', {authRequired: true}, {
         Registrations.find({createdBy: this.userId}).forEach(function(doc){
             var flatdoc = Flat(doc);
             for (var key in flatdoc){
-                var name = doc.moduleName;
+                var name = doc.moduleId;
                 if (!modules[name]) {
                     modules[name] = [];
                 }

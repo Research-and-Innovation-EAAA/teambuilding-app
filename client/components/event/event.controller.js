@@ -10,11 +10,17 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
     //----------------------------------------------
     $scope.$on('$ionicView.beforeEnter', function (event, data) {
         vm.autorun(() => {
+            var now = new Date();
+
             vm.subscribe('customModules',
                 () => [],
                 () => {
                     console.log('Subscription ready for modules!');
-                    vm.modules = CustomModules.find({eventId: vm.event._id}).fetch();
+                    vm.modules = CustomModules.find({
+                        eventId: vm.event._id,
+                        startTime: {$lte: now},
+                        endTime: {$gte: now}
+                    }).fetch();
                     console.log(vm.modules);
                 });
         });
@@ -49,10 +55,6 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
                         type = Session.get('registrationType');
                         title = Session.get('registrationType');
                     }
-                    else if (toState.url == "/graphdata") {
-                        type = Session.get('graphDataType');
-                        title = Session.get('graphDataType');
-                    }
                     else {
                         title = "How-R-you";
                     }
@@ -77,8 +79,8 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
             return;
         }
 
-        Session.set('registrationType', module.name);
-        WizardStateAccessor.setRegistration(module.name, undefined);
+        Session.set('registrationType', module._id);
+        WizardStateAccessor.setRegistration(module._id, undefined);
         Session.set('updating', undefined);
         $location.path("app/questionwizard");
     };
