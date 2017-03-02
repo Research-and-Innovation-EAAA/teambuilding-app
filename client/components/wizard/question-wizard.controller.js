@@ -103,24 +103,14 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
 
             console.log("Save reg: ", registration);
 
-            if (registration._id) {
-                //registration.updating = undefined;
-                Meteor.call('updateRegistration', registration, (error, result) => {
-                    if (error) {
-                        saveError();
-                    } else {
-                        updateOk();
-                    }
-                });
-            } else {
-                Meteor.call('addRegistration', registration, vm.dataType, (error, result) => {
-                    if (error) {
-                        saveError();
-                    } else {
-                        saveOk();
-                    }
-                });
-            }
+
+            Meteor.call('addRegistration', registration, vm.dataType, (error, result) => {
+                if (error) {
+                    saveError();
+                } else {
+                    saveOk();
+                }
+            });
 
         }
         //}, 100);
@@ -183,21 +173,6 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
         });
     }
 
-    function updateOk() {
-        $ionicPopup.alert({
-            title: vm.dataType,
-            content: $translate.instant('wizard.updated')
-        });
-        WizardStateAccessor.setRegistration(vm.dataType, undefined);
-        Session.set('regValidated', undefined);
-
-        var analyticsSettings = Settings.findOne({key: 'analytics'});
-        if (!!analyticsSettings.value) {
-            analytics.track("Registration Updated " + vm.dataType, {
-                type: vm.dataType
-            });
-        }
-    }
 
     $scope.$watch(
         function steps() {

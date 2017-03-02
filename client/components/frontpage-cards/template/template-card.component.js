@@ -16,14 +16,29 @@ function TemplateCardController($scope, $reactive, $location, WizardStateAccesso
 
     vm.module = {};
 
+    //Code to be run every time view becomes visible
+    //----------------------------------------------
+    $scope.$on('$ionicView.beforeEnter', function (event, data) {
+        vm.autorun(() => {
+            vm.subscribe('customModules',
+                () => [],
+                () => {
+                    console.log('Subscription ready for modules!');
+                    vm.modules = CustomModules.find({eventId: vm.event._id}).fetch();
+                    console.log(vm.modules);
+                });
+        });
+    });
+
+
     getModuleFromName();
 
     //Find module from name
     function getModuleFromName() {
-        for (moduleIndex = 0; moduleIndex < Modules.length; moduleIndex++) {
-            if (Modules[moduleIndex].name === $scope.moduleName) {
+        for (moduleIndex = 0; moduleIndex < CustomModules.length; moduleIndex++) {
+            if (CustomModules[moduleIndex].name === $scope.moduleName) {
 
-                vm.module = Modules[moduleIndex];
+                vm.module = CustomModules[moduleIndex];
                 vm.moduleTitle = vm.module.name;
 
             }

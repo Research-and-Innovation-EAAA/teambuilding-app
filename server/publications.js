@@ -109,7 +109,7 @@
     Meteor.publish("customModules", function () {
         return CustomModules.find(
             {
-                // TODO add only for this user
+                // TODO only allowed modules by timestamp?
             }
         );
     });

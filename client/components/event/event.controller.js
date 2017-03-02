@@ -1,31 +1,29 @@
 angular.module('leukemiapp').controller('frontpageController', FrontpageController);
 
-function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicNavBarDelegate, ModuleManagementService, $timeout) {
+function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicNavBarDelegate, $location, WizardStateAccessor, $timeout) {
     $reactive(this).attach($scope);
     var vm = this;
 
-    vm.activeModules = ModuleManagementService.activeModules;
-    vm.modules = ModuleManagementService.modules;
-
     vm.event = Session.get('event');
-
-    console.log('activeModules are: ', vm.activeModules);
 
     //Code to be run every time view becomes visible
     //----------------------------------------------
     $scope.$on('$ionicView.beforeEnter', function (event, data) {
         vm.autorun(() => {
-            vm.subscribe('moduleData',
+            vm.subscribe('customModules',
                 () => [],
                 () => {
-                    console.log('Subscription ready for event card!');
+                    console.log('Subscription ready for modules!');
+                    vm.modules = CustomModules.find({eventId: vm.event._id}).fetch();
+                    console.log(vm.modules);
                 });
         });
     });
 
-/*    Accounts.ui.config({
-        passwordSignupFields: "USERNAME_ONLY"
-    });*/
+
+    /*    Accounts.ui.config({
+     passwordSignupFields: "USERNAME_ONLY"
+     });*/
 
     $scope.$on('$ionicView.enter', function () {
         $timeout(function () {
@@ -71,6 +69,21 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
     });
 
 
+    vm.newRegistration = (moduleIndex) => {
+        var module = vm.modules[moduleIndex];
+
+        if (module == null) {
+            console.error("Module index " + moduleIndex + " not found");
+            return;
+        }
+
+        Session.set('registrationType', module.name);
+        WizardStateAccessor.setRegistration(module.name, undefined);
+        Session.set('updating', undefined);
+        $location.path("app/questionwizard");
+    };
+
+
     //Settings for turning modules on/off
 
     $ionicModal.fromTemplateUrl("client/components/settings/settings.html", {
@@ -87,25 +100,18 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
 
     $scope.closeModal = function () {
         vm.modal.hide();
-        console.log('activeModules at vm.closeModal: ', vm.activeModules);
+        console.log('activeModules at vm.closeModal: ', vm.modules);
     };
 
     $scope.$on('modal.hidden', function () {
-        console.log('activeModules at modal.hidden', vm.activeModules);
+        console.log('activeModules at modal.hidden', vm.modules);
         refreshModules();
         //$ionicScrollDelegate.$getByHandle('front-page-scroll').resize();
         //$ionicScrollDelegate.$getByHandle('front-page-scroll').scrollTop();
     });
     // Execute action on remove modal
     $scope.$on('modal.removed', function () {
-        console.log('activeModules at modal.removed', vm.activeModules);
+        console.log('activeModules at modal.removed', vm.modules);
     });
-
-    function refreshModules() {
-        console.log('refreshModules called');
-        $timeout(function (scope) {
-            vm.activeModules = ModuleManagementService.activeModules;
-        });
-    }
 }
 

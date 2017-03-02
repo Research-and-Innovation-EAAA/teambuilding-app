@@ -29,9 +29,18 @@
                 </div>
             </div>
         </div>
-        <div ng-repeat="module in vm.activeModules" class="responsive-md">
+
+
+        <div ng-repeat="module in vm.modules" class="responsive-md">
             <div class="col-50 col-offset-25 frontpage-col">
-                <template-card module-name="{{vm.activeModules[$index]}}"></template-card>
+                <div class="card frontpage-card">
+                    <div class="item">
+                        <strong style="float: left">{{module.name}}</strong>
+                        <button style="float: right" class="button button-icon ion-chevron-right"
+                                ng-click="vm.newRegistration($index)"></button>
+                    </div>
+                </div>
+                <!--template-card module-name="{{module.name}}"></template-card-->
             </div>
         </div>
     </ion-content>
