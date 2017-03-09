@@ -106,21 +106,16 @@
         );
     });
 
-    Meteor.publish("customModules", function () {
-        var reg =  Registrations.find({
-            $and: [
-                {moduleId: {$exists: true}},
-                {createdBy: this.userId},
-                {createdBy: {$exists: true}}
-            ]},
-            {moduleId: 1, _id: 0} // projection is not working
-        ).fetch();
-        reg = _.pluck(reg, 'moduleId');
-        reg = _.uniq(reg);
+    Meteor.publish("modulesAndRegistrations", function () {
+        return [
+            CustomModules.find({}),
+            Registrations.find({"createdBy":this.userId})
+        ];
+    });
 
+    Meteor.publish("customModules", function () {
         return CustomModules.find(
             {
-                _id : {$nin: reg}
                 // TODO only allowed modules by timestamp?
             }
         );

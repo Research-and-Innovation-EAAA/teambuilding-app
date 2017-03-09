@@ -6,22 +6,44 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
 
     vm.event = Session.get('event');
 
+    function getModules(){
+        // get IDs of modules from completed registrations of a particular user
+        var reg =  Registrations.find({
+                $and: [
+                    {moduleId: {$exists: true}},
+                    {createdBy: Meteor.userId()},
+                    {createdBy: {$exists: true}}
+                ]},
+            {moduleId: 1, _id: 0} // projection is not working
+        ).fetch();
+        reg = _.pluck(reg, 'moduleId');
+        reg = _.uniq(reg);
+
+        var now = new Date();
+
+        return CustomModules.find(
+            {
+                _id : {$nin: reg}, // filter already filled in
+                eventId: vm.event._id,
+                startTime: {$lte: now, $exists: true},
+                endTime: {$gte: now, $exists: true}
+            }
+        ).fetch();
+    }
+
+
     //Code to be run every time view becomes visible
     //----------------------------------------------
     $scope.$on('$ionicView.beforeEnter', function (event, data) {
         vm.autorun(() => {
             var now = new Date();
 
-            vm.subscribe('customModules',
+            vm.subscribe('modulesAndRegistrations',
                 () => [],
                 () => {
-                    console.log('Subscription ready for modules!');
-                    vm.modules = CustomModules.find({
-                        eventId: vm.event._id,
-                        startTime: {$lte: now},
-                        endTime: {$gte: now}
-                    }).fetch();
-                    console.log(vm.modules);
+                    console.log('Subscription ready for modules and registrations!');
+                    vm.modules = getModules();
+                    console.log(JSON.stringify(vm.modules));
                 });
         });
     });
