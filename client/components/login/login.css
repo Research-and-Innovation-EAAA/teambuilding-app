@@ -1,0 +1,13 @@
+.eventPasswordInput{
+    border: 1px solid red;
+    background: palegoldenrod;
+}
+
+.login-link-text {
+    color: white;
+}
+
+login-buttons {
+    margin-left: 10px;
+    margin-top: 5px;
+}

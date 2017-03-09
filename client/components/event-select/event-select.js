@@ -20,10 +20,6 @@ function EventSelectController($scope, $rootScope, $location, $reactive, $ionicN
     vm.events = Events.find().fetch();
     vm.eventPassword = "";
 
-    Accounts.ui.config({
-        passwordSignupFields: "USERNAME_ONLY"
-    });
-
     $scope.$on('$ionicView.enter', function () {
         $timeout(function () {
             $ionicNavBarDelegate.align('center');
@@ -31,7 +27,8 @@ function EventSelectController($scope, $rootScope, $location, $reactive, $ionicN
     });
 
     vm.showEvent = function(){
-        var event = Events.findOne({password:vm.eventPassword});
+        var event = _.where(vm.events, {password:vm.eventPassword})[0];
+        // var event = Events.findOne({password:vm.eventPassword}); TODO not working???? return undefined, nothing in the collection?
         console.log(event);
 
         if (event != null) {

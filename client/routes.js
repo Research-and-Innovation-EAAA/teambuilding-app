@@ -8,6 +8,14 @@ angular.module('leukemiapp')
               url: '/app',
               templateUrl: 'client/components/side-menu/side-menu.html'
            })
+           .state('app.login', {
+               url: '/login',
+               views: {
+                   'menuContent': {
+                       templateUrl: 'client/components/login/login.html'
+                   }
+               }
+           })
            .state('app.eventselect', {
                url: '/eventselect',
                views: {
@@ -42,5 +50,5 @@ angular.module('leukemiapp')
            });
 
        // if none of the above states are matched, use this as the fallback
-       $urlRouterProvider.otherwise('/app/eventselect');
+       $urlRouterProvider.otherwise('/app/login');
     });
