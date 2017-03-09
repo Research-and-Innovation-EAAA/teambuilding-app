@@ -31,6 +31,22 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
         ).fetch();
     }
 
+    vm.futureModules = function(){
+        var now = new Date();
+
+        return CustomModules.find(
+            {
+                eventId: vm.event._id,
+                startTime: {$gte: now, $exists: true},
+            }
+        ).count();
+    }
+
+    vm.refresh = function (){
+        vm.modules = getModules();
+        console.log(JSON.stringify(vm.modules));
+        $scope.$broadcast('scroll.refreshComplete');
+    }
 
     //Code to be run every time view becomes visible
     //----------------------------------------------

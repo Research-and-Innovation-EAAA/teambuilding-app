@@ -9,6 +9,10 @@
     </ion-nav-buttons>
     <ion-content class="default-background"
                  delegate-handle="front-page-scroll">
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="vm.refresh()">
+        </ion-refresher>
         <div class="row responsive-md bigScreen-topRow">
             <div class="col">
                 <div class="card item item-text-wrap frontpage-topcomponent">
@@ -40,8 +44,16 @@
                                 ng-click="vm.newRegistration($index)"></button>
                     </div>
                 </div>
-                <!--template-card module-name="{{module.name}}"></template-card-->
             </div>
         </div>
+
+        <div ng-if="vm.modules.length == 0" class="responsive-md">
+            <div class="col-50 col-offset-25">
+                <strong style="text-align: center">Perfect! Everything has been filled in.</strong>
+                <strong ng-if="vm.futureModules() > 0">We'll see each other later!</strong>
+                <strong ng-if="vm.futureModules() == 0">Thanks for everything! It's been a great day :-)</strong>
+            </div>
+        </div>
+
     </ion-content>
 </ion-view>
