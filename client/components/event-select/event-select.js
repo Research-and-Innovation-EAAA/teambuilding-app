@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('eventSelectController', EventSelectController);
 
-function EventSelectController($scope, $rootScope, $location, $reactive, $ionicNavBarDelegate, $timeout) {
+function EventSelectController($scope, $rootScope, $location, $reactive, $ionicNavBarDelegate, $ionicPopup, $timeout) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -36,10 +36,18 @@ function EventSelectController($scope, $rootScope, $location, $reactive, $ionicN
             Session.set('event', event);
             $location.path("app/event");
         }
-        else alert("No event found!");
+        else {
+            $ionicPopup.alert({
+                title: 'No event found!',
+                template: "Incorrect event code. Please try again."
+            });
+        }
     }
 
-
+    vm.backToLogout = function(){
+        Meteor.logout();
+        $location.path("app/login");
+    }
 
 
  /*   //Analytics

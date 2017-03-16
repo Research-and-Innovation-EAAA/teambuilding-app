@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('loginController', LoginController);
 
-function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarDelegate, $timeout) {
+function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarDelegate, $ionicPopup, $timeout) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -21,12 +21,26 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
                             $location.path("app/eventselect");
                         }
                         else {
-                            alert("This email is already in the system, but the password does not match.");
+                            $ionicPopup.alert({
+                                title: 'Error!',
+                                template: "This email is already in the system, but the password does not match."
+                            });
                         }
                     });
                 }
+                else if (err.error === 400) { // input error
+                    //TODO red border around input field(s)
+                    $ionicPopup.alert({
+                        title: 'Error!',
+                        template: "Please fill in all the fields."
+                    });
+                }
                 else {
-                    alert("Cannot create a user. Check internet connection and try again later.");
+                    $ionicPopup.alert({
+                        title: 'Error!',
+                        template: "Cannot create a user. Check internet connection and try again later. " + err
+                    });
+
                     console.error(err);
                 }
 
@@ -40,7 +54,6 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
             $ionicNavBarDelegate.align('center');
         });
     });
-
 
 
     /*   //Analytics

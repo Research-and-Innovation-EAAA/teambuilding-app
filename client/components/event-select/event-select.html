@@ -1,30 +1,58 @@
 <ion-view view-title="Teambuilding" ng-controller="eventSelectController as vm">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" ng-click="vm.backToLogout()">
+            <i class="ion-backspace-outline"></i> Log out
+        </ion-nav-back-button>
+    </ion-nav-bar>
+
     <!-- Login button -->
     <ion-nav-buttons side="right">
         <login-buttons></login-buttons>
     </ion-nav-buttons>
+
     <ion-content class="default-background">
 
-        <div ng-repeat="event in vm.events" class="row responsive-md">
-            <div class="col-50 frontpage-col">
-                <strong>{{ event.name }}</strong>
-            </div>
-            <div class="col-50 frontpage-col">
-                {{ event.password }}
-                {{ vm.eventPassword }}
+
+        <div class="row">
+            <div class="col">
+                <h3>Event code:</h3>
             </div>
         </div>
 
-        <div class="eventPasswordInput">
-        <form>
-            <input id="eventpassword"
-                   type="text"
-                   autocomplete="off"
-                   ng-model="vm.eventPassword">
-            <ion-input type="text" placeholder="Username"></ion-input>
+        <div class="row row-center">
+            <div class="col">
 
-            <button id="enterBtn" ng-click="vm.showEvent()">Enter</button>
-        </form>
+                <form>
+                    <div class="list">
+                        <label class="item item-input">
+                            <input id="eventpassword"
+                                   type="text"
+                                   autocomplete="off"
+                                   placeholder="Event code"
+                                   ng-model="vm.eventPassword">
+                        </label>
+
+                        <button type="submit" class="button button-block button-positive" id="enterBtn"
+                                ng-click="vm.showEvent()">Enter
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+                <div ng-repeat="event in vm.events" class="row responsive-md">
+                    <div class="col-50 frontpage-col">
+                        <strong>{{ event.name }}</strong>
+                    </div>
+                    <div class="col-50 frontpage-col">
+                        {{ event.password }}
+                        {{ vm.eventPassword }}
+                    </div>
+                </div>
+            </div>
         </div>
 
 

@@ -6,17 +6,17 @@
     </div>
 
     <div class="range range-positive padding-horizontal-50">
-        <i class="icon ion-happy-outline slider-smiley"></i>
+        <i class="icon ion-sad-outline slider-smiley" ng-show="vm.smiley"></i>
         <rzslider rz-slider-model="vm.slider.value"
                   rz-slider-options="vm.slider.options"></rzslider>
-        <i class="icon ion-sad-outline slider-smiley"></i>
+        <i class="icon ion-happy-outline slider-smiley" ng-show="vm.smiley"></i>
     </div>
     <div class="row">
         <span class="col slider-desc" style="text-align: left">
-            {{ vm.positiveText }}
+            {{ vm.negativeText }}
         </span>
         <span class="col slider-desc" style="text-align: right">
-            {{ vm.negativeText }}
+            {{ vm.positiveText }}
         </span>
     </div>
 </div>

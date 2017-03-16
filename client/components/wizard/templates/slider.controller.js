@@ -11,8 +11,8 @@ function sliderController($scope, $reactive, WizardHandler, WizardState, WizardS
             return WizardHandler.wizard().currentStepNumber();
         },
         function (newValue, oldValue) {
-                initUi();
-                updateRegistration();
+            initUi();
+            updateRegistration();
         }
     );
 
@@ -46,12 +46,13 @@ function sliderController($scope, $reactive, WizardHandler, WizardState, WizardS
             }
         }
 
-        vm.registration  = WizardState[vm.dataType];
-        if(vm.registration === undefined){
+        vm.registration = WizardState[vm.dataType];
+        if (vm.registration === undefined) {
             vm.registration = {};
         }
 
         vm.question = vm.config.question;
+        vm.smiley = vm.config.smiley === undefined ? true : vm.config.smiley;
         vm.positiveText = vm.config.positiveText;
         vm.negativeText = vm.config.negativeText;
 
@@ -59,7 +60,7 @@ function sliderController($scope, $reactive, WizardHandler, WizardState, WizardS
         console.log("vm.question is " + vm.question);
 
         var value = vm.config.defaultValue;
-        if (typeof vm.registration[vm.config.propertyName] === 'number'){
+        if (typeof vm.registration[vm.config.propertyName] === 'number') {
             value = vm.registration[vm.config.propertyName];
         }
 
