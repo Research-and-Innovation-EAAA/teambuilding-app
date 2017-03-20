@@ -14,6 +14,12 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
             vm.myPopup.close();
     }
 
+    //Analytics
+    Accounts.onLogin(function () {
+        ga('set', 'userId', Meteor.userId()); // Set the user ID using signed-in user_id.
+        ga('set', 'dimension1', Meteor.userId()); // Set the custom dimension in Google Analytics to store the actual userId
+    });
+
     vm.submit = function () {
         var user = {'email': vm.email, 'password': vm.password};
 
@@ -26,7 +32,7 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
             $ionicLoading.hide();
 
             if (!err) {
-                $location.path("app/event");
+                $location.path("app/eventselect");
             } else {
                 if (err.error === 403) { // Email already exists => try to log in
                     Meteor.loginWithPassword(vm.email, vm.password, function (err) {
@@ -38,8 +44,6 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
                                 title: 'Error!',
                                 template: "This email is already in the system, but the password does not match.<input autofocus ng-enter='vm.closePopup();' style='position: absolute; left: -9999px'>"
                             });
-
-
                         }
                     });
                 }

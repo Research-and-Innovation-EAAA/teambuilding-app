@@ -77,16 +77,14 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
 
     vm.backToLogout = function(){
         Meteor.logout(function(){
+            Object.keys(Session.keys).forEach(function(key){ Session.set(key, undefined); });
+            Session.keys = {};
+
             $location.path("app/login");
         });
     }
 
 
-    //Analytics
-    Accounts.onLogin(function () {
-        ga('set', 'userId', Meteor.userId()); // Set the user ID using signed-in user_id.
-        ga('set', 'dimension1', Meteor.userId()); // Set the custom dimension in Google Analytics to store the actual userId
-    });
     Meteor.subscribe("settings", function () {
         var analyticsSettings = Settings.findOne({key: 'analytics'});
         console.log("Analytics settings", analyticsSettings);

@@ -26,9 +26,15 @@ function EventSelectController($scope, $rootScope, $location, $reactive, $ionicN
         });
     });
 
+    vm.myPopup;
+    vm.closePopup = function () {
+        console.log("CLOSE IT PLS");
+        if (vm.myPopup && typeof vm.myPopup.close === 'function')
+            vm.myPopup.close();
+    }
+
     vm.showEvent = function () {
         var event = _.where(vm.events, {password: vm.eventPassword})[0];
-        // var event = Events.findOne({password:vm.eventPassword}); TODO not working???? return undefined, nothing in the collection?
         console.log(event);
 
         if (event != null) {
@@ -37,15 +43,19 @@ function EventSelectController($scope, $rootScope, $location, $reactive, $ionicN
             $location.path("app/event");
         }
         else {
-            $ionicPopup.alert({
+            vm.myPopup = $ionicPopup.alert({
                 title: 'No event found!',
-                template: "Incorrect event code. Please try again."
+                template: "Incorrect event code. Please try again.<input autofocus ng-enter='vm.closePopup();' style='position: absolute; left: -9999px'>"
             });
         }
     }
 
     vm.backToLogout = function () {
         Meteor.logout(function () {
+            // Clear all keys
+            Object.keys(Session.keys).forEach(function(key){ Session.set(key, undefined); });
+            Session.keys = {};
+
             $location.path("app/login");
         });
     }

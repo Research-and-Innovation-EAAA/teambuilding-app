@@ -32,8 +32,7 @@
 
 
 .logout-button {
-    color: white;
-    background-color: red;
+    color: white !important;
 }
 
 /*.scroll-content > .scroll {*/
