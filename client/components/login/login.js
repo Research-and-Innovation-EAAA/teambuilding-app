@@ -1,44 +1,59 @@
 angular.module('leukemiapp').controller('loginController', LoginController);
 
-function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarDelegate, $ionicPopup, $timeout) {
+function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarDelegate, $ionicLoading, $ionicHistory, $ionicPopup, $timeout) {
     $reactive(this).attach($scope);
     var vm = this;
 
     vm.email = "";
     vm.password = "";
 
+    vm.myPopup;
+    vm.closePopup = function () {
+        console.log("CLOSE IT PLS");
+        if (vm.myPopup && typeof vm.myPopup.close === 'function')
+            vm.myPopup.close();
+    }
+
     vm.submit = function () {
         var user = {'email': vm.email, 'password': vm.password};
 
+        $ionicLoading.show({
+            content: 'Loading',
+            animation: 'fade-in'
+        });
+
         Accounts.createUser(user, function (err) {
+            $ionicLoading.hide();
+
             if (!err) {
                 $location.path("app/event");
             } else {
-                console.error(err);
-                if (err.error === 403) { // Email already exists.
+                if (err.error === 403) { // Email already exists => try to log in
                     Meteor.loginWithPassword(vm.email, vm.password, function (err) {
                         if (!err) {
                             $location.path("app/eventselect");
                         }
                         else {
-                            $ionicPopup.alert({
+                            vm.myPopup = $ionicPopup.alert({
                                 title: 'Error!',
-                                template: "This email is already in the system, but the password does not match."
+                                template: "This email is already in the system, but the password does not match.<input autofocus ng-enter='vm.closePopup();' style='position: absolute; left: -9999px'>"
                             });
+
+
                         }
                     });
                 }
                 else if (err.error === 400) { // input error
-                    //TODO red border around input field(s)
-                    $ionicPopup.alert({
+                    //TODO red border around input field(s) http://meteortips.com/second-meteor-tutorial/validation/
+                    vm.myPopup = $ionicPopup.alert({
                         title: 'Error!',
-                        template: "Please fill in all the fields."
+                        template: "Please fill in all the fields." + "<input autofocus ng-enter='vm.closePopup()' style='position: absolute; left: -9999px'>"
                     });
                 }
                 else {
-                    $ionicPopup.alert({
+                    vm.myPopup = $ionicPopup.alert({
                         title: 'Error!',
-                        template: "Cannot create a user. Check internet connection and try again later. " + err
+                        template: "Cannot create a user. Check internet connection and try again later. " + err + "<input autofocus ng-enter='vm.closePopup()' style='position: absolute; left: -9999px'>"
                     });
 
                     console.error(err);
@@ -48,6 +63,19 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
         });
     };
 
+    $scope.$on('$ionicView.beforeEnter', function () {
+        $ionicHistory.clearHistory(); // hide back button
+        $ionicHistory.clearCache();
+
+        if (!!Meteor.userId()) { // skip this view, if the user is already logged in
+            console.log("already logged in as " + Meteor.user().emails[0].address + ", skipping login screen");
+            $ionicHistory.nextViewOptions({
+                disableAnimate: true
+            });
+            $location.path("app/eventselect");
+            return;
+        }
+    });
 
     $scope.$on('$ionicView.enter', function () {
         $timeout(function () {

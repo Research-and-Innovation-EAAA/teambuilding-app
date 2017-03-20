@@ -1,4 +1,4 @@
-<ion-view view-title="Teambuilding feedback" ng-controller="loginController as vm">
+<ion-view view-title="Teambuilding feedback" ng-controller="loginController as vm" hide-back-button="true">
     <ion-content scroll="false" class="default-background">
 
         <div class="login-container">
@@ -21,10 +21,10 @@
             <div class="list">
                 <form>
                     <label class="item item-input">
-                        <input type="email" placeholder="E-mail" ng-model="vm.email">
+                        <input type="email" placeholder="E-mail" id="login-email" ng-model="vm.email">
                     </label>
                     <label class="item item-input">
-                        <input type="password" placeholder="Password" ng-model="vm.password">
+                        <input type="password" placeholder="Password" id="login-password" ng-model="vm.password">
                     </label>
 
                     <button type="submit" class="button button-block button-positive" id="submit"

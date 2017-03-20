@@ -30,6 +30,12 @@
     color: red;
 }
 
+
+.logout-button {
+    color: white;
+    background-color: red;
+}
+
 /*.scroll-content > .scroll {*/
 /*height: 100%;*/
 /*}*/
@@ -45,3 +51,4 @@
         margin: 10px 10px;
     }
 }
+

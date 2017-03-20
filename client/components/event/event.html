@@ -1,12 +1,11 @@
 <ion-view view-title="{{vm.event.name}}" ng-controller="frontpageController as vm">
-    <!-- Login button -->
-    <ion-nav-buttons side="right">
-        <login-buttons></login-buttons>
-    </ion-nav-buttons>
-    <!-- Settings button >
+
     <ion-nav-buttons side="secondary">
-        <button class="button button-icon ion-android-settings" ng-click="vm.openModal()"></button>
-    </ion-nav-buttons>-->
+        <button class="button-clear logout-button" ng-click="vm.backToLogout()">
+            <i class="ion-log-out"></i> Log out {{currentUser.emails[0].address}}
+        </button>
+    </ion-nav-buttons>
+
     <ion-content class="default-background"
                  delegate-handle="front-page-scroll">
         <ion-refresher
@@ -22,6 +21,12 @@
                         </div>
                         <div class="col">
                             <h1>{{vm.event.name}}</h1>
+                            <div><h3>Mødested:</h3>
+                                {{vm.event.meetingPoint}}
+                            </div>
+                            <div><h3>Medbring:</h3>
+                                {{vm.event.bring}}
+                            </div>
                             <div><h3>Program:</h3>
                                 {{vm.event.program}}
                             </div>

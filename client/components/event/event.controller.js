@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('frontpageController', FrontpageController);
 
-function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicNavBarDelegate, $location, WizardStateAccessor, $timeout) {
+function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicNavBarDelegate, $ionicHistory, $location, WizardStateAccessor, $timeout) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -74,6 +74,13 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
             $ionicNavBarDelegate.align('center');
         });
     });
+
+    vm.backToLogout = function(){
+        Meteor.logout(function(){
+            $location.path("app/login");
+        });
+    }
+
 
     //Analytics
     Accounts.onLogin(function () {

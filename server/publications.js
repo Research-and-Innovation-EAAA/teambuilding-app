@@ -98,35 +98,30 @@
         );
     });
 
-    Meteor.publish("userSettings", function () {
-        return UserSettings.find(
-            {
-                userId: this.userId
-            }
-        );
-    });
-
     Meteor.publish("modulesAndRegistrations", function () {
+        if (!this.userId)
+            return;
         return [
             CustomModules.find({}),
-            Registrations.find({"createdBy":this.userId})
+            Registrations.find({"createdBy": this.userId})
         ];
     });
 
     Meteor.publish("customModules", function () {
-        return CustomModules.find(
-            {
-                // TODO only allowed modules by timestamp?
-            }
-        );
+        if (!this.userId)
+            return;
+        return CustomModules.find({});
     });
 
     Meteor.publish("events", function () {
-        return Events.find(
-            {
-                // TODO add only upcoming? events
-            }
-        );
+        if (!this.userId)
+            return;
+        else
+            return Events.find(
+                {
+                    // TODO add only upcoming? events
+                }
+            );
     });
 
 })();
