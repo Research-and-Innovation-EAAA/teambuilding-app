@@ -10,16 +10,21 @@
             </ion-content>
 
             <ion-footer-bar class="bar thick-footer">
-                <div>{{qwiz.stepNumber}}/{{qwiz.steps.length}}</div>
+
                 <wizard style="width: 100%"
                         current-step="qwiz.stepName"
                         on-finish="qwiz.finishWizard()"
                         hide-indicators="true">
 
-                    <progress class="progress-bar" value="{{qwiz.stepNumber}}" max="{{qwiz.steps.length}}"></progress>
+                    <div class="progress">
+                        <progress class="progress-bar" value="{{qwiz.stepNumber}}"
+                                  max="{{qwiz.steps.length}}"></progress>
+                        <!--span ng-bind="qwiz.calcProgress()" class="progress-perc text-center"></span-->
+                    </div>
+
 
                     <div ng-repeat="(label,step) in qwiz.modules[qwiz.moduleId]">
-                        <wz-step wz-title="{{label | translate}}" canexit="qwiz.validateData" >
+                        <wz-step wz-title="{{label | translate}}" canexit="qwiz.validateData">
                         </wz-step>
                     </div>
                     <ion-footer-bar class="bar">

@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('frontpageController', FrontpageController);
 
-function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicNavBarDelegate, $ionicHistory, $location, WizardStateAccessor, $timeout) {
+function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicNavBarDelegate, $location, WizardStateAccessor, $timeout) {
     $reactive(this).attach($scope);
     var vm = this;
 

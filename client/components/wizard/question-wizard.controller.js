@@ -39,6 +39,10 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
         }
     });
 
+    vm.calcProgress = () => {
+        return Math.round(vm.stepNumber/vm.steps.length * 100.0) + " %";
+    }
+
     vm.nextWizardStep = () => {
         var valid = vm.validateData();
 
