@@ -1,0 +1,30 @@
+// Import your custom variables
+@import '../../../styles/app-variables';
+// Then import ionic after. Ionic will use your variables instead of it's own.
+@import '{seba:ionic-sass}/scss/ionic';
+
+// ---------------------------------------------------------------------------------
+
+.slider-smiley {
+  margin: 0px 20px;
+  padding-top: 20px; /* to align with the slider */
+}
+
+.slider-desc {
+  margin: 0px 50px;
+  margin-top: -10px;
+  color: $text-color;
+}
+
+.custom-slider .rz-bar {
+  background: $dark;
+  height: 2px;
+}
+
+.custom-slider .rz-pointer {
+  background-color: $calm;
+}
+
+.custom-slider .rz-active:after{
+  background-color: $positive;
+}

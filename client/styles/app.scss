@@ -1,0 +1,59 @@
+// Import your custom variables
+@import 'app-variables';
+// Then import ionic after. Ionic will use your variables instead of it's own.
+@import '{seba:ionic-sass}/scss/ionic';
+
+// ---------------------------------------------------------------------------------
+
+.default-background {
+  /*background: rgba(229,247,255,0.4);*/
+  background-color: $background-color;
+}
+
+.center-text {
+  text-align: center;
+  margin: auto;
+}
+
+.button-border {
+  border: 1px solid grey !important;
+}
+
+.button-border-white {
+  border: 1px solid white !important;
+}
+
+/* Login popover */
+.accounts-dialog {
+  margin-left: 0;
+  margin-top: 0;
+}
+
+.error {
+  padding: 5px 10px;
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: red;
+}
+
+.logout-button {
+  color: white !important;
+}
+
+/*.scroll-content > .scroll {*/
+/*height: 100%;*/
+/*}*/
+
+@media (max-width: 767px) {
+  .col, .button.button-block {
+    margin: 2px 0 !important;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+
+  .card {
+    margin: 10px 10px;
+  }
+}
+
