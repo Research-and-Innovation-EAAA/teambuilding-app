@@ -2,7 +2,7 @@
 
     <ion-nav-buttons side="secondary">
         <button class="button-clear logout-button" ng-click="vm.backToLogout()">
-            <i class="ion-log-out"></i> Log out {{currentUser.emails[0].address}}
+            <i class="ion-log-out"></i> Log out {{currentUser.emails[0].address|nameFromEmail}}
         </button>
     </ion-nav-buttons>
 
@@ -12,51 +12,76 @@
                 pulling-text="Pull to refresh..."
                 on-refresh="vm.refresh()">
         </ion-refresher>
-        <div class="row responsive-md bigScreen-topRow">
-            <div class="col">
-                <div class="card item item-text-wrap frontpage-topcomponent">
+        <div class="event-container">
+            <div class="row responsive-sm">
+                <div class="col">
+                    <h1>{{vm.event.name}}</h1>
+                </div>
+                <div class="col">
+                    <div ng-repeat="module in vm.modules" class="row">
+                        <button class="button button-block icon-right ion-chevron-right button-royal"
+                                ng-click="vm.newRegistration($index)">
+                            {{module.name}}
+                        </button>
+                    </div>
+                </div>
+                <div ng-if="vm.modules.length == 0" class="col">
+                    <strong style="text-align: center">Perfect! Everything has been filled in.</strong>
+                    <strong ng-if="vm.futureModules() > 0">We'll see each other later!</strong>
+                    <strong ng-if="vm.futureModules() == 0">Thanks for everything! It's been a great day :-)</strong>
+                </div>
+
+            </div>
+            <div class="row responsive-sm">
+                <div class="col">
                     <div class="row">
+                        <div class="col">
+                            <h3>Dato:</h3>
+                            {{vm.event.startDate | date:"d. M."}}
+                            <span ng-hide="vm.event.startDate == vm.event.endDate">&ndash; {{vm.event.endDate | date:"d. M."}}</span>
+                        </div>
+                        <div class="col">
+                            <h3>Mødested:</h3>
+                            {{vm.event.meetingPoint}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3>Program:</h3>
+                            <div ng-bind-html="vm.event.program"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <h3>Medbring:</h3>
+                    {{vm.event.bring}}
+                    <h3>Flere oplysninger:</h3>
+                    {{vm.event.otherInfo}}
+                </div>
+
+
+                <!--div class="row">
                         <div id="calendar-date" class="col-33">
                             <calendar-date></calendar-date>
                         </div>
                         <div class="col">
-                            <h1>{{vm.event.name}}</h1>
-                            <div><h3>Mødested:</h3>
-                                {{vm.event.meetingPoint}}
+
+
+                            <div class="row responsive-sm">
+                                <div class="col">
+
+                                </div>
+
+                                <div class="col">
+
+                                </div>
+                                <div class="col">
+
+                                </div>
                             </div>
-                            <div><h3>Medbring:</h3>
-                                {{vm.event.bring}}
-                            </div>
-                            <div><h3>Program:</h3>
-                                {{vm.event.program}}
-                            </div>
-                            <div><h3>More info:</h3>
-                                {{vm.event.otherInfo}}
-                            </div>
+
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div ng-repeat="module in vm.modules" class="responsive-md">
-            <div class="col-50 col-offset-25 frontpage-col">
-                <div class="card frontpage-card">
-                    <div class="item">
-                        <strong style="float: left">{{module.name}}</strong>
-                        <button style="float: right" class="button button-icon ion-chevron-right"
-                                ng-click="vm.newRegistration($index)"></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div ng-if="vm.modules.length == 0" class="responsive-md">
-            <div class="col-50 col-offset-25">
-                <strong style="text-align: center">Perfect! Everything has been filled in.</strong>
-                <strong ng-if="vm.futureModules() > 0">We'll see each other later!</strong>
-                <strong ng-if="vm.futureModules() == 0">Thanks for everything! It's been a great day :-)</strong>
+                    </div-->
             </div>
         </div>
 
