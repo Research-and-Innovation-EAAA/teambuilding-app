@@ -36,36 +36,55 @@
                 </div>
             </div>
             <div class="row responsive-sm">
-                <div class="col bordero">
-                    <div class="row">
+                <div class="col col-no-padding bordero">
+                    <div class="row row-first">
                         <div class="col bordero">
-                            <h3>Dato:</h3>
-                            {{vm.event.startDate | date:"d. M."}}
-                            <span ng-hide="vm.event.startDate == vm.event.endDate">&ndash; {{vm.event.endDate | date:"d. M."}}</span>
+                            <div class="twocol-container">
+                                <i class="twocol-left icon ion-calendar padding-right"></i>
+                                <div class="twocol-right">
+                                    <h3>Dato:</h3>
+                                    {{vm.event.startDate | date:"d. M."}}
+                                    <span ng-hide="vm.event.startDate == vm.event.endDate">&ndash; {{vm.event.endDate | date:"d. M."}}</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col bordero">
-                            <h3>Mødested:</h3>
-                            {{vm.event.meetingPoint}}
+                            <div class="twocol-container">
+                                <i class="twocol-left icon ion-location padding-right"></i>
+                                <div class="twocol-right">
+                                    <h3>Mødested:</h3>
+                                    {{vm.event.meetingPoint}}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row row-first">
                         <div class="col bordero">
-                            <h3>Program:</h3>
-                            <div ng-bind-html="vm.event.program"></div>
+                            <div class="twocol-container">
+                                <i class="twocol-left icon ion-ios-list-outline padding-right"></i>
+                                <div class="twocol-right">
+                                    <h3>Program:</h3>
+                                    <div ng-bind-html="vm.event.program"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col bordero">
-                    <i class="icon ion-information"></i>
-                    <div class="row">
+
+                <div class="col col-info bordero">
+                    <div class="row row-no-padding">
                         <div class="col bordero">
-                            <h3>Medbring:</h3>
-                            {{vm.event.bring}}
-                            <h3>Flere oplysninger:</h3>
-                            {{vm.event.otherInfo}}
+                            <div class="twocol-container padding-left">
+                                <i class="twocol-left icon ion-information padding-right"></i>
+                                <div class="twocol-right">
+                                    <h3>Medbring:</h3>
+                                    {{vm.event.bring}}
+                                    <h3>Flere oplysninger:</h3>
+                                    {{vm.event.otherInfo}}
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
