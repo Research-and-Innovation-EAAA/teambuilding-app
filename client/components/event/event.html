@@ -13,77 +13,61 @@
                 on-refresh="vm.refresh()">
         </ion-refresher>
         <div class="event-container">
-            <div class="row responsive-sm">
-                <div class="col">
+            <div class="row row-first responsive-sm">
+                <div class="col col-no-padding bordero">
                     <h1>{{vm.event.name}}</h1>
                 </div>
-                <div class="col">
-                    <div ng-repeat="module in vm.modules" class="row">
-                        <button class="button button-block icon-right ion-chevron-right button-royal"
-                                ng-click="vm.newRegistration($index)">
-                            {{module.name}}
+                <div class="col col-no-padding bordero">
+                    <div ng-repeat="module in vm.modules" class="row row-no-padding">
+                        <div class="col col-no-padding bordero">
+                            <button class="button button-block icon-right ion-chevron-right button-royal button-event"
+                                    ng-click="vm.newRegistration($index)">
+                                {{module.name}}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div ng-if="vm.modules.length == 0" class="col col-no-padding">
+                        <button class="button button-outline button-royal button-block button-disabled button-event">
+                            <span ng-if="vm.futureModules() > 0">Vi ses senere!</span>
+                            <span ng-if="vm.futureModules() == 0">Tak for i dag! Det har været en dejlig dag :-)</span>
                         </button>
                     </div>
                 </div>
-                <div ng-if="vm.modules.length == 0" class="col">
-                    <strong style="text-align: center">Perfect! Everything has been filled in.</strong>
-                    <strong ng-if="vm.futureModules() > 0">We'll see each other later!</strong>
-                    <strong ng-if="vm.futureModules() == 0">Thanks for everything! It's been a great day :-)</strong>
-                </div>
-
             </div>
             <div class="row responsive-sm">
-                <div class="col">
+                <div class="col bordero">
                     <div class="row">
-                        <div class="col">
+                        <div class="col bordero">
                             <h3>Dato:</h3>
                             {{vm.event.startDate | date:"d. M."}}
                             <span ng-hide="vm.event.startDate == vm.event.endDate">&ndash; {{vm.event.endDate | date:"d. M."}}</span>
                         </div>
-                        <div class="col">
+                        <div class="col bordero">
                             <h3>Mødested:</h3>
                             {{vm.event.meetingPoint}}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col">
+                        <div class="col bordero">
                             <h3>Program:</h3>
                             <div ng-bind-html="vm.event.program"></div>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <h3>Medbring:</h3>
-                    {{vm.event.bring}}
-                    <h3>Flere oplysninger:</h3>
-                    {{vm.event.otherInfo}}
+                <div class="col bordero">
+                    <i class="icon ion-information"></i>
+                    <div class="row">
+                        <div class="col bordero">
+                            <h3>Medbring:</h3>
+                            {{vm.event.bring}}
+                            <h3>Flere oplysninger:</h3>
+                            {{vm.event.otherInfo}}
+                        </div>
+                    </div>
+
                 </div>
-
-
-                <!--div class="row">
-                        <div id="calendar-date" class="col-33">
-                            <calendar-date></calendar-date>
-                        </div>
-                        <div class="col">
-
-
-                            <div class="row responsive-sm">
-                                <div class="col">
-
-                                </div>
-
-                                <div class="col">
-
-                                </div>
-                                <div class="col">
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div-->
             </div>
         </div>
-
     </ion-content>
 </ion-view>

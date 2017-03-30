@@ -1,0 +1,61 @@
+// Import your custom variables
+@import '../../styles/app-variables';
+// Then import ionic after. Ionic will use your variables instead of it's own.
+@import '{seba:ionic-sass}/scss/ionic';
+
+// ---------------------------------------------------------------------------------
+
+.event-container {
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid red;
+  font-size: 1.1em;
+}
+
+.event-container h3 {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .event-container {
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .event-container {
+    padding-top: 10px;
+  }
+}
+
+.bordero{
+//  border: 1px solid deepskyblue;
+}
+
+.col-no-padding{
+  padding: 0px !important;
+}
+
+.row-first {
+  margin-bottom: 20px;
+}
+
+.event-container .button-disabled {
+  cursor: default !important;
+  background-color: transparent !important;
+  color: $royal !important;
+}
+
+.button-event {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.frontpage-col {
+  padding-top: 0;
+  padding-bottom: 0;
+}

@@ -1,15 +1,13 @@
 $light: #fffaed;
 $stable: #fff4d3;
 $positive: #EB613B;
-$calm: #f08c70; //#F98F6F;
+$calm: #f08c70;
 //$balanced:
-//$energized:
+$energized: #73E399;
 //$assertive:
 $royal: #FFAF51;
-
 $dark: #302522;
 
-
-$text-color: #302522;
-
-$background-color: #fffaed; //#fff4d3;
+// our custom constants
+$text-color: $dark;
+$background-color: $light; //#fff4d3;

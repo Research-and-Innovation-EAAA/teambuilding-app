@@ -6,7 +6,6 @@
 // ---------------------------------------------------------------------------------
 
 .default-background {
-  /*background: rgba(229,247,255,0.4);*/
   background-color: $background-color;
 }
 
@@ -40,10 +39,6 @@
 .logout-button {
   color: white !important;
 }
-
-/*.scroll-content > .scroll {*/
-/*height: 100%;*/
-/*}*/
 
 @media (max-width: 767px) {
   .col, .button.button-block {
