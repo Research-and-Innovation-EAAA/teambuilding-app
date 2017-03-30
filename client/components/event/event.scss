@@ -9,7 +9,7 @@
   max-width: 1024px;
   margin-left: auto;
   margin-right: auto;
-//  border: 1px solid red;
+  //  border: 1px solid red;
   font-size: 1.1em;
 }
 
@@ -35,10 +35,16 @@
   .event-container {
     padding-top: 10px;
   }
+
+  .col {
+    margin: 2px 0 !important;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
 }
 
 .bordero {
-//    border: 1px solid deepskyblue;
+  //    border: 1px solid deepskyblue;
 }
 
 .col-no-padding {
@@ -46,7 +52,7 @@
 }
 
 .col-info {
-  padding-left: 20px;
+  padding-left: 10px;
 }
 
 .row-first {
@@ -57,11 +63,15 @@
   cursor: default !important;
   background-color: transparent !important;
   color: $royal !important;
+  line-height: 1.2em;
+  padding: 20px 10px;
 }
 
 .button-event {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
+  /*line-height: 1.5em !important;
+  padding: 10px 5px !important;*/
 }
 
 .twocol-container {
@@ -74,17 +84,27 @@
 
 .twocol-left {
   width: auto;
-//  background: deeppink;
-//  border: 3px solid #000
+  //  background: deeppink;
+  //  border: 3px solid #000
 }
 
 .twocol-right {
   vertical-align: top;
-//  background: #aaa;
-//  border: 3px solid #000;
+  //  background: #aaa;
+  //  border: 3px solid #000;
 }
 
 .frontpage-col {
   padding-top: 0;
   padding-bottom: 0;
+}
+
+.event-logo {
+  display: block;
+  width: 50%;
+  max-width: 300px;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
 }

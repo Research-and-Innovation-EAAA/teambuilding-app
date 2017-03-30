@@ -9,7 +9,7 @@
                 </div>
             </ion-content>
 
-            <ion-footer-bar class="bar bar-royal thick-footer">
+            <ion-footer-bar class="bar bar-stable thick-footer">
 
                 <wizard style="width: 100%"
                         current-step="qwiz.stepName"
@@ -27,7 +27,7 @@
                         <wz-step wz-title="{{label | translate}}" canexit="qwiz.validateData">
                         </wz-step>
                     </div>
-                    <ion-footer-bar class="bar bar-royal">
+                    <ion-footer-bar class="bar bar-stable footer-qwiz">
                         <section style="width: 100%">
                             <span ng-if="qwiz.stepNumber == 1">
                                 <a id="wiz-nav-button"

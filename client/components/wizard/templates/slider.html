@@ -1,23 +1,25 @@
 <div class="center-horizontal top-margin"
      ng-controller="sliderController as vm">
 
-    <div>
+    <div class="qwiz-container">
         <h1>{{ vm.question }}</h1>
-    </div>
 
-    <div class="range range-positive padding-horizontal-50">
-        <i class="icon ion-sad-outline slider-smiley" ng-show="vm.smiley"></i>
-        <rzslider rz-slider-model="vm.slider.value"
-                  rz-slider-options="vm.slider.options" class="custom-slider"></rzslider>
-        <i class="icon ion-happy-outline slider-smiley" ng-show="vm.smiley"></i>
-    </div>
-    <div class="row">
+
+        <div class="range range-positive padding-horizontal-50">
+            <i class="icon ion-sad-outline slider-smiley" ng-show="vm.smiley"></i>
+            <rzslider rz-slider-model="vm.slider.value"
+                      rz-slider-options="vm.slider.options" class="custom-slider"></rzslider>
+            <i class="icon ion-happy-outline slider-smiley" ng-show="vm.smiley"></i>
+        </div>
+        <div class="row">
         <span class="col slider-desc" style="text-align: left">
             {{ vm.negativeText }}
         </span>
-        <span class="col slider-desc" style="text-align: right">
-            {{ vm.positiveText }}
-        </span>
+            <span class="col slider-desc" style="text-align: right">
+                {{ vm.positiveText }}
+            </span>
+        </div>
+
     </div>
 </div>
 

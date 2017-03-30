@@ -83,6 +83,23 @@
   border-radius: 9px;
 }
 
+.qwiz-container{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1024px;
+}
+
+.footer-qwiz {
+  border-top: 0 !important;
+}
+
+.thick-footer {
+  width: 100%;
+  height: 15%;
+  min-height: 100px !important;
+}
+
 @media (min-width: 768px) {
   .padding-horizontal-50 {
     padding-left: 50px;
@@ -91,12 +108,6 @@
 
   .top-margin {
     margin-top: 150px;
-  }
-
-  .thick-footer {
-    width: 100%;
-    height: 15%;
-    min-height: 80px !important;
   }
 }
 
@@ -108,11 +119,5 @@
 
   .top-margin {
     margin-top: 35px;
-  }
-
-  .thick-footer {
-    width: 100%;
-    height: 15%;
-    min-height: 100px !important;
   }
 }

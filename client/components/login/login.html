@@ -4,7 +4,8 @@
 
         <div class="login-outer-container">
             <div class="login-container">
-                <h3>Welcome!</h3>
+
+                <img src="/eaaa-logo.png" alt="Erhvervsakademi Aarhus logo" class="login-logo">
 
                 <!--div class="row">
                     <div class="col">
@@ -20,19 +21,22 @@
                 </div-->
 
 
-
                 <div class="list">
                     <form>
                         <label class="item item-input">
-                            <input type="email" placeholder="E-mail" id="login-email" ng-model="vm.email">
+                            <input type="email" placeholder="E-mail" id="login-email" class="user-input"
+                                   ng-model="vm.email">
                         </label>
                         <label class="item item-input">
-                            <input type="password" placeholder="Password" id="login-password" ng-model="vm.password">
+                            <input type="password" placeholder="Password" id="login-password" class="user-input"
+                                   ng-model="vm.password">
                         </label>
 
-                        <button type="submit" class="button button-block button-positive" id="submit"
-                                ng-click="vm.submit()">Enter
-                        </button>
+                        <div class="submit-btn">
+                            <button type="submit" class="button button-block button-positive " id="submit"
+                                    ng-click="vm.submit()">Log ind
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

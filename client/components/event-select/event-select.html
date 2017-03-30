@@ -24,15 +24,18 @@
                             <div class="list">
                                 <label class="item item-input">
                                     <input id="eventpassword"
+                                           class="user-input"
                                            type="text"
                                            autocomplete="off"
                                            placeholder="Event code"
                                            ng-model="vm.eventPassword">
                                 </label>
 
-                                <button type="submit" class="button button-block button-positive" id="enterBtn"
-                                        ng-click="vm.showEvent()">Enter
-                                </button>
+                                <div class="submit-btn">
+                                    <button type="submit" class="button button-block button-positive submit-btn"
+                                            ng-click="vm.showEvent()">Enter
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -47,7 +50,7 @@
                             </div>
                             <div class="col-50 frontpage-col">
                                 {{ event.password }}
-                                {{ vm.eventPassword }}
+                    {{ vm.eventPassword }}
                             </div>
                         </div>
                     </div>

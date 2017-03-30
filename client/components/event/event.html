@@ -22,15 +22,22 @@
                         <div class="col col-no-padding bordero">
                             <button class="button button-block icon-right ion-chevron-right button-royal button-event"
                                     ng-click="vm.newRegistration($index)">
-                                {{module.name}}
+                                Start spørgeskema {{module.number}}
                             </button>
                         </div>
                     </div>
 
+                    <div ng-if="vm.modules.length === undefined" class="col col-no-padding">
+                        <button class="button button-outline button-royal button-block button-disabled button-event">
+                            <ion-spinner class="spinner-positive"></ion-spinner>
+                        </button>
+                    </div>
+
                     <div ng-if="vm.modules.length == 0" class="col col-no-padding">
                         <button class="button button-outline button-royal button-block button-disabled button-event">
-                            <span ng-if="vm.futureModules() > 0">Vi ses senere!</span>
-                            <span ng-if="vm.futureModules() == 0">Tak for i dag! Det har været en dejlig dag :-)</span>
+                            <span ng-if="vm.futureModules() == 0">Tak for al din feedback!</span>
+                            <span ng-if="vm.futureModules() == 1">Tak for i dag! Håber det har været en dejlig dag :-)</span>
+                            <span ng-if="vm.futureModules() > 1">Vi ses senere!</span>
                         </button>
                     </div>
                 </div>
@@ -40,17 +47,18 @@
                     <div class="row row-first">
                         <div class="col bordero">
                             <div class="twocol-container">
-                                <i class="twocol-left icon ion-calendar padding-right"></i>
+                                <i class="twocol-left icon ion-ios-calendar-outline padding-right"></i>
                                 <div class="twocol-right">
                                     <h3>Dato:</h3>
-                                    {{vm.event.startDate | date:"d. M."}}
-                                    <span ng-hide="vm.event.startDate == vm.event.endDate">&ndash; {{vm.event.endDate | date:"d. M."}}</span>
+                                    <span ng-hide="vm.event.startDate == vm.event.endDate">
+                                        {{vm.event.startDate | date:"d. M."}} &ndash;</span>
+                                    {{vm.event.endDate | date:"d. M. yyyy"}}
                                 </div>
                             </div>
                         </div>
                         <div class="col bordero">
                             <div class="twocol-container">
-                                <i class="twocol-left icon ion-location padding-right"></i>
+                                <i class="twocol-left icon ion-ios-location padding-right"></i>
                                 <div class="twocol-right">
                                     <h3>Mødested:</h3>
                                     {{vm.event.meetingPoint}}
@@ -75,7 +83,7 @@
                     <div class="row row-no-padding">
                         <div class="col bordero">
                             <div class="twocol-container padding-left">
-                                <i class="twocol-left icon ion-information padding-right"></i>
+                                <i class="twocol-left icon ion-ios-information-outline padding-right"></i>
                                 <div class="twocol-right">
                                     <h3>Medbring:</h3>
                                     {{vm.event.bring}}
@@ -83,6 +91,11 @@
                                     {{vm.event.otherInfo}}
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row row-no-padding">
+                        <div class="col bordero">
+                            <img src="/coastzone.png" alt="CoastZone logo" class="event-logo">
                         </div>
                     </div>
                 </div>

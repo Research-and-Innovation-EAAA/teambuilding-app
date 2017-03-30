@@ -17,14 +17,14 @@
 }
 
 .custom-slider .rz-bar {
-  background: $dark;
+  // background: #bbbbbb;
   height: 2px;
 }
 
 .custom-slider .rz-pointer {
-  background-color: $calm;
+  background-color: $positive;
 }
 
-.custom-slider .rz-pointer.rz-active:after{
-  background-color: $positive;
+.custom-slider .rz-pointer.rz-active:after {
+  background-color: #DDDDDD;
 }
