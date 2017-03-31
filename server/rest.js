@@ -12,20 +12,42 @@ var ApiV1config = {
 };
 var ApiV1 = new Restivus(ApiV1config);
 
-// Maps to: /api/registrations
-ApiV1.addRoute('registrations', {authRequired: true}, {
+// Maps to: /api/registrations/:event
+ApiV1.addRoute('registrations/:event', {authRequired: true}, {
     get: function () {
+        var isAdmin = UserInfo.findOne({"userId":this.userId}).admin;
+        if (!isAdmin){
+            return "Not an admin";
+        }
+
+        var event = Events.findOne({"password": this.urlParams.event});
+        if (!event){
+            return "Event not found";
+        }
+
         var regs = [];
-        Registrations.find({createdBy: this.userId}).forEach(function (reg) {
+        Registrations.find({eventId: event._id}).forEach(function (reg) {
             regs.push(Flat(reg));
         });
         return regs;
     }
 });
 
-// Maps to: /api/registrations/metadata
-ApiV1.addRoute('registrations/metadata', {authRequired: true}, {
+// Maps to: /api/registrations/:event/metadata
+ApiV1.addRoute('registrations/:event/metadata', {authRequired: true}, {
     get: function () {
+        var isAdmin = UserInfo.findOne({"userId":this.userId}).admin;
+        if (!isAdmin){
+            return "Not an admin";
+        }
+
+        var event = Events.findOne({"password": this.urlParams.event});
+        if (!event){
+            return "Event not found";
+        }
+
+        // TODO get field names for a specific event, maybe use /db.collection.aggregate/
+
         var modules = {};
         Registrations.find({createdBy: this.userId}).forEach(function(doc){
             var flatdoc = Flat(doc);
@@ -129,7 +151,7 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                         }
                     }
                 },
-                "/registrations": {
+                "/registrations/{event}": {
                     "parameters": [
                         {
                             "name": "X-Auth-Token",
@@ -142,6 +164,13 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                             "name": "X-User-id",
                             "in": "header",
                             "description": "User identifier to access How-R-you",
+                            "type": "string",
+                            "required": true
+                        },
+                        {
+                            "name": "event",
+                            "in": "path",
+                            "description": "Event code",
                             "type": "string",
                             "required": true
                         }
@@ -154,7 +183,7 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                         }
                     }
                 },
-                "/registrations/metadata": {
+                "/registrations/{event}/metadata": {
                     "parameters": [
                         {
                             "name": "X-Auth-Token",
@@ -167,6 +196,13 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                             "name": "X-User-id",
                             "in": "header",
                             "description": "User identifier to access How-R-you",
+                            "type": "string",
+                            "required": true
+                        },
+                        {
+                            "name": "event",
+                            "in": "path",
+                            "description": "Event code",
                             "type": "string",
                             "required": true
                         }

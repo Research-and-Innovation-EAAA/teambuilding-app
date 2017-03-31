@@ -131,8 +131,8 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
 
     function saveOk() {
         $ionicPopup.alert({
-            title: vm.viewTitle,
-            content: $translate.instant('wizard.saved')
+            title: "Succes",
+            content: "Dine svar er blevet gemt!"
         });
         WizardStateAccessor.setRegistration(vm.moduleId, undefined);
         Session.set('regValidated', undefined);

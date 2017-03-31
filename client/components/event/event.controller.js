@@ -6,14 +6,15 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
 
     vm.event = Session.get('event');
 
-    function getModules(){
+    function getModules() {
         // get IDs of modules from completed registrations of a particular user
-        var reg =  Registrations.find({
+        var reg = Registrations.find({
                 $and: [
                     {moduleId: {$exists: true}},
                     {createdBy: Meteor.userId()},
                     {createdBy: {$exists: true}}
-                ]},
+                ]
+            },
             {moduleId: 1, _id: 0} // projection is not working
         ).fetch();
         reg = _.pluck(reg, 'moduleId');
@@ -23,26 +24,46 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
 
         return CustomModules.find(
             {
-                _id : {$nin: reg}, // filter already filled in
+                _id: {$nin: reg}, // filter already filled in
                 eventId: vm.event._id,
                 startTime: {$lte: now, $exists: true},
                 endTime: {$gte: now, $exists: true}
             }
         ).fetch();
-    }
+    };
 
-    vm.futureModules = function(){
+    vm.futureModules = function () {
         var now = new Date();
 
         return CustomModules.find(
             {
                 eventId: vm.event._id,
-                startTime: {$gte: now, $exists: true},
+                startTime: {$gt: now, $exists: true},
             }
         ).count();
-    }
+    };
 
-    vm.refresh = function (){
+    vm.countAllModules = function () {
+        return CustomModules.find(
+            {
+                eventId: vm.event._id
+            }
+        ).count();
+    };
+
+    vm.nextTime = function () {
+        var now = new Date();
+
+        return CustomModules.findOne(
+            {
+                eventId: vm.event._id,
+                startTime: {$gt: now, $exists: true},
+            }
+        ).startTime;
+    };
+
+
+    vm.refresh = function () {
         vm.modules = getModules();
         console.log(JSON.stringify(vm.modules));
         $scope.$broadcast('scroll.refreshComplete');
@@ -75,14 +96,23 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
         });
     });
 
-    vm.backToLogout = function(){
-        Meteor.logout(function(){
-            Object.keys(Session.keys).forEach(function(key){ Session.set(key, undefined); });
+    vm.backToLogout = function () {
+        Meteor.logout(function () {
+            Object.keys(Session.keys).forEach(function (key) {
+                Session.set(key, undefined);
+            });
             Session.keys = {};
 
             $location.path("app/login");
         });
-    }
+    };
+
+    vm.backToEvents = function () {
+        Session.set('eventId', null);
+        Session.set('event', null);
+
+        $location.path("app/eventselect");
+    };
 
 
     Meteor.subscribe("settings", function () {

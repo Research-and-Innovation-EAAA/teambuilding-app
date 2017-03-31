@@ -9,7 +9,6 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
 
     vm.myPopup;
     vm.closePopup = function () {
-        console.log("CLOSE IT PLS");
         if (vm.myPopup && typeof vm.myPopup.close === 'function')
             vm.myPopup.close();
     }
@@ -72,7 +71,7 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
         $ionicHistory.clearCache();
 
         if (!!Meteor.userId()) { // skip this view, if the user is already logged in
-            console.log("already logged in as " + Meteor.user().emails[0].address + ", skipping login screen");
+            console.log("already logged in, skipping login screen");
             $ionicHistory.nextViewOptions({
                 disableAnimate: true
             });
@@ -84,6 +83,9 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
     $scope.$on('$ionicView.enter', function () {
         $timeout(function () {
             $ionicNavBarDelegate.align('center');
+
+            vm.email = "";
+            vm.password = "";
         });
     });
 

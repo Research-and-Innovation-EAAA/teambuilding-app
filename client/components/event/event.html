@@ -1,8 +1,14 @@
-<ion-view view-title="" ng-controller="frontpageController as vm">
+<ion-view view-title="" ng-controller="frontpageController as vm" hide-back-button="true">
+
+    <ion-nav-buttons side="primary" >
+        <button class="button-clear logout-button" ng-click="vm.backToEvents()">
+            <i class="ion-chevron-left"></i> Events
+        </button>
+    </ion-nav-buttons>
 
     <ion-nav-buttons side="secondary">
         <button class="button-clear logout-button" ng-click="vm.backToLogout()">
-            <i class="ion-log-out"></i> Log out {{currentUser.emails[0].address|nameFromEmail}}
+            <i class="ion-log-out"></i> Log ud {{currentUser.emails[0].address|nameFromEmail}}
         </button>
     </ion-nav-buttons>
 
@@ -22,7 +28,7 @@
                         <div class="col col-no-padding bordero">
                             <button class="button button-block icon-right ion-chevron-right button-royal button-event"
                                     ng-click="vm.newRegistration($index)">
-                                Start spørgeskema {{module.number}}
+                                Start spørgeskema <span ng-hide="vm.countAllModules() == 1">{{module.number}}</span>
                             </button>
                         </div>
                     </div>
@@ -34,10 +40,11 @@
                     </div>
 
                     <div ng-if="vm.modules.length == 0" class="col col-no-padding">
-                        <button class="button button-outline button-royal button-block button-disabled button-event">
-                            <span ng-if="vm.futureModules() == 0">Tak for al din feedback!</span>
+                        <button class="button button-outline button-royal button-block button-disabled button-no-margin">
+                            <span ng-if="vm.futureModules() == 0 && vm.countAllModules() > 1">Tak for al din feedback!</span>
+                            <span ng-if="vm.futureModules() == 0 && vm.countAllModules() == 1">Tak for i dag! Håber det har været en dejlig dag :-)</span>
                             <span ng-if="vm.futureModules() == 1">Tak for i dag! Håber det har været en dejlig dag :-)</span>
-                            <span ng-if="vm.futureModules() > 1">Vi ses senere!</span>
+                            <span ng-if="vm.futureModules() > 1">Vi ses senere efter kl. {{vm.nextTime()|date:"H:mm"}}!</span>
                         </button>
                     </div>
                 </div>
