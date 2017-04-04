@@ -15,13 +15,13 @@ var ApiV1 = new Restivus(ApiV1config);
 // Maps to: /api/registrations/:event
 ApiV1.addRoute('registrations/:event', {authRequired: true}, {
     get: function () {
-        var isAdmin = UserInfo.findOne({"userId":this.userId}).admin;
-        if (!isAdmin){
+        var isAdmin = UserInfo.findOne({"userId": this.userId}).admin;
+        if (!isAdmin) {
             return "Not an admin";
         }
 
         var event = Events.findOne({"password": this.urlParams.event});
-        if (!event){
+        if (!event) {
             return "Event not found";
         }
 
@@ -36,32 +36,50 @@ ApiV1.addRoute('registrations/:event', {authRequired: true}, {
 // Maps to: /api/registrations/:event/metadata
 ApiV1.addRoute('registrations/:event/metadata', {authRequired: true}, {
     get: function () {
-        var isAdmin = UserInfo.findOne({"userId":this.userId}).admin;
-        if (!isAdmin){
+        var isAdmin = UserInfo.findOne({"userId": this.userId}).admin;
+        if (!isAdmin) {
             return "Not an admin";
         }
 
         var event = Events.findOne({"password": this.urlParams.event});
-        if (!event){
+        if (!event) {
             return "Event not found";
         }
 
         // TODO get field names for a specific event, maybe use /db.collection.aggregate/
 
-        var modules = {};
-        Registrations.find({createdBy: this.userId}).forEach(function(doc){
-            var flatdoc = Flat(doc);
-            for (var key in flatdoc){
-                var name = doc.moduleId;
-                if (!modules[name]) {
-                    modules[name] = [];
+        var attributes = new Array();
+
+        CustomModules.find({eventId: event._id}).forEach(function (doc) {
+
+            var steps = doc.wizard.steps;
+
+            for (var step in steps) {
+                // one question steps
+                var name = steps[step].stepTemplate.config.propertyName;
+                if (!!name) {
+                    if (!attributes[name]) {
+                        attributes.push(name);
+                    }
+                    continue;
                 }
-                if(modules[name].indexOf(key) < 0){
-                    modules[name].push(key);
+                // more question steps
+                else {
+                    var flatdoc = _.flatten(steps[step].stepTemplate.config.questions);
+
+                    for (var key in flatdoc) {
+                        var name = flatdoc[key].propertyName;
+                        if (!!name) {
+                            if (!attributes[name]) {
+                                attributes.push(name);
+                            }
+                        }
+                    }
                 }
             }
         });
-        return modules;
+
+        return attributes;
     }
 });
 
