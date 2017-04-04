@@ -36,14 +36,6 @@ angular.module('leukemiapp')
                     }
                 }
             })
-            .state('app.docctrl', {
-                url: '/docctrl/:url',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'client/components/docctrl/docctrl.html'
-                    }
-                }
-            })
             .state('app.questionwizard', {
                 url: '/questionwizard',
                 views: {

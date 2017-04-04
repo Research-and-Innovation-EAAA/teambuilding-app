@@ -1,4 +1,10 @@
 {
+  "galaxy.meteor.com": {
+    "env": {
+      "ROOT_URL": "http://teambuilding-app.meteorapp.com",
+      "MONGO_URL": "mongodb://meteor:FLCwDLrYexyyrEMVr6g5@aws-us-east-1-portal.26.dblayer.com:18096/teambuilding"
+    }
+  },
   "public": {
     "analyticsSettings": {
       "Google Analytics" : {
