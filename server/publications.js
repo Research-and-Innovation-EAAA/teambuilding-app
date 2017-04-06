@@ -117,11 +117,7 @@
         if (!this.userId)
             return;
         else
-            return Events.find(
-                {
-                    // TODO add only upcoming? events
-                }
-            );
+            return Events.find({});
     });
 
 })();

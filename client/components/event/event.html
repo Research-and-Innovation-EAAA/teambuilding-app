@@ -2,13 +2,15 @@
 
     <ion-nav-buttons side="left">
         <button class="button-clear logout-button" ng-click="vm.backToEvents()">
-            <i class="ion-chevron-left"></i> Events
+            <i class="ion-chevron-left"></i>
+            <translate>events</translate>
         </button>
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
         <button class="button-clear logout-button" ng-click="vm.backToLogout()">
-            <i class="ion-log-out"></i> Log ud {{currentUser.emails[0].address|nameFromEmail}}
+            <i class="ion-log-out"></i>
+            <translate>logout</translate> {{currentUser.emails[0].address|nameFromEmail}}
         </button>
     </ion-nav-buttons>
 
@@ -28,7 +30,8 @@
                         <div class="col col-no-padding ">
                             <button class="button button-block icon-right ion-chevron-right button-royal button-event"
                                     ng-click="vm.newRegistration($index)">
-                                Start spørgeskema <span ng-hide="vm.countAllModules() == 1">{{module.number}}</span>
+                                <translate>startQuestionnaire</translate>
+                                <span ng-hide="vm.countAllModules() == 1">{{module.number}}</span>
                             </button>
                         </div>
                     </div>
@@ -41,10 +44,11 @@
 
                     <div ng-if="vm.modules.length == 0" class="col col-no-padding">
                         <button class="button button-outline button-royal button-block button-disabled button-no-margin">
-                            <span ng-if="vm.futureModules() == 0 && vm.countAllModules() > 1">Tak for al din feedback!</span>
-                            <span ng-if="vm.futureModules() == 0 && vm.countAllModules() == 1">Tak for i dag! Håber det har været en dejlig dag :-)</span>
-                            <span ng-if="vm.futureModules() == 1">Tak for i dag! Håber det har været en dejlig dag :-)</span>
-                            <span ng-if="vm.futureModules() > 1">Vi ses senere efter kl. {{vm.nextTime()|date:"H:mm"}}
+                            <span ng-if="vm.futureModules() == 0 && vm.countAllModules() > 1" translate>thanksAll</span>
+                            <span ng-if="vm.futureModules() == 0 && vm.countAllModules() == 1"
+                                  translate>thanksToday</span>
+                            <span ng-if="vm.futureModules() == 1" translate>thanksToday</span>
+                            <span ng-if="vm.futureModules() > 1" translate>seeYouLaterAt {{vm.nextTime()|date:"H:mm"}}
                                 !</span>
                         </button>
                     </div>
@@ -57,7 +61,7 @@
                             <div class="twocol-container">
                                 <i class="twocol-left icon ion-ios-calendar-outline padding-right"></i>
                                 <div class="twocol-right">
-                                    <h3>Dato:</h3>
+                                    <h3 translate>date</h3>
                                     <span ng-hide="vm.event.startDate == vm.event.endDate">
                                         {{vm.event.startDate | date:"d. M."}} &ndash;</span>
                                     {{vm.event.endDate | date:"d. M. yyyy"}}
@@ -68,7 +72,7 @@
                             <div class="twocol-container">
                                 <i class="twocol-left icon ion-ios-location padding-right"></i>
                                 <div class="twocol-right">
-                                    <h3>Mødested:</h3>
+                                    <h3 translate>meetingPoint</h3>
                                     {{vm.event.meetingPoint}}
                                 </div>
                             </div>
@@ -79,7 +83,7 @@
                             <div class="twocol-container">
                                 <i class="twocol-left icon ion-ios-list-outline padding-right"></i>
                                 <div class="twocol-right">
-                                    <h3>Program:</h3>
+                                    <h3 translate>program</h3>
                                     <div ng-bind-html="vm.event.program"></div>
                                 </div>
                             </div>
@@ -93,17 +97,19 @@
                             <div class="twocol-container padding-left">
                                 <i class="twocol-left icon ion-ios-information-outline padding-right"></i>
                                 <div class="twocol-right">
-                                    <h3>Medbring:</h3>
+                                    <h3 translate>bring</h3>
                                     {{vm.event.bring}}
-                                    <h3>Flere oplysninger:</h3>
+                                    <h3 translate>moreInfo</h3>
                                     {{vm.event.otherInfo}}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row row-no-padding">
-                        <div class="col ">
-                            <img src="/coastzone.png" alt="CoastZone logo" class="event-logo">
+                        <div class="col">
+                            <a href="http://www.eaaa.dk/forskning-og-innovation/" target="_blank">
+                                <img src="/eaaa-logo.png" alt="Erhvervsakademi Aarhus logo" class="event-logo">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -120,7 +126,7 @@
                     <div class="twocol-container">
                         <i class="twocol-left icon ion-ios-calendar-outline padding-right"></i>
                         <div class="twocol-right">
-                            <h3>Dato:</h3>
+                            <h3 translate>date</h3>
                             <span ng-hide="vm.event.startDate == vm.event.endDate">
                                         {{vm.event.startDate | date:"d. M."}} &ndash;</span>
                             {{vm.event.endDate | date:"d. M. yyyy"}}
@@ -150,7 +156,8 @@
                         <div class="col col-no-padding ">
                             <button class="button button-block icon-right ion-chevron-right button-royal button-event"
                                     ng-click="vm.newRegistration($index)">
-                                Start spørgeskema <span ng-hide="vm.countAllModules() == 1">{{module.number}}</span>
+                                <translate>startQuestionnaire</translate>
+                                <span ng-hide="vm.countAllModules() == 1">{{module.number}}</span>
                             </button>
                         </div>
                     </div>
@@ -163,7 +170,7 @@
 
                     <div ng-if="vm.modules.length == 0" class="col col-no-padding">
                         <button class="button button-outline button-royal button-block button-disabled button-no-margin">
-                            <span>Tak for i dag! Håber det har været en dejlig dag :-)</span>
+                            <span translate>thanksToday</span>
                         </button>
                     </div>
                 </div>
@@ -171,7 +178,9 @@
 
             <div class="row row-no-padding">
                 <div class="col">
-                    <img src="/eaaa-logo.png" alt="Erhvervsakademi Aarhus logo" class="event-logo">
+                    <a href="http://www.eaaa.dk/forskning-og-innovation/" target="_blank">
+                        <img src="/eaaa-logo.png" alt="Erhvervsakademi Aarhus logo" class="event-logo">
+                    </a>
                 </div>
             </div>
 

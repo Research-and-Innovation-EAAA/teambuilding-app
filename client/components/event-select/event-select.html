@@ -2,7 +2,7 @@
 
     <ion-nav-buttons side="right">
         <button class="button-clear logout-button" ng-click="vm.backToLogout()">
-            <i class="ion-log-out"></i> Log ud {{currentUser.emails[0].address|nameFromEmail}}
+            <i class="ion-log-out"></i> <translate>logout</translate> {{currentUser.emails[0].address|nameFromEmail}}
         </button>
     </ion-nav-buttons>
 
@@ -13,7 +13,7 @@
             <div class="event-select">
                 <div class="row">
                     <div class="col">
-                        <h3>Event code:</h3>
+                        <h3 translate>eventCode</h3>
                     </div>
                 </div>
 
@@ -27,13 +27,12 @@
                                            class="user-input"
                                            type="text"
                                            autocomplete="off"
-                                           placeholder="Event code"
                                            ng-model="vm.eventPassword">
                                 </label>
 
                                 <div class="submit-btn">
                                     <button type="submit" class="button button-block button-positive submit-btn"
-                                            ng-click="vm.showEvent()">Enter
+                                            ng-click="vm.showEvent()" translate>enter
                                     </button>
                                 </div>
                             </div>
@@ -41,24 +40,8 @@
                     </div>
                 </div>
 
-
-                <!--div class="row">
-                    <div class="col">
-                        <div ng-repeat="event in vm.events" class="row responsive-md">
-                            <div class="col-50 frontpage-col">
-                                <strong>{{ event.name }}</strong>
-                            </div>
-                            <div class="col-50 frontpage-col">
-                                {{ event.password }}
-                    {{ vm.eventPassword }}
-                            </div>
-                        </div>
-                    </div>
-                </div-->
             </div>
 
         </div>
-
-
     </ion-content>
 </ion-view>

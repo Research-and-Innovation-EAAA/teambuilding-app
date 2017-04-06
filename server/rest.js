@@ -41,8 +41,6 @@ ApiV1.addRoute('registrations/:event', {authRequired: true}, {
             return "Event not found";
         }
 
-        // TODO get field names for a specific event, maybe use /db.collection.aggregate/
-
         var regs = [];
         CustomModules.find({eventId: event._id}, {sort: {number: 1}}).forEach(function (mod) {
             Registrations.find({moduleId: mod._id}).forEach(function (reg) {
@@ -123,11 +121,11 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
             "swagger": "2.0",
             "info": {
                 "version": "1.0.0",
-                "title": "How-R-you API",
-                "description": "This API gives access to retrieve data registrations from the How-R-you database",
-                "termsOfService": "http://how-r-you.dk/index.php/da/privatliv-og-betingelser",
+                "title": "Teambuilidng API",
+                "description": "This API gives access to retrieve data registrations from the Teambuilding database",
+                "termsOfService": "",
                 "contact": {
-                    "name": "Morten Mathiasen"
+                    "name": "Jakub Černík"
                 },
                 "license": {
                     "name": "MIT"
@@ -145,14 +143,14 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                         {
                             "name": "email",
                             "in": "formData",
-                            "description": "Email used to access How-R-you",
+                            "description": "Email used to access Teambuilding App",
                             "type": "string",
                             "required": true
                         },
                         {
                             "name": "password",
                             "in": "formData",
-                            "description": "Password used to access How-R-you",
+                            "description": "Password used to access Teambuilding App",
                             "type": "string",
                             "required": true
                         }
@@ -160,7 +158,7 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                     "post": {
                         "responses": {
                             "200": {
-                                "description": "Login using username and password succeeded and reponse contains authentication token and user id."
+                                "description": "Login using email and password succeeded and response contains authentication token and user id."
                             }
                         }
                     }
@@ -170,14 +168,14 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                         {
                             "name": "X-Auth-Token",
                             "in": "header",
-                            "description": "Token used to access How-R-you",
+                            "description": "Token used to access Teambuilding App",
                             "type": "string",
                             "required": true
                         },
                         {
                             "name": "X-User-id",
                             "in": "header",
-                            "description": "User identifier to access How-R-you",
+                            "description": "User identifier to access Teambuilding App",
                             "type": "string",
                             "required": true
                         }
@@ -195,14 +193,14 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                         {
                             "name": "X-Auth-Token",
                             "in": "header",
-                            "description": "Token used to access How-R-you",
+                            "description": "Token used to access Teambuilding App",
                             "type": "string",
                             "required": true
                         },
                         {
                             "name": "X-User-id",
                             "in": "header",
-                            "description": "User identifier to access How-R-you",
+                            "description": "User identifier to access Teambuilding App",
                             "type": "string",
                             "required": true
                         },
@@ -217,7 +215,7 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                     "get": {
                         "responses": {
                             "200": {
-                                "description": "Response contains all registrations owned by user."
+                                "description": "Response contains all registrations for selected event."
                             }
                         }
                     }
@@ -249,39 +247,7 @@ ApiV1.addRoute('swagger.json', {authRequired: false}, {
                     "get": {
                         "responses": {
                             "200": {
-                                "description": "Response contains module annd field namess for registrations owned by user."
-                            }
-                        }
-                    }
-                },
-                "/registrations/{id}": {
-                    "parameters": [
-                        {
-                            "name": "X-Auth-Token",
-                            "in": "header",
-                            "description": "Token used to access How-R-you",
-                            "type": "string",
-                            "required": true
-                        },
-                        {
-                            "name": "X-User-id",
-                            "in": "header",
-                            "description": "User identifier to access How-R-you",
-                            "type": "string",
-                            "required": true
-                        },
-                        {
-                            "name": "id",
-                            "in": "path",
-                            "description": "ID",
-                            "type": "string",
-                            "required": true
-                        }
-                    ],
-                    "get": {
-                        "responses": {
-                            "200": {
-                                "description": "Response contains users registration for requested ID."
+                                "description": "Response contains field namess for selected event."
                             }
                         }
                     }

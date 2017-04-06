@@ -47,7 +47,6 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
                     });
                 }
                 else if (err.error === 400) { // input error
-                    //TODO red border around input field(s) http://meteortips.com/second-meteor-tutorial/validation/
                     vm.myPopup = $ionicPopup.alert({
                         title: 'Error!',
                         template: "Please fill in all the fields." + "<input autofocus ng-enter='vm.closePopup()' style='position: absolute; left: -9999px'>"

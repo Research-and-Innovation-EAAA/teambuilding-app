@@ -15,7 +15,6 @@ standard-minifiers      # JS/CSS minifiers run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 
 angular@=1.3.5
-driftyco:ionic
 shynah:flex-calendar
 momentjs:moment
 shynah:angular-wizard
@@ -37,9 +36,7 @@ kadira:debug
 nimble:restivus
 meteorhacks:picker
 meteorhacks:npm
-
-
 vsivsi:file-collection
-
-
 npm-container
+driftyco:ionic
+seba:ionic-sass

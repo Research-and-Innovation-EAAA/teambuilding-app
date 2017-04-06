@@ -24,17 +24,18 @@
                 <div class="list">
                     <form>
                         <label class="item item-input">
-                            <input type="email" placeholder="E-mail" id="login-email" class="user-input"
+                            <input type="email" placeholder="{{'email'|translate}}" id="login-email" class="user-input"
                                    ng-model="vm.email">
                         </label>
                         <label class="item item-input">
-                            <input type="password" placeholder="Password" id="login-password" class="user-input"
+                            <input type="password" placeholder="{{'password'|translate}}" id="login-password"
+                                   class="user-input"
                                    ng-model="vm.password">
                         </label>
 
                         <div class="submit-btn">
                             <button type="submit" class="button button-block button-positive " id="submit"
-                                    ng-click="vm.submit()">Log ind
+                                    ng-click="vm.submit()" translate>login
                             </button>
                         </div>
                     </form>
