@@ -1,12 +1,12 @@
 <ion-view view-title="" ng-controller="frontpageController as vm" hide-back-button="true">
 
-    <ion-nav-buttons side="primary" >
+    <ion-nav-buttons side="left">
         <button class="button-clear logout-button" ng-click="vm.backToEvents()">
             <i class="ion-chevron-left"></i> Events
         </button>
     </ion-nav-buttons>
 
-    <ion-nav-buttons side="secondary">
+    <ion-nav-buttons side="right">
         <button class="button-clear logout-button" ng-click="vm.backToLogout()">
             <i class="ion-log-out"></i> Log ud {{currentUser.emails[0].address|nameFromEmail}}
         </button>
@@ -18,14 +18,14 @@
                 pulling-text="Pull to refresh..."
                 on-refresh="vm.refresh()">
         </ion-refresher>
-        <div class="event-container">
+        <div class="event-container" ng-if="!vm.event.shortEvent">
             <div class="row row-first responsive-sm">
-                <div class="col col-no-padding bordero">
+                <div class="col col-no-padding ">
                     <h1>{{vm.event.name}}</h1>
                 </div>
-                <div class="col col-no-padding bordero">
+                <div class="col col-no-padding ">
                     <div ng-repeat="module in vm.modules" class="row row-no-padding">
-                        <div class="col col-no-padding bordero">
+                        <div class="col col-no-padding ">
                             <button class="button button-block icon-right ion-chevron-right button-royal button-event"
                                     ng-click="vm.newRegistration($index)">
                                 Start spørgeskema <span ng-hide="vm.countAllModules() == 1">{{module.number}}</span>
@@ -44,15 +44,16 @@
                             <span ng-if="vm.futureModules() == 0 && vm.countAllModules() > 1">Tak for al din feedback!</span>
                             <span ng-if="vm.futureModules() == 0 && vm.countAllModules() == 1">Tak for i dag! Håber det har været en dejlig dag :-)</span>
                             <span ng-if="vm.futureModules() == 1">Tak for i dag! Håber det har været en dejlig dag :-)</span>
-                            <span ng-if="vm.futureModules() > 1">Vi ses senere efter kl. {{vm.nextTime()|date:"H:mm"}}!</span>
+                            <span ng-if="vm.futureModules() > 1">Vi ses senere efter kl. {{vm.nextTime()|date:"H:mm"}}
+                                !</span>
                         </button>
                     </div>
                 </div>
             </div>
             <div class="row responsive-sm">
-                <div class="col col-no-padding bordero">
+                <div class="col col-no-padding ">
                     <div class="row row-first">
-                        <div class="col bordero">
+                        <div class="col ">
                             <div class="twocol-container">
                                 <i class="twocol-left icon ion-ios-calendar-outline padding-right"></i>
                                 <div class="twocol-right">
@@ -63,7 +64,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col bordero">
+                        <div class="col ">
                             <div class="twocol-container">
                                 <i class="twocol-left icon ion-ios-location padding-right"></i>
                                 <div class="twocol-right">
@@ -74,7 +75,7 @@
                         </div>
                     </div>
                     <div class="row row-first">
-                        <div class="col bordero">
+                        <div class="col ">
                             <div class="twocol-container">
                                 <i class="twocol-left icon ion-ios-list-outline padding-right"></i>
                                 <div class="twocol-right">
@@ -86,9 +87,9 @@
                     </div>
                 </div>
 
-                <div class="col col-info bordero">
+                <div class="col col-info ">
                     <div class="row row-no-padding">
-                        <div class="col bordero">
+                        <div class="col ">
                             <div class="twocol-container padding-left">
                                 <i class="twocol-left icon ion-ios-information-outline padding-right"></i>
                                 <div class="twocol-right">
@@ -101,12 +102,80 @@
                         </div>
                     </div>
                     <div class="row row-no-padding">
-                        <div class="col bordero">
+                        <div class="col ">
                             <img src="/coastzone.png" alt="CoastZone logo" class="event-logo">
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="event-container" ng-if="vm.event.shortEvent">
+            <div class="row">
+                <div class="col col-no-padding">
+                    <h1>{{vm.event.name}}</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="twocol-container">
+                        <i class="twocol-left icon ion-ios-calendar-outline padding-right"></i>
+                        <div class="twocol-right">
+                            <h3>Dato:</h3>
+                            <span ng-hide="vm.event.startDate == vm.event.endDate">
+                                        {{vm.event.startDate | date:"d. M."}} &ndash;</span>
+                            {{vm.event.endDate | date:"d. M. yyyy"}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-no-padding">
+                    <div class="long-text">
+                        <p>Kære deltager</p>
+                        <p>Erhvervsakademi Aarhus Forskning &amp; Innovation er ved at undersøge effekten af
+                            teambuilding. Vi vil i den forbindelse gerne stille dig nogle spørgsmål. Tak fordi du vil
+                            deltage.</p>
+                        <p>Din besvarelse er <strong>anonym</strong>, og vil kun blive brugt i forskningssammenhæng.</p>
+                        <p>Med venlig hilsen</p>
+                        <p>Lars Davidsen<br>
+                            Erhvervsakademi Aarhus</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-no-padding">
+                    <div ng-repeat="module in vm.modules" class="row row-no-padding">
+                        <div class="col col-no-padding ">
+                            <button class="button button-block icon-right ion-chevron-right button-royal button-event"
+                                    ng-click="vm.newRegistration($index)">
+                                Start spørgeskema <span ng-hide="vm.countAllModules() == 1">{{module.number}}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div ng-if="vm.modules.length === undefined" class="col col-no-padding">
+                        <button class="button button-outline button-royal button-block button-disabled button-event">
+                            <ion-spinner class="spinner-positive"></ion-spinner>
+                        </button>
+                    </div>
+
+                    <div ng-if="vm.modules.length == 0" class="col col-no-padding">
+                        <button class="button button-outline button-royal button-block button-disabled button-no-margin">
+                            <span>Tak for i dag! Håber det har været en dejlig dag :-)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-padding">
+                <div class="col">
+                    <img src="/eaaa-logo.png" alt="Erhvervsakademi Aarhus logo" class="event-logo">
+                </div>
+            </div>
+
+
         </div>
     </ion-content>
 </ion-view>

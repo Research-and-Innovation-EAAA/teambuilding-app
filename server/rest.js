@@ -12,32 +12,27 @@ var ApiV1config = {
 };
 var ApiV1 = new Restivus(ApiV1config);
 
+function myFlat(input){
+    var output = {};
+    _.each(input, function(value, key, list){
+        if (_.isArray(value)){
+            output[key] = value.toString();
+        }
+        else {
+            output[key] = value;
+        }
+    });
+
+    output = Flat(output);
+
+    return output;
+}
+
 // Maps to: /api/registrations/:event
 ApiV1.addRoute('registrations/:event', {authRequired: true}, {
     get: function () {
-        var isAdmin = UserInfo.findOne({"userId": this.userId}).admin;
-        if (!isAdmin) {
-            return "Not an admin";
-        }
-
-        var event = Events.findOne({"password": this.urlParams.event});
-        if (!event) {
-            return "Event not found";
-        }
-
-        var regs = [];
-        Registrations.find({eventId: event._id}).forEach(function (reg) {
-            regs.push(Flat(reg));
-        });
-        return regs;
-    }
-});
-
-// Maps to: /api/registrations/:event/metadata
-ApiV1.addRoute('registrations/:event/metadata', {authRequired: true}, {
-    get: function () {
-        var isAdmin = UserInfo.findOne({"userId": this.userId}).admin;
-        if (!isAdmin) {
+        var admin = UserInfo.findOne({"userId": this.userId});
+        if (!admin || !admin.admin) {
             return "Not an admin";
         }
 
@@ -48,7 +43,41 @@ ApiV1.addRoute('registrations/:event/metadata', {authRequired: true}, {
 
         // TODO get field names for a specific event, maybe use /db.collection.aggregate/
 
+        var regs = [];
+        CustomModules.find({eventId: event._id}, {sort: {number: 1}}).forEach(function (mod) {
+            Registrations.find({moduleId: mod._id}).forEach(function (reg) {
+                reg = _.omit(reg, '_id', 'moduleId');
+
+                var user = Meteor.users.findOne({"_id": reg.createdBy});
+
+                if (user !== undefined){
+                    reg.createdBy = user.emails[0].address;
+                }
+
+                regs.push(myFlat(reg));
+            });
+        });
+
+        return regs;
+    }
+});
+
+// Maps to: /api/registrations/:event/metadata
+ApiV1.addRoute('registrations/:event/metadata', {authRequired: true}, {
+    get: function () {
+        var admin = UserInfo.findOne({"userId": this.userId});
+        if (!admin || !admin.admin) {
+            return "Not an admin";
+        }
+
+        var event = Events.findOne({"password": this.urlParams.event});
+        if (!event) {
+            return "Event not found";
+        }
+
         var attributes = new Array();
+        attributes.push("createdAt");
+        attributes.push("createdBy");
 
         CustomModules.find({eventId: event._id}).forEach(function (doc) {
 
@@ -82,14 +111,6 @@ ApiV1.addRoute('registrations/:event/metadata', {authRequired: true}, {
         return attributes;
     }
 });
-
-// Maps to: /api/registrations/:id
-ApiV1.addRoute('registrations/:id', {authRequired: true}, {
-    get: function () {
-        return Registrations.findOne({_id: this.urlParams.id, createdBy: this.userId});
-    }
-});
-
 
 ApiV1.addRoute('swagger.json', {authRequired: false}, {
     get: function () {
