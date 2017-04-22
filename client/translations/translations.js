@@ -34,6 +34,7 @@ function config($translateProvider) {
         enter: 'Enter',
         email: 'E-mail',
         password: 'Password',
+        error: 'Error!',
         errorLoginPwd: 'This email is already in the system, but the password does not match.',
         errorLoginNewUser: 'Cannot create a user. Check internet connection and try again later.',
         errorLoginAllFields: 'Please fill in all the fields.',
@@ -102,6 +103,7 @@ function config($translateProvider) {
         enter: 'Gå ind', //TODO !!!!!!!!!!
         email: 'E-mail',
         password: 'Kodeord',
+        error: 'Fejl!',
         errorLoginPwd: 'Denne e-mailaddrese er allerede i brug, men kodeordet passer ikke.', //TODO check!!!!
         errorLoginNewUser: 'Kunne ikke oprette en ny bruger. Tjek internetforbindelsen og prøv venligst igen.',
         errorLoginAllFields: 'Udfyld venligst begge felter.',

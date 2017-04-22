@@ -1,11 +1,13 @@
 angular.module('leukemiapp').controller('loginController', LoginController);
 
-function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarDelegate, $ionicLoading, $ionicHistory, $ionicPopup, $timeout) {
+function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarDelegate, $ionicLoading, $ionicHistory, $ionicPopup, $timeout, $translate) {
     $reactive(this).attach($scope);
     var vm = this;
 
     vm.email = "";
     vm.password = "";
+
+    vm.attempts = 0;
 
     vm.myPopup;
     vm.closePopup = function () {
@@ -20,6 +22,29 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
     });
 
     vm.submit = function () {
+        var animationName = "animated shake";
+        var animationFinish = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        var valid = true;
+
+        if (!/^.+@.+\..+$/.test(vm.email)) {
+            $('#emailInput').addClass("inputError");
+            $('#emailInput').addClass(animationName).one(animationFinish, () => {
+                $('#emailInput').removeClass(animationName);
+                $('#emailInput').removeClass("inputError");
+            });
+            valid = false;
+        }
+        if (vm.password.length == 0) {
+            $('#passwordInput').addClass("inputError");
+            $('#passwordInput').addClass(animationName).one(animationFinish, () => {
+                $('#passwordInput').removeClass(animationName);
+                $('#passwordInput').removeClass("inputError");
+            });
+            valid = false;
+        }
+        if (!valid)
+            return;
+
         var user = {'email': vm.email, 'password': vm.password};
 
         $ionicLoading.show({
@@ -33,28 +58,39 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
             if (!err) {
                 $location.path("app/eventselect");
             } else {
+                vm.attempts++;
+
                 if (err.error === 403) { // Email already exists => try to log in
                     Meteor.loginWithPassword(vm.email, vm.password, function (err) {
                         if (!err) {
                             $location.path("app/eventselect");
                         }
                         else {
-                            vm.myPopup = $ionicPopup.alert({
-                                title: 'Error!',
-                                template: $translate.instant('errorLoginPwd') + "<input autofocus ng-enter='vm.closePopup();' style='position: absolute; left: -9999px'>"
-                            });
+                            if (vm.attempts < 3) {
+                                $('#passwordInput').addClass("inputError");
+                                $('#passwordInput').addClass(animationName).one(animationFinish, () => {
+                                    $('#passwordInput').removeClass(animationName);
+                                    $('#passwordInput').removeClass("inputError");
+                                });
+                            }
+                            else {
+                                vm.myPopup = $ionicPopup.alert({
+                                    title: $translate.instant('error'),
+                                    template: $translate.instant('errorLoginPwd') + "<input autofocus ng-enter='vm.closePopup();' style='position: absolute; left: -9999px'>"
+                                });
+                            }
                         }
                     });
                 }
                 else if (err.error === 400) { // input error
                     vm.myPopup = $ionicPopup.alert({
-                        title: 'Error!',
-                        template: $translate.instant('errorLoginAllFields') +"<input autofocus ng-enter='vm.closePopup()' style='position: absolute; left: -9999px'>"
+                        title: $translate.instant('error'),
+                        template: $translate.instant('errorLoginAllFields') + "<input autofocus ng-enter='vm.closePopup()' style='position: absolute; left: -9999px'>"
                     });
                 }
                 else {
                     vm.myPopup = $ionicPopup.alert({
-                        title: 'Error!',
+                        title: $translate.instant('error'),
                         template: $translate.instant('errorLoginNewUser') + err + "<input autofocus ng-enter='vm.closePopup()' style='position: absolute; left: -9999px'>"
                     });
 
@@ -77,14 +113,15 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
             $location.path("app/eventselect");
             return;
         }
+
+        vm.email = "";
+        vm.password = "";
     });
 
     $scope.$on('$ionicView.enter', function () {
         $timeout(function () {
             $ionicNavBarDelegate.align('center');
 
-            vm.email = "";
-            vm.password = "";
         });
     });
 

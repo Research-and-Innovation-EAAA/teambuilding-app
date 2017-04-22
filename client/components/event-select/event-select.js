@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('eventSelectController', EventSelectController);
 
-function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegate, $ionicPopup, $translate, $timeout) {
+function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegate, $ionicPopup, $translate, $timeout, $animate) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -43,17 +43,26 @@ function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegat
             $location.path("app/event");
         }
         else {
-            vm.myPopup = $ionicPopup.alert({
-                title: $translate.instant("errorNoEventFound"),
-                template: $translate.instant("errorEventCode") + "<input autofocus ng-enter='vm.closePopup();' style='position: absolute; left: -9999px'>"
+            var animationName = "animated shake";
+            $('#eventpassword').addClass("inputError");
+            $('#eventpassword').addClass(animationName).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+                $('#eventpassword').removeClass(animationName);
+                $('#eventpassword').removeClass("inputError");
             });
+
+            /*vm.myPopup = $ionicPopup.alert({
+             title: $translate.instant("errorNoEventFound"),
+             template: $translate.instant("errorEventCode") + "<input autofocus ng-enter='vm.closePopup();' style='position: absolute; left: -9999px'>"
+             });*/
         }
     }
 
     vm.backToLogout = function () {
         Meteor.logout(function () {
             // Clear all keys
-            Object.keys(Session.keys).forEach(function(key){ Session.set(key, undefined); });
+            Object.keys(Session.keys).forEach(function (key) {
+                Session.set(key, undefined);
+            });
             Session.keys = {};
 
             $location.path("app/login");
