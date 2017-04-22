@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('eventSelectController', EventSelectController);
 
-function EventSelectController($scope, $rootScope, $location, $reactive, $ionicNavBarDelegate, $ionicPopup, $timeout) {
+function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegate, $ionicPopup, $translate, $timeout) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -44,8 +44,8 @@ function EventSelectController($scope, $rootScope, $location, $reactive, $ionicN
         }
         else {
             vm.myPopup = $ionicPopup.alert({
-                title: 'No event found!',
-                template: "Incorrect event code. Please try again.<input autofocus ng-enter='vm.closePopup();' style='position: absolute; left: -9999px'>"
+                title: $translate.instant("errorNoEventFound"),
+                template: $translate.instant("errorEventCode") + "<input autofocus ng-enter='vm.closePopup();' style='position: absolute; left: -9999px'>"
             });
         }
     }

@@ -13,7 +13,7 @@
             <div class="event-select">
                 <div class="row">
                     <div class="col">
-                        <h3 translate>eventCode</h3>
+                        <h3>{{'eventCode' | translate}}:</h3>
                     </div>
                 </div>
 
@@ -27,6 +27,7 @@
                                            class="user-input"
                                            type="text"
                                            autocomplete="off"
+                                           placeholder="{{'eventCode' | translate}}"
                                            ng-model="vm.eventPassword">
                                 </label>
 

@@ -41,7 +41,7 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
                         else {
                             vm.myPopup = $ionicPopup.alert({
                                 title: 'Error!',
-                                template: "This email is already in the system, but the password does not match.<input autofocus ng-enter='vm.closePopup();' style='position: absolute; left: -9999px'>"
+                                template: $translate.instant('errorLoginPwd') + "<input autofocus ng-enter='vm.closePopup();' style='position: absolute; left: -9999px'>"
                             });
                         }
                     });
@@ -49,13 +49,13 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
                 else if (err.error === 400) { // input error
                     vm.myPopup = $ionicPopup.alert({
                         title: 'Error!',
-                        template: "Please fill in all the fields." + "<input autofocus ng-enter='vm.closePopup()' style='position: absolute; left: -9999px'>"
+                        template: $translate.instant('errorLoginAllFields') +"<input autofocus ng-enter='vm.closePopup()' style='position: absolute; left: -9999px'>"
                     });
                 }
                 else {
                     vm.myPopup = $ionicPopup.alert({
                         title: 'Error!',
-                        template: "Cannot create a user. Check internet connection and try again later. " + err + "<input autofocus ng-enter='vm.closePopup()' style='position: absolute; left: -9999px'>"
+                        template: $translate.instant('errorLoginNewUser') + err + "<input autofocus ng-enter='vm.closePopup()' style='position: absolute; left: -9999px'>"
                     });
 
                     console.error(err);

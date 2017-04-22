@@ -75,7 +75,6 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
     };
 
     vm.finishWizard = function () {
-        //setTimeout(function () {
         console.log("Run finish wizard");
         if (vm.validateData()) {
             var registration = getRegistration();
@@ -101,7 +100,6 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
             });
 
         }
-        //}, 100);
     };
 
     vm.cancelRegistration = () => {
@@ -131,8 +129,8 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
 
     function saveOk() {
         $ionicPopup.alert({
-            title: "Succes",
-            content: "Dine svar er blevet gemt!"
+            title: $translate.instant('wizard.saved'),
+            content: $translate.instant('wizard.savedThanks')
         });
         WizardStateAccessor.setRegistration(vm.moduleId, undefined);
         Session.set('regValidated', undefined);

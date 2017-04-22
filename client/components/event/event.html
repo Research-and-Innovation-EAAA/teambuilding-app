@@ -48,8 +48,9 @@
                             <span ng-if="vm.futureModules() == 0 && vm.countAllModules() == 1"
                                   translate>thanksToday</span>
                             <span ng-if="vm.futureModules() == 1" translate>thanksToday</span>
-                            <span ng-if="vm.futureModules() > 1" translate>seeYouLaterAt {{vm.nextTime()|date:"H:mm"}}
-                                !</span>
+
+                            <span ng-if="vm.futureModules() > 1" translate="seeYouLaterAt"
+                                  translate-value-time="{{vm.nextTime()| date:'H:mm'}}"></span>
                         </button>
                     </div>
                 </div>
@@ -61,7 +62,7 @@
                             <div class="twocol-container">
                                 <i class="twocol-left icon ion-ios-calendar-outline padding-right"></i>
                                 <div class="twocol-right">
-                                    <h3 translate>date</h3>
+                                    <h3>{{'date' | translate}}:</h3>
                                     <span ng-hide="vm.event.startDate == vm.event.endDate">
                                         {{vm.event.startDate | date:"d. M."}} &ndash;</span>
                                     {{vm.event.endDate | date:"d. M. yyyy"}}
@@ -72,7 +73,7 @@
                             <div class="twocol-container">
                                 <i class="twocol-left icon ion-ios-location padding-right"></i>
                                 <div class="twocol-right">
-                                    <h3 translate>meetingPoint</h3>
+                                    <h3>{{'meetingPoint' | translate}}:</h3>
                                     {{vm.event.meetingPoint}}
                                 </div>
                             </div>
@@ -83,7 +84,7 @@
                             <div class="twocol-container">
                                 <i class="twocol-left icon ion-ios-list-outline padding-right"></i>
                                 <div class="twocol-right">
-                                    <h3 translate>program</h3>
+                                    <h3>{{'program' | translate}}:</h3>
                                     <div ng-bind-html="vm.event.program"></div>
                                 </div>
                             </div>
@@ -97,9 +98,9 @@
                             <div class="twocol-container padding-left">
                                 <i class="twocol-left icon ion-ios-information-outline padding-right"></i>
                                 <div class="twocol-right">
-                                    <h3 translate>bring</h3>
+                                    <h3>{{'bring' | translate}}:</h3>
                                     {{vm.event.bring}}
-                                    <h3 translate>moreInfo</h3>
+                                    <h3>{{'moreInfo' | translate}}:</h3>
                                     {{vm.event.otherInfo}}
                                 </div>
                             </div>
@@ -126,7 +127,7 @@
                     <div class="twocol-container">
                         <i class="twocol-left icon ion-ios-calendar-outline padding-right"></i>
                         <div class="twocol-right">
-                            <h3 translate>date</h3>
+                            <h3>{{'date' | translate}}:</h3>
                             <span ng-hide="vm.event.startDate == vm.event.endDate">
                                         {{vm.event.startDate | date:"d. M."}} &ndash;</span>
                             {{vm.event.endDate | date:"d. M. yyyy"}}
