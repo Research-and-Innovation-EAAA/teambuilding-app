@@ -50,6 +50,7 @@ function config($translateProvider) {
         thanksAll: 'Thank you for all your feedback!',
         thanksToday: 'Thank you! We hope you have enjoyed as much as we did :-)',
         seeYouLaterAt: 'See you later after {{time}}!',
+        refresherText: 'Pull to refresh...',
 
 
         wizard: {
@@ -116,10 +117,10 @@ function config($translateProvider) {
         bring: 'Medbring',
         moreInfo: 'Flere oplysninger',
         startQuestionnaire: 'Start spørgeskema',
-
         thanksAll: 'Tak for al din feedback!',
         thanksToday: 'Tak for i dag! Håber det har været en dejlig dag :-)',
         seeYouLaterAt: 'Vi ses senere efter kl. {{time}}!',
+        refresherText: 'Træk for at opdatere...',
 
 
         wizard: {

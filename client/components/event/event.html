@@ -17,7 +17,7 @@
     <ion-content class="default-background"
                  delegate-handle="front-page-scroll">
         <ion-refresher
-                pulling-text="Pull to refresh..."
+                pulling-text="{{'refresherText' | translate}}"
                 on-refresh="vm.refresh()">
         </ion-refresher>
         <div class="event-container" ng-if="!vm.event.shortEvent">
