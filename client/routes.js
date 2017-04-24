@@ -43,6 +43,22 @@ angular.module('leukemiapp')
                         templateUrl: 'client/components/wizard/question-wizard.html'
                     }
                 }
+            })
+            .state('app.editor', {
+                url: '/editor',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'client/components/editor/events.html'
+                    }
+                }
+            })
+            .state('app.notauthorised', {
+                url: '/not-authorised',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'client/components/not-authorised/not-authorised.html'
+                    }
+                }
             });
 
         // if none of the above states are matched, use this as the fallback

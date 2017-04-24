@@ -1,0 +1,115 @@
+// Import your custom variables
+@import '../../styles/app-variables';
+// Then import ionic after. Ionic will use your variables instead of its own.
+@import '{seba:ionic-sass}/scss/ionic';
+
+// ---------------------------------------------------------------------------------
+
+.event-container {
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  //  border: 1px solid red;
+  font-size: 1.1em;
+}
+
+.event-container h3 {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.event-container .icon {
+  font-size: 2em;
+  color: $text-color;
+}
+
+@media (min-width: 768px) {
+  .event-container {
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .event-container {
+    padding-top: 10px;
+  }
+
+  .col {
+    margin: 2px 0 !important;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+}
+
+.bordero {
+  //    border: 1px solid deepskyblue;
+}
+
+.col-no-padding {
+  padding: 0px !important;
+}
+
+.col-info {
+  padding-left: 10px;
+}
+
+.row-first {
+  margin-bottom: 20px;
+}
+
+.event-container .button-disabled {
+  cursor: default !important;
+  background-color: transparent !important;
+  color: $royal !important;
+  line-height: 1.2em;
+  padding: 20px 10px;
+}
+
+.button-no-margin {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  /*line-height: 1.5em !important;
+  padding: 10px 5px !important;*/
+}
+
+.twocol-container {
+  display: table;
+}
+
+.twocol-left, .twocol-right {
+  display: table-cell;
+}
+
+.twocol-left {
+  width: auto;
+  //  background: deeppink;
+  //  border: 3px solid #000
+}
+
+.twocol-right {
+  vertical-align: top;
+  //  background: #aaa;
+  //  border: 3px solid #000;
+}
+
+.frontpage-col {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.event-logo {
+  display: block;
+  width: 50%;
+  max-width: 300px;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+
+.long-text{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

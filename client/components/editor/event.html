@@ -1,0 +1,43 @@
+<ion-modal-view class="centervertically" ng-controller="eventEditorController as vm">
+    <ion-header-bar class="bar bar-header bar-stable">
+        <h1 class="title">{{vm.pageTitle}}</h1>
+        <button class="button button-clear button-left"
+                ng-click="vm.doneModal()">
+            <strong translate>Cancel</strong>
+        </button>
+        <button class="button button-clear button-right"
+                ng-click="vm.doneModal()">
+            <strong translate>Save</strong>
+        </button>
+    </ion-header-bar>
+    <ion-content class="default-background">
+
+        <div class="list list-inset">
+            <label class="item item-input">
+                <input type="text" placeholder="Event name" ng-model="vm.event.name">
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Password" ng-model="vm.event.password">
+            </label>
+            <label class="item item-input">
+                <input type="date" placeholder="Start date" ng-model="vm.event.startDate">
+            </label>
+            <label class="item item-input">
+                <input type="date" placeholder="End date" ng-model="vm.event.endDate">
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Meeting point" ng-model="vm.event.meetingPoint">
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Bring" ng-model="vm.event.bring">
+            </label>
+            <label class="item item-input">
+                <div ng-model="vm.event.program" id="summernote-editor" style="width: 90%"></div>
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Other info" ng-model="vm.event.otherInfo">
+            </label>
+
+        </div>
+    </ion-content>
+</ion-modal-view>

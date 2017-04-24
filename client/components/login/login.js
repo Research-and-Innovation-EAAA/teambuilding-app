@@ -21,6 +21,24 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
         ga('set', 'dimension1', Meteor.userId()); // Set the custom dimension in Google Analytics to store the actual userId
     });
 
+    function navigateToNextStep() {
+      /*  Meteor.subscribe('userInfo', function () {
+            if (!Meteor.userId()) {
+                return;
+            }
+
+            // UserInfo.insert({"userId": Meteor.userId(), "admin": true});
+            var admin = UserInfo.findOne({"userId": Meteor.userId()});
+            console.log("jsem admin? " + JSON.stringify(admin));
+            if (admin && admin.admin) {
+                $location.path("app/editor");
+            }
+            else {*/
+                $location.path("app/eventselect");
+            /*}
+        });*/
+    }
+
     vm.submit = function () {
         var animationName = "animated shake";
         var animationFinish = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
@@ -56,14 +74,14 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
             $ionicLoading.hide();
 
             if (!err) {
-                $location.path("app/eventselect");
+                navigateToNextStep();
             } else {
                 vm.attempts++;
 
                 if (err.error === 403) { // Email already exists => try to log in
                     Meteor.loginWithPassword(vm.email, vm.password, function (err) {
                         if (!err) {
-                            $location.path("app/eventselect");
+                            navigateToNextStep();
                         }
                         else {
                             if (vm.attempts < 3) {
@@ -110,7 +128,8 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
             $ionicHistory.nextViewOptions({
                 disableAnimate: true
             });
-            $location.path("app/eventselect");
+
+            navigateToNextStep();
             return;
         }
 
@@ -125,12 +144,14 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
         });
     });
 
+    //Analytics
+    Accounts.onLogin(function () {
+        /*ga('set', 'userId', Meteor.userId()); // Set the user ID using signed-in user_id.
+         ga('set', 'dimension1', Meteor.userId()); // Set the custom dimension in Google Analytics to store the actual userId
+         */
+    });
 
-    /*   //Analytics
-     Accounts.onLogin(function () {
-     ga('set', 'userId', Meteor.userId()); // Set the user ID using signed-in user_id.
-     ga('set', 'dimension1', Meteor.userId()); // Set the custom dimension in Google Analytics to store the actual userId
-     });*/
+
     /*
      Meteor.subscribe("settings", function () {
      var analyticsSettings = Settings.findOne({key: 'analytics'});

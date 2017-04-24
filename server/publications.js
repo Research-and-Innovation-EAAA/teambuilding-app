@@ -100,7 +100,7 @@
 
     Meteor.publish("modulesAndRegistrations", function () {
         if (!this.userId)
-            return;
+            return this.ready();
         return [
             CustomModules.find({}),
             Registrations.find({"createdBy": this.userId})
@@ -109,15 +109,22 @@
 
     Meteor.publish("customModules", function () {
         if (!this.userId)
-            return;
+            return this.ready();
         return CustomModules.find({});
     });
 
     Meteor.publish("events", function () {
         if (!this.userId)
-            return;
+            return this.ready();
         else
             return Events.find({});
+    });
+
+    Meteor.publish("userInfo", function () {
+        if (!this.userId)
+            return this.ready();
+        else
+            return UserInfo.find({"userId": this.userId});
     });
 
 })();
