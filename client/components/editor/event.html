@@ -11,33 +11,73 @@
         </button>
     </ion-header-bar>
     <ion-content class="default-background">
+        <form class="editor-form">
+            <div class="row">
+                <div class="col">
+                    <span class="editor-input-group event-name-input">
+                        <input type="text" class="editor-input" placeholder="Event name"
+                               ng-model="vm.event.name">
+                        <div class="editor-input-bar"></div>
+				    </span>
 
-        <div class="list list-inset">
-            <label class="item item-input">
-                <input type="text" placeholder="Event name" ng-model="vm.event.name">
-            </label>
-            <label class="item item-input">
-                <input type="text" placeholder="Password" ng-model="vm.event.password">
-            </label>
-            <label class="item item-input">
-                <input type="date" placeholder="Start date" ng-model="vm.event.startDate">
-            </label>
-            <label class="item item-input">
-                <input type="date" placeholder="End date" ng-model="vm.event.endDate">
-            </label>
-            <label class="item item-input">
-                <input type="text" placeholder="Meeting point" ng-model="vm.event.meetingPoint">
-            </label>
-            <label class="item item-input">
-                <input type="text" placeholder="Bring" ng-model="vm.event.bring">
-            </label>
-            <label class="item item-input">
-                <div ng-model="vm.event.program" id="summernote-editor" style="width: 90%"></div>
-            </label>
-            <label class="item item-input">
-                <input type="text" placeholder="Other info" ng-model="vm.event.otherInfo">
-            </label>
+                    <div class="event-password-input">
+                        (<span class="editor-input-group">
+                        <input type="text" class="editor-input" placeholder="password" ng-model="vm.event.password">
+                        <div class="editor-input-bar"></div>
+				        </span>)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="icon-col"><i class="icon ion-ios-calendar-outline padding-right"></i></div>
+                <div class="col">
+                    <span class="editor-input-group editor-date-input">
+                        <input type="date" class="editor-input" ng-model="vm.event.startDate">
+                        <div class="editor-input-bar"></div>
+				    </span>&ndash;
+                    <span class="editor-input-group">
+                        <input type="date" class="editor-input" ng-model="vm.event.endDate">
+                        <div class="editor-input-bar"></div>
+				    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="icon-col"><i class="icon ion-ios-location padding-right"></i></div>
+                <div class="col">
+                    <span class="editor-input-group">
+                        <input type="text" class="editor-input" placeholder="Meeting point"
+                               ng-model="vm.event.meetingPoint">
+                        <div class="editor-input-bar"></div>
+				    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="icon-col"><i class="icon ion-ios-list-outline padding-right"></i></div>
+                <div class="col">
+                    Program
+                    <textarea ng-model="vm.event.program" class="editor-program-input"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="icon-col"><i class="icon ion-ios-information-outline padding-right"></i></div>
+                <div class="col">
+                    <label>Bring</label>
+                    <span class="editor-input-group">
+                        <input type="text" class="editor-input" placeholder="Bring"
+                               ng-model="vm.event.bring">
+                        <div class="editor-input-bar"></div>
+				    </span>
+                    <br>
+                    <label>Other info....</label>
+                    <span class="editor-input-group">
+                        <input type="text" class="editor-input" placeholder="Other info"
+                               ng-model="vm.event.otherInfo">
+                        <div class="editor-input-bar"></div>
+				    </span>
 
-        </div>
+                </div>
+            </div>
+        </form>
+
     </ion-content>
 </ion-modal-view>

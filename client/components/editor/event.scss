@@ -1,0 +1,105 @@
+// Import your custom variables
+@import '../../styles/app-variables';
+// Then import ionic after. Ionic will use your variables instead of its own.
+@import '{seba:ionic-sass}/scss/ionic';
+
+// ---------------------------------------------------------------------------------
+
+.icon-col {
+  width: 40px;
+  padding-top: 10px;
+ // background: red;
+}
+
+.icon-col i {
+  font-size: 2em;
+}
+
+.editor-form {
+  margin-top: 10px;
+}
+
+.editor-form .row{
+  margin-bottom: 15px;
+}
+
+.editor-form .editor-input {
+ /* border: 0;
+  background: hotpink;
+  border-bottom: 2px solid forestgreen;*/
+}
+
+.editor-form .editor-input-group {
+  display: inline-block;
+  position: relative;
+  width: 200px;
+  //max-width: 300px;
+  //border: 1px solid red;
+}
+
+.editor-form .editor-input {
+  background: none;
+  //font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #bbbbbb;
+}
+
+.editor-form .editor-input:focus {
+  outline: none;
+}
+
+.editor-form .editor-input-bar {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.editor-form .editor-input-bar:before,
+.editor-form .editor-input-bar:after {
+  content: '';
+  height: 2px;
+  width: 0px;
+  bottom: 1px;
+  position: absolute;
+  background: $positive;
+  transition: 0.2s ease all;
+}
+
+.editor-form .editor-input-bar:before {
+  left: 50%;
+}
+
+.editor-form .editor-input-bar:after {
+  right: 50%;
+}
+
+input:focus ~ .editor-input-bar:before, input:focus ~ .editor-input-bar:after {
+  width: 50%;
+}
+
+.editor-form .event-name-input {
+  width: 100%;
+
+  input{
+    font-size: 1.8em;
+    font-weight: bold;
+  }
+}
+
+.editor-form .event-password-input{
+  float: right;
+}
+
+.editor-form .editor-date-input{
+  min-width: 150px;
+}
+
+.editor-form .editor-program-input{
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #bbbbbb;
+}

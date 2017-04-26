@@ -14,12 +14,11 @@
                 on-refresh="vm.refresh()">
         </ion-refresher>
 
-        <button class="button button-royal icon-left ion-plus-circled" ng-click="vm.openModal()">Create event</button>
         <div class="list">
 
             <div ng-repeat="event in vm.events" class="item item-button-right">
 <!--                <div class="col">
-                    <strong>-->{{ event.name }} <span class="eventPassword">({{event.password}})</span><!--</strong>
+                    --><strong>{{ event.name }}</strong> <span class="eventPassword">({{event.password}})</span><!--
                     </div>
                 <div class="col">
                     {{ event.shortEvent }}
@@ -213,4 +212,8 @@
 
         </div-->
     </ion-content>
+
+    <div class="bar bar-footer">
+        <button class="button button-royal pull-right icon-left ion-plus-circled" ng-click="vm.openModal()"> Create event</button>
+    </div>
 </ion-view>
