@@ -16,13 +16,14 @@
                 <div class="col">
                     <span class="editor-input-group event-name-input">
                         <input type="text" class="editor-input" placeholder="Event name"
-                               ng-model="vm.event.name">
+                               required="required" ng-model="vm.event.name">
                         <div class="editor-input-bar"></div>
 				    </span>
 
                     <div class="event-password-input">
                         (<span class="editor-input-group">
-                        <input type="text" class="editor-input" placeholder="password" ng-model="vm.event.password">
+                        <input type="text" class="editor-input" placeholder="{{'eventCode' | translate}}"
+                               ng-model="vm.event.password">
                         <div class="editor-input-bar"></div>
 				        </span>)
                     </div>
@@ -31,21 +32,23 @@
             <div class="row">
                 <div class="icon-col"><i class="icon ion-ios-calendar-outline padding-right"></i></div>
                 <div class="col">
-                    <span class="editor-input-group editor-date-input">
-                        <input type="date" class="editor-input" ng-model="vm.event.startDate">
-                        <div class="editor-input-bar"></div>
-				    </span>&ndash;
-                    <span class="editor-input-group">
-                        <input type="date" class="editor-input" ng-model="vm.event.endDate">
-                        <div class="editor-input-bar"></div>
-				    </span>
+                    <div class="editor-dates">
+                        <span class="editor-input-group editor-date-input">
+                            <input type="date" class="editor-input" ng-model="vm.event.startDate">
+                            <div class="editor-input-bar"></div>
+                        </span> &ndash;
+                        <span class="editor-input-group editor-date-input">
+                            <input type="date" class="editor-input" ng-model="vm.event.endDate">
+                            <div class="editor-input-bar"></div>
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="icon-col"><i class="icon ion-ios-location padding-right"></i></div>
                 <div class="col">
                     <span class="editor-input-group">
-                        <input type="text" class="editor-input" placeholder="Meeting point"
+                        <input type="text" class="editor-input" placeholder="{{'meetingPoint' | translate}}"
                                ng-model="vm.event.meetingPoint">
                         <div class="editor-input-bar"></div>
 				    </span>
@@ -54,23 +57,26 @@
             <div class="row">
                 <div class="icon-col"><i class="icon ion-ios-list-outline padding-right"></i></div>
                 <div class="col">
-                    Program
-                    <textarea ng-model="vm.event.program" class="editor-program-input"></textarea>
+                    <label>{{'program' | translate}}:</label>
+                    <span class="editor-input-group">
+                        <textarea ng-model="vm.event.program" class="editor-program-input"></textarea>
+                        <div class="editor-input-bar"></div>
+                    </span>
                 </div>
             </div>
             <div class="row">
                 <div class="icon-col"><i class="icon ion-ios-information-outline padding-right"></i></div>
                 <div class="col">
-                    <label>Bring</label>
+                    <label>{{'bring' | translate}}:</label>
                     <span class="editor-input-group">
-                        <input type="text" class="editor-input" placeholder="Bring"
+                        <input type="text" class="editor-input" placeholder="{{'bring' | translate}}"
                                ng-model="vm.event.bring">
                         <div class="editor-input-bar"></div>
 				    </span>
                     <br>
-                    <label>Other info....</label>
+                    <label>{{'moreInfo' | translate}}:</label>
                     <span class="editor-input-group">
-                        <input type="text" class="editor-input" placeholder="Other info"
+                        <input type="text" class="editor-input" placeholder="{{'moreInfo' | translate}}"
                                ng-model="vm.event.otherInfo">
                         <div class="editor-input-bar"></div>
 				    </span>
