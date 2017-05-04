@@ -19,34 +19,10 @@ function EditorController($scope, $rootScope, $reactive, $ionicModal, $ionicNavB
 
 
     function getModules() {
-        /*      // get IDs of modules from completed registrations of a particular user
-         var reg = Registrations.find({
-         $and: [
-         {moduleId: {$exists: true}},
-         {createdBy: Meteor.userId()},
-         {createdBy: {$exists: true}}
-         ]
-         },
-         {moduleId: 1, _id: 0} // projection is not working
-         ).fetch();
-         reg = _.pluck(reg, 'moduleId');
-         reg = _.uniq(reg);
-
-         var now = new Date();
-
-         return CustomModules.find(
-         {
-         _id: {$nin: reg}, // filter already filled in
-         eventId: vm.event._id,
-         startTime: {$lte: now, $exists: true},
-         endTime: {$gte: now, $exists: true}
-         }
-         ).fetch();*/
         return Events.find().fetch();
     };
 
     vm.refresh = function () {
-        //  vm.modules = getModules();
         vm.events = getModules();
         console.log(JSON.stringify(vm.events));
         $scope.$broadcast('scroll.refreshComplete');
@@ -131,9 +107,8 @@ function EditorController($scope, $rootScope, $reactive, $ionicModal, $ionicNavB
 
     $scope.$on('modal.hidden', function () {
         console.log('activeModules at modal.hidden', vm.modules);
-        refreshModules();
-        //$ionicScrollDelegate.$getByHandle('front-page-scroll').resize();
-        //$ionicScrollDelegate.$getByHandle('front-page-scroll').scrollTop();
+        vm.refresh();
+
     });
     // Execute action on remove modal
     $scope.$on('modal.removed', function () {

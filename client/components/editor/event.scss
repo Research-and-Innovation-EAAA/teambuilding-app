@@ -39,6 +39,10 @@
   border-bottom: 1px solid #bbbbbb;
 }
 
+input.editor-input:valid {
+  border-bottom: 1px solid #eeeeee;
+}
+
 .editor-form .editor-input:focus {
   outline: none;
 }
@@ -54,7 +58,7 @@
   content: '';
   height: 2px;
   width: 0px;
-  bottom: 1px;
+  bottom: 0px;
   position: absolute;
   background: $positive;
   transition: 0.2s ease all;
@@ -70,24 +74,31 @@ input:focus ~ .editor-input-bar:after {
 
 .editor-form .event-name-input {
   width: 100%;
+  max-width: none;
 
   input {
     font-size: 1.8em;
     font-weight: bold;
     padding: 5px 10px 10px 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-}
-
-.editor-form .event-name-input:valid {
-  border-bottom: none !important; //TODO not working
 }
 
 .editor-form .event-password-input {
   float: right;
+  text-align: right;
   font-style: italic;
-  input {
-    font-style: italic;
-    width: 90%; //TODO needs to be in one line
+  width: 50%;
+  max-width: 250px;
+
+  .editor-input-group {
+    width: 90%;
+    display: inline-block;
+
+    input {
+      font-style: italic;
+    }
   }
 }
 
@@ -111,6 +122,11 @@ input:focus ~ .editor-input-bar:after {
 .editor-form .editor-program-input:focus {
   border: 1px solid #bbbbbb;
 }
+
+.editor-form .editor-program-input:valid {
+  border: none;
+}
+
 
 .editor-form label {
   display: block;

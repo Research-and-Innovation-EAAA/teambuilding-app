@@ -1,14 +1,22 @@
 Events = new Mongo.Collection("events");
 
 Meteor.methods({
-    addEvent: (event) => {
+    saveEvent: (event) => {
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
-        event.createdBy = Meteor.userId();
+        if(!!event.createdBy ) {
+            event.createdBy = Meteor.userId();
+            event.createdAt = new Date();
+        }
+        else {
+            event.lastEditedBy = Meteor.userId();
+            event.lastEditedAt = new Date();
+        }
 
-        Events.insert(event);
-        console.log('Succesfully inserted event: ', reminder);
+        Events.update({_id: event._id}, event, {upsert: true});
+
+        console.log('Succesfully saved event: ', event);
     },
     deleteEvent: (event) => {
         if (!Meteor.userId()) {
@@ -20,7 +28,7 @@ Meteor.methods({
     }
 });
 
-// Initialise default reminders
+// Initialise default events
 Meteor.startup(() => {
     console.log('Meteor startup called');
     Meteor.setTimeout(function () {

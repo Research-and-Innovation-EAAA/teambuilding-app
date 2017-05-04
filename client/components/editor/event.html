@@ -2,11 +2,11 @@
     <ion-header-bar class="bar bar-header bar-stable">
         <h1 class="title">{{vm.pageTitle}}</h1>
         <button class="button button-clear button-left"
-                ng-click="vm.doneModal()">
+                ng-click="vm.cancelModal()">
             <strong translate>Cancel</strong>
         </button>
         <button class="button button-clear button-right"
-                ng-click="vm.doneModal()">
+                ng-click="vm.saveModal()">
             <strong translate>Save</strong>
         </button>
     </ion-header-bar>
@@ -22,9 +22,9 @@
 
                     <div class="event-password-input">
                         (<span class="editor-input-group">
-                        <input type="text" class="editor-input" placeholder="{{'eventCode' | translate}}"
-                               ng-model="vm.event.password">
-                        <div class="editor-input-bar"></div>
+                            <input type="text" class="editor-input" placeholder="{{'eventCode' | translate}}"
+                                   required="required" autocapitalize="none" ng-model="vm.event.password">
+                            <div class="editor-input-bar"></div>
 				        </span>)
                     </div>
                 </div>
@@ -34,11 +34,11 @@
                 <div class="col">
                     <div class="editor-dates">
                         <span class="editor-input-group editor-date-input">
-                            <input type="date" class="editor-input" ng-model="vm.event.startDate">
+                            <input type="date" class="editor-input" required="required" placeholder="YYYY-MM-DD" ng-model="vm.event.startDate">
                             <div class="editor-input-bar"></div>
                         </span> &ndash;
                         <span class="editor-input-group editor-date-input">
-                            <input type="date" class="editor-input" ng-model="vm.event.endDate">
+                            <input type="date" class="editor-input" required="required" placeholder="YYYY-MM-DD" ng-model="vm.event.endDate">
                             <div class="editor-input-bar"></div>
                         </span>
                     </div>
@@ -49,7 +49,7 @@
                 <div class="col">
                     <span class="editor-input-group">
                         <input type="text" class="editor-input" placeholder="{{'meetingPoint' | translate}}"
-                               ng-model="vm.event.meetingPoint">
+                               required="required" ng-model="vm.event.meetingPoint">
                         <div class="editor-input-bar"></div>
 				    </span>
                 </div>
@@ -59,7 +59,8 @@
                 <div class="col">
                     <label>{{'program' | translate}}:</label>
                     <span class="editor-input-group">
-                        <textarea ng-model="vm.event.program" class="editor-program-input"></textarea>
+                        <textarea ng-model="vm.event.program" required="required"
+                                  class="editor-program-input"></textarea>
                         <div class="editor-input-bar"></div>
                     </span>
                 </div>
@@ -70,14 +71,14 @@
                     <label>{{'bring' | translate}}:</label>
                     <span class="editor-input-group">
                         <input type="text" class="editor-input" placeholder="{{'bring' | translate}}"
-                               ng-model="vm.event.bring">
+                               required="required" ng-model="vm.event.bring">
                         <div class="editor-input-bar"></div>
 				    </span>
                     <br>
                     <label>{{'moreInfo' | translate}}:</label>
                     <span class="editor-input-group">
                         <input type="text" class="editor-input" placeholder="{{'moreInfo' | translate}}"
-                               ng-model="vm.event.otherInfo">
+                               required="required" ng-model="vm.event.otherInfo">
                         <div class="editor-input-bar"></div>
 				    </span>
 
