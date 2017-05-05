@@ -11,7 +11,16 @@
         </button>
     </ion-header-bar>
     <ion-content class="default-background">
-        <form class="editor-form">
+
+        <div class="event-type-select" ng-show="vm.eventType === undefined">
+            <label>How many surveys during the event?</label>
+            <div class="button-bar">
+                <a class="button" ng-click="vm.chooseType(1)">One survey</a>
+                <a class="button" ng-click="vm.chooseType(3)">Three surveys</a>
+            </div>
+        </div>
+
+        <form class="editor-form" ng-show="vm.eventType == 3">
             <div class="row">
                 <div class="col">
                     <span class="editor-input-group event-name-input">
@@ -34,11 +43,13 @@
                 <div class="col">
                     <div class="editor-dates">
                         <span class="editor-input-group editor-date-input">
-                            <input type="date" class="editor-input" required="required" placeholder="YYYY-MM-DD" ng-model="vm.event.startDate">
+                            <input type="date" class="editor-input" required="required" placeholder="YYYY-MM-DD"
+                                   ng-model="vm.event.startDate">
                             <div class="editor-input-bar"></div>
                         </span> &ndash;
                         <span class="editor-input-group editor-date-input">
-                            <input type="date" class="editor-input" required="required" placeholder="YYYY-MM-DD" ng-model="vm.event.endDate">
+                            <input type="date" class="editor-input" required="required" placeholder="YYYY-MM-DD"
+                                   ng-model="vm.event.endDate">
                             <div class="editor-input-bar"></div>
                         </span>
                     </div>
@@ -82,6 +93,137 @@
                         <div class="editor-input-bar"></div>
 				    </span>
 
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="icon-col"><i class="icon ion-clock padding-right"></i></div>
+                <div class="col">
+                    <label>Survey opened:</label>
+                    <div style="width: 100%">
+                        Before:
+                        <div class="editor-dates">
+                            <span class="editor-input-group editor-date-input">
+                                <input type="datetime-local" class="editor-input" required="required"
+                                       placeholder="YYYY-MM-DD HH:MM"
+                                       ng-model="vm.moduleInfo.startTime1">
+                                <div class="editor-input-bar"></div>
+                            </span> &ndash;
+                            <span class="editor-input-group editor-date-input">
+                                <input type="datetime-local" class="editor-input" required="required"
+                                       placeholder="YYYY-MM-DD HH:MM"
+                                       ng-model="vm.moduleInfo.endTime1">
+                                <div class="editor-input-bar"></div>
+                            </span>
+                        </div>
+                        During:
+                        <div class="editor-dates">
+                            <span class="editor-input-group editor-date-input">
+                                <input type="datetime-local" class="editor-input" required="required"
+                                       placeholder="YYYY-MM-DD HH:MM"
+                                       ng-model="vm.moduleInfo.startTime2">
+                                <div class="editor-input-bar"></div>
+                            </span> &ndash;
+                            <span class="editor-input-group editor-date-input">
+                                <input type="datetime-local" class="editor-input" required="required"
+                                       placeholder="YYYY-MM-DD HH:MM"
+                                       ng-model="vm.moduleInfo.endTime2">
+                                <div class="editor-input-bar"></div>
+                            </span>
+                        </div>
+                        After:
+                        <div class="editor-dates">
+                            <span class="editor-input-group editor-date-input">
+                                <input type="datetime-local" class="editor-input" required="required"
+                                       placeholder="YYYY-MM-DD HH:MM"
+                                       ng-model="vm.moduleInfo.startTime3">
+                                <div class="editor-input-bar"></div>
+                            </span> &ndash;
+                            <span class="editor-input-group editor-date-input">
+                                <input type="datetime-local" class="editor-input" required="required"
+                                       placeholder="YYYY-MM-DD HH:MM"
+                                       ng-model="vm.moduleInfo.endTime3">
+                                <div class="editor-input-bar"></div>
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+
+        <form class="editor-form" ng-show="vm.eventType == 1">
+            <div class="row">
+                <div class="col">
+                    <span class="editor-input-group event-name-input">
+                        <input type="text" class="editor-input" placeholder="Event name"
+                               required="required" ng-model="vm.event.name">
+                        <div class="editor-input-bar"></div>
+				    </span>
+
+                    <div class="event-password-input">
+                        (<span class="editor-input-group">
+                            <input type="text" class="editor-input" placeholder="{{'eventCode' | translate}}"
+                                   required="required" autocapitalize="none" ng-model="vm.event.password">
+                            <div class="editor-input-bar"></div>
+				        </span>)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="icon-col"><i class="icon ion-ios-calendar-outline padding-right"></i></div>
+                <div class="col">
+                    <div class="editor-dates">
+                        <span class="editor-input-group editor-date-input">
+                            <input type="date" class="editor-input" required="required" placeholder="YYYY-MM-DD"
+                                   ng-model="vm.event.startDate">
+                            <div class="editor-input-bar"></div>
+                        </span> &ndash;
+                        <span class="editor-input-group editor-date-input">
+                            <input type="date" class="editor-input" required="required" placeholder="YYYY-MM-DD"
+                                   ng-model="vm.event.endDate">
+                            <div class="editor-input-bar"></div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="icon-col"><i class="icon ion-clock padding-right"></i></div>
+                <div class="col">
+                    <label>Survey opened:</label>
+                    <div class="editor-dates">
+                        <span class="editor-input-group editor-date-input">
+                            <input type="datetime-local" class="editor-input" required="required"
+                                   placeholder="YYYY-MM-DD HH:MM"
+                                   ng-model="vm.moduleInfo.startTime">
+                            <div class="editor-input-bar"></div>
+                        </span> &ndash;
+                        <span class="editor-input-group editor-date-input">
+                            <input type="datetime-local" class="editor-input" required="required"
+                                   placeholder="YYYY-MM-DD HH:MM"
+                                   ng-model="vm.moduleInfo.endTime">
+                            <div class="editor-input-bar"></div>
+                        </span>
+
+
+                        <!--<div>
+                            <ionic-timepicker input-obj="ts.timePickerObj">
+                                <button class="button button-block button-stable button-border">
+                                    <strong>{{vm.timePickerObj.displayValue()}}</strong>
+                                </button>
+                            </ionic-timepicker>
+                        </div>
+                        <div>
+                            <ionic-datepicker input-obj="ts.datePickerObj">
+                                <button class="button button-block button-stable button-border">
+                                    <strong>{{vm.datePickerObj.inputDate | date:vm.dateFormat}}</strong>
+                                </button>
+                            </ionic-datepicker>
+                        </div>-->
+                    </div>
                 </div>
             </div>
         </form>

@@ -67,6 +67,14 @@ function config($translateProvider) {
             savedThanks: "Thank you! Your answers have been saved.",
             failed: 'Failed to save registration, please try again.',
             saveRegistrationLoggedOut: 'Log in to save the registration',
+        },
+
+        dateTime:{
+            timestamp: "Time",
+            choose: "Choose",
+            close: "Close",
+            today: "Today",
+            date: "Date"
         }
 
     });
@@ -140,6 +148,14 @@ function config($translateProvider) {
             failed: 'Kunne ikke gemme registreringen',
             saveRegistrationLoggedOut: 'Log ind for at spare registrering',
 
+        },
+
+        dateTime:{
+            timestamp: "Tidspunkt",
+            choose: "Vælg",
+            close: "Luk",
+            today: "I dag",
+            date: "Dato"
         }
 
 

@@ -7,6 +7,15 @@ function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegat
     //Code to be run every time view becomes visible
     //----------------------------------------------
     $scope.$on('$ionicView.beforeEnter', function (event, data) {
+        /* vm.autorun(() => {               TODO show button if admin
+            vm.subscribe('userInfo',
+                () => [],
+                () => {
+                    console.log('Subscription ready for userInfo!');
+                    var admin = UserInfo.findOne({"userId": Meteor.userId()});
+                    vm.isAdmin = admin && admin.admin;
+                });
+        });*/
         vm.autorun(() => {
             vm.subscribe('events',
                 () => [],
@@ -67,6 +76,10 @@ function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegat
 
             $location.path("app/login");
         });
+    }
+
+    vm.goToEditor = function () {
+        $location.path("app/editor");
     }
 
 

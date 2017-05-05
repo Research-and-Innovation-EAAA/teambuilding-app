@@ -15,6 +15,10 @@
   font-size: 2em;
 }
 
+.event-type-select{
+  max-width: 300px;
+}
+
 .editor-form {
   margin-top: 10px;
 }
@@ -74,7 +78,7 @@ input:focus ~ .editor-input-bar:after {
 
 .editor-form .event-name-input {
   width: 100%;
-  max-width: none;
+  max-width: 800px;
 
   input {
     font-size: 1.8em;

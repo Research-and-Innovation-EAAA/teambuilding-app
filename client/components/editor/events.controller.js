@@ -6,16 +6,30 @@ function EditorController($scope, $rootScope, $reactive, $ionicModal, $ionicNavB
 
     $scope.$on('$ionicView.beforeEnter', function (event, data) {
         vm.autorun(() => {
-            vm.subscribe('events',
+            vm.subscribe('userInfo',
                 () => [],
                 () => {
-                    console.log('Subscription ready for events!');
-                    vm.events = Events.find().fetch();
+                    console.log('Subscription ready for userInfo!');
+                    var admin = UserInfo.findOne({"userId": Meteor.userId()});
+                    if (!admin || !admin.admin) {
+                        $location.path("app/eventselect");
+                    }
+
+                    else {
+                        vm.autorun(() => {
+                            vm.subscribe('events',
+                                () => [],
+                                () => {
+                                    console.log('Subscription ready for events!');
+                                    vm.events = Events.find().fetch();
+                                });
+                        });
+                    }
                 });
         });
     });
 
-    vm.events = Events.find().fetch();
+    //vm.events = Events.find().fetch();
 
 
     function getModules() {
@@ -95,7 +109,7 @@ function EditorController($scope, $rootScope, $reactive, $ionicModal, $ionicNavB
     });
 
     vm.openModal = function (eventId) {
-        console.log("OPEN MODAL CALLED: " +eventId);
+        console.log("OPEN MODAL CALLED: " + eventId);
         $scope.eventId = eventId;
         vm.modal.show();
     };

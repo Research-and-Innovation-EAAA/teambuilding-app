@@ -1,11 +1,24 @@
 Events = new Mongo.Collection("events");
 
 Meteor.methods({
-    saveEvent: (event) => {
+    saveEvent: (event, moduleInfo) => {
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
-        if(!!event.createdBy ) {
+        var admin = UserInfo.findOne({"userId": Meteor.userId()});
+        if (!admin || !admin.admin) {
+            throw new Meteor.Error('not-authorised', 'You are not an admin!');
+        }
+
+        if (event.shortEvent === undefined) {
+            throw new Meteor.Error('not-valid', 'Event object does not contain shortEvent attribute.');
+        }
+        var foundEvent = Events.findOne({password: event.password})
+        if (foundEvent !== undefined && foundEvent._id !== event._id) {
+            throw new Meteor.Error('not-valid', 'Event with password ' + event.password + ' already exists.');
+        }
+
+        if (!event.createdBy) {
             event.createdBy = Meteor.userId();
             event.createdAt = new Date();
         }
@@ -16,7 +29,36 @@ Meteor.methods({
 
         Events.update({_id: event._id}, event, {upsert: true});
 
-        console.log('Succesfully saved event: ', event);
+        event._id = Events.findOne({password: event.password})._id;
+
+        if (event.shortEvent) {
+            module = ModuleTemplates.shortEvent;
+            module.eventId = event._id;
+            module.startTime = moduleInfo.startTime;
+            module.endTime = moduleInfo.endTime;
+            CustomModules.update({eventId: event._id, number: 1}, module, {upsert: true});
+        }
+        else {
+            module = ModuleTemplates.longEventBefore;
+            module.eventId = event._id;
+            module.startTime = moduleInfo.startTime1;
+            module.endTime = moduleInfo.endTime1;
+            CustomModules.update({eventId: event._id, number: 1}, module, {upsert: true});
+
+            module = ModuleTemplates.longEventDuring;
+            module.eventId = event._id;
+            module.startTime = moduleInfo.startTime2;
+            module.endTime = moduleInfo.endTime2;
+            CustomModules.update({eventId: event._id, number: 2}, module, {upsert: true});
+
+            module = ModuleTemplates.longEventAfter;
+            module.eventId = event._id;
+            module.startTime = moduleInfo.startTime3;
+            module.endTime = moduleInfo.endTime3;
+            CustomModules.update({eventId: event._id, number: 3}, module, {upsert: true});
+        }
+
+        console.log('Successfully saved event+modules: ', event);
     },
     deleteEvent: (event) => {
         if (!Meteor.userId()) {
