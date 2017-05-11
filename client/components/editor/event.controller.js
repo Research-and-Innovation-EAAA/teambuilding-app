@@ -11,6 +11,7 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
     vm.cancelModal = () => {
         $scope.modal.hide();
         vm.event = undefined;
+        vm.questionsShow = false;
     };
 
     vm.saveModal = () => {
@@ -41,6 +42,11 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
 
     };
 
+    vm.showQuestions = () => {
+        vm.customModules = CustomModules.find({eventId: vm.event._id}, {sort: {number: 1}}).fetch();
+        vm.questionsShow = !vm.questionsShow;
+    };
+
     $scope.$on('modal.shown', function () {
         if ($scope.eventId) {
             vm.pageTitle = "Edit event";
@@ -50,6 +56,7 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
         }
         console.log("EVENT IDIDIDID: " + $scope.eventId + " " + vm.pageTitle);
 
+        vm.questionsShow = false;
         vm.event = Events.findOne({'_id': $scope.eventId});
 
         if (vm.event !== undefined) {

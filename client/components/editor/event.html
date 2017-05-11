@@ -20,188 +20,190 @@
             </div>
         </div>
 
-        <form class="editor-form" ng-show="vm.eventType == 3">
-            <div class="row">
-                <div class="col">
+        <div class="editor-modal" ng-show="vm.eventType == 3">
+            <form class="editor-form">
+                <div class="row">
+                    <div class="col">
                     <span class="editor-input-group event-name-input">
                         <input type="text" class="editor-input" placeholder="Event name"
                                required="required" ng-model="vm.event.name">
                         <div class="editor-input-bar"></div>
 				    </span>
 
-                    <div class="event-password-input">
-                        (<span class="editor-input-group">
+                        <div class="event-password-input">
+                            (<span class="editor-input-group">
                             <input type="text" class="editor-input" placeholder="{{'eventCode' | translate}}"
                                    required="required" autocapitalize="none" ng-model="vm.event.password">
                             <div class="editor-input-bar"></div>
 				        </span>)
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="icon-col"><i class="icon ion-ios-calendar-outline padding-right"></i></div>
-                <div class="col">
-                    <div class="editor-dates">
+                <div class="row">
+                    <div class="icon-col"><i class="icon ion-ios-calendar-outline padding-right"></i></div>
+                    <div class="col">
+                        <div class="editor-dates">
                         <span class="editor-input-group editor-date-input">
                             <input type="date" class="editor-input" required="required" placeholder="YYYY-MM-DD"
                                    ng-model="vm.event.startDate">
                             <div class="editor-input-bar"></div>
                         </span> &ndash;
-                        <span class="editor-input-group editor-date-input">
+                            <span class="editor-input-group editor-date-input">
                             <input type="date" class="editor-input" required="required" placeholder="YYYY-MM-DD"
                                    ng-model="vm.event.endDate">
                             <div class="editor-input-bar"></div>
                         </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="icon-col"><i class="icon ion-ios-location padding-right"></i></div>
-                <div class="col">
+                <div class="row">
+                    <div class="icon-col"><i class="icon ion-ios-location padding-right"></i></div>
+                    <div class="col">
                     <span class="editor-input-group">
                         <input type="text" class="editor-input" placeholder="{{'meetingPoint' | translate}}"
                                required="required" ng-model="vm.event.meetingPoint">
                         <div class="editor-input-bar"></div>
 				    </span>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="icon-col"><i class="icon ion-ios-list-outline padding-right"></i></div>
-                <div class="col">
-                    <label>{{'program' | translate}}:</label>
-                    <span class="editor-input-group">
+                <div class="row">
+                    <div class="icon-col"><i class="icon ion-ios-list-outline padding-right"></i></div>
+                    <div class="col">
+                        <label>{{'program' | translate}}:</label>
+                        <span class="editor-input-group">
                         <textarea ng-model="vm.event.program" required="required"
                                   class="editor-program-input"></textarea>
                         <div class="editor-input-bar"></div>
                     </span>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="icon-col"><i class="icon ion-ios-information-outline padding-right"></i></div>
-                <div class="col">
-                    <label>{{'bring' | translate}}:</label>
-                    <span class="editor-input-group">
+                <div class="row">
+                    <div class="icon-col"><i class="icon ion-ios-information-outline padding-right"></i></div>
+                    <div class="col">
+                        <label>{{'bring' | translate}}:</label>
+                        <span class="editor-input-group">
                         <input type="text" class="editor-input" placeholder="{{'bring' | translate}}"
                                required="required" ng-model="vm.event.bring">
                         <div class="editor-input-bar"></div>
 				    </span>
-                    <br>
-                    <label>{{'moreInfo' | translate}}:</label>
-                    <span class="editor-input-group">
+                        <br>
+                        <label>{{'moreInfo' | translate}}:</label>
+                        <span class="editor-input-group">
                         <input type="text" class="editor-input" placeholder="{{'moreInfo' | translate}}"
                                required="required" ng-model="vm.event.otherInfo">
                         <div class="editor-input-bar"></div>
 				    </span>
 
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="icon-col"><i class="icon ion-clock padding-right"></i></div>
-                <div class="col">
-                    <label>Survey opened:</label>
-                    <div style="width: 100%">
-                        Before:
-                        <div class="editor-dates">
+                <div class="row">
+                    <div class="icon-col"><i class="icon ion-clock padding-right"></i></div>
+                    <div class="col">
+                        <label>Survey opened:</label>
+                        <div style="width: 100%">
+                            Before:
+                            <div class="editor-dates">
                             <span class="editor-input-group editor-date-input">
                                 <input type="datetime-local" class="editor-input" required="required"
                                        placeholder="YYYY-MM-DD HH:MM"
                                        ng-model="vm.moduleInfo.startTime1">
                                 <div class="editor-input-bar"></div>
                             </span> &ndash;
-                            <span class="editor-input-group editor-date-input">
+                                <span class="editor-input-group editor-date-input">
                                 <input type="datetime-local" class="editor-input" required="required"
                                        placeholder="YYYY-MM-DD HH:MM"
                                        ng-model="vm.moduleInfo.endTime1">
                                 <div class="editor-input-bar"></div>
                             </span>
-                        </div>
-                        During:
-                        <div class="editor-dates">
+                            </div>
+                            During:
+                            <div class="editor-dates">
                             <span class="editor-input-group editor-date-input">
                                 <input type="datetime-local" class="editor-input" required="required"
                                        placeholder="YYYY-MM-DD HH:MM"
                                        ng-model="vm.moduleInfo.startTime2">
                                 <div class="editor-input-bar"></div>
                             </span> &ndash;
-                            <span class="editor-input-group editor-date-input">
+                                <span class="editor-input-group editor-date-input">
                                 <input type="datetime-local" class="editor-input" required="required"
                                        placeholder="YYYY-MM-DD HH:MM"
                                        ng-model="vm.moduleInfo.endTime2">
                                 <div class="editor-input-bar"></div>
                             </span>
-                        </div>
-                        After:
-                        <div class="editor-dates">
+                            </div>
+                            After:
+                            <div class="editor-dates">
                             <span class="editor-input-group editor-date-input">
                                 <input type="datetime-local" class="editor-input" required="required"
                                        placeholder="YYYY-MM-DD HH:MM"
                                        ng-model="vm.moduleInfo.startTime3">
                                 <div class="editor-input-bar"></div>
                             </span> &ndash;
-                            <span class="editor-input-group editor-date-input">
+                                <span class="editor-input-group editor-date-input">
                                 <input type="datetime-local" class="editor-input" required="required"
                                        placeholder="YYYY-MM-DD HH:MM"
                                        ng-model="vm.moduleInfo.endTime3">
                                 <div class="editor-input-bar"></div>
                             </span>
+                            </div>
+
                         </div>
 
                     </div>
-
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
 
-
-        <form class="editor-form" ng-show="vm.eventType == 1">
-            <div class="row">
-                <div class="col">
+        <div class="editor-modal" ng-show="vm.eventType == 1">
+            <form class="editor-form">
+                <div class="row">
+                    <div class="col">
                     <span class="editor-input-group event-name-input">
                         <input type="text" class="editor-input" placeholder="Event name"
                                required="required" ng-model="vm.event.name">
                         <div class="editor-input-bar"></div>
 				    </span>
 
-                    <div class="event-password-input">
-                        (<span class="editor-input-group">
+                        <div class="event-password-input">
+                            (<span class="editor-input-group">
                             <input type="text" class="editor-input" placeholder="{{'eventCode' | translate}}"
                                    required="required" autocapitalize="none" ng-model="vm.event.password">
                             <div class="editor-input-bar"></div>
 				        </span>)
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="icon-col"><i class="icon ion-ios-calendar-outline padding-right"></i></div>
-                <div class="col">
-                    <div class="editor-dates">
+                <div class="row">
+                    <div class="icon-col"><i class="icon ion-ios-calendar-outline padding-right"></i></div>
+                    <div class="col">
+                        <div class="editor-dates">
                         <span class="editor-input-group editor-date-input">
                             <input type="date" class="editor-input" required="required" placeholder="YYYY-MM-DD"
                                    ng-model="vm.event.startDate">
                             <div class="editor-input-bar"></div>
                         </span> &ndash;
-                        <span class="editor-input-group editor-date-input">
+                            <span class="editor-input-group editor-date-input">
                             <input type="date" class="editor-input" required="required" placeholder="YYYY-MM-DD"
                                    ng-model="vm.event.endDate">
                             <div class="editor-input-bar"></div>
                         </span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="icon-col"><i class="icon ion-clock padding-right"></i></div>
-                <div class="col">
-                    <label>Survey opened:</label>
-                    <div class="editor-dates">
+                <div class="row">
+                    <div class="icon-col"><i class="icon ion-clock padding-right"></i></div>
+                    <div class="col">
+                        <label>Survey opened:</label>
+                        <div class="editor-dates">
                         <span class="editor-input-group editor-date-input">
                             <input type="datetime-local" class="editor-input" required="required"
                                    placeholder="YYYY-MM-DD HH:MM"
                                    ng-model="vm.moduleInfo.startTime">
                             <div class="editor-input-bar"></div>
                         </span> &ndash;
-                        <span class="editor-input-group editor-date-input">
+                            <span class="editor-input-group editor-date-input">
                             <input type="datetime-local" class="editor-input" required="required"
                                    placeholder="YYYY-MM-DD HH:MM"
                                    ng-model="vm.moduleInfo.endTime">
@@ -209,7 +211,7 @@
                         </span>
 
 
-                        <!--<div>
+                            <!--<div>
                             <ionic-timepicker input-obj="ts.timePickerObj">
                                 <button class="button button-block button-stable button-border">
                                     <strong>{{vm.timePickerObj.displayValue()}}</strong>
@@ -223,10 +225,49 @@
                                 </button>
                             </ionic-datepicker>
                         </div>-->
+                        </div>
                     </div>
                 </div>
+            </form>
+
+            <button class="button" ng-click="vm.showQuestions()"
+                    ng-class="{'button-royal': vm.questionsShow, 'button-calm': !vm.questionsShow}">
+                Show questions
+            </button>
+            <div ng-if="vm.questionsShow" class="editor-questions">
+                Modules:
+                <div ng-repeat="module in vm.customModules">
+                    <b>{{module.name}} /{{module.number}}</b>
+                    <div ng-repeat="step in module.wizard.steps">
+                        <b><i>{{step.stepName}}:</i></b>
+                        <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/slider.html'">
+                            <i>{{step.stepTemplate.config.propertyName}}: {{step.stepTemplate.config.question}} / slider</i>
+                            <ul>
+                                <li>{{step.stepTemplate.config.minValue}} {{step.stepTemplate.config.negativeText}}</li>
+                                <li>{{step.stepTemplate.config.maxValue}} {{step.stepTemplate.config.positiveText}}</li>
+                            </ul>
+                        </div>
+
+                        <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/single-question.html'">
+                            <i>{{step.stepTemplate.config.propertyName}}: {{step.stepTemplate.config.question}} / choose one</i>
+                            <ul>
+                                <li ng-repeat="answer in step.stepTemplate.config.answers">{{answer}}</li>
+                            </ul>
+                        </div>
+
+                        <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/multiple-questions.html'" ng-repeat="question in step.stepTemplate.config.questions">
+                            <i>{{question.propertyName}}: {{question.question}} / choose one</i>
+                            <ul>
+                                <li ng-repeat="answer in question.answers">{{answer}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                --done--
             </div>
-        </form>
+        </div>
+
 
     </ion-content>
 </ion-modal-view>

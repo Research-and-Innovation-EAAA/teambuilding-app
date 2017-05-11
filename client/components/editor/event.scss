@@ -19,6 +19,12 @@
   max-width: 300px;
 }
 
+.editor-modal{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .editor-form {
   margin-top: 10px;
 }
@@ -142,4 +148,13 @@ input:focus ~ .editor-input-bar:after {
 
 .editor-form .editor-input-group ~ label {
   margin-top: 20px;
+}
+
+.editor-questions ul {
+  display: block;
+  list-style-type: disc;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 40px;
 }
