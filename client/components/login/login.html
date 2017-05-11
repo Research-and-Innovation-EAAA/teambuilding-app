@@ -1,45 +1,42 @@
 <ion-view view-title="Teambuilding feedback" ng-controller="loginController as vm" hide-back-button="true">
-    <ion-content scroll="false" class="default-background">
+    <ion-content scroll="true" class="default-background login-page">
 
+        <div class="login-container">
+            <img src="/eaaa-logo.png" alt="Erhvervsakademi Aarhus logo" class="login-logo">
 
-        <div class="login-outer-container">
-            <div class="login-container">
-
-                <img src="/eaaa-logo.png" alt="Erhvervsakademi Aarhus logo" class="login-logo">
-
-                <!--div class="row">
-                    <div class="col">
-                        <button class="button button-block button-outline button-calm">
-                            Register
-                        </button>
-                    </div>
-                    <div class="col">
-                        <button class="button button-block button-clear button-calm">
-                            Login
-                        </button>
-                    </div>
-                </div-->
-
-
-                <div class="list">
-                    <form>
-                        <label class="item item-input" id="emailInput">
-                            <input type="email" placeholder="{{'email'|translate}}" id="login-email" class="user-input"
-                                   autocapitalize="none" ng-model="vm.email">
-                        </label>
-                        <label class="item item-input" id="passwordInput">
-                            <input type="password" placeholder="{{'password'|translate}}" id="login-password"
-                                   class="user-input"
-                                   ng-model="vm.password">
-                        </label>
-
-                        <div class="submit-btn">
-                            <button type="submit" class="button button-block button-positive " id="submit"
-                                    ng-click="vm.submit()" translate>login
-                            </button>
-                        </div>
-                    </form>
+            <!--div class="row">
+                <div class="col">
+                    <button class="button button-block button-outline button-calm">
+                        Register
+                    </button>
                 </div>
+                <div class="col">
+                    <button class="button button-block button-clear button-calm">
+                        Login
+                    </button>
+                </div>
+            </div-->
+
+
+            <div class="list">
+                <form>
+                    <label class="item item-input" id="emailInput">
+                        <input type="email" placeholder="{{'email'|translate}}" id="login-email"
+                               class="user-input"
+                               autocapitalize="none" ng-model="vm.email">
+                    </label>
+                    <label class="item item-input" id="passwordInput">
+                        <input type="password" placeholder="{{'password'|translate}}" id="login-password"
+                               class="user-input"
+                               ng-model="vm.password">
+                    </label>
+
+                    <div class="submit-btn">
+                        <button type="submit" class="button button-block button-positive " id="submit"
+                                ng-click="vm.submit()" translate>login
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
 
