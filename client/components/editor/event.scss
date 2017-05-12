@@ -15,11 +15,11 @@
   font-size: 2em;
 }
 
-.event-type-select{
+.event-type-select {
   max-width: 300px;
 }
 
-.editor-modal{
+.editor-modal {
   position: relative;
   width: 100%;
   height: 100%;
@@ -121,6 +121,10 @@ input:focus ~ .editor-input-bar:after {
   width: 100%;
 }
 
+.editor-open-times .editor-dates {
+  margin-bottom: 20px;
+}
+
 .editor-form .editor-program-input {
   width: 100%;
   background: none;
@@ -137,7 +141,6 @@ input:focus ~ .editor-input-bar:after {
   border: none;
 }
 
-
 .editor-form label {
   display: block;
   font-size: 0.8em;
@@ -150,6 +153,15 @@ input:focus ~ .editor-input-bar:after {
   margin-top: 20px;
 }
 
+.editor-questions.ng-hide-add,
+.editor-questions.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+
+.editor-questions.ng-hide {
+  opacity: 0;
+}
+
 .editor-questions ul {
   display: block;
   list-style-type: disc;
@@ -157,4 +169,127 @@ input:focus ~ .editor-input-bar:after {
   margin-left: 0;
   margin-right: 0;
   padding-left: 40px;
+}
+
+.editor-module-name {
+  font-size: 1.25em;
+  font-weight: bold;
+  cursor: pointer;
+
+  span {
+    font-weight: normal;
+  }
+}
+
+.editor-step {
+  border: 1px solid #bbbbbb;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.editor-steps {
+  padding: 10px;
+}
+
+.editor-steps.ng-hide-add,
+.editor-steps.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+
+.editor-steps.ng-hide {
+  opacity: 0;
+}
+
+.editor-modal-container {
+  padding: 10px;
+  margin-bottom: 50px;
+}
+
+.editor-module {
+  //border: 1px solid #bbbbbb;
+  padding: 10px;
+  padding-left: 20px;
+}
+
+.editor-question {
+  .question {
+    font-weight: bold;
+  }
+  .type {
+    font-style: italic;
+    font-size: 0.9em;
+  }
+  .property {
+    font-size: 0.9em;
+    cursor: pointer;
+  }
+  .mandatory{
+    color: red;
+    cursor: pointer;
+  }
+}
+
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  position: relative;
+  top: -3px;
+  margin-left: 5px;
+  vertical-align: middle;
+  border-top: 7px solid transparent;
+  border-right: 0 solid transparent;
+  border-left: 7px solid $dark;
+  border-bottom: 7px solid transparent;
+  overflow: hidden;
+  transition: 200ms ease;
+  cursor: pointer;
+}
+
+.caret.open {
+  transform: rotate(90deg);
+  border-width: 7px 0px 7px 7px;
+}
+
+/* -------------------- Vertical Steps https://codepen.io/luisleguisamo/pen/obXapK -------------------- */
+.vertical-steps {
+  padding-left: 10px;
+}
+
+.vertical-steps .list-group-item {
+  border: none;
+  border-left: 5px solid $royal;
+  box-sizing: border-box;
+  border-radius: 0;
+  counter-increment: step-counter;
+  padding-left: 20px;
+  padding-right: 0px;
+  padding-bottom: 20px;
+  padding-top: 0px;
+}
+
+.vertical-steps .list-group-item:last-child {
+  border-left: 5px solid transparent;
+  padding-bottom: 0;
+}
+
+.vertical-steps .list-group-item::before {
+  border-radius: 50%;
+  background-color: $royal;
+  color: white;
+  content: counter(step-counter);
+  font-weight: bold;
+  display: inline-block;
+  float: left;
+  height: 25px;
+  line-height: 25px;
+  margin-left: -35px;
+  text-align: center;
+  width: 25px;
+}
+
+.vertical-steps .list-group-item > div {
+  display: block;
+  overflow: hidden;
+  padding-top: 2px;
 }

@@ -45,7 +45,19 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
     vm.showQuestions = () => {
         vm.customModules = CustomModules.find({eventId: vm.event._id}, {sort: {number: 1}}).fetch();
         vm.questionsShow = !vm.questionsShow;
+        if (vm.questionsShow && vm.customModules.length == 1){
+            vm.customModules[0].open = true;
+        }
     };
+
+    vm.showSteps = (number) => {
+        console.log("showSteps " + number);
+        var module = _.where(vm.customModules,{number:number})[0];
+        module.open = !module.open;
+        console.log("module.open: " + module.open);
+
+    };
+
 
     $scope.$on('modal.shown', function () {
         if ($scope.eventId) {
@@ -54,7 +66,8 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
         else {
             vm.pageTitle = "Add event";
         }
-        console.log("EVENT IDIDIDID: " + $scope.eventId + " " + vm.pageTitle);
+
+        console.log("EVENT ID: " + $scope.eventId + " " + vm.pageTitle);
 
         vm.questionsShow = false;
         vm.event = Events.findOne({'_id': $scope.eventId});
