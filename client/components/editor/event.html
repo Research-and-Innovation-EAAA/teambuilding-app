@@ -238,88 +238,159 @@
                     Show questions
                 </button>
                 <div class="editor-questions" ng-show="vm.questionsShow">
-                    <div ng-repeat="module in vm.customModules" class="editor-module">
-                        <div class="editor-module-name" ng-click="vm.showSteps(module.number)">
-                            <span>{{module.number}})</span> {{module.name}}
-                            <i class="caret rotate" ng-class="{'open':!!module.open}"></i>
-                        </div>
-                        <div class="editor-steps" ng-show="!!module.open">
-                            <ol class="vertical-steps">
-                                <li ng-repeat="step in module.wizard.steps" class="list-group-item editor-step">
-                                    <div>
-                                        <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/slider.html'">
-                                            <div class="editor-question">
+                    <form class="editor-form">
+                        <div ng-repeat="module in vm.customModules" class="editor-module">
+                            <div class="editor-module-name" ng-click="vm.showSteps(module.number)">
+                                <span>{{module.number}})</span> {{module.name}}
+                                <i class="caret rotate" ng-class="{'open':!!module.open}"></i>
+                            </div>
+                            <div class="editor-steps" ng-show="!!module.open">
+                                <ol class="vertical-steps">
+                                    <li ng-repeat-start="step in module.wizard.steps"
+                                        class="list-group-item question editor-step" ng-class="{'new-step': step.new}">
+                                        <div>
+                                            <div ng-if="step.new">
+                                                <select ng-model="vm.newStepType"
+                                                        ng-options="type for type in vm.stepTypes"
+                                                        ng-change="vm.newStepTypeSelected()" ></select>
+                                            </div>
+
+                                            <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/slider.html'">
+                                                <div class="editor-question">
                                                 <span class="question">
-                                                    {{step.stepTemplate.config.question}}
+
+
+                                                    <span class="editor-input-group">
+                                                        <input type="text" ng-model="step.stepTemplate.config.question"
+                                                               placeholder="Question" class="editor-input"
+                                                               required="required">
+                                                        <div class="editor-input-bar"></div>
+                                                    </span>
+
                                                     <span class="mandatory" title="mandatory"
                                                           ng-if="step.stepTemplate.config.mandatory">*</span>
                                                 </span>
-                                                <span class="property"
-                                                      title="Abbreviation visible only in the Excel output">
+                                                    <span class="property"
+                                                          title="Abbreviation visible only in the Excel output">
                                                     ({{step.stepTemplate.config.propertyName}})
                                                 </span>
-                                                <br>
-                                                <span class="type">Slider:</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <i class="icon ion-sad-outline"></i> {{step.stepTemplate.config.minValue}}
-                                                    : {{step.stepTemplate.config.negativeText}}
-                                                </li>
-                                                <li>
-                                                    <i class="icon ion-happy-outline"></i> {{step.stepTemplate.config.maxValue}}
-                                                    : {{step.stepTemplate.config.positiveText}}
-                                                </li>
-                                            </ul>
-                                        </div>
+                                                    <br>
+                                                    <span class="type">Slider:</span>
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <i class="icon ion-sad-outline"></i>
+                                                        <span class="editor-input-group">
+                                                        <input type="number"
+                                                               ng-model="step.stepTemplate.config.minValue"
+                                                               placeholder="min value"
+                                                               class="editor-input"
+                                                               required="required">
+                                                        <div class="editor-input-bar"></div>
+                                                    </span>
+                                                        :
 
-                                        <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/single-question.html'">
-                                            <div class="editor-question">
+                                                        <span class="editor-input-group">
+                                                        <input type="text"
+                                                               ng-model="step.stepTemplate.config.negativeText"
+                                                               placeholder="negative text" class="editor-input"
+                                                               required="required">
+                                                        <div class="editor-input-bar"></div>
+                                                    </span>
+
+                                                    </li>
+                                                    <li>
+                                                        <i class="icon ion-happy-outline"></i>
+
+                                                        <span class="editor-input-group">
+                                                        <input type="number"
+                                                               ng-model="step.stepTemplate.config.maxValue"
+                                                               placeholder="max value"
+                                                               class="editor-input"
+                                                               ng-min="step.stepTemplate.config.minValue"
+                                                               required="required">
+                                                        <div class="editor-input-bar"></div>
+                                                    </span>
+
+
+                                                        :
+                                                        <span class="editor-input-group">
+                                                        <input type="text"
+                                                               ng-model="step.stepTemplate.config.positiveText"
+                                                               placeholder="positive text"
+                                                               class="editor-input" required="required">
+                                                        <div class="editor-input-bar"></div>
+                                                    </span>
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/single-question.html'">
+                                                <div class="editor-question">
                                                 <span class="question">
-                                                    {{step.stepTemplate.config.question}}
+                                                    <span class="editor-input-group">
+                                                        <input type="text" ng-model="step.stepTemplate.config.question"
+                                                               placeholder="Question" class="editor-input"
+                                                               required="required">
+                                                        <div class="editor-input-bar"></div>
+                                                    </span>
+
+                                                    <span class="mandatory" ng-if="step.stepTemplate.config.mandatory"
+                                                          title="mandatory">*</span>
+
+                                                </span>
+                                                    <span class="property"
+                                                          title="Abbreviation visible only in the Excel output">
+                                                    ({{step.stepTemplate.config.propertyName}})
+                                                </span>
+                                                    <br>
+                                                    <span class="type" ng-if="!step.stepTemplate.config.multipleChoice">Single choice:</span>
+                                                    <span class="type" ng-if="step.stepTemplate.config.multipleChoice">Multiple choice:</span>
+                                                </div>
+                                                <ul>
+                                                    <li ng-repeat="answer in step.stepTemplate.config.answers">{{answer}}</li>
+                                                </ul>
+                                            </div>
+
+                                            <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/multiple-questions.html'"
+                                                 ng-repeat="question in step.stepTemplate.config.questions">
+                                                <div class="editor-question">
+                                                <span class="question">
+                                                    <span class="editor-input-group">
+                                                        <input type="text" ng-model="question.question"
+                                                               placeholder="Question" class="editor-input"
+                                                               required="required">
+                                                        <div class="editor-input-bar"></div>
+                                                    </span>
+
                                                     <span class="mandatory" ng-if="step.stepTemplate.config.mandatory"
                                                           title="mandatory">*</span>
                                                 </span>
-                                                <span class="property"
-                                                      title="Abbreviation visible only in the Excel output">
-                                                    ({{step.stepTemplate.config.propertyName}})
-                                                </span>
-                                                <br>
-                                                <span class="type" ng-if="!step.stepTemplate.config.multipleChoice">Single choice:</span>
-                                                <span class="type" ng-if="step.stepTemplate.config.multipleChoice">Multiple choice:</span>
-                                            </div>
-                                            <ul>
-                                                <li ng-repeat="answer in step.stepTemplate.config.answers">{{answer}}</li>
-                                            </ul>
-                                        </div>
-
-                                        <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/multiple-questions.html'"
-                                             ng-repeat="question in step.stepTemplate.config.questions">
-                                            <div class="editor-question">
-                                                <span class="question">
-                                                    {{question.question}}
-                                                    <span class="mandatory" ng-if="step.stepTemplate.config.mandatory"
-                                                          title="mandatory">*</span>
-                                                </span>
-                                                <span class="property"
-                                                      title="Abbreviation visible only in the Excel output">
+                                                    <span class="property"
+                                                          title="Abbreviation visible only in the Excel output">
                                                     ({{question.propertyName}})
                                                 </span>
-                                                <br>
-                                                <span class="type">Single choice:</span>
+                                                    <br>
+                                                    <span class="type">Single choice:</span>
+                                                </div>
+                                                <ul>
+                                                    <li ng-repeat="answer in question.answers">{{answer}}</li>
+                                                </ul>
                                             </div>
-                                            <ul>
-                                                <li ng-repeat="answer in question.answers">{{answer}}</li>
-                                            </ul>
                                         </div>
-                                    </div>
-                                </li>
-                            </ol>
-                            <hr>
+                                    </li>
+                                    <li ng-repeat-end
+                                        ng-if="!step.new"
+                                        class="list-group-item add editor-step"
+                                        ng-click="vm.addStep(module._id, $index + 1)">
+                                    </li>
+                                </ol>
+                                <hr>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-
             </div>
         </div>
 

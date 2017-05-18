@@ -223,7 +223,7 @@ input:focus ~ .editor-input-bar:after {
     font-size: 0.9em;
     cursor: pointer;
   }
-  .mandatory{
+  .mandatory {
     color: red;
     cursor: pointer;
   }
@@ -254,42 +254,97 @@ input:focus ~ .editor-input-bar:after {
 /* -------------------- Vertical Steps https://codepen.io/luisleguisamo/pen/obXapK -------------------- */
 .vertical-steps {
   padding-left: 10px;
+
+  .list-group-item {
+    border: none;
+    border-left: 5px solid $royal;
+    box-sizing: border-box;
+    border-radius: 0;
+    padding-left: 20px;
+    padding-right: 0px;
+    padding-bottom: 20px;
+    padding-top: 0px;
+  }
+
+  .list-group-item.question {
+    counter-increment: question-counter;
+  }
+
+  .list-group-item.add {
+
+  }
+
+  .list-group-item:last-child {
+    border-left: 5px solid transparent;
+    padding-bottom: 0;
+  }
+
+  .list-group-item::before {
+    border-radius: 50%;
+
+    background-color: $stable;
+    color: $royal;
+    border: 3px solid $royal;
+    line-height: 19px;
+
+    font-weight: bold;
+    display: inline-block;
+    float: left;
+    height: 25px;
+    margin-left: -35px;
+    text-align: center;
+    width: 25px;
+  }
+
+  .list-group-item.question {
+    padding-bottom: 5px;
+  }
+
+  .list-group-item.question::before {
+    content: counter(question-counter);
+  }
+
+  .list-group-item.question:hover::before {
+    background-color: $royal;
+    color: white;
+    //border: none;
+    //line-height: 25px;
+  }
+
+  .list-group-item.add {
+    margin-top: -10px;
+    height: 50px;
+    //pointer-events: none;
+  }
+
+  .list-group-item.add::before {
+    //pointer-events: all;
+  }
+
+  .list-group-item.add:last-child::before {
+    content: '+';
+    font-size: 1.5em;
+    border: none;
+    line-height: 21px;
+    background-color: $energized;
+    color: white;
+    cursor: pointer;
+  }
+
+  .list-group-item.add:hover::before {
+    content: '+';
+    font-size: 1.5em;
+    border: none;
+    line-height: 21px;
+    background-color: $energized;
+    color: white;
+    cursor: pointer;
+  }
+
+  .list-group-item > div {
+    display: block;
+    overflow: hidden;
+    padding-top: 2px;
+  }
 }
 
-.vertical-steps .list-group-item {
-  border: none;
-  border-left: 5px solid $royal;
-  box-sizing: border-box;
-  border-radius: 0;
-  counter-increment: step-counter;
-  padding-left: 20px;
-  padding-right: 0px;
-  padding-bottom: 20px;
-  padding-top: 0px;
-}
-
-.vertical-steps .list-group-item:last-child {
-  border-left: 5px solid transparent;
-  padding-bottom: 0;
-}
-
-.vertical-steps .list-group-item::before {
-  border-radius: 50%;
-  background-color: $royal;
-  color: white;
-  content: counter(step-counter);
-  font-weight: bold;
-  display: inline-block;
-  float: left;
-  height: 25px;
-  line-height: 25px;
-  margin-left: -35px;
-  text-align: center;
-  width: 25px;
-}
-
-.vertical-steps .list-group-item > div {
-  display: block;
-  overflow: hidden;
-  padding-top: 2px;
-}

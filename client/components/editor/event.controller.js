@@ -45,19 +45,77 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
     vm.showQuestions = () => {
         vm.customModules = CustomModules.find({eventId: vm.event._id}, {sort: {number: 1}}).fetch();
         vm.questionsShow = !vm.questionsShow;
-        if (vm.questionsShow && vm.customModules.length == 1){
+        if (vm.questionsShow && vm.customModules.length == 1) {
             vm.customModules[0].open = true;
         }
     };
 
     vm.showSteps = (number) => {
         console.log("showSteps " + number);
-        var module = _.where(vm.customModules,{number:number})[0];
+        var module = _.where(vm.customModules, {number: number})[0];
         module.open = !module.open;
         console.log("module.open: " + module.open);
 
     };
 
+    vm.stepTypes = ["Slider", "Single question"];
+
+    vm.newStepId = undefined;
+
+    vm.addStep = (moduleId, number) => {
+        alert(moduleId + " " + number);
+        var module = _.findWhere(vm.customModules, {_id: moduleId});
+
+        console.log("found module " + JSON.stringify(module));
+
+        vm.newStepType = undefined;
+        vm.newStepIndex = number;
+        vm.newStepModuleId = moduleId;
+        module.wizard.steps.splice(number, 0, {"new": true});
+    };
+
+    vm.newStepTypeSelected = () => {
+        var module = _.findWhere(vm.customModules, {_id: vm.newStepModuleId});
+
+        alert("selected yay" + vm.newStepType);
+        if (vm.newStepType === 'Single question') {
+            module.wizard.steps[vm.newStepIndex] = {
+                "stepName": "Quiz question #1",
+                "stepTemplate": {
+                    "url": "client/components/wizard/templates/single-question.html",
+                    "config": {
+                        "propertyName": "qwwwww1",
+                        "question": "",
+                        "answers": [
+                            "",
+                            ""
+                        ],
+                        "mandatory": true
+                    }
+                }
+            };
+        }
+        if (vm.newStepType === 'Slider') {
+            module.wizard.steps[vm.newStepIndex] = {
+                "stepName": "Bilka",
+                "stepTemplate": {
+                    "url": "client/components/wizard/templates/slider.html",
+                    "config": {
+                        "question": "",
+                        "propertyName": "cowBilkaAge",
+                        "minValue": 0,
+                        "maxValue": 10,
+                        "step": 1,
+                        "mandatory": true
+                    }
+                }
+            };
+        }
+
+        vm.newStepType = undefined;
+        vm.newStepIndex = undefined;
+        vm.newStepModuleId = undefined;
+    };
 
     $scope.$on('modal.shown', function () {
         if ($scope.eventId) {
