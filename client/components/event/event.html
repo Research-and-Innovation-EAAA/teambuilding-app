@@ -47,10 +47,14 @@
                             <span ng-if="vm.futureModules() == 0 && vm.countAllModules() > 1" translate>thanksAll</span>
                             <span ng-if="vm.futureModules() == 0 && vm.countAllModules() == 1"
                                   translate>thanksToday</span>
+                            <!-- after the day is done -->
                             <span ng-if="vm.futureModules() == 1" translate>thanksToday</span>
-
-                            <span ng-if="vm.futureModules() > 1" translate="seeYouLaterAt"
+                            <!-- after the first questionnaire -->
+                            <span ng-if="vm.futureModules() == 2" translate="seeYouLaterAt"
                                   translate-value-time="{{vm.nextTime()| date:'H:mm'}}"></span>
+                            <!-- before everything starts -->
+                            <span ng-if="vm.futureModules() == 3" translate>hereWillBeQuestionnaire</span>
+
                         </button>
                     </div>
                 </div>
@@ -116,6 +120,8 @@
                 </div>
             </div>
         </div>
+
+
         <div class="event-container" ng-if="vm.event.shortEvent">
             <div class="row">
                 <div class="col col-no-padding">
@@ -170,9 +176,15 @@
                         </button>
                     </div>
 
-                    <div ng-if="vm.modules.length == 0" class="col col-no-padding">
+                    <div ng-if="vm.modules.length == 0 && vm.futureModules() == 0" class="col col-no-padding">
                         <button class="button button-outline button-royal button-block button-disabled button-no-margin">
                             <span translate>thanksToday</span>
+                        </button>
+                    </div>
+
+                    <div ng-if="vm.modules.length == 0 && vm.futureModules() > 0" class="col col-no-padding">
+                        <button class="button button-outline button-royal button-block button-disabled button-no-margin">
+                            <span translate>hereWillBeQuestionnaire</span>
                         </button>
                     </div>
                 </div>

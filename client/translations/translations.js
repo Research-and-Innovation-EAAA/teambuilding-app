@@ -47,6 +47,7 @@ function config($translateProvider) {
         bring: 'Please bring',
         moreInfo: 'More information',
         startQuestionnaire: 'Start questionnaire',
+        hereWillBeQuestionnaire: 'Here you will find a questionnaire later on',
         thanksAll: 'Thank you for all your feedback!',
         thanksToday: 'Thank you! We hope you have enjoyed as much as we did :-)',
         seeYouLaterAt: 'See you later after {{time}}!',
@@ -125,6 +126,7 @@ function config($translateProvider) {
         bring: 'Medbring',
         moreInfo: 'Flere oplysninger',
         startQuestionnaire: 'Start spørgeskema',
+        hereWillBeQuestionnaire: 'Her vil du senere finde et spørgeskema', //TODO check!!
         thanksAll: 'Tak for al din feedback!',
         thanksToday: 'Tak for i dag! Håber det har været en dejlig dag :-)',
         seeYouLaterAt: 'Vi ses senere efter kl. {{time}}!',
