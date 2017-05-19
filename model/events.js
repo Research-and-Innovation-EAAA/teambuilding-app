@@ -2,11 +2,8 @@ Events = new Mongo.Collection("events");
 
 Meteor.methods({
     saveEvent: (event, moduleInfo) => {
-        if (!Meteor.userId()) {
-            throw new Meteor.Error('not-authorized');
-        }
-        var admin = UserInfo.findOne({"userId": Meteor.userId()});
-        if (!admin || !admin.admin) {
+        var user = Meteor.user();
+        if (!user || !user.profile || !user.profile.admin) {
             throw new Meteor.Error('not-authorised', 'You are not an admin!');
         }
 

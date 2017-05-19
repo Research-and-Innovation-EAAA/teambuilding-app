@@ -6,26 +6,21 @@ function EditorController($scope, $rootScope, $reactive, $ionicModal, $ionicNavB
 
     $scope.$on('$ionicView.beforeEnter', function (event, data) {
         vm.autorun(() => {
-            vm.subscribe('userInfo',
-                () => [],
-                () => {
-                    console.log('Subscription ready for userInfo!');
-                    var admin = UserInfo.findOne({"userId": Meteor.userId()});
-                    if (!admin || !admin.admin) {
-                        $location.path("app/eventselect");
-                    }
+            var user = Meteor.user();
+            if (!user || !user.profile || !user.profile.admin) {
+                $location.path("app/eventselect");
+            }
 
-                    else {
-                        vm.autorun(() => {
-                            vm.subscribe('events',
-                                () => [],
-                                () => {
-                                    console.log('Subscription ready for events!');
-                                    vm.events = Events.find().fetch();
-                                });
+            else {
+                vm.autorun(() => {
+                    vm.subscribe('events',
+                        () => [],
+                        () => {
+                            console.log('Subscription ready for events!');
+                            vm.events = Events.find().fetch();
                         });
-                    }
                 });
+            }
         });
     });
 

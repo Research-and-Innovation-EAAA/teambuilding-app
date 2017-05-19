@@ -120,11 +120,4 @@
             return Events.find({});
     });
 
-    Meteor.publish("userInfo", function () {
-        if (!this.userId)
-            return this.ready();
-        else
-            return UserInfo.find({"userId": this.userId});
-    });
-
 })();

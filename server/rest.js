@@ -12,10 +12,10 @@ var ApiV1config = {
 };
 var ApiV1 = new Restivus(ApiV1config);
 
-function myFlat(input){
+function myFlat(input) {
     var output = {};
-    _.each(input, function(value, key, list){
-        if (_.isArray(value)){
+    _.each(input, function (value, key, list) {
+        if (_.isArray(value)) {
             output[key] = value.toString();
         }
         else {
@@ -31,7 +31,7 @@ function myFlat(input){
 // Maps to: /api/registrations/:event
 ApiV1.addRoute('registrations/:event', {authRequired: true}, {
     get: function () {
-        var admin = UserInfo.findOne({"userId": this.userId});
+        var admin = Meteor.users.findOne({"userId": this.userId});
         if (!admin || !admin.admin) {
             return "Not an admin";
         }
@@ -48,7 +48,7 @@ ApiV1.addRoute('registrations/:event', {authRequired: true}, {
 
                 var user = Meteor.users.findOne({"_id": reg.createdBy});
 
-                if (user !== undefined){
+                if (user !== undefined) {
                     reg.createdBy = user.emails[0].address;
                 }
 
@@ -63,8 +63,8 @@ ApiV1.addRoute('registrations/:event', {authRequired: true}, {
 // Maps to: /api/registrations/:event/metadata
 ApiV1.addRoute('registrations/:event/metadata', {authRequired: true}, {
     get: function () {
-        var admin = UserInfo.findOne({"userId": this.userId});
-        if (!admin || !admin.admin) {
+        var user = Meteor.user();
+        if (!user || !user.profile || !user.profile.admin) {
             return "Not an admin";
         }
 
