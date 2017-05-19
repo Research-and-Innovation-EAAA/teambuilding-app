@@ -97,21 +97,11 @@ function EditorController($scope, $rootScope, $reactive, $ionicModal, $ionicNavB
     });
 
 
-    //Settings for turning modules on/off
-
-    $ionicModal.fromTemplateUrl("client/components/editor/event.html", {
-        scope: $scope,
-        animation: 'slide-in-up',
-        backdropClickToClose: false
-    }).then(function (modal) {
-        vm.modal = modal;
-        $scope.modal = modal;
-    });
-
     vm.openModal = function (eventId) {
         console.log("OPEN MODAL CALLED: " + eventId);
-        $scope.eventId = eventId;
-        vm.modal.show();
+        Session.set('eventId', eventId);
+
+        $location.path("app/editevent");
     };
 
     $scope.closeModal = function () {

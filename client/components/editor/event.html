@@ -1,16 +1,14 @@
-<ion-modal-view class="centervertically" ng-controller="eventEditorController as vm">
-    <ion-header-bar class="bar bar-header bar-stable" align-title="center">
-        <h1 class="title">{{vm.pageTitle}}</h1>
-        <button class="button button-clear button-left"
-                ng-click="vm.cancelModal()">
-            <strong translate>Cancel</strong>
+<ion-view view-title="{{vm.pageTitle}}" ng-controller="eventEditorController as vm" hide-back-button="false">
+
+    <ion-nav-buttons side="right">
+        <button class="button button-royal logout-button"  ng-click="vm.saveModal()">
+            <translate>Save</translate>
         </button>
-        <button class="button button-clear button-right"
-                ng-click="vm.saveModal()">
-            <strong translate>Save</strong>
-        </button>
-    </ion-header-bar>
-    <ion-content class="default-background">
+    </ion-nav-buttons>
+
+    <ion-content class="default-background"
+                 delegate-handle="front-page-scroll">
+
         <div class="editor-modal-container">
 
             <div class="event-type-select" ng-show="vm.eventType === undefined">
@@ -395,4 +393,5 @@
         </div>
 
     </ion-content>
-</ion-modal-view>
+</ion-view>
+

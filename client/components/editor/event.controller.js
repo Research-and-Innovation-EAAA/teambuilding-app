@@ -117,18 +117,18 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
         vm.newStepModuleId = undefined;
     };
 
-    $scope.$on('modal.shown', function () {
-        if ($scope.eventId) {
+    $scope.$on('$ionicView.beforeEnter', function () {
+        if (Session.get('eventId')) {
             vm.pageTitle = "Edit event";
         }
         else {
             vm.pageTitle = "Add event";
         }
 
-        console.log("EVENT ID: " + $scope.eventId + " " + vm.pageTitle);
+        console.log("EVENT ID: " + Session.get('eventId')+ " " + vm.pageTitle);
 
         vm.questionsShow = false;
-        vm.event = Events.findOne({'_id': $scope.eventId});
+        vm.event = Events.findOne({'_id': Session.get('eventId')});
 
         if (vm.event !== undefined) {
             if (vm.event.startDate !== undefined) {

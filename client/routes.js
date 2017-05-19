@@ -52,6 +52,14 @@ angular.module('leukemiapp')
                     }
                 }
             })
+            .state('app.editevent', {
+                url: '/editevent',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'client/components/editor/event.html'
+                    }
+                }
+            })
             .state('app.notauthorised', {
                 url: '/not-authorised',
                 views: {
