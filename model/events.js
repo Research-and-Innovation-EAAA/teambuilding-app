@@ -10,14 +10,16 @@ Meteor.methods({
         if (event.shortEvent === undefined) {
             throw new Meteor.Error('not-valid', 'Event object does not contain shortEvent attribute.');
         }
-        var foundEvent = Events.findOne({password: event.password})
+        var foundEvent = Events.findOne({password: event.password});
         if (foundEvent !== undefined && foundEvent._id !== event._id) {
             throw new Meteor.Error('not-valid', 'Event with password ' + event.password + ' already exists.');
         }
 
+        var newEvent = false;
         if (!event.createdBy) {
             event.createdBy = Meteor.userId();
             event.createdAt = new Date();
+            newEvent = true;
         }
         else {
             event.lastEditedBy = Meteor.userId();
@@ -33,6 +35,9 @@ Meteor.methods({
             module.eventId = event._id;
             module.startTime = moduleInfo.startTime;
             module.endTime = moduleInfo.endTime;
+            if (!newEvent) {
+                module.wizard.steps = moduleInfo.steps;
+            }
             CustomModules.update({eventId: event._id, number: 1}, module, {upsert: true});
         }
         else {
@@ -40,18 +45,28 @@ Meteor.methods({
             module.eventId = event._id;
             module.startTime = moduleInfo.startTime1;
             module.endTime = moduleInfo.endTime1;
+            if (!newEvent) {
+                module.wizard.steps = moduleInfo.steps1;
+            }
+
             CustomModules.update({eventId: event._id, number: 1}, module, {upsert: true});
 
             module = ModuleTemplates.longEventDuring;
             module.eventId = event._id;
             module.startTime = moduleInfo.startTime2;
             module.endTime = moduleInfo.endTime2;
+            if (!newEvent) {
+                module.wizard.steps = moduleInfo.steps2;
+            }
             CustomModules.update({eventId: event._id, number: 2}, module, {upsert: true});
 
             module = ModuleTemplates.longEventAfter;
             module.eventId = event._id;
             module.startTime = moduleInfo.startTime3;
             module.endTime = moduleInfo.endTime3;
+            if (!newEvent) {
+                module.wizard.steps = moduleInfo.steps3;
+            }
             CustomModules.update({eventId: event._id, number: 3}, module, {upsert: true});
         }
 

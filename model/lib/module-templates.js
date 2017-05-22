@@ -40,6 +40,17 @@ ModuleTemplates = {
                                         "mand",
                                         "kvinde"
                                     ]
+                                },
+                                {
+                                    "propertyName": "anciennitet",
+                                    "question": "Hvor længe har du været ansat på din nuværende arbejdsplads?",
+                                    "answers": [
+                                        "Op til 1 år",
+                                        "Fra 1 år til 3 år",
+                                        "Fra 3 år til 5 år",
+                                        "Fra 5 år til 8 år",
+                                        "Mere end 8 år"
+                                    ]
                                 }
                             ],
                             "mandatory": true
@@ -47,21 +58,92 @@ ModuleTemplates = {
                     }
                 },
                 {
+                    "stepName": "q1",
+                    "stepTemplate": {
+                        "url": "client/components/wizard/templates/slider.html",
+                        "config": {
+                            "question": "Hvad var din generelle holdning til teambuilding før dagens forløb?",
+                            "propertyName": "q1",
+                            "minValue": 1,
+                            "maxValue": 7,
+                            "step": 1,
+                            "defaultValue": 1,
+                            "mandatory": true,
+                            "positiveText": "Overvejende positiv",
+                            "negativeText": "Overvejende negativ",
+                            "smiley": false
+                        }
+                    }
+                },
+                {
+                    "stepName": "q2",
+                    "stepTemplate": {
+                        "url": "client/components/wizard/templates/slider.html",
+                        "config": {
+                            "question": "I hvor høj grad har du lært nogle af dine kollegaer bedre at kende i dag?",
+                            "propertyName": "q2",
+                            "minValue": 1,
+                            "maxValue": 7,
+                            "step": 1,
+                            "defaultValue": 1,
+                            "mandatory": true,
+                            "positiveText": "I meget høj grad",
+                            "negativeText": "I meget lav grad",
+                            "smiley": false
+                        }
+                    }
+                },
+                {
+                    "stepName": "q3",
+                    "stepTemplate": {
+                        "url": "client/components/wizard/templates/slider.html",
+                        "config": {
+                            "question": "I hvor høj grad tror du, at du vil opleve et bedre samarbejde på din arbejdsplads efter dagens forløb?",
+                            "propertyName": "q3",
+                            "minValue": 1,
+                            "maxValue": 7,
+                            "step": 1,
+                            "defaultValue": 1,
+                            "mandatory": true,
+                            "positiveText": "I meget høj grad",
+                            "negativeText": "I meget lav grad",
+                            "smiley": false
+                        }
+                    }
+                },
+                {
+                    "stepName": "q4",
+                    "stepTemplate": {
+                        "url": "client/components/wizard/templates/slider.html",
+                        "config": {
+                            "question": "I hvor høj grad er du tilfreds med den måde I løste dagens udfordringer?",
+                            "propertyName": "q4",
+                            "minValue": 1,
+                            "maxValue": 7,
+                            "step": 1,
+                            "defaultValue": 1,
+                            "mandatory": true,
+                            "positiveText": "I meget høj grad",
+                            "negativeText": "I meget lav grad",
+                            "smiley": false
+                        }
+                    }
+                },
+                {
                     "stepName": "q5",
                     "stepTemplate": {
-                        "url": "client/components/wizard/templates/single-question.html",
+                        "url": "client/components/wizard/templates/slider.html",
                         "config": {
-                            "propertyName": "anciennitet",
-                            "question": "Hvor længe har du været ansat på din nuværende arbejdsplads?",
-                            "answers": [
-                                "Op til 1 år",
-                                "Fra 1 år til 3 år",
-                                "Fra 3 år til 5 år",
-                                "Fra 5 år til 8 år",
-                                "Mere end 8 år"
-                            ],
+                            "question": "I hvor høj grad kan dele af dagens aktiviteter overføres til udfordringer på din arbejdsplads?",
+                            "propertyName": "q5",
+                            "minValue": 1,
+                            "maxValue": 7,
+                            "step": 1,
+                            "defaultValue": 1,
                             "mandatory": true,
-                            "multipleChoice": false
+                            "positiveText": "I meget høj grad",
+                            "negativeText": "I meget lav grad",
+                            "smiley": false
                         }
                     }
                 },
@@ -70,16 +152,16 @@ ModuleTemplates = {
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
-                            "question": "Inden dagens teambuilding forløb hvad var din holdning til teambuilding generelt?",
-                            "propertyName": "holdning",
+                            "question": "I hvor høj grad oplevede du i dag at der var en eller flere der tog ledelse?",
+                            "propertyName": "q6",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
                             "defaultValue": 1,
                             "mandatory": true,
-                            "positiveText": "Overvejende positiv",
-                            "negativeText": "Overvejende negativ",
-                            "smiley": true
+                            "positiveText": "I meget høj grad",
+                            "negativeText": "I meget lav grad",
+                            "smiley": false
                         }
                     }
                 },
@@ -88,16 +170,16 @@ ModuleTemplates = {
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
-                            "question": "Var du tilfreds med jeres resultater i de forskellige øvelser/opgaver i dag?",
+                            "question": "I hvor høj grad er du tilfreds med jeres engagement i dagens forløb?",
                             "propertyName": "q7",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
                             "defaultValue": 1,
                             "mandatory": true,
-                            "positiveText": "Ja det var rigtig godt",
-                            "negativeText": "Nej slet ikke",
-                            "smiley": true
+                            "positiveText": "I meget høj grad",
+                            "negativeText": "I meget lav grad",
+                            "smiley": false
                         }
                     }
                 },
@@ -106,16 +188,16 @@ ModuleTemplates = {
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
-                            "question": "Har du en forståelse for formålet med dagens aktiviteter/opgaver?",
+                            "question": "Hvordan er din holdning til jeres samarbejde i dag?",
                             "propertyName": "q8",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
                             "defaultValue": 1,
                             "mandatory": true,
-                            "positiveText": "Ja det står helt klart",
-                            "negativeText": "Nej slet ikke",
-                            "smiley": true
+                            "positiveText": "Overvejende positiv",
+                            "negativeText": "Overvejende negativ",
+                            "smiley": false
                         }
                     }
                 },
@@ -124,16 +206,16 @@ ModuleTemplates = {
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
-                            "question": "I de øvelser du oplevede i dag, var der en eller flere fra jeres gruppe der tog ledelsen?",
+                            "question": "Hvordan er din holdning til din egen indsats i dag?",
                             "propertyName": "q9",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
                             "defaultValue": 1,
                             "mandatory": true,
-                            "positiveText": "Ja der var rigtig god ledelse",
-                            "negativeText": "Nej slet ikke",
-                            "smiley": true
+                            "positiveText": "Ovejvejende positiv",
+                            "negativeText": "Overvejende negativ",
+                            "smiley": false
                         }
                     }
                 },
@@ -142,142 +224,16 @@ ModuleTemplates = {
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
-                            "question": "Hvordan var jeres engagement i de forskellige øvelser/opgaver?",
+                            "question": "Efter dagens forløb hvad er din generelle vurdering af dagen?",
                             "propertyName": "q10",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
                             "defaultValue": 1,
                             "mandatory": true,
-                            "positiveText": "Super godt",
-                            "negativeText": "Meget dårligt",
-                            "smiley": true
-                        }
-                    }
-                },
-                {
-                    "stepName": "q11",
-                    "stepTemplate": {
-                        "url": "client/components/wizard/templates/slider.html",
-                        "config": {
-                            "question": "Hvordan var jeres samarbejdsevne i dag?",
-                            "propertyName": "q11",
-                            "minValue": 1,
-                            "maxValue": 7,
-                            "step": 1,
-                            "defaultValue": 1,
-                            "mandatory": true,
-                            "positiveText": "Super god",
-                            "negativeText": "Meget dårlig",
-                            "smiley": true
-                        }
-                    }
-                },
-                {
-                    "stepName": "q12",
-                    "stepTemplate": {
-                        "url": "client/components/wizard/templates/slider.html",
-                        "config": {
-                            "question": "Hvordan løste I konflikter/uoverensstemmelser i løbet af dagen?",
-                            "propertyName": "q12",
-                            "minValue": 1,
-                            "maxValue": 7,
-                            "step": 1,
-                            "defaultValue": 1,
-                            "mandatory": true,
-                            "positiveText": "Alle bidrog og blev hørt",
-                            "negativeText": "De blev ikke løst",
-                            "smiley": true
-                        }
-                    }
-                },
-                {
-                    "stepName": "q13",
-                    "stepTemplate": {
-                        "url": "client/components/wizard/templates/slider.html",
-                        "config": {
-                            "question": "Hvordan var stemningen i jeres team?",
-                            "propertyName": "q13",
-                            "minValue": 1,
-                            "maxValue": 7,
-                            "step": 1,
-                            "defaultValue": 1,
-                            "mandatory": true,
-                            "positiveText": "Super god",
-                            "negativeText": "Dårlig",
-                            "smiley": true
-                        }
-                    }
-                },
-                {
-                    "stepName": "q14",
-                    "stepTemplate": {
-                        "url": "client/components/wizard/templates/slider.html",
-                        "config": {
-                            "question": "Efter dagens forløb tror jeg, at vi vil have et bedre samarbejde på vores arbejdsplads",
-                            "propertyName": "q14",
-                            "minValue": 1,
-                            "maxValue": 7,
-                            "step": 1,
-                            "defaultValue": 1,
-                            "mandatory": true,
-                            "positiveText": "Meget enig",
-                            "negativeText": "Meget uenig",
-                            "smiley": true
-                        }
-                    }
-                },
-                {
-                    "stepName": "q15",
-                    "stepTemplate": {
-                        "url": "client/components/wizard/templates/slider.html",
-                        "config": {
-                            "question": "Jeg har lært nogle af mine kollegaer bedre at kende i dag",
-                            "propertyName": "q15",
-                            "minValue": 1,
-                            "maxValue": 7,
-                            "step": 1,
-                            "defaultValue": 1,
-                            "mandatory": true,
-                            "positiveText": "Meget enig",
-                            "negativeText": "Meget uenig",
-                            "smiley": true
-                        }
-                    }
-                },
-                {
-                    "stepName": "q16",
-                    "stepTemplate": {
-                        "url": "client/components/wizard/templates/slider.html",
-                        "config": {
-                            "question": "Mange af de øvelser/opgaver og dilemmaer vi har haft i dag kan jeg overføre til nogle arbejdssituationer",
-                            "propertyName": "q16",
-                            "minValue": 1,
-                            "maxValue": 7,
-                            "step": 1,
-                            "defaultValue": 1,
-                            "mandatory": true,
-                            "positiveText": "Meget enig",
-                            "negativeText": "Meget uenig",
-                            "smiley": true
-                        }
-                    }
-                },
-                {
-                    "stepName": "q17",
-                    "stepTemplate": {
-                        "url": "client/components/wizard/templates/slider.html",
-                        "config": {
-                            "question": "Efter dagens forløb hvad er din generelle vurdering af dagen?",
-                            "propertyName": "q17",
-                            "minValue": 1,
-                            "maxValue": 7,
-                            "step": 1,
-                            "defaultValue": 1,
-                            "mandatory": true,
-                            "positiveText": "Super godt",
-                            "negativeText": "Spild af tid",
-                            "smiley": true
+                            "positiveText": "Overvejende positiv",
+                            "negativeText": "Overvejende negativ",
+                            "smiley": false
                         }
                     }
                 }

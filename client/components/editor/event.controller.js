@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('eventEditorController', EventEditorController);
 
-function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
+function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ionicActionSheet) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -24,6 +24,17 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
 
         vm.event.shortEvent = vm.eventType != 3;
 
+        if (vm.customModules !== undefined) {
+            if (vm.event.shortEvent) {
+                vm.moduleInfo["steps"] = vm.customModules[0].wizard.steps;
+            }
+            else {
+                vm.moduleInfo["steps1"] = vm.customModules[0].wizard.steps;
+                vm.moduleInfo["steps2"] = vm.customModules[1].wizard.steps;
+                vm.moduleInfo["steps3"] = vm.customModules[2].wizard.steps;
+            }
+        }
+
         Meteor.call('saveEvent', vm.event, vm.moduleInfo, (error, result) => {
             if (error) {
                 $ionicPopup.alert({
@@ -31,12 +42,12 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
                     content: "Could not save event, try again! " + error
                 });
             } else {
-                $scope.modal.hide();
-
                 $ionicPopup.alert({
                     title: "Event saved",
                     content: "We successfully saved event " + vm.event.name + "!"
                 });
+
+                $rootScope.$ionicGoBack();
             }
         });
 
@@ -58,28 +69,35 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
 
     };
 
-    vm.stepTypes = ["Slider", "Single question"];
+    vm.stepTypes = [
+        {text: 'Slider'},
+        {text: 'Single question'}
+    ];
 
     vm.newStepId = undefined;
 
-    vm.addStep = (moduleId, number) => {
-        alert(moduleId + " " + number);
-        var module = _.findWhere(vm.customModules, {_id: moduleId});
-
-        console.log("found module " + JSON.stringify(module));
-
-        vm.newStepType = undefined;
-        vm.newStepIndex = number;
-        vm.newStepModuleId = moduleId;
-        module.wizard.steps.splice(number, 0, {"new": true});
+    vm.popoverNewStep = function (moduleId, number) {
+        // Show the action sheet
+        $ionicActionSheet.show({
+            buttons: vm.stepTypes,
+            titleText: 'Add a new question',
+            cancelText: 'Cancel',
+            cancel: function () {
+                // cancel code..
+            },
+            buttonClicked: function (index) {
+                vm.addStep(moduleId, number, vm.stepTypes[index].text);
+                return true;
+            }
+        });
     };
 
-    vm.newStepTypeSelected = () => {
-        var module = _.findWhere(vm.customModules, {_id: vm.newStepModuleId});
+    vm.addStep = (moduleId, number, type) => {
+        var module = _.findWhere(vm.customModules, {_id: moduleId});
+        console.log("found module " + JSON.stringify(module));
 
-        alert("selected yay" + vm.newStepType);
-        if (vm.newStepType === 'Single question') {
-            module.wizard.steps[vm.newStepIndex] = {
+        if (type === 'Single question') {
+            module.wizard.steps[number] = {
                 "stepName": "Quiz question #1",
                 "stepTemplate": {
                     "url": "client/components/wizard/templates/single-question.html",
@@ -87,16 +105,16 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
                         "propertyName": "qwwwww1",
                         "question": "",
                         "answers": [
-                            "",
-                            ""
+                            "aa",
+                            "bb"
                         ],
                         "mandatory": true
                     }
                 }
             };
         }
-        if (vm.newStepType === 'Slider') {
-            module.wizard.steps[vm.newStepIndex] = {
+        else if (type === 'Slider') {
+            module.wizard.steps[number] = {
                 "stepName": "Bilka",
                 "stepTemplate": {
                     "url": "client/components/wizard/templates/slider.html",
@@ -106,16 +124,15 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
                         "minValue": 0,
                         "maxValue": 10,
                         "step": 1,
-                        "mandatory": true
+                        "mandatory": true,
+                        "smiley": true
                     }
                 }
             };
         }
 
-        vm.newStepType = undefined;
-        vm.newStepIndex = undefined;
-        vm.newStepModuleId = undefined;
     };
+
 
     $scope.$on('$ionicView.beforeEnter', function () {
         if (Session.get('eventId')) {
@@ -125,7 +142,7 @@ function EventEditorController($scope, $reactive, $ionicPopup, $translate) {
             vm.pageTitle = "Add event";
         }
 
-        console.log("EVENT ID: " + Session.get('eventId')+ " " + vm.pageTitle);
+        console.log("EVENT ID: " + Session.get('eventId') + " " + vm.pageTitle);
 
         vm.questionsShow = false;
         vm.event = Events.findOne({'_id': Session.get('eventId')});

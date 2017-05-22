@@ -1,7 +1,7 @@
 <ion-view view-title="{{vm.pageTitle}}" ng-controller="eventEditorController as vm" hide-back-button="false">
 
     <ion-nav-buttons side="right">
-        <button class="button button-royal logout-button"  ng-click="vm.saveModal()">
+        <button class="button button-royal logout-button" ng-click="vm.saveModal()">
             <translate>Save</translate>
         </button>
     </ion-nav-buttons>
@@ -230,98 +230,96 @@
                     </form>
                 </div>
 
+
                 <button class="button button-royal" ng-click="vm.showQuestions()"
-                        ng-class="{'button-outline': vm.questionsShow}"
                         ng-show="vm.pageTitle == 'Edit event'">
-                    Show questions
+                    <span ng-show="vm.questionsShow">Hide questions</span>
+                    <span ng-show="!vm.questionsShow">Show questions</span>
+                </button>
+                <button class="button button-royal button-outline button-print" onclick="window.print()"
+                        ng-show="vm.questionsShow">
+                    <i class="icon ion-printer"></i> Print questions
                 </button>
                 <div class="editor-questions" ng-show="vm.questionsShow">
                     <form class="editor-form">
-                        <div ng-repeat="module in vm.customModules" class="editor-module">
+                        <div ng-repeat="module in vm.customModules track by module._id" class="editor-module">
                             <div class="editor-module-name" ng-click="vm.showSteps(module.number)">
                                 <span>{{module.number}})</span> {{module.name}}
                                 <i class="caret rotate" ng-class="{'open':!!module.open}"></i>
                             </div>
                             <div class="editor-steps" ng-show="!!module.open">
                                 <ol class="vertical-steps">
-                                    <li ng-repeat-start="step in module.wizard.steps"
-                                        class="list-group-item question editor-step" ng-class="{'new-step': step.new}">
+                                    <li ng-repeat="step in module.wizard.steps track by $index"
+                                        class="list-group-item question editor-step">
                                         <div>
-                                            <div ng-if="step.new">
-                                                <select ng-model="vm.newStepType"
-                                                        ng-options="type for type in vm.stepTypes"
-                                                        ng-change="vm.newStepTypeSelected()" ></select>
-                                            </div>
-
                                             <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/slider.html'">
                                                 <div class="editor-question">
                                                 <span class="question">
-
-
                                                     <span class="editor-input-group">
                                                         <input type="text" ng-model="step.stepTemplate.config.question"
                                                                placeholder="Question" class="editor-input"
                                                                required="required">
                                                         <div class="editor-input-bar"></div>
                                                     </span>
-
-                                                    <span class="mandatory" title="mandatory"
-                                                          ng-if="step.stepTemplate.config.mandatory">*</span>
                                                 </span>
                                                     <span class="property"
                                                           title="Abbreviation visible only in the Excel output">
                                                     ({{step.stepTemplate.config.propertyName}})
                                                 </span>
+
                                                     <br>
                                                     <span class="type">Slider:</span>
                                                 </div>
                                                 <ul>
                                                     <li>
                                                         <i class="icon ion-sad-outline"></i>
-                                                        <span class="editor-input-group">
-                                                        <input type="number"
-                                                               ng-model="step.stepTemplate.config.minValue"
-                                                               placeholder="min value"
-                                                               class="editor-input"
-                                                               required="required">
-                                                        <div class="editor-input-bar"></div>
-                                                    </span>
+                                                        <span class="editor-input-group number">
+                                                            <input type="number"
+                                                                   ng-model="step.stepTemplate.config.minValue"
+                                                                   placeholder="min value"
+                                                                   class="editor-input"
+                                                                   required="required">
+                                                            <div class="editor-input-bar"></div>
+                                                        </span>
                                                         :
-
                                                         <span class="editor-input-group">
-                                                        <input type="text"
-                                                               ng-model="step.stepTemplate.config.negativeText"
-                                                               placeholder="negative text" class="editor-input"
-                                                               required="required">
-                                                        <div class="editor-input-bar"></div>
-                                                    </span>
-
+                                                            <input type="text"
+                                                                   ng-model="step.stepTemplate.config.negativeText"
+                                                                   placeholder="negative text"
+                                                                   class="editor-input number"
+                                                                   required="required">
+                                                            <div class="editor-input-bar"></div>
+                                                        </span>
                                                     </li>
+
                                                     <li>
                                                         <i class="icon ion-happy-outline"></i>
-
-                                                        <span class="editor-input-group">
-                                                        <input type="number"
-                                                               ng-model="step.stepTemplate.config.maxValue"
-                                                               placeholder="max value"
-                                                               class="editor-input"
-                                                               ng-min="step.stepTemplate.config.minValue"
-                                                               required="required">
-                                                        <div class="editor-input-bar"></div>
-                                                    </span>
-
-
+                                                        <span class="editor-input-group number">
+                                                            <input type="number"
+                                                                   ng-model="step.stepTemplate.config.maxValue"
+                                                                   placeholder="max value"
+                                                                   class="editor-input"
+                                                                   ng-min="step.stepTemplate.config.minValue"
+                                                                   required="required">
+                                                            <div class="editor-input-bar"></div>
+                                                        </span>
                                                         :
                                                         <span class="editor-input-group">
-                                                        <input type="text"
-                                                               ng-model="step.stepTemplate.config.positiveText"
-                                                               placeholder="positive text"
-                                                               class="editor-input" required="required">
-                                                        <div class="editor-input-bar"></div>
-                                                    </span>
-
+                                                            <input type="text"
+                                                                   ng-model="step.stepTemplate.config.positiveText"
+                                                                   placeholder="positive text"
+                                                                   class="editor-input" required="required">
+                                                            <div class="editor-input-bar"></div>
+                                                        </span>
                                                     </li>
                                                 </ul>
+
+                                                <ion-checkbox ng-model="step.stepTemplate.config.smiley">
+                                                    Show smileys
+                                                </ion-checkbox>
+                                                <ion-checkbox ng-model="step.stepTemplate.config.mandatory">
+                                                    Mandatory
+                                                </ion-checkbox>
                                             </div>
 
                                             <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/single-question.html'">
@@ -333,26 +331,42 @@
                                                                required="required">
                                                         <div class="editor-input-bar"></div>
                                                     </span>
-
-                                                    <span class="mandatory" ng-if="step.stepTemplate.config.mandatory"
-                                                          title="mandatory">*</span>
-
                                                 </span>
                                                     <span class="property"
                                                           title="Abbreviation visible only in the Excel output">
                                                     ({{step.stepTemplate.config.propertyName}})
                                                 </span>
+
+                                                    <span class="">
+                                                        <ion-checkbox
+                                                                ng-model="step.stepTemplate.config.multipleChoice">
+                                                            Multiple choice
+                                                        </ion-checkbox>
+                                                    </span>
                                                     <br>
                                                     <span class="type" ng-if="!step.stepTemplate.config.multipleChoice">Single choice:</span>
                                                     <span class="type" ng-if="step.stepTemplate.config.multipleChoice">Multiple choice:</span>
                                                 </div>
                                                 <ul>
-                                                    <li ng-repeat="answer in step.stepTemplate.config.answers">{{answer}}</li>
+                                                    <li ng-repeat="answer in step.stepTemplate.config.answers track by $index">
+                                                        <span class="editor-input-group">
+                                                            <input type="text" ng-model="answer"
+                                                                   placeholder="Question" class="editor-input"
+                                                                   required="required">
+                                                            <div class="editor-input-bar"></div>
+                                                        </span>
+                                                        {{answer}}
+                                                    </li>
                                                 </ul>
+
+                                                <ion-checkbox ng-model="step.stepTemplate.config.mandatory">
+                                                    Mandatory
+                                                </ion-checkbox>
+
                                             </div>
 
                                             <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/multiple-questions.html'"
-                                                 ng-repeat="question in step.stepTemplate.config.questions">
+                                                 ng-repeat="question in step.stepTemplate.config.questions track by $index">
                                                 <div class="editor-question">
                                                 <span class="question">
                                                     <span class="editor-input-group">
@@ -373,16 +387,17 @@
                                                     <span class="type">Single choice:</span>
                                                 </div>
                                                 <ul>
-                                                    <li ng-repeat="answer in question.answers">{{answer}}</li>
+                                                    <li ng-repeat="answer in question.answers track by $index">{{answer}}</li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </li>
-                                    <li ng-repeat-end
-                                        ng-if="!step.new"
-                                        class="list-group-item add editor-step"
-                                        ng-click="vm.addStep(module._id, $index + 1)">
-                                    </li>
+                                    <!-- <li ng-repeat-end
+                                            ng-if="!step.new"
+                                            class="list-group-item add editor-step"
+                                            ng-click="vm.popoverNewStep(module._id, $index + 1)">
+                                            <div></div>
+                                        </li> -->
                                 </ol>
                                 <hr>
                             </div>

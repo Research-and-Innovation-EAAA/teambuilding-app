@@ -1,0 +1,35 @@
+@media print {
+  /* Reset height */
+  .view-container,
+  .pane,
+  .view {
+    height: auto;
+  }
+  /* Reset position */
+  .view-container,
+  .pane,
+  .view,
+  .scroll-content {
+    position: static;
+  }
+  /* Reset overflow */
+  html,
+  body,
+  .pane,
+  .view,
+  .scroll-content {
+    overflow: visible;
+  }
+
+  .button, ion-nav-bar{
+    display: none;
+  }
+}
+
+.button-print{
+  visibility: hidden;
+}
+
+.platform-browser .button-print{
+  visibility: visible;
+}

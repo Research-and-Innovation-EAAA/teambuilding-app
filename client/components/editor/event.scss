@@ -153,6 +153,13 @@ input:focus ~ .editor-input-bar:after {
   margin-top: 20px;
 }
 
+.editor-questions {
+  .editor-input-group.number {
+    width: 50px;
+  }
+
+}
+
 .editor-questions.ng-hide-add,
 .editor-questions.ng-hide-remove {
   transition: all linear 0.5s;
@@ -214,6 +221,12 @@ input:focus ~ .editor-input-bar:after {
 .editor-question {
   .question {
     font-weight: bold;
+
+    .editor-input-group {
+      width: 100%;
+      max-width: 800px;
+      text-overflow: ellipsis;
+    }
   }
   .type {
     font-style: italic;
@@ -221,12 +234,17 @@ input:focus ~ .editor-input-bar:after {
   }
   .property {
     font-size: 0.9em;
-    cursor: pointer;
+    cursor: help;
   }
   .mandatory {
-    color: red;
-    cursor: pointer;
+    color: $balanced;
+    cursor: help;
   }
+
+}
+
+.action-sheet .button {
+  color: $balanced !important; // override ionic
 }
 
 .caret {
@@ -270,10 +288,6 @@ input:focus ~ .editor-input-bar:after {
     counter-increment: question-counter;
   }
 
-  .list-group-item.add {
-
-  }
-
   .list-group-item:last-child {
     border-left: 5px solid transparent;
     padding-bottom: 0;
@@ -297,7 +311,7 @@ input:focus ~ .editor-input-bar:after {
   }
 
   .list-group-item.question {
-    padding-bottom: 5px;
+    padding-bottom: 20px; // 5px; TODO back to 5px when add question enabled again
   }
 
   .list-group-item.question::before {
@@ -339,6 +353,19 @@ input:focus ~ .editor-input-bar:after {
     background-color: $energized;
     color: white;
     cursor: pointer;
+  }
+
+  .list-group-item.add:hover div {
+    border: 1px dashed #bbbbbb;
+    cursor: pointer;
+    position: relative;
+    left: 20px;
+    width: 90%;
+    height: 100%;
+  }
+
+  .new-step + .list-group-item.add {
+    background-color: red !important;
   }
 
   .list-group-item > div {
