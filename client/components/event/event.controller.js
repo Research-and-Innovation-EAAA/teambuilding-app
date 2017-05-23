@@ -28,7 +28,8 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
                 eventId: vm.event._id,
                 startTime: {$lte: now, $exists: true},
                 endTime: {$gte: now, $exists: true}
-            }
+            },
+            {sort: {number: 1}}
         ).fetch();
     };
 

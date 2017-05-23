@@ -15,6 +15,12 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
     };
 
     vm.saveModal = () => {
+        if (vm.event === undefined){
+            $ionicPopup.alert({
+                title: "Event not saved",
+                content: "Please, fill in all the fields."
+            });
+        }
         if (vm.event.startDate !== undefined) {
             vm.event.startDate = moment(vm.event.startDate).format('YYYY-MM-DD');
         }
@@ -39,7 +45,7 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
             if (error) {
                 $ionicPopup.alert({
                     title: "Event not saved",
-                    content: "Could not save event, try again! " + error
+                    content: "Could not save event, try again!<br>" + error
                 });
             } else {
                 $ionicPopup.alert({
