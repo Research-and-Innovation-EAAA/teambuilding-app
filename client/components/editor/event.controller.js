@@ -60,7 +60,6 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
     };
 
     vm.showQuestions = () => {
-        vm.customModules = CustomModules.find({eventId: vm.event._id}, {sort: {number: 1}}).fetch();
         vm.questionsShow = !vm.questionsShow;
         if (vm.questionsShow && vm.customModules.length == 1) {
             vm.customModules[0].open = true;
@@ -169,7 +168,8 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
                 const isReady = handle.ready();
 
                 if (isReady) {
-                    console.log("FOUND CUST MODULES: " + CustomModules.find().fetch());
+                    vm.customModules = CustomModules.find({eventId: vm.event._id}, {sort: {number: 1}}).fetch();
+                    console.log("FOUND CUST MODULES: " + vm.customModules);
 
                     if (vm.eventType == 1) {
                         var module = CustomModules.findOne({eventId: vm.event._id, number: 1});

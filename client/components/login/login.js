@@ -22,21 +22,19 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
     });
 
     function navigateToNextStep() {
-        /*  Meteor.subscribe('userInfo', function () {
-         if (!Meteor.userId()) {
-         return;
-         }
-
-         // UserInfo.insert({"userId": Meteor.userId(), "admin": true});
-         var admin = UserInfo.findOne({"userId": Meteor.userId()});
-         console.log("jsem admin? " + JSON.stringify(admin));
-         if (admin && admin.admin) {
-         $location.path("app/editor");
-         }
-         else {*/
-        $location.path("app/eventselect");
-        /*}
-         });*/
+        Tracker.autorun(() => {
+            var user = Meteor.user();
+            console.log("jsem admin? " + JSON.stringify(user));
+            if (user == null) {
+                $location.path("app/login");
+            }
+            if (user.profile && user.profile.admin) {
+                $location.path("app/editor");
+            }
+            else {
+                $location.path("app/eventselect");
+            }
+        });
     }
 
     vm.submit = function () {

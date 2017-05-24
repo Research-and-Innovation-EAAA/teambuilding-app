@@ -31,8 +31,8 @@ function myFlat(input) {
 // Maps to: /api/registrations/:event
 ApiV1.addRoute('registrations/:event', {authRequired: true}, {
     get: function () {
-        var admin = Meteor.users.findOne({"userId": this.userId});
-        if (!admin || !admin.admin) {
+        var user = this.user;
+        if (!user || !user.profile || !user.profile.admin) {
             return "Not an admin";
         }
 
@@ -63,7 +63,7 @@ ApiV1.addRoute('registrations/:event', {authRequired: true}, {
 // Maps to: /api/registrations/:event/metadata
 ApiV1.addRoute('registrations/:event/metadata', {authRequired: true}, {
     get: function () {
-        var user = Meteor.user();
+        var user = this.user;
         if (!user || !user.profile || !user.profile.admin) {
             return "Not an admin";
         }
