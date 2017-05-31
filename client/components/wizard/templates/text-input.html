@@ -1,20 +1,12 @@
 <div ng-controller="textInputController as vm">
 
-    <section class="padding-horizontal-50 top-margin">
-        <div style="width: 100%">
+    <div class="qwiz-container top-margin">
+        <h3 class="center-horizontal">{{vm.question}}</h3>
+        <br>
 
-            <div class="row num-input-row responsive-sm row-center" ng-repeat="question in vm.questions">
-                <div class="col">
-                    <span class="input-label">{{question.question}}</span>
-                </div>
-                <div class="col col-75">
-                    <textarea
-                            ng-model="vm.registration[question.propertyName]"
-                            ng-blur="vm.updateRegistration()"></textarea>
-                </div>
-            </div>
-
+        <div class="padding-horizontal-50">
+            <textarea ng-model="vm.registration[vm.propertyName]" class="user-input qwiz-textarea"></textarea>
         </div>
-    </section>
+    </div>
 
 </div>

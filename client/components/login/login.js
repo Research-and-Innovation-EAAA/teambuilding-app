@@ -27,12 +27,15 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
             console.log("jsem admin? " + JSON.stringify(user));
             if (user == null) {
                 $location.path("app/login");
+                return;
             }
-            if (user.profile && user.profile.admin) {
+            else if (user.profile && user.profile.admin) {
                 $location.path("app/editor");
+                return;
             }
             else {
                 $location.path("app/eventselect");
+                return;
             }
         });
     }

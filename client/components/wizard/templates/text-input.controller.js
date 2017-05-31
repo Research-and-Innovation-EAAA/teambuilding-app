@@ -40,6 +40,7 @@ function textInputController($scope, $reactive, WizardHandler, WizardState, Wiza
 
         vm.question = config.question;
         vm.mandatory = config.mandatory;
+        vm.propertyName = config.propertyName;
 
         vm.registration = WizardState[vm.dataType];
     }
@@ -48,7 +49,7 @@ function textInputController($scope, $reactive, WizardHandler, WizardState, Wiza
         WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
 
         if (vm.registration[vm.config.propertyName] == undefined || vm.registration[vm.config.propertyName] == null || vm.registration[vm.config.propertyName] == 0)
-            vm.registration[vm.config.propertyName] = [];
+            vm.registration[vm.config.propertyName] = "";
 
         vm.init = true;
     }
@@ -65,9 +66,8 @@ function textInputController($scope, $reactive, WizardHandler, WizardState, Wiza
 
     vm.validateData = (registration) => {
         if (vm.mandatory) {
-
-            var prop = registration[registration[vm.config.propertyName]];
-            if (!prop && prop !== 0) {
+            var prop = registration[vm.propertyName];
+            if (!prop && prop !== 0 && prop.replace(/\s/g, "").length == 0) {  // trim white characters
                 return false;
             }
         }
