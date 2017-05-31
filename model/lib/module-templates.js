@@ -236,7 +236,19 @@ ModuleTemplates = {
                             "smiley": false
                         }
                     }
+                },
+                {
+                    "stepName": "qText",
+                    "stepTemplate": {
+                        "url": "client/components/wizard/templates/text-input.html",
+                        "config": {
+                            "question": "Hvad har været det bedste ved dagens forløb og hvorfor?",
+                            "propertyName": "qText",
+                            "mandatory": false
+                        }
+                    }
                 }
+
             ]
         }
     },

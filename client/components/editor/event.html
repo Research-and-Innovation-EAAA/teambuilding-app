@@ -390,6 +390,31 @@
                                                     <li ng-repeat="answer in question.answers track by $index">{{answer}}</li>
                                                 </ul>
                                             </div>
+
+                                            <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/text-input.html'">
+                                                <div class="editor-question">
+                                                <span class="question">
+                                                    <span class="editor-input-group">
+                                                        <input type="text" ng-model="step.stepTemplate.config.question"
+                                                               placeholder="Question" class="editor-input"
+                                                               required="required">
+                                                        <div class="editor-input-bar"></div>
+                                                    </span>
+                                                </span>
+                                                    <span class="property"
+                                                          title="Abbreviation visible only in the Excel output">
+                                                    ({{step.stepTemplate.config.propertyName}})
+                                                </span>
+
+                                                    <br>
+                                                    <span class="type">Free text input</span>
+                                                </div>
+
+                                                <ion-checkbox ng-model="step.stepTemplate.config.mandatory">
+                                                    Mandatory
+                                                </ion-checkbox>
+
+                                            </div>
                                         </div>
                                     </li>
                                     <!-- <li ng-repeat-end
