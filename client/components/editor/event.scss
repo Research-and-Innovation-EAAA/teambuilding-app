@@ -192,6 +192,30 @@ input:focus ~ .editor-input-bar:after {
   border: 1px solid #bbbbbb;
   padding: 5px;
   padding-left: 10px;
+
+  .step-delete {
+    border-radius: 50%;
+
+    background-color: transparent;
+    color: transparent;
+    border: 3px solid transparent;
+    line-height: 19px;
+
+    font-weight: bold;
+    display: inline-block;
+    float: left;
+    width: 25px;
+    height: 25px;
+    margin-left: -35px;
+    text-align: center;
+  }
+
+  .step-delete:hover{
+    background-color: $balanced;
+    color: $stable;
+    border: 3px solid $balanced;
+    cursor: pointer;
+  }
 }
 
 .editor-steps {
@@ -364,14 +388,9 @@ input:focus ~ .editor-input-bar:after {
     height: 100%;
   }
 
-  .new-step + .list-group-item.add {
-    background-color: red !important;
-  }
-
   .list-group-item > div {
     display: block;
     overflow: hidden;
-    padding-top: 2px;
   }
 }
 

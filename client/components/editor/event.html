@@ -249,8 +249,9 @@
                             </div>
                             <div class="editor-steps" ng-show="!!module.open">
                                 <ol class="vertical-steps">
-                                    <li ng-repeat="step in module.wizard.steps track by $index"
+                                    <li ng-repeat-start="step in module.wizard.steps track by $index"
                                         class="list-group-item question editor-step">
+                                        <span class="step-delete" ng-click="vm.removeStep(module._id, $index)"><i class="icon ion-close-round"></i></span>
                                         <div>
                                             <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/slider.html'">
                                                 <div class="editor-question">
@@ -342,12 +343,14 @@
                                                 <ul>
                                                     <li ng-repeat="answer in step.stepTemplate.config.answers track by $index">
                                                         <span class="editor-input-group">
-                                                            <input type="text" ng-model="step.stepTemplate.config.answers[$index]"
+                                                            <input type="text"
+                                                                   ng-model="step.stepTemplate.config.answers[$index]"
                                                                    placeholder="Answer" class="editor-input"
                                                                    required="required">
                                                             <div class="editor-input-bar"></div>
                                                         </span>
-                                                        <a ng-click="vm.deleteAnswer(module._id, step.stepName, $index)"><i class="icon ion-close-round"></i></a>
+                                                        <a ng-click="vm.deleteAnswer(module._id, step.stepName, $index)"><i
+                                                                class="icon ion-close-round"></i></a>
                                                     </li>
                                                     <li>
                                                         <a ng-click="vm.addAnswer(module._id, step.stepName)">
@@ -420,12 +423,12 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <!-- <li ng-repeat-end
-                                            ng-if="!step.new"
-                                            class="list-group-item add editor-step"
-                                            ng-click="vm.popoverNewStep(module._id, $index + 1)">
-                                            <div></div>
-                                        </li> -->
+                                    <li ng-repeat-end
+                                        ng-if="!step.new"
+                                        class="list-group-item add editor-step"
+                                        ng-click="vm.popoverNewStep(module._id, $index + 1)">
+                                        <div></div>
+                                    </li>
                                 </ol>
                                 <hr>
                             </div>

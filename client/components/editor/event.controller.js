@@ -168,15 +168,38 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
                 "stepTemplate": {
                     "url": "client/components/wizard/templates/text-input.html",
                     "config": {
-                        "question" : "",
-                        "propertyName" : "qText",
-                        "mandatory" : true
+                        "question": "",
+                        "propertyName": "qText",
+                        "mandatory": true
                     }
                 }
             };
         }
+
+        vm.recalculateStepNames(module);
     };
 
+    vm.removeStep = (moduleId, index) => {
+        var module = _.findWhere(vm.customModules, {_id: moduleId});
+        console.log("found module " + JSON.stringify(module));
+
+        if (confirm("Do you really want to delete step #" + (index + 1) + "?")) {
+            module.wizard.steps.splice(index, 1);
+            vm.recalculateStepNames(module);
+        }
+    };
+
+    vm.recalculateStepNames = (module) => {
+        for (i = 0; i < module.wizard.steps.length; i++) {
+            var step = module.wizard.steps[i];
+            if (step.stepName !== 'Profil') {
+                var abbrev = "m" + module.number + "q" + (i + 1);
+                step.stepName = abbrev;
+                step.stepTemplate.config.propertyName = abbrev;
+
+            }
+        }
+    };
 
     $scope.$on('$ionicView.beforeEnter', function () {
         if (Session.get('eventId')) {
