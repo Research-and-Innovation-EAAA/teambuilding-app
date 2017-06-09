@@ -24,7 +24,7 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
     function navigateToNextStep() {
         Tracker.autorun(() => {
             var user = Meteor.user();
-            console.log("jsem admin? " + JSON.stringify(user));
+
             if (user == null) {
                 $location.path("app/login");
                 return;

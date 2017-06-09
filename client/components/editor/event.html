@@ -317,9 +317,6 @@
                                                 <ion-checkbox ng-model="step.stepTemplate.config.smiley">
                                                     Show smileys
                                                 </ion-checkbox>
-                                                <ion-checkbox ng-model="step.stepTemplate.config.mandatory">
-                                                    Mandatory
-                                                </ion-checkbox>
                                             </div>
 
                                             <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/single-question.html'">
@@ -337,12 +334,7 @@
                                                     ({{step.stepTemplate.config.propertyName}})
                                                 </span>
 
-                                                    <span class="">
-                                                        <ion-checkbox
-                                                                ng-model="step.stepTemplate.config.multipleChoice">
-                                                            Multiple choice
-                                                        </ion-checkbox>
-                                                    </span>
+
                                                     <br>
                                                     <span class="type" ng-if="!step.stepTemplate.config.multipleChoice">Single choice:</span>
                                                     <span class="type" ng-if="step.stepTemplate.config.multipleChoice">Multiple choice:</span>
@@ -350,15 +342,26 @@
                                                 <ul>
                                                     <li ng-repeat="answer in step.stepTemplate.config.answers track by $index">
                                                         <span class="editor-input-group">
-                                                            <input type="text" ng-model="answer"
-                                                                   placeholder="Question" class="editor-input"
+                                                            <input type="text" ng-model="step.stepTemplate.config.answers[$index]"
+                                                                   placeholder="Answer" class="editor-input"
                                                                    required="required">
                                                             <div class="editor-input-bar"></div>
                                                         </span>
-                                                        {{answer}}
+                                                        <a ng-click="vm.deleteAnswer(module._id, step.stepName, $index)"><i class="icon ion-close-round"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a ng-click="vm.addAnswer(module._id, step.stepName)">
+                                                            <i class="icon ion-plus-round"></i>
+                                                        </a>
                                                     </li>
                                                 </ul>
 
+                                                <span class="">
+                                                        <ion-checkbox
+                                                                ng-model="step.stepTemplate.config.multipleChoice">
+                                                            Multiple choice
+                                                        </ion-checkbox>
+                                                    </span>
                                                 <ion-checkbox ng-model="step.stepTemplate.config.mandatory">
                                                     Mandatory
                                                 </ion-checkbox>

@@ -33,7 +33,7 @@ function EditorController($scope, $rootScope, $reactive, $ionicModal, $ionicNavB
 
     vm.refresh = function () {
         vm.events = getModules();
-        console.log(JSON.stringify(vm.events));
+        // console.log(JSON.stringify(vm.events));
         $scope.$broadcast('scroll.refreshComplete');
     }
 

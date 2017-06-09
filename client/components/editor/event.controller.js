@@ -15,7 +15,7 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
     };
 
     vm.saveModal = () => {
-        if (vm.event === undefined){
+        if (vm.event === undefined) {
             $ionicPopup.alert({
                 title: "Event not saved",
                 content: "Please, fill in all the fields."
@@ -74,9 +74,36 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
 
     };
 
+    vm.addAnswer = (moduleId, stepName) => {
+        var module = _.findWhere(vm.customModules, {_id: moduleId});
+        var step = _.findWhere(module.wizard.steps, {stepName: stepName});
+        if (step.stepTemplate.url === 'client/components/wizard/templates/single-question.html') {
+            var answers = step.stepTemplate.config.answers;
+            console.log("answers" + answers);
+            answers.push("");
+        }
+        else {
+            console.log("not a single-question.html step, cannot remove answer");
+        }
+    };
+
+    vm.deleteAnswer = (moduleId, stepName, index) => {
+        var module = _.findWhere(vm.customModules, {_id: moduleId});
+        var step = _.findWhere(module.wizard.steps, {stepName: stepName});
+        if (step.stepTemplate.url === 'client/components/wizard/templates/single-question.html') {
+            var answers = step.stepTemplate.config.answers;
+            console.log(index + " answers " + answers);
+            answers.splice(index, 1);
+        }
+        else {
+            console.log("not a single-question.html step, cannot remove answer");
+        }
+    };
+
     vm.stepTypes = [
         {text: 'Slider'},
-        {text: 'Single question'}
+        {text: 'Single question'},
+        {text: 'Free text input'}
     ];
 
     vm.newStepId = undefined;
@@ -135,7 +162,19 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
                 }
             };
         }
-
+        else if (type === 'Free text input') {
+            module.wizard.steps[number] = {
+                "stepName": "TextInput",
+                "stepTemplate": {
+                    "url": "client/components/wizard/templates/text-input.html",
+                    "config": {
+                        "question" : "",
+                        "propertyName" : "qText",
+                        "mandatory" : true
+                    }
+                }
+            };
+        }
     };
 
 

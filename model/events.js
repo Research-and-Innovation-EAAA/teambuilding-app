@@ -72,7 +72,7 @@ Meteor.methods({
                 CustomModules.update({eventId: event._id, number: 3}, module, {upsert: true});
             }
 
-            console.log('Successfully saved event+modules: ', event);
+            // console.log('Successfully saved event+modules: ', event);
         }
         else {
             throw new Meteor.Error('not-valid', 'Please, fill in all the fields.');
@@ -84,13 +84,13 @@ Meteor.methods({
         }
 
         Events.remove(event._id);
-        console.log('Removed event: ', event);
+        // console.log('Removed event: ', event);
     }
 });
 
 // Initialise default events
 Meteor.startup(() => {
-    console.log('Meteor startup called');
+    // console.log('Meteor startup called');
     Meteor.setTimeout(function () {
         if (!Events.findOne({})) {
             var testEvent = {
