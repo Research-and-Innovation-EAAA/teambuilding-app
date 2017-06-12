@@ -250,11 +250,18 @@
                             <div class="editor-steps" ng-show="!!module.open">
                                 <ol class="vertical-steps">
                                     <li ng-repeat-start="step in module.wizard.steps track by $index"
-                                        class="list-group-item question editor-step">
-                                        <span class="step-delete" ng-click="vm.removeStep(module._id, $index)"><i class="icon ion-close-round"></i></span>
+                                        class="list-group-item question editor-step"
+                                        ng-class="{'open':vm.showTooltipQuestion == step.stepName}">
+                                        <span class="step-delete" ng-click="vm.removeStep(module._id, $index)"><i
+                                                class="icon ion-close-round"></i></span>
                                         <div>
                                             <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/slider.html'">
-                                                <div class="editor-question">
+                                                <span class="question" ng-click="vm.showTooltip(step.stepName)"
+                                                      ng-class="{'question-open':vm.showTooltipQuestion == step.stepName}">{{step.stepTemplate.config.question}}
+                                                    &nbsp;&nbsp;<i class="icon ion-arrow-right-b"></i></span>
+
+                                                <div class="editor-question"
+                                                     ng-show="vm.showTooltipQuestion == step.stepName">
                                                 <span class="question">
                                                     <span class="editor-input-group">
                                                         <input type="text" ng-model="step.stepTemplate.config.question"
@@ -270,11 +277,11 @@
 
                                                     <br>
                                                     <span class="type">Slider:</span>
-                                                </div>
-                                                <ul>
-                                                    <li>
-                                                        <i class="icon ion-sad-outline"></i>
-                                                        <span class="editor-input-group number">
+
+                                                    <ul>
+                                                        <li>
+                                                            <i class="icon ion-sad-outline"></i>
+                                                            <span class="editor-input-group number">
                                                             <input type="number"
                                                                    ng-model="step.stepTemplate.config.minValue"
                                                                    placeholder="min value"
@@ -282,8 +289,8 @@
                                                                    required="required">
                                                             <div class="editor-input-bar"></div>
                                                         </span>
-                                                        :
-                                                        <span class="editor-input-group">
+                                                            :
+                                                            <span class="editor-input-group">
                                                             <input type="text"
                                                                    ng-model="step.stepTemplate.config.negativeText"
                                                                    placeholder="negative text"
@@ -291,11 +298,11 @@
                                                                    required="required">
                                                             <div class="editor-input-bar"></div>
                                                         </span>
-                                                    </li>
+                                                        </li>
 
-                                                    <li>
-                                                        <i class="icon ion-happy-outline"></i>
-                                                        <span class="editor-input-group number">
+                                                        <li>
+                                                            <i class="icon ion-happy-outline"></i>
+                                                            <span class="editor-input-group number">
                                                             <input type="number"
                                                                    ng-model="step.stepTemplate.config.maxValue"
                                                                    placeholder="max value"
@@ -304,24 +311,30 @@
                                                                    required="required">
                                                             <div class="editor-input-bar"></div>
                                                         </span>
-                                                        :
-                                                        <span class="editor-input-group">
+                                                            :
+                                                            <span class="editor-input-group">
                                                             <input type="text"
                                                                    ng-model="step.stepTemplate.config.positiveText"
                                                                    placeholder="positive text"
                                                                    class="editor-input" required="required">
                                                             <div class="editor-input-bar"></div>
                                                         </span>
-                                                    </li>
-                                                </ul>
+                                                        </li>
+                                                    </ul>
 
-                                                <ion-checkbox ng-model="step.stepTemplate.config.smiley">
-                                                    Show smileys
-                                                </ion-checkbox>
+                                                    <ion-checkbox ng-model="step.stepTemplate.config.smiley">
+                                                        Show smileys
+                                                    </ion-checkbox>
+                                                </div>
                                             </div>
 
                                             <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/single-question.html'">
-                                                <div class="editor-question">
+                                                <span class="question" ng-click="vm.showTooltip(step.stepName)"
+                                                      ng-class="{'question-open':vm.showTooltipQuestion == step.stepName}">{{step.stepTemplate.config.question}}
+                                                    &nbsp;&nbsp;<i class="icon ion-arrow-right-b"></i></span>
+
+                                                <div class="editor-question"
+                                                     ng-show="vm.showTooltipQuestion == step.stepName">
                                                 <span class="question">
                                                     <span class="editor-input-group">
                                                         <input type="text" ng-model="step.stepTemplate.config.question"
@@ -339,9 +352,9 @@
                                                     <br>
                                                     <span class="type" ng-if="!step.stepTemplate.config.multipleChoice">Single choice:</span>
                                                     <span class="type" ng-if="step.stepTemplate.config.multipleChoice">Multiple choice:</span>
-                                                </div>
-                                                <ul>
-                                                    <li ng-repeat="answer in step.stepTemplate.config.answers track by $index">
+
+                                                    <ul>
+                                                        <li ng-repeat="answer in step.stepTemplate.config.answers track by $index">
                                                         <span class="editor-input-group">
                                                             <input type="text"
                                                                    ng-model="step.stepTemplate.config.answers[$index]"
@@ -349,31 +362,37 @@
                                                                    required="required">
                                                             <div class="editor-input-bar"></div>
                                                         </span>
-                                                        <a ng-click="vm.deleteAnswer(module._id, step.stepName, $index)"><i
-                                                                class="icon ion-close-round"></i></a>
-                                                    </li>
-                                                    <li>
-                                                        <a ng-click="vm.addAnswer(module._id, step.stepName)">
-                                                            <i class="icon ion-plus-round"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                                            <a ng-click="vm.deleteAnswer(module._id, step.stepName, $index)"><i
+                                                                    class="icon ion-close-round"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a ng-click="vm.addAnswer(module._id, step.stepName)">
+                                                                <i class="icon ion-plus-round"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
 
-                                                <span class="">
+                                                    <span class="">
                                                         <ion-checkbox
                                                                 ng-model="step.stepTemplate.config.multipleChoice">
                                                             Multiple choice
                                                         </ion-checkbox>
                                                     </span>
-                                                <ion-checkbox ng-model="step.stepTemplate.config.mandatory">
-                                                    Mandatory
-                                                </ion-checkbox>
-
+                                                    <ion-checkbox ng-model="step.stepTemplate.config.mandatory">
+                                                        Mandatory
+                                                    </ion-checkbox>
+                                                </div>
                                             </div>
 
-                                            <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/multiple-questions.html'"
-                                                 ng-repeat="question in step.stepTemplate.config.questions track by $index">
-                                                <div class="editor-question">
+                                            <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/multiple-questions.html'">
+                                                <span class="question" ng-click="vm.showTooltip(step.stepName)"
+                                                      ng-class="{'question-open':vm.showTooltipQuestion == step.stepName}">
+                                                    {{step.stepName}} &nbsp;&nbsp;<i class="icon ion-arrow-right-b"></i></span>
+
+                                                <div class="editor-question"
+                                                     ng-show="vm.showTooltipQuestion == step.stepName">
+                                                    <div ng-repeat="question in step.stepTemplate.config.questions track by
+                                                $index">
                                                 <span class="question">
                                                     <span class="editor-input-group">
                                                         <input type="text" ng-model="question.question"
@@ -381,24 +400,30 @@
                                                                required="required">
                                                         <div class="editor-input-bar"></div>
                                                     </span>
-
-                                                    <span class="mandatory" ng-if="step.stepTemplate.config.mandatory"
-                                                          title="mandatory">*</span>
                                                 </span>
-                                                    <span class="property"
-                                                          title="Abbreviation visible only in the Excel output">
+                                                        <span class="property"
+                                                              title="Abbreviation visible only in the Excel output">
                                                     ({{question.propertyName}})
                                                 </span>
-                                                    <br>
-                                                    <span class="type">Single choice:</span>
+                                                        <br>
+                                                        <span class="type">Single choice:</span>
+
+                                                        <ul>
+                                                            <li ng-repeat="answer in question.answers track by $index">{{answer}}</li>
+                                                        </ul>
+                                                    </div>
+                                                    <ion-checkbox ng-model="step.stepTemplate.config.mandatory">
+                                                        All questions here mandatory
+                                                    </ion-checkbox>
                                                 </div>
-                                                <ul>
-                                                    <li ng-repeat="answer in question.answers track by $index">{{answer}}</li>
-                                                </ul>
                                             </div>
 
                                             <div ng-if="step.stepTemplate.url=='client/components/wizard/templates/text-input.html'">
-                                                <div class="editor-question">
+                                                <span class="question" ng-click="vm.showTooltip(step.stepName)"
+                                                      ng-class="{'question-open':vm.showTooltipQuestion == step.stepName}">{{step.stepTemplate.config.question}}
+                                                    &nbsp;&nbsp;<i class="icon ion-arrow-right-b"></i></span>
+                                                <div class="editor-question"
+                                                     ng-show="vm.showTooltipQuestion == step.stepName">
                                                 <span class="question">
                                                     <span class="editor-input-group">
                                                         <input type="text" ng-model="step.stepTemplate.config.question"
@@ -413,24 +438,25 @@
                                                 </span>
 
                                                     <br>
-                                                    <span class="type">Free text input</span>
+                                                    <span class="type">Free text input.</span>
+                                                    <ion-checkbox ng-model="step.stepTemplate.config.mandatory">
+                                                        Mandatory
+                                                    </ion-checkbox>
+
                                                 </div>
-
-                                                <ion-checkbox ng-model="step.stepTemplate.config.mandatory">
-                                                    Mandatory
-                                                </ion-checkbox>
-
                                             </div>
                                         </div>
                                     </li>
                                     <li ng-repeat-end
                                         ng-if="!step.new"
-                                        class="list-group-item add editor-step"
-                                        ng-click="vm.popoverNewStep(module._id, $index + 1)">
+                                        class="list-group-item editor-step">
+                                        <span class="step-add" ng-class="{'last':$last}"
+                                              ng-click="vm.popoverNewStep(module._id, $index + 1)">
+                                            <i class="icon ion-plus-round"></i></span>
                                         <div></div>
                                     </li>
                                 </ol>
-                                <hr>
+                                <hr style="clear: both;">
                             </div>
                         </div>
                     </form>

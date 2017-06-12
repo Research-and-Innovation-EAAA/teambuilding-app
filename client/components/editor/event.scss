@@ -195,12 +195,10 @@ input:focus ~ .editor-input-bar:after {
 
   .step-delete {
     border-radius: 50%;
-
     background-color: transparent;
     color: transparent;
     border: 3px solid transparent;
     line-height: 19px;
-
     font-weight: bold;
     display: inline-block;
     float: left;
@@ -210,12 +208,52 @@ input:focus ~ .editor-input-bar:after {
     text-align: center;
   }
 
-  .step-delete:hover{
+  .step-delete:hover {
     background-color: $balanced;
     color: $stable;
     border: 3px solid $balanced;
     cursor: pointer;
   }
+
+  .step-add {
+    border-radius: 50%;
+    background-color: transparent;
+    color: transparent;
+    border: 3px solid transparent;
+    line-height: 12px;
+    font-size: 12px;
+    display: inline-block;
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin-left: -30px;
+    margin-top: 2px;
+    text-align: center;
+  }
+
+  .step-add:hover, .step-add.last {
+    background-color: $energized;
+    color: $stable;
+    border: 3px solid $energized;
+    cursor: pointer;
+  }
+
+  .step-add.last {
+    line-height: 19px;
+    width: 25px;
+    height: 25px;
+    margin-left: -35px;
+  }
+
+  .question {
+    width: 40%;
+    cursor: pointer;
+  }
+
+  .question-open {
+    color: $positive;
+  }
+
 }
 
 .editor-steps {
@@ -243,13 +281,20 @@ input:focus ~ .editor-input-bar:after {
 }
 
 .editor-question {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #bbbbbb;
+  border-radius: 10px;
+
   .question {
     font-weight: bold;
 
     .editor-input-group {
       width: 100%;
       max-width: 800px;
-      text-overflow: ellipsis;
+      input {
+        text-overflow: ellipsis;
+      }
     }
   }
   .type {
@@ -259,12 +304,49 @@ input:focus ~ .editor-input-bar:after {
   .property {
     font-size: 0.9em;
     cursor: help;
+    float:right;
   }
-  .mandatory {
-    color: $balanced;
-    cursor: help;
+}
+
+@media (min-width: 768px) {
+  .editor-question {
+    width: 50%;
+    max-width: 600px;
+    left: 50%;
+    margin-top: -50px !important;
+    padding: 10px 20px 20px 20px;
+  }
+  .editor-question::after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: 100%; /* To the left of the tooltip */
+    margin-top: 25px;
+    border-width: 15px;
+    border-style: solid;
+    border-color: transparent #AAAAAA transparent transparent;
+
+  }
+}
+
+@media (max-width: 767px) {
+  .editor-question {
+    width: 90%;
+    left: 5%;
+    margin-top: 20px !important;
+    padding: 10px 20px 20px 20px;
   }
 
+  .editor-question::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%; /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -15px;
+    border-width: 15px;
+    border-style: solid;
+    border-color: transparent transparent #AAAAAA transparent;
+  }
 }
 
 .action-sheet .button {
@@ -335,28 +417,21 @@ input:focus ~ .editor-input-bar:after {
   }
 
   .list-group-item.question {
-    padding-bottom: 20px; // 5px; TODO back to 5px when add question enabled again
+    padding-bottom: 5px;
   }
 
   .list-group-item.question::before {
     content: counter(question-counter);
   }
 
-  .list-group-item.question:hover::before {
+  .list-group-item.question:hover::before, .list-group-item.question.open::before {
     background-color: $royal;
     color: white;
-    //border: none;
-    //line-height: 25px;
   }
 
   .list-group-item.add {
     margin-top: -10px;
     height: 50px;
-    //pointer-events: none;
-  }
-
-  .list-group-item.add::before {
-    //pointer-events: all;
   }
 
   .list-group-item.add:last-child::before {
@@ -391,6 +466,7 @@ input:focus ~ .editor-input-bar:after {
   .list-group-item > div {
     display: block;
     overflow: hidden;
+    padding-top: 2px;
   }
 }
 

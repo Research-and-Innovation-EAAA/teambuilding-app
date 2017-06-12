@@ -59,6 +59,17 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
 
     };
 
+    vm.showTooltipQuestion = null;
+
+    vm.showTooltip = (step) => {
+        if (vm.showTooltipQuestion == step)
+            vm.showTooltipQuestion = null;
+        else {
+            vm.showTooltipQuestion = step;
+        }
+    }
+
+
     vm.showQuestions = () => {
         vm.questionsShow = !vm.questionsShow;
         if (vm.questionsShow && vm.customModules.length == 1) {
@@ -177,6 +188,7 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
         }
 
         vm.recalculateStepNames(module);
+        vm.showTooltipQuestion = module.wizard.steps[number].stepName;
     };
 
     vm.removeStep = (moduleId, index) => {
