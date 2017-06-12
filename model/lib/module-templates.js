@@ -58,12 +58,12 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "q1",
+                    "stepName": "m1q2",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "Hvad var din generelle holdning til teambuilding før dagens forløb?",
-                            "propertyName": "q1",
+                            "propertyName": "m1q2",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
@@ -76,12 +76,12 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "q2",
+                    "stepName": "m1q3",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "I hvor høj grad har du lært nogle af dine kollegaer bedre at kende i dag?",
-                            "propertyName": "q2",
+                            "propertyName": "m1q3",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
@@ -94,12 +94,12 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "q3",
+                    "stepName": "m1q4",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "I hvor høj grad tror du, at du vil opleve et bedre samarbejde på din arbejdsplads efter dagens forløb?",
-                            "propertyName": "q3",
+                            "propertyName": "m1q4",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
@@ -112,12 +112,12 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "q4",
+                    "stepName": "m1q5",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "I hvor høj grad er du tilfreds med den måde I løste dagens udfordringer?",
-                            "propertyName": "q4",
+                            "propertyName": "m1q5",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
@@ -130,12 +130,12 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "q5",
+                    "stepName": "m1q6",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "I hvor høj grad kan dele af dagens aktiviteter overføres til udfordringer på din arbejdsplads?",
-                            "propertyName": "q5",
+                            "propertyName": "m1q6",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
@@ -148,12 +148,12 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "q6",
+                    "stepName": "m1q7",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "I hvor høj grad oplevede du i dag at der var en eller flere der tog ledelse?",
-                            "propertyName": "q6",
+                            "propertyName": "m1q7",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
@@ -166,12 +166,12 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "q7",
+                    "stepName": "m1q8",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "I hvor høj grad er du tilfreds med jeres engagement i dagens forløb?",
-                            "propertyName": "q7",
+                            "propertyName": "m1q8",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
@@ -184,12 +184,12 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "q8",
+                    "stepName": "m1q9",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "Hvordan er din holdning til jeres samarbejde i dag?",
-                            "propertyName": "q8",
+                            "propertyName": "m1q9",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
@@ -202,12 +202,12 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "q9",
+                    "stepName": "m1q10",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "Hvordan er din holdning til din egen indsats i dag?",
-                            "propertyName": "q9",
+                            "propertyName": "m1q10",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
@@ -220,12 +220,12 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "q10",
+                    "stepName": "m1q11",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "Efter dagens forløb hvad er din generelle vurdering af dagen?",
-                            "propertyName": "q10",
+                            "propertyName": "m1q11",
                             "minValue": 1,
                             "maxValue": 7,
                             "step": 1,
@@ -238,12 +238,12 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "qText",
+                    "stepName": "m1q12",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/text-input.html",
                         "config": {
                             "question": "Hvad har været det bedste ved dagens forløb og hvorfor?",
-                            "propertyName": "qText",
+                            "propertyName": "m1q12",
                             "mandatory": false
                         }
                     }
@@ -262,12 +262,12 @@ ModuleTemplates = {
         "wizard": {
             "steps": [
                 {
-                    "stepName": "Teamarbejde",
+                    "stepName": "m1q1",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "Arbejder du normalt alene eller i et team?",
-                            "propertyName": "aleneEllerTeam",
+                            "propertyName": ",m1q1",
                             "minValue": 1,
                             "maxValue": 5,
                             "step": 1,
@@ -280,11 +280,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "Jobprofil",
+                    "stepName": "m1q2",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "jobprofil",
+                            "propertyName": "m1q2",
                             "question": "Jobprofil",
                             "answers": [
                                 "Ledelsesansvar for mere end 5 personer",
@@ -297,12 +297,12 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "Holdning",
+                    "stepName": "m1q3",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "Hvad er din generelle holdning til teambuilding?",
-                            "propertyName": "fholdning",
+                            "propertyName": "m1q3",
                             "minValue": 1,
                             "maxValue": 5,
                             "step": 1,
@@ -315,11 +315,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f1",
+                    "stepName": "m1q4",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f1",
+                            "propertyName": "m1q4",
                             "question": "På din arbejdsplads er I åbne om jeres svagheder?",
                             "answers": [
                                 "Næsten aldrig",
@@ -334,11 +334,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f2",
+                    "stepName": "m1q5",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f2",
+                            "propertyName": "m1q5",
                             "question": "På din arbejdsplads er I gode til at give hinanden en undskyldning?",
                             "answers": [
                                 "Næsten aldrig",
@@ -353,11 +353,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f3",
+                    "stepName": "m1q6",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f3",
+                            "propertyName": "m1q6",
                             "question": "På din arbejdsplads er I åbne og oprigtige over for hinanden?",
                             "answers": [
                                 "Næsten aldrig",
@@ -372,11 +372,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f4",
+                    "stepName": "m1q7",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f4",
+                            "propertyName": "m1q7",
                             "question": "På din arbejdsplads hjælper I hinanden og søger input vedrørende hinandens arbejdsområder?",
                             "answers": [
                                 "Næsten aldrig",
@@ -391,11 +391,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f5",
+                    "stepName": "m1q8",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f5",
+                            "propertyName": "m1q8",
                             "question": "På din arbejdsplads fremfører folk deres meninger, også selvom det medfører risiko for uenighed?",
                             "answers": [
                                 "Næsten aldrig",
@@ -410,11 +410,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f6",
+                    "stepName": "m1q9",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f6",
+                            "propertyName": "m1q9",
                             "question": "Under møder bliver alle meninger og holdninger inddraget?",
                             "answers": [
                                 "Næsten aldrig",
@@ -429,11 +429,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f7",
+                    "stepName": "m1q10",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f7",
+                            "propertyName": "m1q10",
                             "question": "Når der opstår en konflikt i afdelingen, håndteres den med det samme.",
                             "answers": [
                                 "Næsten aldrig",
@@ -448,11 +448,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f8",
+                    "stepName": "m1q11",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f8",
+                            "propertyName": "m1q11",
                             "question": "På team/afdelingsmøder diskuteres de vigtigste og vanskelige problemstillinger.",
                             "answers": [
                                 "Næsten aldrig",
@@ -467,11 +467,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f9",
+                    "stepName": "m1q12",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f9",
+                            "propertyName": "m1q12",
                             "question": "Min afdeling/teamet er klar over vores overordnede retning og prioriteter.",
                             "answers": [
                                 "Næsten aldrig",
@@ -486,11 +486,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f10",
+                    "stepName": "m1q13",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f10",
+                            "propertyName": "m1q13",
                             "question": "Afdelings/teammøder afslutter diskussioner med klare og specifikke løsninger og handlingspunkter.",
                             "answers": [
                                 "Næsten aldrig",
@@ -505,11 +505,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f11",
+                    "stepName": "m1q14",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f11",
+                            "propertyName": "m1q14",
                             "question": "Efter møder forlader alle møderne fulde af tillid og alle bakker op om de beslutninger der er truffet.",
                             "answers": [
                                 "Næsten aldrig",
@@ -524,11 +524,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f12",
+                    "stepName": "m1q15",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f12",
+                            "propertyName": "m1q15",
                             "question": "Folk i min afdeling bakker op om de trufne beslutninger, også selvom de ikke er enige som udgangspunkt.",
                             "answers": [
                                 "Næsten aldrig",
@@ -543,11 +543,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f13",
+                    "stepName": "m1q16",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f13",
+                            "propertyName": "m1q16",
                             "question": "På min arbejdsplads giver vi hinanden spontan, konstruktiv feedback.",
                             "answers": [
                                 "Næsten aldrig",
@@ -562,11 +562,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f14",
+                    "stepName": "m1q17",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f14",
+                            "propertyName": "m1q17",
                             "question": "Vi sikrer, at alle føler et pres og at der er en forventning om at alle præsterer.",
                             "answers": [
                                 "Næsten aldrig",
@@ -581,11 +581,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f15",
+                    "stepName": "m1q18",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f15",
+                            "propertyName": "m1q18",
                             "question": "Vi konfronterer kollegaer med problemer inden for deres respektive ansvarsområder.",
                             "answers": [
                                 "Næsten aldrig",
@@ -600,11 +600,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f16",
+                    "stepName": "m1q19",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f16",
+                            "propertyName": "m1q19",
                             "question": "Kollegaerne stiller spørgsmål til hinanden om deres aktuelle tilgang og metoder.",
                             "answers": [
                                 "Næsten aldrig",
@@ -619,11 +619,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f17",
+                    "stepName": "m1q20",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f17",
+                            "propertyName": "m1q20",
                             "question": "Teamet/arbejdsgruppen sætter teamets succes over individuelle præsentationer.",
                             "answers": [
                                 "Næsten aldrig",
@@ -638,11 +638,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f18",
+                    "stepName": "m1q21",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f18",
+                            "propertyName": "m1q21",
                             "question": "Vi er villige til at bringe ofre på egne områder for teamets/afdelings skyld.",
                             "answers": [
                                 "Næsten aldrig",
@@ -657,11 +657,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f19",
+                    "stepName": "m1q22",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f19",
+                            "propertyName": "m1q22",
                             "question": "Hvis vi ikke når vores fælles mål, tager alle et personligt ansvar for at forbedre afdelingens/teamets præsentationer.",
                             "answers": [
                                 "Næsten aldrig",
@@ -676,11 +676,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "f20",
+                    "stepName": "m1q23",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "f20",
+                            "propertyName": "m1q23",
                             "question": "Vi er hurtige til at fremhæve andres bidrag og præsentationer.",
                             "answers": [
                                 "Næsten aldrig",
@@ -707,12 +707,12 @@ ModuleTemplates = {
         "wizard": {
             "steps": [
                 {
-                    "stepName": "Holdning",
+                    "stepName": "m2q1",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "Hvad er din generelle holdning til teambuilding?",
-                            "propertyName": "uholdning",
+                            "propertyName": "m2q1",
                             "minValue": 1,
                             "maxValue": 5,
                             "defaultValue": 3,
@@ -725,11 +725,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "u1",
+                    "stepName": "m2q2",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "u1",
+                            "propertyName": "m2q2",
                             "question": "Teammedlemmerne var åbne og oprigtige over for hinanden.",
                             "answers": [
                                 "Næsten aldrig",
@@ -744,11 +744,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "u2",
+                    "stepName": "m2q3",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "u2",
+                            "propertyName": "m2q3",
                             "question": "Teammedlemmerne indrømmede deres svagheder over for teamet.",
                             "answers": [
                                 "Næsten aldrig",
@@ -763,11 +763,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "u3",
+                    "stepName": "m2q4",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "u3",
+                            "propertyName": "m2q4",
                             "question": "Når der opstod konflikt, håndterede teamet dem med det samme, før teamet gik videre til næste aktivitet.",
                             "answers": [
                                 "Næsten aldrig",
@@ -782,11 +782,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "u4",
+                    "stepName": "m2q5",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "u4",
+                            "propertyName": "m2q5",
                             "question": "Teammedlemmerne spurgte ind til de andres holdninger og meninger under aktiviteterne.",
                             "answers": [
                                 "Næsten aldrig",
@@ -801,11 +801,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "u5",
+                    "stepName": "m2q6",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "u5",
+                            "propertyName": "m2q6",
                             "question": "Teamet afslutter diskussioner med klare og specifikke løsninger og handlingspunkter.",
                             "answers": [
                                 "Næsten aldrig",
@@ -820,11 +820,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "u6",
+                    "stepName": "m2q7",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "u6",
+                            "propertyName": "m2q7",
                             "question": "Alle bakkede op om teamets beslutning, også selvom de ikke var 100% enig.",
                             "answers": [
                                 "Næsten aldrig",
@@ -839,11 +839,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "u7",
+                    "stepName": "m2q8",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "u7",
+                            "propertyName": "m2q8",
                             "question": "Alle oplevede et pres fra teamet og der var en forventning om at alle præsenterede.",
                             "answers": [
                                 "Næsten aldrig",
@@ -858,11 +858,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "u8",
+                    "stepName": "m2q9",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "u8",
+                            "propertyName": "m2q9",
                             "question": "Alle gav hinanden spontan og konstruktiv feedback.",
                             "answers": [
                                 "Næsten aldrig",
@@ -877,11 +877,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "u9",
+                    "stepName": "m2q10",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "u9",
+                            "propertyName": "m2q10",
                             "question": "Teammedlemmerne var villige til at bringe ofre på egne områder for teamets skyld.",
                             "answers": [
                                 "Næsten aldrig",
@@ -896,11 +896,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "u10",
+                    "stepName": "m2q11",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "u10",
+                            "propertyName": "m2q11",
                             "question": "Hvis teamet ikke kunne nå de fælles mål, tog det enkelte teammedlem personligt ansvar for at forbedre teamets præsentation.",
                             "answers": [
                                 "Næsten aldrig",
@@ -927,12 +927,12 @@ ModuleTemplates = {
         "wizard": {
             "steps": [
                 {
-                    "stepName": "Holdning",
+                    "stepName": "m3q1",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/slider.html",
                         "config": {
                             "question": "Hvad er din generelle holdning til teambuilding?",
-                            "propertyName": "eholdning",
+                            "propertyName": "m3q1",
                             "minValue": 1,
                             "maxValue": 5,
                             "step": 1,
@@ -945,11 +945,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e1",
+                    "stepName": "m3q2",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e1",
+                            "propertyName": "m3q2",
                             "question": "På din arbejdsplads er I åbne om jeres svagheder?",
                             "answers": [
                                 "Næsten aldrig",
@@ -964,11 +964,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e2",
+                    "stepName": "m3q3",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e2",
+                            "propertyName": "m3q3",
                             "question": "På din arbejdsplads er I gode til at give hinanden en undskyldning?",
                             "answers": [
                                 "Næsten aldrig",
@@ -983,11 +983,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e3",
+                    "stepName": "m3q4",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e3",
+                            "propertyName": "m3q4",
                             "question": "På din arbejdsplads er I åbne og oprigtige over for hinanden?",
                             "answers": [
                                 "Næsten aldrig",
@@ -1002,11 +1002,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e4",
+                    "stepName": "m3q5",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e4",
+                            "propertyName": "m3q5",
                             "question": "På din arbejdsplads hjælper I hinanden og søger input vedrørende hinandens arbejdsområder?",
                             "answers": [
                                 "Næsten aldrig",
@@ -1021,11 +1021,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e5",
+                    "stepName": "m3q6",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e5",
+                            "propertyName": "m3q6",
                             "question": "På din arbejdsplads fremfører folk deres meninger, også selvom det medfører risiko for uenighed?",
                             "answers": [
                                 "Næsten aldrig",
@@ -1040,11 +1040,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e6",
+                    "stepName": "m3q7",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e6",
+                            "propertyName": "m3q7",
                             "question": "Under møder bliver alle meninger og holdninger inddraget?",
                             "answers": [
                                 "Næsten aldrig",
@@ -1059,11 +1059,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e7",
+                    "stepName": "m3q8",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e7",
+                            "propertyName": "m3q8",
                             "question": "Når der opstår en konflikt i afdelingen, håndteres den med det samme.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1078,11 +1078,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e8",
+                    "stepName": "m3q9",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e8",
+                            "propertyName": "m3q9",
                             "question": "På team/afdelingsmøder diskuteres de vigtigste og vanskelige problemstillinger.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1097,11 +1097,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e9",
+                    "stepName": "m3q10",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e9",
+                            "propertyName": "m3q10",
                             "question": "Min afdeling/teamet er klar over vores overordnede retning og prioriteter.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1116,11 +1116,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e10",
+                    "stepName": "m3q11",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e10",
+                            "propertyName": "m3q11",
                             "question": "Afdelings/teammøder afslutter diskussioner med klare og specifikke løsninger og handlingspunkter.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1135,11 +1135,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e11",
+                    "stepName": "m3q12",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e11",
+                            "propertyName": "m3q12",
                             "question": "Efter møder forlader alle møderne fulde af tillid og alle bakker op om de beslutninger der er truffet.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1154,11 +1154,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e12",
+                    "stepName": "m3q13",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e12",
+                            "propertyName": "m3q13",
                             "question": "Folk i min afdeling bakker op om de trufne beslutninger, også selvom de ikke er enige som udgangspunkt.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1173,11 +1173,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e13",
+                    "stepName": "m3q14",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e13",
+                            "propertyName": "m3q14",
                             "question": "På min arbejdsplads giver vi hinanden spontan, konstruktiv feedback.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1192,11 +1192,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e14",
+                    "stepName": "m3q15",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e14",
+                            "propertyName": "m3q15",
                             "question": "Vi sikrer, at alle føler et pres og at der er en forventning om at alle præsterer.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1211,11 +1211,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e15",
+                    "stepName": "m3q16",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e15",
+                            "propertyName": "m3q16",
                             "question": "Vi konfronterer kollegaer med problemer inden for deres respektive ansvarsområder.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1230,11 +1230,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e16",
+                    "stepName": "m3q17",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e16",
+                            "propertyName": "m3q17",
                             "question": "Kollegaerne stiller spørgsmål til hinanden om deres aktuelle tilgang og metoder.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1249,11 +1249,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e17",
+                    "stepName": "m3q18",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e17",
+                            "propertyName": "m3q18",
                             "question": "Teamet/arbejdsgruppen sætter teamets succes over individuelle præsentationer.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1268,11 +1268,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e18",
+                    "stepName": "m3q19",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e18",
+                            "propertyName": "m3q19",
                             "question": "Vi er villige til at bringe ofre på egne områder for teamets/afdelings skyld.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1287,11 +1287,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e19",
+                    "stepName": "m3q20",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e19",
+                            "propertyName": "m3q20",
                             "question": "Hvis vi ikke når vores fælles mål, tager alle et personligt ansvar for at forbedre afdelingens/teamets præsentationer.",
                             "answers": [
                                 "Næsten aldrig",
@@ -1306,11 +1306,11 @@ ModuleTemplates = {
                     }
                 },
                 {
-                    "stepName": "e20",
+                    "stepName": "m3q21",
                     "stepTemplate": {
                         "url": "client/components/wizard/templates/single-question.html",
                         "config": {
-                            "propertyName": "e20",
+                            "propertyName": "m3q21",
                             "question": "Vi er hurtige til at fremhæve andres bidrag og præsentationer.",
                             "answers": [
                                 "Næsten aldrig",
