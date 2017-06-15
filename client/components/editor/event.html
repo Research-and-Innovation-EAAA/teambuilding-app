@@ -234,7 +234,7 @@
                 <button class="button button-royal" ng-click="vm.showQuestions()"
                         ng-show="vm.pageTitle == 'Edit event'">
                     <span ng-show="vm.questionsShow">Hide questions</span>
-                    <span ng-show="!vm.questionsShow">Show questions</span>
+                    <span ng-show="!vm.questionsShow">Edit questions</span>
                 </button>
                 <button class="button button-royal button-outline button-print" onclick="window.print()"
                         ng-show="vm.questionsShow">
@@ -355,19 +355,20 @@
 
                                                     <ul>
                                                         <li ng-repeat="answer in step.stepTemplate.config.answers track by $index">
-                                                        <span class="editor-input-group">
-                                                            <input type="text"
-                                                                   ng-model="step.stepTemplate.config.answers[$index]"
-                                                                   placeholder="Answer" class="editor-input"
-                                                                   required="required">
-                                                            <div class="editor-input-bar"></div>
-                                                        </span>
-                                                            <a ng-click="vm.deleteAnswer(module._id, step.stepName, $index)"><i
-                                                                    class="icon ion-close-round"></i></a>
+                                                            <span class="editor-input-group">
+                                                                <input type="text"
+                                                                       ng-model="step.stepTemplate.config.answers[$index]"
+                                                                       placeholder="Answer" class="editor-input"
+                                                                       required="required">
+                                                                <div class="editor-input-bar"></div>
+                                                            </span>
+                                                            <a ng-click="vm.deleteAnswer(module._id, step.stepName, $index)">
+                                                                <i class="icon ion-close-round cursor-pointer"></i>
+                                                            </a>
                                                         </li>
                                                         <li>
                                                             <a ng-click="vm.addAnswer(module._id, step.stepName)">
-                                                                <i class="icon ion-plus-round"></i>
+                                                                <i class="icon ion-plus-round cursor-pointer"></i>
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -447,8 +448,11 @@
                                             </div>
                                         </div>
                                     </li>
+                                    <li ng-if="$last"
+                                        class="list-group-item editor-step">
+                                        <div></div>
+                                    </li>
                                     <li ng-repeat-end
-                                        ng-if="!step.new"
                                         class="list-group-item editor-step">
                                         <span class="step-add" ng-class="{'last':$last}"
                                               ng-click="vm.popoverNewStep(module._id, $index + 1)">

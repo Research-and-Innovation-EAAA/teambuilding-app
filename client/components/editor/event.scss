@@ -220,8 +220,8 @@ input:focus ~ .editor-input-bar:after {
     background-color: transparent;
     color: transparent;
     border: 3px solid transparent;
-    line-height: 12px;
-    font-size: 12px;
+    line-height: 10px;
+    font-size: 10px;
     display: inline-block;
     float: left;
     width: 15px;
@@ -240,6 +240,7 @@ input:focus ~ .editor-input-bar:after {
 
   .step-add.last {
     line-height: 19px;
+    font-size: 15px;
     width: 25px;
     height: 25px;
     margin-left: -35px;
@@ -284,7 +285,7 @@ input:focus ~ .editor-input-bar:after {
   position: absolute;
   background-color: white;
   border: 1px solid #bbbbbb;
-  border-radius: 10px;
+  border-radius: 4px;
 
   .question {
     font-weight: bold;
@@ -305,6 +306,10 @@ input:focus ~ .editor-input-bar:after {
     font-size: 0.9em;
     cursor: help;
     float:right;
+  }
+
+  .cursor-pointer{
+    cursor: pointer;
   }
 }
 

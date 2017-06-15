@@ -90,7 +90,6 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
         var step = _.findWhere(module.wizard.steps, {stepName: stepName});
         if (step.stepTemplate.url === 'client/components/wizard/templates/single-question.html') {
             var answers = step.stepTemplate.config.answers;
-            console.log("answers" + answers);
             answers.push("");
         }
         else {
@@ -140,12 +139,12 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
         console.log("found module " + JSON.stringify(module));
 
         if (type === 'Single question') {
-            module.wizard.steps[number] = {
-                "stepName": "Quiz question #1",
+            module.wizard.steps.splice(number, 0, {
+                "stepName": "nameX",
                 "stepTemplate": {
                     "url": "client/components/wizard/templates/single-question.html",
                     "config": {
-                        "propertyName": "qwwwww1",
+                        "propertyName": "nameX",
                         "question": "",
                         "answers": [
                             "aa",
@@ -154,37 +153,38 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
                         "mandatory": true
                     }
                 }
-            };
+            });
         }
         else if (type === 'Slider') {
-            module.wizard.steps[number] = {
-                "stepName": "Bilka",
+            module.wizard.steps.splice(number, 0, {
+                "stepName": "nameX",
                 "stepTemplate": {
                     "url": "client/components/wizard/templates/slider.html",
                     "config": {
                         "question": "",
-                        "propertyName": "cowBilkaAge",
+                        "propertyName": "nameX",
                         "minValue": 0,
                         "maxValue": 10,
+                        "defaultValue" : 0,
                         "step": 1,
                         "mandatory": true,
                         "smiley": true
                     }
                 }
-            };
+            });
         }
         else if (type === 'Free text input') {
-            module.wizard.steps[number] = {
-                "stepName": "TextInput",
+            module.wizard.steps.splice(number, 0, {
+                "stepName": "nameX",
                 "stepTemplate": {
                     "url": "client/components/wizard/templates/text-input.html",
                     "config": {
                         "question": "",
-                        "propertyName": "qText",
+                        "propertyName": "nameX",
                         "mandatory": true
                     }
                 }
-            };
+            });
         }
 
         vm.recalculateStepNames(module);
@@ -195,10 +195,18 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
         var module = _.findWhere(vm.customModules, {_id: moduleId});
         console.log("found module " + JSON.stringify(module));
 
-        if (confirm("Do you really want to delete step #" + (index + 1) + "?")) {
-            module.wizard.steps.splice(index, 1);
-            vm.recalculateStepNames(module);
-        }
+        $ionicPopup.confirm({
+            title: 'Delete step',
+            template: "Do you really want to delete step #" + (index + 1) + "?"
+        }).then(function (res) {
+            if (res) {
+                module.wizard.steps.splice(index, 1);
+                vm.recalculateStepNames(module);
+            } else {
+                console.log('Deleting of step #' + (index + 1) + ' cancelled');
+            }
+        });
+
     };
 
     vm.recalculateStepNames = (module) => {
