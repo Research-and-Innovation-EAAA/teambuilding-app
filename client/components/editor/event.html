@@ -236,10 +236,6 @@
                     <span ng-show="vm.questionsShow">Hide questions</span>
                     <span ng-show="!vm.questionsShow">Edit questions</span>
                 </button>
-                <button class="button button-royal button-outline button-print" onclick="window.print()"
-                        ng-show="vm.questionsShow">
-                    <i class="icon ion-printer"></i> Print questions
-                </button>
                 <div class="editor-questions" ng-show="vm.questionsShow">
                     <form class="editor-form">
                         <div ng-repeat="module in vm.customModules track by module._id" class="editor-module">
