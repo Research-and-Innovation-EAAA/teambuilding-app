@@ -109,12 +109,12 @@ function config($translateProvider) {
         events: 'Events',
         login: 'Log ind',
         logout: 'Log ud',
-        eventCode: 'Event kode',
-        enter: 'Gå ind', //TODO !!!!!!!!!!
+        eventCode: 'Eventkode',
+        enter: 'Gå ind',
         email: 'E-mail',
         password: 'Kodeord',
         error: 'Fejl!',
-        errorLoginPwd: 'Denne e-mailaddrese er allerede i brug, men kodeordet passer ikke.', //TODO check!!!!
+        errorLoginPwd: 'Kodeordet passer ikke.',
         errorLoginNewUser: 'Kunne ikke oprette en ny bruger. Tjek internetforbindelsen og prøv venligst igen.',
         errorLoginAllFields: 'Udfyld venligst begge felter.',
         errorNoEventFound: 'Ingen event fundet!',
@@ -126,7 +126,7 @@ function config($translateProvider) {
         bring: 'Medbring',
         moreInfo: 'Flere oplysninger',
         startQuestionnaire: 'Start spørgeskema',
-        hereWillBeQuestionnaire: 'Her vil du senere finde et spørgeskema', //TODO check!!
+        hereWillBeQuestionnaire: 'Her vil du senere finde et spørgeskema',
         thanksAll: 'Tak for al din feedback!',
         thanksToday: 'Tak for i dag! Håber det har været en dejlig dag :-)',
         seeYouLaterAt: 'Vi ses senere efter kl. {{time}}!',
