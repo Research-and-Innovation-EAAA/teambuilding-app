@@ -86,11 +86,6 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
         });
     });
 
-
-    /*    Accounts.ui.config({
-     passwordSignupFields: "USERNAME_ONLY"
-     });*/
-
     $scope.$on('$ionicView.enter', function () {
         $timeout(function () {
             $ionicNavBarDelegate.align('center');
@@ -182,8 +177,6 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
     $scope.$on('modal.hidden', function () {
         console.log('activeModules at modal.hidden', vm.modules);
         refreshModules();
-        //$ionicScrollDelegate.$getByHandle('front-page-scroll').resize();
-        //$ionicScrollDelegate.$getByHandle('front-page-scroll').scrollTop();
     });
     // Execute action on remove modal
     $scope.$on('modal.removed', function () {

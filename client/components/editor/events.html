@@ -21,28 +21,9 @@
         <div class="list">
 
             <div ng-repeat="event in vm.events" class="item item-button-right">
-<!--                <div class="col">
-                    -->
 
                 <strong>{{ event.name }}</strong> <span class="eventPassword">({{event.password}})</span>
 
-                <!--
-                    </div>
-                <div class="col">
-                    {{ event.shortEvent }}
-                </div>
-                <div class="col">
-                <span ng-hide="vm.event.startDate == vm.event.endDate">
-                                        {{vm.event.startDate | date:"d. M."}} &ndash;</span>
-                    {{vm.event.endDate | date:"d. M. yyyy"}}
-                </div>
-                <div class="col">
-                    {{event.password}}
-                </div>
-
-                <div class="col">
-                    {{event.meetingPoint}}
-                </div>-->
                 <button class="button button-positive" ng-click="vm.openModal(event._id)">
                     <i class="icon ion-edit"></i>
                 </button>

@@ -283,7 +283,6 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
         }
 
 
-        console.log('modal is shown!');
     });
 
 
