@@ -1,32 +1,17 @@
 # Teambuilding feedback app #
 
 ## Synopsis
-
-Mobile app to register decease and treatment symptoms experienced. The app is used by patients and they can give doctors access to the data in the online and realtime database.
+Mobile app to gather data from teambuilding attenders using adjustable questionnaires.
 
 ## Motivation
-
-The app is invented during a common research project that is carried out by Business Academy Aarhus and Aarhus University.
+The app is invented during a research project that is carried out by Business Academy Aarhus, http://www.baaa.dk/.
 
 ## Installation
-
 Download and run the app inside the Meteor development framework.
 
 ## API Reference
-
 Data is stored in a Mongo database, https://www.mongodb.com/
-Application interface is establised by the Meteor framework, https://www.meteor.com/
-
-## Contributors
-
-Contribution is welcome. You are free to use the existing code and/or improve it. Fork the repository and make pull request to release your changes to the repository.
-
-### Contact ###
-
-For more info contact:
-* Morten Mathiasen, Associate professor @ Business Academy Aarhus
-* Torben Stamm Mikkelsen, Oncology doctor @ Aarhus University Hospital
+Application interface is established by the Meteor framework, https://www.meteor.com/
 
 ## License
-
 See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).

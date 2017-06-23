@@ -118,7 +118,7 @@ function config($translateProvider) {
         errorLoginNewUser: 'Kunne ikke oprette en ny bruger. Tjek internetforbindelsen og prøv venligst igen.',
         errorLoginAllFields: 'Udfyld venligst begge felter.',
         errorNoEventFound: 'Ingen event fundet!',
-        errorEventCode: 'Ukorrekt event kode. Prøv venligst igen.',
+        errorEventCode: 'Ukorrekt eventkode. Prøv venligst igen.',
 
         date: 'Dato',
         meetingPoint: 'Mødested',
