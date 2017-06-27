@@ -17,9 +17,7 @@ App.icons({
     'android_ldpi': 'resources/android/icon/ldpi.png',
     'android_mdpi': 'resources/android/icon/mdpi.png',
     'android_hdpi': 'resources/android/icon/hdpi.png',
-    'android_xhdpi': 'resources/android/icon/xhdpi.png',
-    'android_xxhdpi': 'resources/android/icon/xxhdpi.png',
-    'android_xxxhdpi': 'resources/android/icon/xxxhdpi.png'
+    'android_xhdpi': 'resources/android/icon/xhdpi.png'
 });
 App.launchScreens({
     'iphone': 'resources/ios/splash/Default~iphone.png',
@@ -39,9 +37,5 @@ App.launchScreens({
     'android_hdpi_portrait': 'resources/android/splash/drawable-port-hdpi.png',
     'android_hdpi_landscape': 'resources/android/splash/drawable-land-hdpi.png',
     'android_xhdpi_portrait': 'resources/android/splash/drawable-port-xhdpi.png',
-    'android_xhdpi_landscape': 'resources/android/splash/drawable-land-xhdpi.png',
-    'android_xxhdpi_portrait': 'resources/android/splash/drawable-port-xxhdpi.png',
-    'android_xxhdpi_landscape': 'resources/android/splash/drawable-land-xxhdpi.png',
-    'android_xxxhdpi_portrait': 'resources/android/splash/drawable-port-xxxhdpi.png',
-    'android_xxxhdpi_landscape': 'resources/android/splash/drawable-land-xxxhdpi.png'
+    'android_xhdpi_landscape': 'resources/android/splash/drawable-land-xhdpi.png'
 });
