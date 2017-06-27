@@ -26,6 +26,10 @@ function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegat
         });
     });
 
+    vm.change = function()  {
+        console.log("Change Event: '"+vm.eventPassword+"'");
+    }
+
     vm.myPopup;
     vm.closePopup = function () {
         console.log("CLOSE IT PLS");
@@ -35,7 +39,8 @@ function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegat
 
     vm.showEvent = function () {
         var event = _.where(vm.events, {password: vm.eventPassword})[0];
-        console.log(event);
+        console.log("NoOfEvents: "+Events.find().count());
+        console.log("Event: '"+vm.eventPassword+"'");
 
         if (event != null) {
             Session.set('eventId', event._id);
