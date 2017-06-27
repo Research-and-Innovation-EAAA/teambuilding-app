@@ -91,20 +91,20 @@ Meteor.methods({
 // Initialise default events
 Meteor.startup(() => {
     // console.log('Meteor startup called');
-    Meteor.setTimeout(function () {
-        if (!Events.findOne({})) {
-            var testEvent = {
-                name: "Test Teambuilding",
-                startDate: "2017-02-17",
-                endDate: "2017-02-17",
-                password: "cactus",
-                program: "12:00 start, 14:00 slut",
-                otherInfo: "Meeting in front of the school."
-            };
-            Events.insert(testEvent);
-            if (Meteor.isServer) {
+    if (Meteor.isServer) {
+        Meteor.setTimeout(function () {
+            if (!Events.findOne({})) {
+                var testEvent = {
+                    name: "Test Teambuilding",
+                    startDate: "2017-02-17",
+                    endDate: "2017-02-17",
+                    password: "cactus",
+                    program: "12:00 start, 14:00 slut",
+                    otherInfo: "Meeting in front of the school."
+                };
+                Events.insert(testEvent);
                 Events._ensureIndex({"createdBy": 1});
             }
-        }
-    }, 10000);
+        }, 10000);
+    }
 });
