@@ -17,7 +17,7 @@ Application interface is established by the Meteor framework, https://www.meteor
 See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
 
 ## Deploy
-DEPLOY_HOSTNAME=eu-west-1.galaxy-deploy.meteor.com meteor deploy --settings settings.json https://teambuilding-app.meteorapp.com
+DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings-galaxy.json https://teambuilding-app.meteorapp.com
 
 ## Build mobile apps
 rm -Rf ~/tmp/teambuilding/* ; meteor build ~/tmp/teambuilding --server https://teambuilding-app.meteorapp.com:443 --debug
