@@ -5,6 +5,7 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
     var vm = this;
 
     vm.event = Session.get('event');
+    vm.currentDate = Date.now();
 
     function getModules() {
         // get IDs of modules from completed registrations of a particular user

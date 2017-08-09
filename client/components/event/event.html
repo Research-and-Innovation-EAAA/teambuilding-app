@@ -134,9 +134,10 @@
                         <i class="twocol-left icon ion-ios-calendar-outline padding-right"></i>
                         <div class="twocol-right">
                             <h3>{{'date' | translate}}:</h3>
-                            <span ng-hide="vm.event.startDate == vm.event.endDate">
+                            <!-- <span ng-hide="vm.event.startDate == vm.event.endDate">
                                         {{vm.event.startDate | date:"d. M."}} &ndash;</span>
-                            {{vm.event.endDate | date:"d. M. yyyy"}}
+                            {{vm.event.endDate | date:"d. M. yyyy"}} -->
+                            {{ vm.currentDate | date:"d. M. yyyy" }}
                         </div>
                     </div>
                 </div>
