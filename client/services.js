@@ -10,7 +10,7 @@ angular.module('leukemiapp')
             var result = Session.get(service.KEYS_STRING);
             if (typeof result != 'object') {
                 result = {};
-                Session.set(Service.KEYS_STRING, result);
+                Session.set(service.KEYS_STRING, result);
             }
             return result;
         };
