@@ -1,10 +1,10 @@
 angular.module('leukemiapp').controller('painScaleSliderController', painScaleSliderController);
 
-function painScaleSliderController($scope, $reactive, WizardHandler, WizardState, WizardStateAccessor) {
+function painScaleSliderController($scope, $reactive, WizardHandler, WizardState, WizardStateAccessor, SessionSetting) {
    $reactive(this).attach($scope);
    var vm = this;
 
-   vm.dataType = Session.get('registrationType');
+   vm.dataType = SessionSetting.getValue('registrationType');
    var stepNumber = WizardHandler.wizard().currentStepNumber();
    WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
 

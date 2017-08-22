@@ -7,7 +7,7 @@ angular.module('leukemiapp').directive('calendarDate', function () {
    }
 });
 
-function CalendarDateController($scope, $reactive, $translate) {
+function CalendarDateController($scope, $reactive, $translate, SessionSetting) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -16,13 +16,13 @@ function CalendarDateController($scope, $reactive, $translate) {
 
    vm.helpers({
       selectedDate: () => {
-         return moment(Session.get('selectedDate')).date();
+         return moment(SessionSetting.getValue('selectedDate')).date();
       },
       selectedDayOfWeek: () => {
-         return dayOfWeekNames[moment(Session.get('selectedDate')).day()];
+         return dayOfWeekNames[moment(SessionSetting.getValue('selectedDate')).day()];
       },
       selectedMonth: () => {
-         return monthNames[moment(Session.get('selectedDate')).month()];
+         return monthNames[moment(SessionSetting.getValue('selectedDate')).month()];
       }
    });
 }

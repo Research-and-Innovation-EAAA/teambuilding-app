@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('editorController', EditorController);
 
-function EditorController($scope, $rootScope, $reactive, $ionicModal, $ionicNavBarDelegate, $location, $timeout) {
+function EditorController($scope, $rootScope, $reactive, $ionicModal, $ionicNavBarDelegate, $location, $timeout, SessionSetting) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -46,18 +46,14 @@ function EditorController($scope, $rootScope, $reactive, $ionicModal, $ionicNavB
 
     vm.backToLogout = function () {
         Meteor.logout(function () {
-            Object.keys(Session.keys).forEach(function (key) {
-                Session.set(key, undefined);
-            });
-            Session.keys = {};
-
+            SessionSetting.clearAllValues();
             $location.path("app/login");
         });
     };
 
     vm.backToEvents = function () {
-        Session.set('eventId', null);
-        Session.set('event', null);
+        SessionSetting.setValue('eventId', null);
+        SessionSetting.setValue('event', null);
 
         $location.path("app/eventselect");
     };
@@ -73,8 +69,8 @@ function EditorController($scope, $rootScope, $reactive, $ionicModal, $ionicNavB
                     var type = "", title = "";
 
                     if (toState.url == "/questionwizard") {
-                        type = Session.get('registrationType');
-                        title = Session.get('registrationType');
+                        type = SessionSetting.getValue('registrationType');
+                        title = SessionSetting.getValue('registrationType');
                     }
                     else {
                         title = "How-R-you";
@@ -94,7 +90,7 @@ function EditorController($scope, $rootScope, $reactive, $ionicModal, $ionicNavB
 
     vm.openModal = function (eventId) {
         console.log("OPEN MODAL CALLED: " + eventId);
-        Session.set('eventId', eventId);
+        SessionSetting.setValue('eventId', eventId);
 
         $location.path("app/editevent");
     };

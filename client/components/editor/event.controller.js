@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('eventEditorController', EventEditorController);
 
-function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ionicActionSheet) {
+function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ionicActionSheet, SessionSetting) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -222,17 +222,17 @@ function EventEditorController($scope, $rootScope, $reactive, $ionicPopup, $ioni
     };
 
     $scope.$on('$ionicView.beforeEnter', function () {
-        if (Session.get('eventId')) {
+        if (SessionSetting.getValue('eventId')) {
             vm.pageTitle = "Edit event";
         }
         else {
             vm.pageTitle = "Add event";
         }
 
-        console.log("EVENT ID: " + Session.get('eventId') + " " + vm.pageTitle);
+        console.log("EVENT ID: " + SessionSetting.getValue('eventId') + " " + vm.pageTitle);
 
         vm.questionsShow = false;
-        vm.event = Events.findOne({'_id': Session.get('eventId')});
+        vm.event = Events.findOne({'_id': SessionSetting.getValue('eventId')});
 
         if (vm.event !== undefined) {
             if (vm.event.startDate !== undefined) {

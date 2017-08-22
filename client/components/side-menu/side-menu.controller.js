@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('pdfController', PdfViewerController);
 
-function PdfViewerController($scope, $reactive, $location) {
+function PdfViewerController($scope, $reactive, $location, SessionSetting) {
    $reactive(this).attach($scope);
    var vm = this;
 

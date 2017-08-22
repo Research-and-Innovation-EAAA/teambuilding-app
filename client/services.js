@@ -1,8 +1,46 @@
 angular.module('leukemiapp')
 
-    .factory('ModuleManagementService', function () {
+    .factory('SessionSetting', function () {
 
         var service = {};
+
+        service.KEYS_STRING = "keys";
+
+        service.getKeyValueObj = function() {
+            var result = Session.get(service.KEYS_STRING);
+            if (typeof result != 'object') {
+                result = {};
+                Session.set(Service.KEYS_STRING, result);
+            }
+            return result;
+        };
+
+        service.setKeyValueObj = function(keys) {
+            Session.set(service.KEYS_STRING, keys);
+        };
+
+        service.setValue = function (key, value) {
+            var keys = service.getKeyValueObj();
+            keys[key] = value;
+            service.setKeyValueObj(keys);
+        };
+
+        service.getValue = function(key) {
+            var keys = service.getKeyValueObj();
+            return keys[key];
+        }
+
+        service.clearAllValues = function () {
+            service.setKeyValueObj({});
+        }
+
+        return service;
+
+    })
+
+    .factory('ModuleManagementService', function () {
+
+            var service = {};
 
         service.activeModules = [];
         service.modules = {};

@@ -1,11 +1,11 @@
 angular.module('leukemiapp').controller('multipleQuestionsController', multipleQuestionsController);
 
-function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScrollDelegate, WizardState, WizardStateAccessor) {
+function multipleQuestionsController($scope, $reactive, WizardHandler, $ionicScrollDelegate, WizardState, WizardStateAccessor, SessionSetting) {
     $reactive(this).attach($scope);
     var vm = this;
 
     vm.config = {};
-    vm.dataType = Session.get('registrationType');
+    vm.dataType = SessionSetting.getValue('registrationType');
 
     $scope.$watch(
         function stepNumber(scope) {

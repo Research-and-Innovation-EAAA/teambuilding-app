@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('sliderController', sliderController);
 
-function sliderController($scope, $reactive, WizardHandler, WizardState, WizardStateAccessor) {
+function sliderController($scope, $reactive, WizardHandler, WizardState, WizardStateAccessor, SessionSetting) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -18,7 +18,7 @@ function sliderController($scope, $reactive, WizardHandler, WizardState, WizardS
 
     initUi();
     function initUi() {
-        vm.dataType = Session.get('registrationType');
+        vm.dataType = SessionSetting.getValue('registrationType');
         WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
         vm.stepNumber = WizardHandler.wizard().currentStepNumber();
 

@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('eventSelectController', EventSelectController);
 
-function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegate, $ionicPopup, $translate, $timeout, $animate) {
+function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegate, $ionicPopup, $translate, $timeout, $animate, SessionSetting) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -43,8 +43,8 @@ function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegat
         console.log("Event: '"+vm.eventPassword+"'");
 
         if (event != null) {
-            Session.set('eventId', event._id);
-            Session.set('event', event);
+            SessionSetting.setValue('eventId', event._id);
+            SessionSetting.setValue('event', event);
             $location.path("app/event");
         }
         else {
@@ -64,12 +64,7 @@ function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegat
 
     vm.backToLogout = function () {
         Meteor.logout(function () {
-            // Clear all keys
-            Object.keys(Session.keys).forEach(function (key) {
-                Session.set(key, undefined);
-            });
-            Session.keys = {};
-
+            SessionSetting.clearAllValues();
             $location.path("app/login");
         });
     }
@@ -78,44 +73,5 @@ function EventSelectController($scope, $location, $reactive, $ionicNavBarDelegat
         $location.path("app/editor");
     }
 
-
-    /*   //Analytics
-     Accounts.onLogin(function () {
-     ga('set', 'userId', Meteor.userId()); // Set the user ID using signed-in user_id.
-     ga('set', 'dimension1', Meteor.userId()); // Set the custom dimension in Google Analytics to store the actual userId
-     });*/
-    /*
-     Meteor.subscribe("settings", function () {
-     var analyticsSettings = Settings.findOne({key: 'analytics'});
-     console.log("Analytics settings", analyticsSettings);
-     if (!!analyticsSettings.value) {
-     console.log("turning on analytics");
-     $rootScope.$on('$stateChangeSuccess', function (event, toState) {
-     $timeout(function () {
-     var type = "", title = "";
-
-     if (toState.url == "/questionwizard") {
-     type = Session.get('registrationType');
-     title = Session.get('registrationType');
-     }
-     else if (toState.url == "/graphdata") {
-     type = Session.get('graphDataType');
-     title = Session.get('graphDataType');
-     }
-     else {
-     title = "How-R-you";
-     }
-     console.log(toState.url + "/" + type + " | " + title);
-
-     analytics.page(title, {
-     title: title,
-     path: toState.url + "/" + type
-     });
-     });
-     });
-     }
-     else console.log("turning off analytics");
-     });
-     */
 }
 

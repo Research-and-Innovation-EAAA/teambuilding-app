@@ -1,11 +1,11 @@
 angular.module('leukemiapp').controller('textInputController', textInputController);
 
-function textInputController($scope, $reactive, WizardHandler, WizardState, WizardStateAccessor) {
+function textInputController($scope, $reactive, WizardHandler, WizardState, WizardStateAccessor, SessionSetting) {
     $reactive(this).attach($scope);
     var vm = this;
 
     vm.config = {};
-    vm.dataType = Session.get('registrationType');
+    vm.dataType = SessionSetting.getValue('registrationType');
 
     initUi();
     function initUi() {
@@ -55,7 +55,7 @@ function textInputController($scope, $reactive, WizardHandler, WizardState, Wiza
     }
 
     $scope.$on('stepLoaded', (event, data) => {
-        if (data['vm.dataType'] === Session.get('registrationType')) {
+        if (data['vm.dataType'] === SessionSetting.getValue('registrationType')) {
             console.log(data['vm.dataType'], 'step loaded! Step number:', data['stepNumber']);
 
             if (data['stepNumber'] == 1 && !vm.init) {

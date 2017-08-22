@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('timestampController', TimestampController);
 
-function TimestampController($scope, $reactive, $timeout, $translate, WizardState, WizardStateAccessor) {
+function TimestampController($scope, $reactive, $timeout, $translate, WizardState, WizardStateAccessor, SessionSetting) {
    $reactive(this).attach($scope);
    var vm = this;
 
@@ -43,7 +43,7 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
    });
 
    //Init
-   vm.dataType = Session.get('registrationType');
+   vm.dataType = SessionSetting.getValue('registrationType');
    WizardStateAccessor.registerValidateFunction(vm.dataType, validateRegistrationTimestamp);
 
    if (vm.timePickerObj === undefined)
@@ -137,7 +137,7 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
 
       //Code to execute after vm.timestamp is updated
       var registration = WizardStateAccessor.getRegistration(vm.dataType);
-      var validated = Session.get('regValidated');
+      var validated = SessionSetting.getValue('regValidated');
 
       if (validated === undefined)
          validated = [];
@@ -154,13 +154,13 @@ function TimestampController($scope, $reactive, $timeout, $translate, WizardStat
             timestamp: vm.datePickerObj.inputDate
          };
       }
-      Session.set('regValidated', validated);
+      SessionSetting.setValue('regValidated', validated);
       console.log('regValidated session variable updated', validated);
       WizardStateAccessor.setRegistration(vm.dataType, registration);
       console.log('registration session variable updated', registration);
    }
 
    function validateRegistrationTimestamp(registration, from, to) {
-      return !registration._id || Session.get('updating');
+      return !registration._id || SessionSetting.getValue('updating');
    }
 }

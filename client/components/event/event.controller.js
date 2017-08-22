@@ -1,10 +1,10 @@
 angular.module('leukemiapp').controller('frontpageController', FrontpageController);
 
-function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicNavBarDelegate, $location, WizardStateAccessor, $timeout) {
+function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicNavBarDelegate, $location, WizardStateAccessor, $timeout, SessionSetting) {
     $reactive(this).attach($scope);
     var vm = this;
 
-    vm.event = Session.get('event');
+    vm.event = SessionSetting.getValue('event');
     vm.currentDate = Date.now();
 
     function getModules() {
@@ -95,18 +95,15 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
 
     vm.backToLogout = function () {
         Meteor.logout(function () {
-            Object.keys(Session.keys).forEach(function (key) {
-                Session.set(key, undefined);
-            });
-            Session.keys = {};
+            SessionSetting.clearAllValues()
 
             $location.path("app/login");
         });
     };
 
     vm.backToEvents = function () {
-        Session.set('eventId', null);
-        Session.set('event', null);
+        SessionSetting.setValue('eventId', null);
+        SessionSetting.setValue('event', null);
 
         $location.path("app/eventselect");
     };
@@ -122,8 +119,8 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
                     var type = "", title = "";
 
                     if (toState.url == "/questionwizard") {
-                        type = Session.get('registrationType');
-                        title = Session.get('registrationType');
+                        type = SessionSetting.getValue('registrationType');
+                        title = SessionSetting.getValue('registrationType');
                     }
                     else {
                         title = "How-R-you";
@@ -149,9 +146,9 @@ function FrontpageController($scope, $rootScope, $reactive, $ionicModal, $ionicN
             return;
         }
 
-        Session.set('registrationType', module._id);
+        SessionSetting.setValue('registrationType', module._id);
         WizardStateAccessor.setRegistration(module._id, undefined);
-        Session.set('updating', undefined);
+        SessionSetting.setValue('updating', undefined);
         $location.path("app/questionwizard");
     };
 

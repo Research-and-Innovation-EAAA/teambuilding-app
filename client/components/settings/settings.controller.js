@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('settingsController', SettingsController);
 
-function SettingsController($scope, $reactive, ModuleManagementService) {
+function SettingsController($scope, $reactive, ModuleManagementService, SessionSetting) {
     $reactive(this).attach($scope);
     var vm = this;
 

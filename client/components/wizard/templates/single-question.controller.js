@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('singleQuestionController', singleQuestionController);
 
-function singleQuestionController($scope, $reactive, WizardHandler, $ionicScrollDelegate, WizardState, WizardStateAccessor) {
+function singleQuestionController($scope, $reactive, WizardHandler, $ionicScrollDelegate, WizardState, WizardStateAccessor, SessionSetting) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -20,7 +20,7 @@ function singleQuestionController($scope, $reactive, WizardHandler, $ionicScroll
     );
 
     vm.initUi = function() {
-        vm.dataType = Session.get('registrationType');
+        vm.dataType = SessionSetting.getValue('registrationType');
         WizardStateAccessor.registerValidateFunction(vm.dataType, vm.validateData);
 
         vm.stepNumber = WizardHandler.wizard().currentStepNumber();

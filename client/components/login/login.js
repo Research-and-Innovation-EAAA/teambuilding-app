@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('loginController', LoginController);
 
-function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarDelegate, $ionicLoading, $ionicHistory, $ionicPopup, $timeout, $translate) {
+function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarDelegate, $ionicLoading, $ionicHistory, $ionicPopup, $timeout, $translate, SessionSetting) {
     $reactive(this).attach($scope);
     var vm = this;
 
@@ -17,8 +17,9 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
 
     //Analytics
     Accounts.onLogin(function () {
-        ga('set', 'userId', Meteor.userId()); // Set the user ID using signed-in user_id.
+        /* ga('set', 'userId', Meteor.userId()); // Set the user ID using signed-in user_id.
         ga('set', 'dimension1', Meteor.userId()); // Set the custom dimension in Google Analytics to store the actual userId
+        */
     });
 
     function navigateToNextStep() {
@@ -152,39 +153,5 @@ function LoginController($scope, $rootScope, $location, $reactive, $ionicNavBarD
          */
     });
 
-
-    /*
-     Meteor.subscribe("settings", function () {
-     var analyticsSettings = Settings.findOne({key: 'analytics'});
-     console.log("Analytics settings", analyticsSettings);
-     if (!!analyticsSettings.value) {
-     console.log("turning on analytics");
-     $rootScope.$on('$stateChangeSuccess', function (event, toState) {
-     $timeout(function () {
-     var type = "", title = "";
-
-     if (toState.url == "/questionwizard") {
-     type = Session.get('registrationType');
-     title = Session.get('registrationType');
-     }
-     else if (toState.url == "/graphdata") {
-     type = Session.get('graphDataType');
-     title = Session.get('graphDataType');
-     }
-     else {
-     title = "How-R-you";
-     }
-     console.log(toState.url + "/" + type + " | " + title);
-
-     analytics.page(title, {
-     title: title,
-     path: toState.url + "/" + type
-     });
-     });
-     });
-     }
-     else console.log("turning off analytics");
-     });
-     */
 }
 

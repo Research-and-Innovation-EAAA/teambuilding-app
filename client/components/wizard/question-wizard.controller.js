@@ -1,6 +1,6 @@
 angular.module('leukemiapp').controller('questionWizardController', QuestionWizardController);
 
-function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $ionicScrollDelegate, $translate, WizardHandler, WizardState, WizardStateAccessor) {
+function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $ionicScrollDelegate, $translate, WizardHandler, WizardState, WizardStateAccessor, SessionSetting) {
     $reactive(this).attach($scope);
     var vm = this;
     vm.modules = {};
@@ -26,7 +26,7 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
         vm.moduleNames[module._id] = module.name;
     }
 
-    vm.moduleId = Session.get('registrationType');
+    vm.moduleId = SessionSetting.getValue('registrationType');
     vm.viewTitle = $translate.instant(vm.moduleNames[vm.moduleId]);
     vm.steps = Object.keys(vm.modules[vm.moduleId]);
     vm.stepNumber = 0; //First template, goes from 0 .. x
@@ -104,7 +104,7 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
 
     vm.cancelRegistration = () => {
         WizardStateAccessor.setRegistration(vm.moduleId, undefined);
-        Session.set('regValidated', undefined);
+        SessionSetting.setValue('regValidated', undefined);
         $rootScope.$ionicGoBack();
     };
 
@@ -112,7 +112,7 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
         if (vm.stepNumber > 0) {
             var analyticsSettings = Settings.findOne({key: 'analytics'});
             if (analyticsSettings && analyticsSettings.value) {
-                var type = Session.get('registrationType');
+                var type = SessionSetting.getValue('registrationType');
                 var title = vm.viewTitle;
                 analytics.page(title, {
                     title: title,
@@ -133,7 +133,7 @@ function QuestionWizardController($scope, $rootScope, $reactive, $ionicPopup, $i
             content: $translate.instant('wizard.savedThanks')
         });
         WizardStateAccessor.setRegistration(vm.moduleId, undefined);
-        Session.set('regValidated', undefined);
+        SessionSetting.setValue('regValidated', undefined);
 
         var analyticsSettings = Settings.findOne({key: 'analytics'});
         if (!!analyticsSettings.value) {
